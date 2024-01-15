@@ -1,0 +1,28 @@
+@import "_mixin.scss";
+
+$color: (
+  // 藍綠色系
+  blue-1: #d5faff,
+  blue-2: #bae6ec,
+  blue-3: #3eb3c2,
+  blue-4: #347781,
+
+  // 黃綠色系
+  brown-1: #fef7d2,
+  brown-2: #c0a790,
+  green-1: #ced38c,
+  green-2: #8f9546,
+
+  // 中性色系
+  white01: #fff,
+  dark: #30322a,
+  light-gray: #f1f1f1
+);
+
+// 生成 CSS 類別
+@include generate-color-classes($color);
+
+// 文字顏色
+// .blue-1
+//背景顏色
+// .bg-blue-1
