@@ -47,6 +47,11 @@ const router = createRouter({
       name: 'camp',
       component: () => import('../views/CampView.vue'),
     },
+    {
+      path: '/shopCar',
+      name: 'shopCar',
+      component: () => import('../views/ShopCarView.vue'),
+    },
   ],
 });
 
