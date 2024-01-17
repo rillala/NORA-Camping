@@ -1,15 +1,12 @@
 <script>
 // 引入函式庫
-import axios from "axios";
+import axios from 'axios';
 
-export default{
-  
-
-}
+export default {};
 </script>
 
 <template>
-    <div>This is About page</div>
+  <div class="wrap">頁面裡的內容請寫在.wrap標籤裡面</div>
 </template>
 
 <style lang="scss" scoped>

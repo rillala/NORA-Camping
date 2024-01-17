@@ -1,89 +1,484 @@
 <script>
-export default{
-  
+import { RouterLink, RouterView } from 'vue-router';
 
-}
+export default {
+  data() {
+    return {
+      isMenuOpen: false,
+      navList: [
+        {
+          name: '關於野良',
+          path: '/about',
+        },
+        {
+          name: '營地導覽',
+          path: '/camp',
+        },
+        {
+          name: '常見問題',
+          path: '/faq',
+        },
+        {
+          name: '野良之家',
+          path: '/shelter',
+        },
+      ],
+    };
+  },
+  watch: {
+    isMenuOpen(newVal, oldVal) {
+      document.body.style.overflow = newVal ? 'hidden' : 'auto';
+    },
+  },
+};
 </script>
 
 <template>
   <input
-  type="checkbox"
-  name="hambuger-mobile"
-  id="hambuger-mobile"
-  class="ham-check"
-  v-model="isMenuOpen"
-/>
+    type="checkbox"
+    name="hambuger-mobile"
+    id="hambuger-mobile"
+    class="ham-check"
+    v-model="isMenuOpen"
+  />
 
-<input
-  type="checkbox"
-  name="hambuger-tablet"
-  id="hambuger-tablet"
-  class="ham-check"
-  v-model="isMenuOpen"
-/>
+  <input
+    type="checkbox"
+    name="hambuger-tablet"
+    id="hambuger-tablet"
+    class="ham-check"
+    v-model="isMenuOpen"
+  />
 
-<nav>
-  <div id="nav-wrap">
-    <a id="logo" href="index.html" alt="nora camping logo"></a>
+  <nav>
+    <div id="nav-wrap">
+      <a id="logo" href="index.html" alt="nora camping logo"></a>
 
-    <!--手機用子選單開關-->
+      <!--手機用子選單開關-->
 
-    <label for="hambuger-mobile" id="menu-btn-mobile" class="menu-btn">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-
-    <!--導覽列右側-->
-    <div id="nav-box">
-      <!-- <a href="" class="bg-blue-3" id="reserve-btn"
-        ><img src="./image/icon/reservation-mobile.png" alt="" />
-        <p>線上預約</p></a
-      >
-
-      <a href="" class="bg-blue-3" id="shop-btn"
-        ><img src="./image/icon/shop-mobile.png" alt="" />
-        <p>野良選物</p></a
-      > -->
-
-      <!--會員登入-->
-      <button id="member-login"></button>
-
-      <!--購物車-->
-      <a href="" id="shop-car"></a>
-
-      <!--平板用子選單開關-->
-
-      <label for="hambuger-tablet" id="menu-btn-tablet" class="menu-btn">
-        <span></span>
-        <span></span>
-        <span></span>
+      <label for="hambuger-mobile" id="menu-btn-mobile" class="menu-btn">
+        <span v-for="num in 3"></span>
       </label>
-    </div>
-  </div>
 
-  <ul id="menu-list">
-    <li>
-      <a href="" class="bg-blue-3" id="reserve-btn"
-        ><img src="@/assets/image/headerFooter/reservation-mobile.png" alt="" />
-        <p>線上預約</p></a
-      >
-    </li>
-    <li>
-      <a href="" class="bg-blue-3" id="shop-btn"
-        ><img src="@/assets/image/headerFooter/shop-mobile.png" alt="" />
-        <p>野良選物</p></a
-      >
-    </li>
-    <li><a href="" class="sub-menu dark">關於野良</a></li>
-    <li><a href="" class="sub-menu dark">營地導覽</a></li>
-    <li><a href="" class="sub-menu dark">常見問題</a></li>
-    <li><a href="" class="sub-menu dark">野良之家</a></li>
-  </ul>
-</nav>
+      <!--導覽列右側-->
+      <div id="nav-box">
+        <a href="" class="bg-blue-3" id="reserve-btn-desktop"
+          ><img
+            src="@/assets/image/headerFooter/reservation-mobile.png"
+            alt=""
+          />
+          <p>線上預約</p></a
+        >
+
+        <a href="" class="bg-blue-3" id="shop-btn-desktop"
+          ><img src="@/assets/image/headerFooter/shop-mobile.png" alt="" />
+          <p>野良選物</p></a
+        >
+
+        <!--會員登入-->
+        <button id="member-login"></button>
+
+        <!--購物車-->
+        <a href="" id="shop-car"></a>
+
+        <!--平板用子選單開關-->
+
+        <label for="hambuger-tablet" id="menu-btn-tablet" class="menu-btn">
+          <span v-for="num in 3"></span>
+        </label>
+      </div>
+    </div>
+
+    <ul id="menu-list">
+      <li>
+        <a href="" class="bg-blue-3" id="reserve-btn"
+          ><img
+            src="@/assets/image/headerFooter/reservation-mobile.png"
+            alt=""
+          />
+          <p>線上預約</p></a
+        >
+      </li>
+      <li>
+        <a href="" class="bg-blue-3" id="shop-btn"
+          ><img src="@/assets/image/headerFooter/shop-mobile.png" alt="" />
+          <p>野良選物</p></a
+        >
+      </li>
+      <li v-for="link in navList" :key="link.name"><RouterLink :to="link.path" class="sub-menu dark">
+      {{link.name}} 
+      </RouterLink></li>
+     
+    </ul>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
-@use "@/assets/sass/header.scss"
+@use '../assets/sass/header.scss';
+
+#nav-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  // 手機板先切
+  width: 100%;
+
+  padding: 24px 20px;
+  background-color: $blue-3; // 無子選單時為$blue-3
+  transition: 0.2s ease-in-out;
+
+  @include tablet {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 35px;
+
+    // grid-template-columns: none;
+  }
+
+  @include desktop {
+    padding: 20px 46px;
+  }
+
+  #menu-btn-mobile {
+    display: block;
+    justify-self: flex-end;
+  }
+}
+
+#nav-box {
+  display: flex;
+  height: 0;
+  overflow: hidden;
+  grid-column: 1/3;
+  margin: 0 auto;
+
+  @include tablet {
+    height: auto;
+    margin: 0;
+
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+// LOGO
+#logo {
+  display: block;
+  width: 170px;
+  height: 40px;
+  text-decoration: none;
+  background-image: url(@/assets/image/headerFooter/logo-mobile-light.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @include tablet {
+    width: 289px;
+    height: 68px;
+  }
+}
+
+// 會員登入
+#member-login {
+  width: 50px;
+  height: 50px;
+  border: 0;
+  background-color: transparent;
+  background-image: url(@/assets/image/headerFooter/member-mobile.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @include tablet {
+    background-image: url(@/assets/image/headerFooter/member-tablet.png);
+  }
+}
+
+// 購物車
+#shop-car {
+  margin-left: 30px;
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+  background-image: url(@/assets/image/headerFooter/shopCar-mobile.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @include tablet {
+    margin: 0 20px;
+    background-image: url(@/assets/image/headerFooter/shopCar-tablet.png);
+  }
+
+  @include desktop {
+  }
+}
+
+// 子選單開關
+.menu-btn {
+  display: block;
+  width: 60px;
+  height: 45px;
+  cursor: pointer;
+  position: relative;
+
+  span {
+    display: block;
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    height: 8px;
+    background-color: $white01;
+    border-radius: 10px;
+
+    transition: 0.25s ease-in-out;
+  }
+
+  span:nth-of-type(1) {
+    top: 0;
+    transform-origin: left center;
+  }
+
+  span:nth-of-type(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: left center;
+  }
+
+  span:nth-of-type(3) {
+    top: 100%;
+    transform-origin: left center;
+    transform: translateY(-100%);
+  }
+}
+
+// 子選單樣式
+
+#menu-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: $blue-2;
+
+  width: 100%;
+
+  height: 0;
+  overflow: hidden;
+  transition: 0.4s ease-in-out;
+
+  @include tablet {
+  }
+
+  @include desktop {
+    flex-direction: row;
+    height: auto;
+    justify-content: center;
+
+    background: $blue-1;
+    padding: 10px 0;
+
+    li + li {
+      margin-right: 40px;
+    }
+  }
+
+  li {
+    text-align: center;
+
+    a {
+      width: 80%;
+      height: 50px;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      text-decoration: none;
+      @include font-style(20px, 700, 15%, 100%);
+      border-radius: 30px;
+      
+      @include tablet {
+        // margin: 0 auto 60px;
+        height: 85px;
+        @include font-style(32px, 700, 10%, 100%);
+      }
+
+      @include desktop {
+        width: 100%;
+        height: auto;
+        @include font-style(20px, 700, 20%, 100%);
+        border-radius: 0;
+        transition: 0.3s ease-in-out;
+      }
+    }
+
+    a:hover{
+      @include desktop{
+       
+        border-bottom: 1px solid $dark;
+      }
+    }
+
+    .sub-menu {
+      line-height: 160%;
+      border: 1px solid $dark;
+
+      @include desktop {
+        border: none;
+      }
+    }
+  }
+}
+
+// 手機板和平板的線上預約+商店按鈕
+#menu-list #shop-btn,
+#menu-list #reserve-btn {
+  width: 80%;
+  height: 50px;
+  // margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
+  @include font-style(20px, 700, 15%, 100%);
+  border-radius: 100px;
+
+  @include tablet {
+    // margin: 0 auto 60px;
+    height: 85px;
+    @include font-style(32px, 700, 10%, 100%);
+  }
+
+  @include desktop {
+    display: none;
+    overflow: hidden;
+  }
+
+  p {
+    margin-left: 10px;
+    text-decoration: none;
+    @include font-style(20px, 700, 15%, 100%);
+    color: $white01;
+
+    @include tablet {
+      @include font-style(32px, 700, 15%, 100%);
+    }
+  }
+
+  img {
+    width: 18px;
+    height: 19px;
+
+    @include tablet {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+// 手機板和桌機板的線上預約+商店按鈕
+#shop-btn-desktop,
+#reserve-btn-desktop {
+  display: none;
+  @include desktop {
+    width: 180px;
+    height: 45px;
+    margin-right: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid $white01;
+    border-radius: $radius;
+    text-decoration: none;
+
+    img {
+      width: 22px;
+      height: 22px;
+      margin-right: 10px;
+    }
+
+    p {
+      color: $white01;
+    }
+  }
+}
+
+// 子選單開關動作設定-------------------------
+input[type='checkbox'] {
+  display: none;
+}
+
+// 點選後 1.上方背景顏色更換
+.ham-check:checked ~ nav #nav-wrap {
+  background-color: $blue-2;
+}
+
+// 點選後 2.LOGO 更換圖檔
+.ham-check:checked ~ nav #logo {
+  background-image: url(@/assets/image/headerFooter/logo-mobile-dark.png);
+}
+
+// 點選後 3.子選單打開
+.ham-check:checked ~ nav #menu-list {
+  height: calc(100svh - 143px);
+  margin-top: -40px;
+
+  @include tablet {
+    height: calc(100svh - 108px);
+  }
+}
+
+// 點選後 4.原本的選單圖案變更為 x
+.ham-check:checked ~ nav .menu-btn {
+  span:nth-of-type(1) {
+    transform: rotate(45deg);
+    background: $dark;
+  }
+
+  span:nth-of-type(2) {
+    opacity: 0;
+  }
+
+  span:nth-of-type(3) {
+    transform: rotate(-45deg);
+    background: $dark;
+  }
+}
+
+// 點選後 5.會員登入和購物車出現
+.ham-check:checked ~ nav #nav-box {
+  height: auto;
+  margin: 20px auto;
+
+  @include tablet {
+    margin: 0;
+  }
+}
+
+// RWD 子選單差異-----------------------------
+
+// 手機板時, 平板開關隱藏
+// 桌機板時, 平板和手機開關隱藏
+#menu-btn-tablet {
+  display: none;
+  @include tablet {
+    display: block;
+  }
+
+  @include desktop {
+    display: none;
+  }
+}
+
+// 平板時, 手機開關隱藏
+#menu-btn-mobile {
+  @include tablet {
+    display: none !important;
+  }
+}
+
+// RWD 按鈕差異-----------------------------
+
 
 </style>

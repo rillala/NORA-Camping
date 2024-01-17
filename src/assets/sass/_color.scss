@@ -1,28 +1,49 @@
-@import "_mixin.scss";
+@import '_mixin.scss';
+
+
+// 文字顏色 class 名稱-->以此類推
+// .blue-1
+//背景顏色 class 名稱-->以此類推
+// .bg-blue-1
+
 
 $color: (
   // 藍綠色系
   blue-1: #d5faff,
+  // 湖水亮色
   blue-2: #bae6ec,
+  // 湖水預設色
   blue-3: #3eb3c2,
+  // 主視覺預設色
   blue-4: #347781,
 
-  // 黃綠色系
+  // 湖水深色
+  // 咖啡色系
   brown-1: #fef7d2,
+  // 咖啡亮色
   brown-2: #c0a790,
-  green-1: #ced38c,
-  green-2: #8f9546,
+  // 咖啡預設
+  brown-3: #9a8470,
 
+  //咖啡深色
+  // 黃綠色系
+  yellow-1: #faffb6,
+  // 黃綠亮色
+  yellow-2: #ced38c,
+  // 黃綠預設
+  yellow-3: #8f9546,
+
+  // 黃綠暗色
   // 中性色系
   white01: #fff,
   dark: #30322a,
-  light-gray: #f1f1f1
+  light-gray: #f1f1f1,
+  // 淺灰1
+  dark-gray: #d9d9d9,
+  // 深灰2
 );
 
 // 生成 CSS 類別
 @include generate-color-classes($color);
 
-// 文字顏色
-// .blue-1
-//背景顏色
-// .bg-blue-1
+
