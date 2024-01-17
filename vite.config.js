@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import path from 'path';
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,12 +15,12 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "${path.resolve(__dirname, 'src/assets/sass/style.scss')}";`
+        additionalData: `
+					$injectedColor: orange;
+					@import "./src/assets/sass/main.scss";
+				`,
       }
-    }
+    },
   },
 });
-
-
-
 

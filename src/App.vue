@@ -17,5 +17,4 @@ import headerCom from '@/components/header.vue';
 </template>
 
 <style lang="scss">
-@use '@/assets/sass/style.scss';
 </style>

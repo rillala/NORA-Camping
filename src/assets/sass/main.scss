@@ -1,0 +1,31 @@
+// base
+@import 'base/reset';
+@import 'base/variables';
+@import 'base/color';
+@import 'base/text';
+
+// function
+@import 'mixin';
+
+// components
+@import './components/component';
+
+// 生成顏色 class 名稱
+// 文字顏色 class 名稱-->以此類推
+// .blue-1
+//背景顏色 class 名稱-->以此類推
+// .bg-blue-1
+@include generate-color-classes($color);
+
+
+// 全局共用格式
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+a,
+button {
+  cursor: pointer;
+}

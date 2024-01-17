@@ -91,7 +91,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "@/assets/sass/style.scss";
 
 /* 這裡可以添加樣式，視情況而定 */
 

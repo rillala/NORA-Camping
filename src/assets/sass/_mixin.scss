@@ -1,5 +1,3 @@
-@import '_variables.scss';
-
 // 生成顏色 class 名稱: .color / .bg-color
 @mixin generate-color-classes($colors) {
   @each $k, $v in $colors {
