@@ -6,8 +6,8 @@ export default {};
 </script>
 
 <template>
-  <div class="wrap">頁面裡的內容請寫在.wrap標籤裡面</div>
   
+  <h1>this is about page</h1>
 </template>
 
 <style lang="scss" scoped>
