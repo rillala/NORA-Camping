@@ -15,5 +15,6 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 
+
 // 渲染在 index.html 裡面的 div#app
 app.mount('#app');
