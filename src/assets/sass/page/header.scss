@@ -167,7 +167,7 @@
   li {
     text-align: center;
 
-    a {
+    .sub-menu {
       width: 80%;
       height: 50px;
       margin: auto;
@@ -177,7 +177,9 @@
 
       text-decoration: none;
       @include font-style(20px, 700, 15%, 100%);
-      border-radius: 30px;
+      border-radius: $radius;
+      line-height: 160%;
+      border: 1px solid $dark;
       
       @include tablet {
         // margin: 0 auto 60px;
@@ -190,25 +192,18 @@
         height: auto;
         @include font-style(20px, 700, 20%, 100%);
         border-radius: 0;
+        border: none;
         transition: 0.3s ease-in-out;
       }
     }
 
-    a:hover{
+    .sub-menu:hover{
       @include desktop{
-       
         border-bottom: 1px solid $dark;
+        color:$dark;
       }
     }
 
-    .sub-menu {
-      line-height: 160%;
-      border: 1px solid $dark;
-
-      @include desktop {
-        border: none;
-      }
-    }
   }
 }
 
@@ -217,19 +212,17 @@
 #menu-list #reserve-btn {
   width: 80%;
   height: 50px;
-  // margin: 0 auto 20px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
 
   text-decoration: none;
-  @include font-style(20px, 700, 15%, 100%);
   border-radius: 100px;
+  
 
   @include tablet {
-    // margin: 0 auto 60px;
     height: 85px;
-    @include font-style(32px, 700, 10%, 100%);
   }
 
   @include desktop {
@@ -240,12 +233,11 @@
   p {
     margin-left: 10px;
     text-decoration: none;
-    @include font-style(20px, 700, 15%, 100%);
     color: $white01;
-
+    @include font-style(20px, 700, 10%, 100%);   
     @include tablet {
-      @include font-style(32px, 700, 15%, 100%);
-    }
+      @include font-style(32px, 700, 10%, 100%);   
+    } 
   }
 
   img {
@@ -284,6 +276,9 @@
 
     p {
       color: $white01;
+      @include font-style(20px, 900, 15%, 100%);
+        
+      
     }
   }
 }

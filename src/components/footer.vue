@@ -9,6 +9,14 @@ export default {
 };
 </script>
 
-<template></template>
+<template>
+  <div class="bg-blue-3"></div>
+</template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+div{
+  width: 200px;
+  height: 200px;
+}
+</style>

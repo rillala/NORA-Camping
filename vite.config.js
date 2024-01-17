@@ -16,7 +16,8 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-										@import "./src/assets/sass/main.scss";
+        @import "view-ui-plus/dist/styles/viewuiplus.css";
+				@import "./src/assets/sass/main.scss";
 				`,
       }
     },

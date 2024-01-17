@@ -1,5 +1,6 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router';
+// import headerCom from '@/components/header.vue';
 import memberLogin from '@/components/memberLogin.vue';
 
 export default {
@@ -77,7 +78,9 @@ export default {
         >
 
         <!--會員登入-->
-        <button id="member-login"> <memberLogin /> </button>
+        <button id="member-login"> 
+       
+        </button>
 
         <!--購物車-->
         <a href="" id="shop-car"></a>
