@@ -43,6 +43,11 @@ shopBtn:{
       document.body.style.overflow = newVal ? 'hidden' : 'auto';
     },
   },
+  methods: {
+    getImageUrl(paths) {
+    return new URL(`../assets/image/${paths}`, import.meta.url).href;
+    },
+  },
 };
 </script>
 
@@ -76,9 +81,8 @@ shopBtn:{
       <!--導覽列右側-->
       <div id="nav-box">
         <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn-desktop"
-          ><img
-            src="@/assets/image/headerFooter/reservation-mobile.png"
-            :alt="reserveBtn"
+          ><img :src="getImageUrl('headerFooter/reservation-mobile.png')"
+             :alt="reserveBtn"
           />
           <p>
             {{ reserveBtn.name }}
@@ -86,7 +90,7 @@ shopBtn:{
         >
 
         <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn-desktop"
-          ><img src="@/assets/image/headerFooter/shop-mobile.png" :alt="shopBtn" />
+          ><img :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
           <p>{{ shopBtn.name }}</p></RouterLink
         >
 
@@ -109,9 +113,7 @@ shopBtn:{
     <ul id="menu-list">
       <li>
         <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn"
-          ><img
-            src="@/assets/image/headerFooter/reservation-mobile.png"
-            :alt="reserveBtn"
+          ><img :src="getImageUrl('headerFooter/reservation-mobile.png')" :alt="reserveBtn"
           />
           <p>
             {{ reserveBtn.name }}
@@ -120,7 +122,7 @@ shopBtn:{
       </li>
       <li>
         <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn"
-          ><img src="@/assets/image/headerFooter/shop-mobile.png" :alt="shopBtn" />
+          ><img :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
           <p>{{ shopBtn.name }}</p></RouterLink
         >
       </li>
