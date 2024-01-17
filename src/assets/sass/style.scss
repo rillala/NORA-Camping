@@ -1,5 +1,16 @@
-@import "reset";
-@import "variables";
-@import "color";
-@import "text";
-@import "component";
+@import '@/assets/sass/_reset.scss';
+@import '@/assets/sass/_variables.scss';
+@import '@/assets/sass/_color.scss';
+@import '@/assets/sass/_text.scss';
+@import '@/assets/sass/_component.scss';
+
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+a,
+button {
+  cursor: pointer;
+}

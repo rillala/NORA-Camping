@@ -1,7 +1,10 @@
-@import "variables";
-@import "mixin";
+@import 'variables';
+@import 'mixin';
 
-nav {
+#nav-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
   // 手機板先切
   width: 100%;
 
@@ -9,25 +12,16 @@ nav {
   background-color: $blue-3; // 無子選單時為$blue-3
   transition: 0.2s ease-in-out;
 
-  // 平板 RWD
-  @include tablet {
-    padding: 40px 35px;
-  }
-
-  // 桌機 RWD
-  @include desktop {
-    padding: 20px 46px;
-  }
-}
-
-#nav-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
   @include tablet {
     display: flex;
     justify-content: space-between;
+    padding: 40px 35px;
+
     // grid-template-columns: none;
+  }
+
+  @include desktop {
+    padding: 20px 46px;
   }
 
   #menu-btn-mobile {
@@ -97,6 +91,9 @@ nav {
     margin: 0 20px;
     background-image: url(@/assets/image/headerFooter/shopCar-tablet.png);
   }
+
+  @include desktop {
+  }
 }
 
 // 子選單開關
@@ -144,17 +141,36 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  background-color: $blue-2;
+
+  width: 100%;
 
   height: 0;
   overflow: hidden;
   transition: 0.4s ease-in-out;
+
+  @include tablet {
+  }
+
+  @include desktop {
+    flex-direction: row;
+    height: auto;
+    justify-content: center;
+
+    background: $blue-1;
+    padding: 10px 0;
+
+    li + li {
+      margin-right: 40px;
+    }
+  }
 
   li {
     text-align: center;
 
     a {
       width: 80%;
-      height: 35px;
+      height: 50px;
       margin: auto;
       display: flex;
       justify-content: center;
@@ -163,25 +179,45 @@ nav {
       text-decoration: none;
       @include font-style(20px, 700, 15%, 100%);
       border-radius: 30px;
-
+      
       @include tablet {
         // margin: 0 auto 60px;
         height: 85px;
         @include font-style(32px, 700, 10%, 100%);
+      }
+
+      @include desktop {
+        width: 100%;
+        height: auto;
+        @include font-style(20px, 700, 20%, 100%);
+        border-radius: 0;
+        transition: 0.3s ease-in-out;
+      }
+    }
+
+    a:hover{
+      @include desktop{
+       
+        border-bottom: 1px solid $dark;
       }
     }
 
     .sub-menu {
       line-height: 160%;
       border: 1px solid $dark;
+
+      @include desktop {
+        border: none;
+      }
     }
   }
 }
 
-#shop-btn,
-#reserve-btn {
+// 手機板和平板的線上預約+商店按鈕
+#menu-list #shop-btn,
+#menu-list #reserve-btn {
   width: 80%;
-  height: 35px;
+  height: 50px;
   // margin: 0 auto 20px;
   display: flex;
   justify-content: center;
@@ -195,6 +231,11 @@ nav {
     // margin: 0 auto 60px;
     height: 85px;
     @include font-style(32px, 700, 10%, 100%);
+  }
+
+  @include desktop {
+    display: none;
+    overflow: hidden;
   }
 
   p {
@@ -219,21 +260,43 @@ nav {
   }
 }
 
+// 手機板和桌機板的線上預約+商店按鈕
+#shop-btn-desktop,
+#reserve-btn-desktop {
+  display: none;
+  @include desktop {
+    width: 180px;
+    height: 45px;
+    margin-right: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid $white01;
+    border-radius: $radius;
+    text-decoration: none;
+
+    img {
+      width: 22px;
+      height: 22px;
+      margin-right: 10px;
+    }
+
+    p {
+      color: $white01;
+    }
+  }
+}
+
 // 子選單開關動作設定-------------------------
-input[type="checkbox"] {
+input[type='checkbox'] {
   display: none;
 }
 
-// 點選後 1.背景顏色更換
-.ham-check:checked ~ nav {
+// 點選後 1.上方背景顏色更換
+.ham-check:checked ~ nav #nav-wrap {
   background-color: $blue-2;
-  height: 100svh;
-
-  @include tablet {
-    #nav-wrap {
-      // margin-bottom: 60px;
-    }
-  }
 }
 
 // 點選後 2.LOGO 更換圖檔
@@ -243,7 +306,8 @@ input[type="checkbox"] {
 
 // 點選後 3.子選單打開
 .ham-check:checked ~ nav #menu-list {
-  height: calc(100svh - 159px);
+  height: calc(100svh - 143px);
+  margin-top: -40px;
 
   @include tablet {
     height: calc(100svh - 108px);
@@ -277,8 +341,6 @@ input[type="checkbox"] {
   }
 }
 
-/////////// 點選後 6.防止頁面滑動-->js
-
 // RWD 子選單差異-----------------------------
 
 // 手機板時, 平板開關隱藏
@@ -300,3 +362,5 @@ input[type="checkbox"] {
     display: none !important;
   }
 }
+
+// RWD 按鈕差異-----------------------------

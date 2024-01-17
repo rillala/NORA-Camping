@@ -1,4 +1,4 @@
-@import "_variables.scss";
+@import '_variables.scss';
 
 // 生成顏色 class 名稱: .color / .bg-color
 @mixin generate-color-classes($colors) {
@@ -18,7 +18,7 @@
   font-weight: $weight;
   letter-spacing: $letter-spacing;
   line-height: $line-height;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 // RWD 媒體查詢函式

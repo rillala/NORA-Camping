@@ -1,6 +1,6 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import headerCom from '@/components/header.vue'
+import { RouterLink, RouterView } from 'vue-router';
+import headerCom from '@/components/header.vue';
 </script>
 
 <template>
@@ -17,5 +17,5 @@ import headerCom from '@/components/header.vue'
 </template>
 
 <style lang="scss">
-@use "@/assets/sass/style.scss"
+@use '@/assets/sass/style.scss';
 </style>
