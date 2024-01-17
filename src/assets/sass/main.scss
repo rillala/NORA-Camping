@@ -8,7 +8,7 @@
 @import 'mixin';
 
 // components
-@import './components/component';
+@import 'components/component';
 
 // 生成顏色 class 名稱
 // 文字顏色 class 名稱-->以此類推
@@ -23,6 +23,7 @@
   scroll-behavior: smooth;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
+
 }
 
 a,
