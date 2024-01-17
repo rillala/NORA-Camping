@@ -1,50 +1,53 @@
 <template>
-  <div>
-    <!-- 切換表單的按鈕 -->
-    <div>
-      <button @click="showRegisterForm = true" :class="{ active: showRegisterForm }">註冊</button>
-      <button @click="showRegisterForm = false" :class="{ active: !showRegisterForm }">登入</button>
-    </div>
-
-    <!-- 註冊頁面 -->
-    <div v-if="showRegisterForm" @click="closeLightbox" class="lightbox">
-      <div class="lightbox-content">
-        <input type="text" placeholder="請輸入信箱" v-model="user_add.account">  
-        <input type="password" placeholder="請輸入密碼" v-model="user_add.pwd">  
-        <input type="password" placeholder="再次輸入密碼" v-model="user_add.pwdConfirmation">
-
-        <div class="login_news">
-          <input type="checkbox" v-model="user_add.receiveNews" id="receiveNews">
-          <label for="receiveNews">
-            <p>我願意接收野良的最新消息、優惠相關訊息</p>
-          </label>
-        </div>
-
-        <div class="login_news">
-          <input type="checkbox" v-model="user_add.agreeTerms" id="agreeTerms">
-          <label for="agreeTerms">
-            <p>我同意網站服務條款及隱私權政策</p>
-          </label>
-        </div>
-
-        <button type="submit" @click="joinAjax">立即加入</button>
+  <div class="lightbox">
+    <div v-if="isOpen" >
+      <!-- 切換表單的按鈕 -->
+      <div>
+        <div class="tab-add" @click="showRegisterForm = true" :class="{ active: showRegisterForm }">註冊會員</div>
+        <div class="tab-register" @click="showRegisterForm = false" :class="{ active: !showRegisterForm }">登入</div>
       </div>
-    </div>
 
-    <!-- 登入頁面 -->
-    <div v-else>
-      <input type="text" placeholder="請輸入信箱" v-model="user_enter.account">
-      <button type="submit" @click="loginAjax">會員登入</button>
-      <a @click="forgetPsw">忘記密碼？</a>
+      <!-- 註冊頁面 -->
+      <div v-if="showRegisterForm" @click="closeLightbox" >
+        <div class="lightbox-content">
+          <input type="text" placeholder="請輸入信箱" v-model="user_add.account">  
+          <input type="password" placeholder="請輸入密碼" v-model="user_add.pwd">  
+          <input type="password" placeholder="再次輸入密碼" v-model="user_add.pwdConfirmation">
 
-      <button @click="loginWithGoogle">以Google登入</button>
-      <button @click="loginWithFacebook">以Facebook登入</button>
+          <div class="login_news">
+            <input type="checkbox" v-model="user_add.receiveNews" id="receiveNews">
+            <label for="receiveNews">
+              <p>我願意接收野良的最新消息、優惠相關訊息</p>
+            </label>
+          </div>
+
+          <div class="login_news">
+            <input type="checkbox" v-model="user_add.agreeTerms" id="agreeTerms">
+            <label for="agreeTerms">
+              <p>我同意網站服務條款及隱私權政策</p>
+            </label>
+          </div>
+
+          <button type="submit" @click="joinAjax">立即加入</button>
+        </div>
+      </div>
+
+      <!-- 登入頁面 -->
+      <div v-else @click="closeLightbox">
+        <input type="text" placeholder="請輸入信箱" v-model="user_enter.account">
+        <button type="submit" @click="loginAjax">會員登入</button>
+        <a @click="forgetPsw">忘記密碼？</a>
+
+        <button @click="loginWithGoogle">以Google登入</button>
+        <button @click="loginWithFacebook">以Facebook登入</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+props:['isOpen'],
   data() {
     return {
       showRegisterForm: true,
