@@ -1,12 +1,23 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router';
-// import headerCom from '@/components/header.vue';
 import memberLogin from '@/components/memberLogin.vue';
 
 export default {
+  components: {
+    memberLogin,
+  },
   data() {
     return {
       isMenuOpen: false,
+      reserveBtn:{
+name: "線上預約",
+path: "/reserve",
+},
+shopBtn:{
+    name: "野良選物",
+    path: "/shop",
+
+      } ,
       navList: [
         {
           name: '關於野良',
@@ -64,26 +75,28 @@ export default {
 
       <!--導覽列右側-->
       <div id="nav-box">
-        <a href="" class="bg-blue-3" id="reserve-btn-desktop"
+        <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn-desktop"
           ><img
             src="@/assets/image/headerFooter/reservation-mobile.png"
-            alt=""
+            :alt="reserveBtn"
           />
-          <p>線上預約</p></a
+          <p>
+            {{ reserveBtn.name }}
+          </p></RouterLink
         >
 
-        <a href="" class="bg-blue-3" id="shop-btn-desktop"
-          ><img src="@/assets/image/headerFooter/shop-mobile.png" alt="" />
-          <p>野良選物</p></a
+        <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn-desktop"
+          ><img src="@/assets/image/headerFooter/shop-mobile.png" :alt="shopBtn" />
+          <p>{{ shopBtn.name }}</p></RouterLink
         >
 
         <!--會員登入-->
         <button id="member-login"> 
-       
+       <memberLogin/>
         </button>
 
         <!--購物車-->
-        <a href="" id="shop-car"></a>
+        <RouterLink to="/shopCar" id="shop-car"></RouterLink>
 
         <!--平板用子選單開關-->
 
@@ -95,18 +108,20 @@ export default {
 
     <ul id="menu-list">
       <li>
-        <a href="" class="bg-blue-3" id="reserve-btn"
+        <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn"
           ><img
             src="@/assets/image/headerFooter/reservation-mobile.png"
-            alt=""
+            :alt="reserveBtn"
           />
-          <p>線上預約</p></a
+          <p>
+            {{ reserveBtn.name }}
+          </p></RouterLink
         >
       </li>
       <li>
-        <a href="" class="bg-blue-3" id="shop-btn"
-          ><img src="@/assets/image/headerFooter/shop-mobile.png" alt="" />
-          <p>野良選物</p></a
+        <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn"
+          ><img src="@/assets/image/headerFooter/shop-mobile.png" :alt="shopBtn" />
+          <p>{{ shopBtn.name }}</p></RouterLink
         >
       </li>
       <li v-for="link in navList" :key="link.name"><RouterLink :to="link.path" class="sub-menu dark">
