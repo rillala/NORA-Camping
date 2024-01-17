@@ -10,13 +10,13 @@ export default {
 </script>
 
 <template>
-  <div class="bg-blue-3"></div>
+  <div class="bg-blue-3 h1">Footer Area</div>
 </template>
 
 <style lang="scss" scoped>
 
 div{
-  width: 200px;
+  width: 100%;
   height: 200px;
 }
 </style>
