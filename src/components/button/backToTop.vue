@@ -6,7 +6,7 @@ export default{
 </script>
 
 <template>
-    <a class="back-to-top bg-blue-3">
+    <a href="#" class="back-to-top bg-blue-3">
         <div class="dash bg-white01"></div>
         <div class="triangle"></div>
         <p class="white01">TOP</p>
@@ -26,6 +26,8 @@ height: 70px;
 padding: 15px 9px;
 border-radius: $radius;
 background: $blue-3;
+
+text-decoration: none;
 
   @include desktop{
     width: 80px;
