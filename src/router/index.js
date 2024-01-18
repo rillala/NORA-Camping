@@ -52,6 +52,32 @@ const router = createRouter({
       name: 'shopCar',
       component: () => import('../views/ShopCarView.vue'),
     },
+    {
+      path: '/equipment',
+      name: 'equipment',
+      component: () => import('../views/reserve/EquipmentView.vue'),
+    },
+    {
+      path: '/reserveconfirm',
+      name: 'reserveconfirm',
+      component: () => import('../views/reserve/ReserveConfirmView.vue'),
+    },
+    {
+      path: '/reservepayment',
+      name: 'reservepayment',
+      component: () => import('../views/reserve/ReservePaymentView.vue'),
+    },
+    {
+      path: '/reservesuccess',
+      name: 'reservesuccess',
+      component: () => import('../views/reserve/ReserveSuccessView.vue'),
+    },
+    {
+      path: '/reservefail',
+      name: 'reservefail',
+      component: () => import('../views/reserve/ReserveFailView.vue'),
+    },
+   
   ],
 });
 
