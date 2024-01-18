@@ -70,7 +70,7 @@ shopBtn:{
 
   <nav>
     <div id="nav-wrap">
-      <a id="logo" href="index.html" alt="nora camping logo"></a>
+      <RouterLink to="/home" id="logo"></RouterLink>
 
       <!--手機用子選單開關-->
 
