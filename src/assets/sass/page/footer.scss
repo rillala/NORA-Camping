@@ -227,11 +227,12 @@ input::placeholder{
     max-width: 600px;
     margin: 10px 10px 0;
     color:$dark;
-    @include font-style(12px, 400, 20%, 120%);
+    @include font-style(12px, 400, 10%, 120%);
 
     @include tablet{
         max-width: 800px;
         text-align: center;
         margin: 10px auto 0;
+        padding: 0 20px;
     }
 }
