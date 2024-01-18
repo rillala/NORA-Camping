@@ -2,14 +2,14 @@
 import { RouterLink, RouterView } from 'vue-router';
 import headerCom from '@/components/header.vue';
 import footerCom from '@/components/footer.vue';
-// import backToTop from '@/components/button/backToTop.vue';
+import backToTop from '@/components/button/backToTop.vue';
 </script>
 
 <template>
   <headerCom />
   <div id="content-wrap">
     <RouterView />
-    <!-- <backToTop id="top-btn"/> -->
+    <backToTop id="top-btn"/>
   </div>
   
   <footerCom />
@@ -25,9 +25,10 @@ import footerCom from '@/components/footer.vue';
   position: relative;
 }
 
-// #top-btn{
-//   position: sticky;
-//   bottom: 15%;
-//   right: 10%;
-// }
+#top-btn{
+  position: sticky;
+  bottom: 15%;
+  margin-bottom: 20px;
+  left:calc(90% - 50px)
+}
 </style>

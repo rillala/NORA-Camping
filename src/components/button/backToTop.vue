@@ -66,7 +66,8 @@ p{
     @include desktop{
         display: block;
         text-align: center;
-        @include font-style(20px, 700, 5%, 100%);
+        margin-top: 5px;
+        @include font-style(20px, 700, 20%, 100%);
     }
 }
 
