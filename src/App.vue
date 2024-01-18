@@ -17,7 +17,7 @@ import backToTop from '@/components/button/backToTop.vue';
   
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // body{
 //   margin: 0;
 //   padding: 0;
