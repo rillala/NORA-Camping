@@ -4,7 +4,7 @@
 h1,
 .h1 {
   // 手機板
-  @include font-style(64px, 700, 10%, 125%);
+  @include font-style(40px, 700, 10%, 125%);
 
   // 平板 + 桌機板
   @include tablet {
@@ -15,7 +15,7 @@ h1,
 h2,
 .h2 {
   // 手機板
-  @include font-style(40px, 700, 10%, 125%);
+  @include font-style(32px, 700, 10%, 125%);
 
   // 平板 + 桌機板
   @include tablet {

@@ -18,10 +18,11 @@ import backToTop from '@/components/button/backToTop.vue';
 </template>
 
 <style lang="scss">
-// body{
-//   margin: 0;
-//   padding: 0;
-// }
+body{
+  margin: 0;
+  padding: 0;
+}
+
 #content-wrap{
   position: relative;
 }
