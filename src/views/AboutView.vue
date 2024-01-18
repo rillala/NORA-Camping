@@ -1,15 +1,20 @@
 <script>
 // 引入函式庫
-import axios from 'axios';
+import axios from "axios";
 
-export default {};
+export default{
+
+
+}
 </script>
 
 <template>
-  
-  <h1>this is about page</h1>
+    
+    <div class="bgc">This is About page</div>
+
+    
 </template>
 
 <style lang="scss" scoped>
-
+@use "@/assets/sass/header.scss"
 </style>
