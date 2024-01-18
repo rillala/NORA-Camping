@@ -1,0 +1,237 @@
+footer.bg-light-gray {
+    width: 100%;
+    padding: 20px;
+}
+
+
+.sitemap{
+    display: none;
+
+    @include desktop{
+        max-width: 1000px;
+        margin: 10px auto;
+        padding: 0 20px 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    // .btn-area{
+    //     align-self: center;
+    // }
+}
+
+.site-link{
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-evenly;
+
+    .title{
+        @include font-style(24px,900,10%,200%);
+    }
+
+    .sub-link{
+        text-decoration: none;
+        @include font-style(20px,400,10%,200%);
+    }
+
+    .sub-link::before{
+        content:"-";
+    }
+
+}
+
+#reserve-btn-footer,#shop-btn-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 60px;
+
+    border: 1px solid $dark;
+    border-radius: $radius;
+    text-decoration: none;
+
+    p{
+        margin-left: 20px;
+        @include font-style(24px,800,15%,100%);
+    }
+}
+
+#reserve-btn-footer{
+    margin-bottom: 20px;
+}
+
+
+.container{
+    width: 100%;
+    padding: 10px;
+    border-radius: $radius;
+    
+    @include desktop{
+        display: flex;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 80px;
+    }
+}
+
+.subscribe{
+    margin: 0 auto;
+    padding: 0 20px;
+
+    @include desktop{
+        margin: auto;
+        padding: 0 0 20px;
+    }
+
+p{
+   text-align: center;
+   @include font-style(20px,700,15%,150%);
+   
+   @include tablet{
+    margin: 20px 0;
+   }
+   
+   @include desktop{
+    text-align: left;
+    margin: 0 ;
+    @include font-style(24px,800,15%,150%);
+   }
+ 
+}
+
+.br-mobile{
+    @include tablet{
+        display: none;
+    }
+   }
+
+   .box{
+    @include desktop{
+        display: flex;
+        align-items: center;
+    }
+   }
+
+input{
+    display: block;
+    height: 40px;
+    width: 100%;
+    max-width: 380px;
+    padding: 0 10px;
+    margin: 20px auto;
+    border-radius: 10px;
+    border: 0px;
+    @include font-style(18px, 500, 1%, 160%);
+}
+
+input:focus{
+    border: none;
+    outline: none;
+    color: $dark;
+}
+
+input::placeholder{
+    color:#8B8B8B;
+    @include font-style(20px, 500, 1%, 160%);
+    text-align: center;
+}
+
+#email-submit{
+    display: block;
+    height: 30px;
+    width: 90px;
+    margin: 0 auto;
+    color: $white01;
+    @include font-style(16px, 500, 10%, 100%);
+
+    @include desktop{
+        height: 40px;
+        margin-left: 20px;
+    }
+}
+ 
+}  
+
+.information{
+    margin: 0 auto;
+    padding: 20px 10px 0;
+    max-width: 400px;
+
+    .logo{
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+        @include tablet{
+            margin: 20px auto 30px; 
+            max-width: 400px;
+        }
+        @include desktop{
+            width: 250px;
+            margin: 0;
+        }
+
+
+
+        img{
+            width: 100%;
+            vertical-align: bottom;
+        }
+    }
+
+    .title{
+        text-align: center;
+        margin:20px 0 10px;
+        @include font-style(28px, 700, 15%, 150%);
+
+        @include desktop{
+            text-align-last: left;
+        }
+    }
+
+    .info{
+        max-width: 240px;
+        margin: 0 auto;
+        @include font-style(16px, 400, 15%, 180%);
+
+        @include tablet{
+            max-width: 300px;font-size: 20px;
+         }
+       
+        }
+
+
+}
+
+.social-media{
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+
+    @include tablet{
+        margin: 20px auto;
+    }
+
+    a + a{
+        margin-left: 20px;
+    }
+
+    @include desktop{
+        justify-content: start;
+    }
+}
+
+.tinyp{
+    max-width: 600px;
+    margin: 10px 10px 0;
+    color:$dark;
+    @include font-style(12px, 400, 20%, 120%);
+
+    @include tablet{
+        max-width: 800px;
+        text-align: center;
+        margin: 10px auto 0;
+    }
+}

@@ -1,4 +1,10 @@
-// @import '../main.scss';
+nav{
+  @include desktop{
+    width: 100%;
+    background: $blue-3;
+  }
+}
+
 
 #nav-wrap {
   display: grid;
@@ -7,20 +13,22 @@
   // 手機板先切
   width: 100%;
 
-  padding: 24px 20px;
+  padding: 16px 20px;
   background-color: $blue-3; // 無子選單時為$blue-3
   transition: 0.2s ease-in-out;
 
   @include tablet {
     display: flex;
     justify-content: space-between;
-    padding: 40px 35px;
+    padding: 20px 35px;
 
     // grid-template-columns: none;
   }
 
   @include desktop {
     padding: 20px 46px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   #menu-btn-mobile {
@@ -300,11 +308,11 @@ input[type='checkbox'] {
 
 // 點選後 3.子選單打開
 .ham-check:checked ~ nav #menu-list {
-  height: calc(100svh - 143px);
+  height: calc(100svh - 127px);
   margin-top: -40px;
 
   @include tablet {
-    height: calc(100svh - 108px);
+    height: calc(100svh - 68px);
   }
 }
 
