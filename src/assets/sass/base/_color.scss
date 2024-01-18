@@ -20,6 +20,9 @@ $dark: #30322a;
 $light-gray: #f1f1f1; // 淺灰1
 $dark-gray: #d9d9d9; // 深灰2
 
+//警示色
+$red01:#F09F9F;
+
 
 
 
@@ -53,9 +56,12 @@ $color: (
   // 黃綠暗色
   // 中性色系
   white01: #fff,
+  // 黑色
   dark: #30322a,
-  light-gray: #f1f1f1,
   // 淺灰1
-  dark-gray: #d9d9d9,
+  light-gray: #f1f1f1,
   // 深灰2
+  dark-gray: #d9d9d9,
+  //警示色
+  red01:#F09F9F,
 );
