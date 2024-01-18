@@ -156,15 +156,12 @@ nav{
   overflow: hidden;
   transition: 0.4s ease-in-out;
 
-  @include tablet {
-  }
-
-  @include desktop {
+    @include desktop {
     flex-direction: row;
     height: auto;
     justify-content: center;
 
-    background: $blue-1;
+    background: $blue-2;
     padding: 10px 0;
 
     li + li {
