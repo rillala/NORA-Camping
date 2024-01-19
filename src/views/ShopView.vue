@@ -2,14 +2,10 @@
 // 引入函式庫
 import axios from 'axios';
 
-<<<<<<< HEAD
-export default {};
-=======
 export default{
 
 
 }
->>>>>>> 014_NJ
 </script>
 
 <template>
