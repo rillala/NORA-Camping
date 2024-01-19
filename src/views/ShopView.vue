@@ -2,7 +2,10 @@
 // 引入函式庫
 import axios from 'axios';
 
-export default {};
+export default{
+
+
+}
 </script>
 
 <template>

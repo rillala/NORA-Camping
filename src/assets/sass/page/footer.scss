@@ -4,10 +4,10 @@ footer.bg-light-gray {
 }
 
 
-.sitemap{
+.sitemap {
     display: none;
 
-    @include desktop{
+    @include desktop {
         max-width: 1000px;
         margin: 10px auto;
         padding: 0 20px 20px;
@@ -20,27 +20,28 @@ footer.bg-light-gray {
     // }
 }
 
-.site-link{
+.site-link {
     display: flex;
     flex-grow: 1;
     justify-content: space-evenly;
 
-    .title{
-        @include font-style(24px,900,10%,200%);
+    .title {
+        @include font-style(24px, 900, 10%, 200%);
     }
 
-    .sub-link{
+    .sub-link {
         text-decoration: none;
-        @include font-style(20px,400,10%,200%);
+        @include font-style(20px, 400, 10%, 200%);
     }
 
-    .sub-link::before{
-        content:"-";
+    .sub-link::before {
+        content: "-";
     }
 
 }
 
-#reserve-btn-footer,#shop-btn-footer{
+#reserve-btn-footer,
+#shop-btn-footer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,23 +52,23 @@ footer.bg-light-gray {
     border-radius: $radius;
     text-decoration: none;
 
-    p{
+    p {
         margin-left: 20px;
-        @include font-style(24px,800,15%,100%);
+        @include font-style(24px, 800, 15%, 100%);
     }
 }
 
-#reserve-btn-footer{
+#reserve-btn-footer {
     margin-bottom: 20px;
 }
 
 
-.container{
+.container {
     width: 100%;
     padding: 10px;
     border-radius: $radius;
-    
-    @include desktop{
+
+    @include desktop {
         display: flex;
         max-width: 1200px;
         margin: 0 auto;
@@ -75,161 +76,164 @@ footer.bg-light-gray {
     }
 }
 
-.subscribe{
+.subscribe {
     margin: 0 auto;
     padding: 0 20px;
 
-    @include desktop{
+    @include desktop {
         margin: auto;
         padding: 0 0 20px;
     }
 
-p{
-   text-align: center;
-   @include font-style(20px,700,15%,150%);
-   
-   @include tablet{
-    margin: 20px 0;
-   }
-   
-   @include desktop{
-    text-align: left;
-    margin: 0 ;
-    @include font-style(24px,800,15%,150%);
-   }
- 
-}
+    p {
+        text-align: center;
+        @include font-style(20px, 700, 15%, 150%);
 
-.br-mobile{
-    @include tablet{
-        display: none;
+        @include tablet {
+            margin: 20px 0;
+        }
+
+        @include desktop {
+            text-align: left;
+            margin: 0;
+            @include font-style(24px, 800, 15%, 150%);
+        }
+
     }
-   }
 
-   .box{
-    @include desktop{
-        display: flex;
-        align-items: center;
+    .br-mobile {
+        @include tablet {
+            display: none;
+        }
     }
-   }
 
-input{
-    display: block;
-    height: 40px;
-    width: 100%;
-    max-width: 380px;
-    padding: 0 10px;
-    margin: 20px auto;
-    border-radius: 10px;
-    border: 0px;
-    @include font-style(18px, 500, 1%, 160%);
-}
+    .box {
+        @include desktop {
+            display: flex;
+            align-items: center;
+        }
+    }
 
-input:focus{
-    border: none;
-    outline: none;
-    color: $dark;
-}
-
-input::placeholder{
-    color:#8B8B8B;
-    @include font-style(20px, 500, 1%, 160%);
-    text-align: center;
-}
-
-#email-submit{
-    display: block;
-    height: 30px;
-    width: 90px;
-    margin: 0 auto;
-    color: $white01;
-    @include font-style(16px, 500, 10%, 100%);
-
-    @include desktop{
+    input {
+        display: block;
         height: 40px;
-        margin-left: 20px;
+        width: 100%;
+        max-width: 380px;
+        padding: 0 10px;
+        margin: 20px auto;
+        border-radius: 10px;
+        border: 0px;
+        @include font-style(18px, 500, 1%, 160%);
     }
-}
- 
-}  
 
-.information{
+    input:focus {
+        border: none;
+        outline: none;
+        color: $dark;
+    }
+
+    input::placeholder {
+        color: #8B8B8B;
+        @include font-style(20px, 500, 1%, 160%);
+        text-align: center;
+    }
+
+    #email-submit {
+        display: block;
+        height: 30px;
+        width: 90px;
+        margin: 0 auto;
+        color: $white01;
+        @include font-style(16px, 500, 10%, 100%);
+
+        @include desktop {
+            height: 40px;
+            margin-left: 20px;
+        }
+    }
+
+}
+
+.information {
     margin: 0 auto;
     padding: 20px 10px 0;
     max-width: 400px;
 
-    .logo{
+    .logo {
         width: 100%;
         max-width: 250px;
         margin: 0 auto;
-        @include tablet{
-            margin: 20px auto 30px; 
+
+        @include tablet {
+            margin: 20px auto 30px;
             max-width: 400px;
         }
-        @include desktop{
+
+        @include desktop {
             width: 250px;
             margin: 0;
         }
 
 
 
-        img{
+        img {
             width: 100%;
             vertical-align: bottom;
         }
     }
 
-    .title{
+    .title {
         text-align: center;
-        margin:20px 0 10px;
+        margin: 20px 0 10px;
         @include font-style(28px, 700, 15%, 150%);
 
-        @include desktop{
+        @include desktop {
             text-align-last: left;
         }
     }
 
-    .info{
+    .info {
         max-width: 240px;
         margin: 0 auto;
         @include font-style(16px, 400, 15%, 180%);
 
-        @include tablet{
-            max-width: 300px;font-size: 20px;
-         }
-       
+        @include tablet {
+            max-width: 300px;
+            font-size: 20px;
         }
+
+    }
 
 
 }
 
-.social-media{
+.social-media {
     width: 100%;
     max-width: 300px;
     margin: 10px auto;
     display: flex;
     justify-content: center;
 
-    @include tablet{
+    @include tablet {
         margin: 20px auto;
     }
 
-    a + a{
+    a+a {
         margin-left: 20px;
     }
 
-    @include desktop{
+    @include desktop {
         justify-content: start;
     }
 }
 
-.tinyp{
+.tinyp {
     max-width: 600px;
     margin: 10px 10px 0;
-    color:$dark;
+    color: $dark;
     @include font-style(12px, 400, 20%, 120%);
 
-    @include tablet{
+    @include tablet {
         max-width: 800px;
         text-align: center;
         margin: 10px auto 0;
