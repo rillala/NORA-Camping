@@ -77,7 +77,6 @@ const router = createRouter({
       name: 'reservefail',
       component: () => import('../views/reserve/ReserveFailView.vue'),
     },
-   
   ],
 });
 
