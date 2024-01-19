@@ -59,9 +59,20 @@ export default {
         <input type="text" v-model.trim="search" @input="handleInput" class="shop-searchbar">
       </div>
       <div class="shop-filter">
-        <select name="選擇類別" id="">選擇類別</select>
-        <option value="選擇類別"></option>
-        <select name="選擇排序" id=""></select>
+
+        <label for="type"></label>
+        <select name="type" id="type">
+          <option value="">選擇類別</option>
+          <option value="">Nora文青生活</option>
+          <option value="">Nora品牌服飾</option>
+          <option value="">Nora營地用品</option>
+        </select>
+        <label for="rank"></label>
+        <select name="rank" id="rank">
+          <option value="">選擇排序</option>
+          <option value="">價格高到低</option>
+          <option value="">價格低到高</option>
+        </select>
       </div>  
       <ul class="shop-all-list">
         <li v-for="item in displayData" ::key="item.id" class="shop-all-card">
