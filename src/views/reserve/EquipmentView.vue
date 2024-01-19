@@ -78,7 +78,9 @@ export default {
   </section>
 
   <!--以下都是測試用, 不是正式code-->
-  <button @click="goToNextStep">要按過這個才可以進入下一步驟:3確認畫面</button>
+  <RouterLink to="/reserveconfirm" @click="goToNextStep"
+    >要按過這個才可以進入下一步驟:3確認畫面</RouterLink
+  >
 
   <!--下面抓API測試-->
   <input type="text" v-model="search" @input="filterHandle" />
