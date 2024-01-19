@@ -52,6 +52,11 @@ const router = createRouter({
       name: 'shopCar',
       component: () => import('../views/ShopCarView.vue'),
     },
+    {
+      path: '/shopCar',
+      name: 'shopCar',
+      component: () => import('../views/ShopCarView.vue'),
+    },
   ],
 });
 

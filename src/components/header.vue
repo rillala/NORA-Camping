@@ -82,7 +82,7 @@ shopBtn:{
       <div id="nav-box">
         <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn-desktop"
           ><img :src="getImageUrl('headerFooter/reservation-mobile.png')"
-             :alt="reserveBtn"
+            :alt="reserveBtn"
           />
           <p>
             {{ reserveBtn.name }}
@@ -95,8 +95,8 @@ shopBtn:{
         >
 
         <!--會員登入-->
-        <button id="member-login"> 
-       <memberLogin/>
+        <button id="member-login" @click="isOpen=!isOpen"> 
+          <memberLogin :isOpen="false"/>
         </button>
 
         <!--購物車-->
@@ -129,7 +129,6 @@ shopBtn:{
       <li v-for="link in navList" :key="link.name"><RouterLink :to="link.path" class="sub-menu dark">
       {{link.name}} 
       </RouterLink></li>
-     
     </ul>
   </nav>
 </template>
