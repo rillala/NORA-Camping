@@ -7,7 +7,7 @@
           只是體驗而已。<br>
           走吧，去露營！
         </h1>
-        <actionBtn :content="'立即預約'" />
+        <actionBtn class="Reserve-Now" :content="'立即預約'" />
       </div>
       <div class="things-Moving">
         <img v-for="picsrc in things" :src="getImageUrl(`${picsrc.src}.png`)">
@@ -29,15 +29,17 @@
         <div class="img-contanier">
           <img src="@/assets/image/homeView/knowingnora-pic.jpg">
         </div>
-      </div>
-      <div class="Weather-box bg-blue-2">
-        <h4>營地目前天氣</h4>
-
-        <img src="">
+        <div class="Weather-box bg-blue-2">
+          <h4>營地目前天氣</h4>
+          <img src="">
+          <p>天氣</p>
+          <p>溫度</p>
+        </div>
       </div>
     </div>
     <div class="News bg-blue-3">
       <h2>最新消息</h2>
+      <p>測試測試測試測試測試測試測試測試</p>
     </div>
     <div class="product-recommend bg-blue-2">
       <h2>野良選物X最新商品</h2>
@@ -74,6 +76,7 @@ export default {
         { src: "takibi" },
         { src: "youkai_jinmenken" },
       ],
+
     };
   },
   methods: {
@@ -133,31 +136,36 @@ export default {
 }
 
 .Knowing-nora {
-  text-align: center;
-  height: 850px;
+  display: block;
+  height: 100%;
+  margin: 20px;
 
   .KN-content {
+    text-align: center;
     margin: 20px 0;
   }
 
   .img-contanier {
-    display: flex;
-    justify-content: center;
     width: 90%;
-    height: 300px;
-    border-radius: 30px;
-    margin: auto;
+    margin: 20px auto;
+    height: 400px;
+    background-color: $blue-1;
+    object-fit: cover;
     overflow: hidden;
+  }
 
-    img {
-      height: 100%;
-    }
+  .img-contanier img {
+    object-position: 50% 50%;
+    // display: none;
+    height: 100%;
   }
 
   .Weather-box {
+    text-align: center;
     width: 70%;
-    margin: auto;
+    margin: 20px auto;
     height: 300px;
+    border-radius: 30px;
   }
 }
 
@@ -172,7 +180,7 @@ export default {
 }
 
 .stray-home {
-  min-height: 700px;
+  height: 700px;
   background-color: #aaa;
 }
 </style>

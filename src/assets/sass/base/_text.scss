@@ -48,7 +48,7 @@ h4,
 p,
 .p {
   // 手機板
-  @include font-style(20px, 400, 1%, 160%);
+  @include font-style(16px, 400, 1%, 160%);
 
   // 平板 + 桌機板
   @include tablet {
