@@ -1,0 +1,30 @@
+.intro-container {
+  width: 100%;
+  padding: 20px;
+
+  .title {
+    width: 280px;
+    padding: 15px auto;
+    margin: 0 auto 10px;
+    border: 4px solid $blue-3;
+    text-align: center;
+  }
+
+  .intro {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+
+    li {
+      list-style: disc;
+
+      p {
+        @include font-style(16px, 400, 1%, 160%);
+
+        @include tablet {
+          @include font-style(20px, 400, 1%, 160%);
+        }
+      }
+    }
+  }
+}
