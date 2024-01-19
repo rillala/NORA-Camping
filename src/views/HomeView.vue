@@ -29,16 +29,17 @@
         <div class="img-contanier">
           <img src="@/assets/image/homeView/knowingnora-pic.jpg">
         </div>
-      </div>
-      <div class="Weather-box bg-blue-2">
-        <h4>營地目前天氣</h4>
-        <img src="">
-        <p>天氣</p>
-        <p>溫度</p>
+        <div class="Weather-box bg-blue-2">
+          <h4>營地目前天氣</h4>
+          <img src="">
+          <p>天氣</p>
+          <p>溫度</p>
+        </div>
       </div>
     </div>
     <div class="News bg-blue-3">
       <h2>最新消息</h2>
+      <p>測試測試測試測試測試測試測試測試</p>
     </div>
     <div class="product-recommend bg-blue-2">
       <h2>野良選物X最新商品</h2>
@@ -75,6 +76,7 @@ export default {
         { src: "takibi" },
         { src: "youkai_jinmenken" },
       ],
+
     };
   },
   methods: {
@@ -99,10 +101,6 @@ export default {
     height: 700px;
     position: relative;
     z-index: 3;
-  }
-
-  .Reserve-Now {
-    border: 2px solid red;
   }
 
   .things-Moving {
@@ -138,25 +136,36 @@ export default {
 }
 
 .Knowing-nora {
-  text-align: center;
-  height: 850px;
+  display: block;
+  height: 100%;
   margin: 20px;
 
   .KN-content {
+    text-align: center;
     margin: 20px 0;
   }
 
-
+  .img-contanier {
+    width: 90%;
+    margin: 20px auto;
+    height: 400px;
+    background-color: $blue-1;
+    object-fit: cover;
+    overflow: hidden;
+  }
 
   .img-contanier img {
-    object-position: center;
+    object-position: 50% 50%;
+    // display: none;
     height: 100%;
   }
 
   .Weather-box {
+    text-align: center;
     width: 70%;
-    margin: auto;
+    margin: 20px auto;
     height: 300px;
+    border-radius: 30px;
   }
 }
 
