@@ -112,7 +112,7 @@ export default {
         >
 
         <!--會員登入-->
-        <button id="member-login" @click="isOpen = !isOpen" @click="closeHam">
+        <button id="member-login" @click="(isOpen = !isOpen), closeHam">
           <memberLogin :isOpen="false" />
         </button>
 
