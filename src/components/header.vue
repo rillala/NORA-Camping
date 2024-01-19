@@ -49,6 +49,8 @@ export default {
     closeHam() {
       this.$refs.hamburgerMobile.checked = false;
       this.$refs.hamburgerTablet.checked = false;
+      document.body.style.overflow = 'auto';
+      this.isMenuOpen = false;
     },
   },
 };
