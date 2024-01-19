@@ -1,16 +1,15 @@
 <script>
 export default {
 
-// props:['content'],
+props:['content'],
 };
 
 </script>
 
 <template>
   <button class="action-btn-01" blue-3>
-  <!-- {{content}} -->
-  執行動作
- </button>
+  {{content}}
+  </button>
 </template>
 
 <style lang="scss" scoped>

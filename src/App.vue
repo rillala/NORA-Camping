@@ -9,35 +9,35 @@ import backToTop from '@/components/button/backToTop.vue';
   <headerCom />
   <div id="content-wrap">
     <RouterView />
-    <div id="sidebar"><backToTop id="top-btn"/></div>
-    
+    <div id="sidebar">
+      <backToTop id="top-btn" />
+    </div>
+
   </div>
-  
   <footerCom />
-  
 </template>
 
 <style lang="scss">
-body{
+body {
   margin: 0;
   padding: 0;
 }
 
-#content-wrap{
+#content-wrap {
   position: relative;
 }
 
-#sidebar{
+#sidebar {
   position: absolute;
   top: 0;
-  left:calc(90% - 50px);
+  left: calc(90% - 50px);
   height: 100%;
   padding: 20px 0;
-  z-index:2;
+  z-index: 2;
 }
 
-#top-btn{
+#top-btn {
   position: sticky;
-  top: 85svh;  
+  top: 85svh;
 }
 </style>
