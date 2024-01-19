@@ -26,7 +26,7 @@ h2,
 h3,
 .h3 {
   // 手機板
-  @include font-style(32px, 400, 2%, 125%);
+  @include font-style(30px, 400, 2%, 125%);
 
   // 平板 + 桌機板
   @include tablet {
@@ -58,7 +58,7 @@ p,
 
 .tinyp {
   // 手機板
-  @include font-style(16px, 400, 1%, 160%);
+  @include font-style(14px, 400, 1%, 160%);
 
   // 平板 + 桌機板
   @include tablet {
