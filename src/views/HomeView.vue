@@ -7,7 +7,7 @@
           只是體驗而已。<br>
           走吧，去露營！
         </h1>
-        <actionBtn :content="'立即預約'" />
+        <actionBtn class="Reserve-Now" :content="'立即預約'" />
       </div>
       <div class="things-Moving">
         <img v-for="picsrc in things" :src="getImageUrl(`${picsrc.src}.png`)">
@@ -32,8 +32,9 @@
       </div>
       <div class="Weather-box bg-blue-2">
         <h4>營地目前天氣</h4>
-
         <img src="">
+        <p>天氣</p>
+        <p>溫度</p>
       </div>
     </div>
     <div class="News bg-blue-3">
@@ -100,6 +101,10 @@ export default {
     z-index: 3;
   }
 
+  .Reserve-Now {
+    border: 2px solid red;
+  }
+
   .things-Moving {
     display: flex;
     flex-direction: column;
@@ -135,23 +140,17 @@ export default {
 .Knowing-nora {
   text-align: center;
   height: 850px;
+  margin: 20px;
 
   .KN-content {
     margin: 20px 0;
   }
 
-  .img-contanier {
-    display: flex;
-    justify-content: center;
-    width: 90%;
-    height: 300px;
-    border-radius: 30px;
-    margin: auto;
-    overflow: hidden;
 
-    img {
-      height: 100%;
-    }
+
+  .img-contanier img {
+    object-position: center;
+    height: 100%;
   }
 
   .Weather-box {
@@ -172,7 +171,7 @@ export default {
 }
 
 .stray-home {
-  min-height: 700px;
+  height: 700px;
   background-color: #aaa;
 }
 </style>
