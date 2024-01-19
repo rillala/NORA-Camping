@@ -2,30 +2,40 @@
 // 引入函式庫
 import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
-// import progressBar from '@/components/reserve/bannerStep.vue';
-import equipmentPage from '@/views/reserve/EquipmentView.vue';
+import progressBar from '@/components/reserve/bannerStep.vue';
 
 export default {
-  components:{
-    // progressBar,
-    equipmentPage,
-  }
+  components: {
+    progressBar,
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    goToNextStep(nextPath) {
+      if (sessionStorage.getItem('isStep1Clicked')) {
+        return;
+      } else {
+        let currentStep = parseInt(
+          sessionStorage.getItem('currentStep') || '1',
+        );
+        currentStep++;
+        sessionStorage.setItem('currentStep', currentStep.toString());
+        if (nextPath) {
+          this.$router.push(nextPath);
+        }
+        sessionStorage.setItem('isStep1Clicked', 'true');
+      }
+    },
+  },
 };
 </script>
 
 <template>
   <section class="equipment">
-  <!--暫時把租借設備頁面導進來這頁開發-->
-  <equipmentPage />
-  <!-- <progressBar :activeDiv="1"/> -->
-
- 
-
-
-
+    <progressBar :activeDiv="1" />
   </section>
-  
+  <button @click="goToNextStep">要按過這個才可以進入下一步驟:2租借設備</button>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

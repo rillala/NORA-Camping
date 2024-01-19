@@ -10,10 +10,10 @@ export default {
     return {
       isMenuOpen: false,
       reserveBtn:{
-name: "線上預約",
-path: "/reserve",
-},
-shopBtn:{
+      name: "線上預約",
+      path: "/reserve",
+      },
+    shopBtn:{
     name: "野良選物",
     path: "/shop",
 
@@ -47,6 +47,10 @@ shopBtn:{
     getImageUrl(paths) {
     return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
+    closeHam() {
+      this.$refs.hamburgerMobile.checked = false;
+      this.$refs.hamburgerTablet.checked = false;
+    },
   },
 };
 </script>
@@ -58,6 +62,7 @@ shopBtn:{
     id="hambuger-mobile"
     class="ham-check"
     v-model="isMenuOpen"
+    ref="hamburgerMobile"
   />
 
   <input
@@ -66,6 +71,7 @@ shopBtn:{
     id="hambuger-tablet"
     class="ham-check"
     v-model="isMenuOpen"
+    ref="hamburgerTablet"
   />
 
   <nav>
@@ -81,7 +87,7 @@ shopBtn:{
       <!--導覽列右側-->
       <div id="nav-box">
         <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn-desktop"
-          ><img :src="getImageUrl('headerFooter/reservation-mobile.png')"
+          @click="closeHam"><img :src="getImageUrl('headerFooter/reservation-mobile.png')"
              :alt="reserveBtn"
           />
           <p>
@@ -89,18 +95,18 @@ shopBtn:{
           </p></RouterLink
         >
 
-        <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn-desktop"
+        <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn-desktop" @click="closeHam"
           ><img :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
           <p>{{ shopBtn.name }}</p></RouterLink
         >
 
         <!--會員登入-->
         <button id="member-login"> 
-       <memberLogin/>
+       <memberLogin @click="closeHam"/>
         </button>
 
         <!--購物車-->
-        <RouterLink to="/shopCar" id="shop-car"></RouterLink>
+        <RouterLink to="/shopCar" id="shop-car" @click="closeHam"></RouterLink>
 
         <!--平板用子選單開關-->
 
@@ -112,7 +118,7 @@ shopBtn:{
 
     <ul id="menu-list">
       <li>
-        <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn"
+        <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn" @click="closeHam"
           ><img :src="getImageUrl('headerFooter/reservation-mobile.png')" :alt="reserveBtn"
           />
           <p>
@@ -121,12 +127,12 @@ shopBtn:{
         >
       </li>
       <li>
-        <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn"
+        <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn" @click="closeHam"
           ><img :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
           <p>{{ shopBtn.name }}</p></RouterLink
         >
       </li>
-      <li v-for="link in navList" :key="link.name"><RouterLink :to="link.path" class="sub-menu dark">
+      <li v-for="link in navList" :key="link.name"><RouterLink :to="link.path" class="sub-menu dark" @click="closeHam">
       {{link.name}} 
       </RouterLink></li>
      
