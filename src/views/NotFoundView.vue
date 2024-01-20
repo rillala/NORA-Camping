@@ -1,7 +1,8 @@
 <template>
   <div class="notFound">
     <h1>404</h1>
-    <Button type="info" @click="goHome">回到首頁</Button>
+    <button @click="goHome">回到首頁</button>
+    <!-- <Button type="info" @click="goHome">回到首頁</Button> -->
   </div>
 </template>
 

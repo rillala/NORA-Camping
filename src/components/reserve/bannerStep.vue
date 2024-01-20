@@ -52,6 +52,7 @@ export default {
 
     <div class="bar">
       <div v-for="(step, index) in stepList" :key="index" class="dash-box">
+        <!-- 這邊不要使用RouterLink，每一個步驟的input包在div中，根據步驟選擇開啟隱藏步驟，不然會很難做 -->
         <RouterLink
           :to="step.path"
           class="each-step"
