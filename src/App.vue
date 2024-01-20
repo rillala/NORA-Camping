@@ -7,12 +7,11 @@ import backToTop from '@/components/button/backToTop.vue';
 
 <template>
   <headerCom />
-  <div id="content-wrap">
+  <div id="app-content-wrap">
     <RouterView />
-    <div id="sidebar">
-      <backToTop id="top-btn" />
+    <div id="app-sidebar">
+      <backToTop id="app-top-btn" />
     </div>
-
   </div>
   <footerCom />
 </template>
@@ -23,11 +22,11 @@ body {
   padding: 0;
 }
 
-#content-wrap {
+#app-content-wrap {
   position: relative;
 }
 
-#sidebar {
+#app-sidebar {
   position: absolute;
   top: 0;
   left: calc(90% - 50px);
@@ -36,7 +35,7 @@ body {
   z-index: 2;
 }
 
-#top-btn {
+#app-top-btn {
   position: sticky;
   top: 85svh;
 }

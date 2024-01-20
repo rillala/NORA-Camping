@@ -1,9 +1,7 @@
 <script>
 export default {
-
   props: ['content'],
 };
-
 </script>
 
 <template>

@@ -1,10 +1,9 @@
-nav{
-  @include desktop{
+nav {
+  @include desktop {
     width: 100%;
     background: $blue-3;
   }
 }
-
 
 #nav-wrap {
   display: grid;
@@ -156,7 +155,7 @@ nav{
   overflow: hidden;
   transition: 0.4s ease-in-out;
 
-    @include desktop {
+  @include desktop {
     flex-direction: row;
     height: auto;
     justify-content: center;
@@ -185,7 +184,7 @@ nav{
       border-radius: $radius;
       line-height: 160%;
       border: 1px solid $dark;
-      
+
       @include tablet {
         // margin: 0 auto 60px;
         height: 85px;
@@ -202,13 +201,12 @@ nav{
       }
     }
 
-    .sub-menu:hover{
-      @include desktop{
+    .sub-menu:hover {
+      @include desktop {
         border-bottom: 1px solid $dark;
-        color:$dark;
+        color: $dark;
       }
     }
-
   }
 }
 
@@ -224,7 +222,6 @@ nav{
 
   text-decoration: none;
   border-radius: 100px;
-  
 
   @include tablet {
     height: 85px;
@@ -239,10 +236,10 @@ nav{
     margin-left: 10px;
     text-decoration: none;
     color: $white01;
-    @include font-style(20px, 700, 10%, 100%);   
+    @include font-style(20px, 700, 10%, 100%);
     @include tablet {
-      @include font-style(32px, 700, 10%, 100%);   
-    } 
+      @include font-style(32px, 700, 10%, 100%);
+    }
   }
 
   img {
@@ -282,8 +279,6 @@ nav{
     p {
       color: $white01;
       @include font-style(20px, 900, 15%, 100%);
-        
-      
     }
   }
 }

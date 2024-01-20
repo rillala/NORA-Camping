@@ -5,20 +5,16 @@ import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 
 export default {
-  components:{
+  components: {
     progressBar,
-  }
+  },
 };
 </script>
 
 <template>
   <section class="equipment">
-  <progressBar :activeDiv="4"/>
-
-
+    <progressBar :activeDiv="4" />
   </section>
-  
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

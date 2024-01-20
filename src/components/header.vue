@@ -82,7 +82,9 @@ export default {
       <!--手機用子選單開關-->
 
       <label for="hambuger-mobile" id="menu-btn-mobile" class="menu-btn">
-        <span v-for="num in 3"></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </label>
 
       <!--導覽列右側-->
@@ -124,7 +126,9 @@ export default {
         <!--平板用子選單開關-->
 
         <label for="hambuger-tablet" id="menu-btn-tablet" class="menu-btn">
-          <span v-for="num in 3"></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </label>
       </div>
     </div>
