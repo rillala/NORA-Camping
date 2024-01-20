@@ -1,14 +1,13 @@
 <script>
-export default{
-    props:['content'],
-}
-
+export default {
+  props: ['content'],
+};
 </script>
 
 <template>
   <button class="Btn">
-  {{content}}
- </button>
+    {{ content }}
+  </button>
 </template>
 
 <style lang="scss" scoped>
@@ -19,10 +18,10 @@ export default{
   border: none;
   background-color: $blue-4;
   color: white;
-  box-shadow: 
-  0px 7px 7px $blue-2 inset,
-  0px 5px 10px rgba(5, 5, 5, 0.212),
-  0px -10px 10px $blue-4 inset;
+  box-shadow:
+    0px 7px 7px $blue-2 inset,
+    0px 5px 10px rgba(5, 5, 5, 0.212),
+    0px -10px 10px $blue-4 inset;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -62,5 +61,4 @@ export default{
     transform: scale3d(1, 1, 1);
   }
 }
-
 </style>

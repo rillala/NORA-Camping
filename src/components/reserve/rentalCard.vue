@@ -1,16 +1,11 @@
 <script>
-
 export default {
-    props:[],
-}
+  props: [],
+};
 </script>
 
 <template>
-    <div>
-        
-    </div>
+  <div></div>
 </template>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

@@ -83,14 +83,14 @@ export default {
   >
 
   <!--下面抓API測試-->
-  <input type="text" v-model="search" @input="filterHandle" />
+  <!-- <input type="text" v-model="search" @input="filterHandle" />
   <div class="card-list">
     <div v-for="card in displayData" class="card">
       <div class="title">{{ card.title }}</div>
       <img :src="card.image" :alt="card.title" width="150px" />
       <p class="price">{{ card.price }}</p>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>

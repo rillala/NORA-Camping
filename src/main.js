@@ -6,7 +6,6 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from './router';
 
-
 // 創建一個 vue 應用程式(主要配置在 app.vue裡)
 const vueApp = createApp(App);
 

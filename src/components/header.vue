@@ -57,114 +57,124 @@ export default {
 </script>
 
 <template>
-  <input
-    type="checkbox"
-    name="hambuger-mobile"
-    id="hambuger-mobile"
-    class="ham-check"
-    v-model="isMenuOpen"
-    ref="hamburgerMobile"
-  />
+  <section>
+    <input
+      type="checkbox"
+      name="hambuger-mobile"
+      id="hambuger-mobile"
+      class="ham-check"
+      v-model="isMenuOpen"
+      ref="hamburgerMobile"
+    />
 
-  <input
-    type="checkbox"
-    name="hambuger-tablet"
-    id="hambuger-tablet"
-    class="ham-check"
-    v-model="isMenuOpen"
-    ref="hamburgerTablet"
-  />
+    <input
+      type="checkbox"
+      name="hambuger-tablet"
+      id="hambuger-tablet"
+      class="ham-check"
+      v-model="isMenuOpen"
+      ref="hamburgerTablet"
+    />
 
-  <nav>
-    <div id="nav-wrap">
-      <RouterLink to="/home" id="logo"></RouterLink>
+    <nav>
+      <div id="nav-wrap">
+        <RouterLink to="/home" id="logo"></RouterLink>
 
-      <!--手機用子選單開關-->
+        <!--手機用子選單開關-->
 
-      <label for="hambuger-mobile" id="menu-btn-mobile" class="menu-btn">
-        <span v-for="num in 3"></span>
-      </label>
-
-      <!--導覽列右側-->
-      <div id="nav-box">
-        <RouterLink
-          :to="reserveBtn.path"
-          class="bg-blue-3"
-          id="reserve-btn-desktop"
-          @click="closeHam"
-          ><img
-            :src="getImageUrl('headerFooter/reservation-mobile.png')"
-            :alt="reserveBtn"
-          />
-          <p>
-            {{ reserveBtn.name }}
-          </p></RouterLink
-        >
-
-        <RouterLink
-          :to="shopBtn.path"
-          class="bg-blue-3"
-          id="shop-btn-desktop"
-          @click="closeHam"
-          ><img
-            :src="getImageUrl('headerFooter/shop-mobile.png')"
-            :alt="shopBtn"
-          />
-          <p>{{ shopBtn.name }}</p></RouterLink
-        >
-
-        <!--會員登入-->
-        <button id="member-login" @click="(isOpen = !isOpen), closeHam">
-          <memberLogin :isOpen="false" />
-        </button>
-
-        <!--購物車-->
-        <RouterLink to="/shopCar" id="shop-car" @click="closeHam"></RouterLink>
-
-        <!--平板用子選單開關-->
-
-        <label for="hambuger-tablet" id="menu-btn-tablet" class="menu-btn">
-          <span v-for="num in 3"></span>
+        <label for="hambuger-mobile" id="menu-btn-mobile" class="menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
         </label>
-      </div>
-    </div>
 
-    <ul id="menu-list">
-      <li>
-        <RouterLink
-          :to="reserveBtn.path"
-          class="bg-blue-3"
-          id="reserve-btn"
-          @click="closeHam"
-          ><img
-            :src="getImageUrl('headerFooter/reservation-mobile.png')"
-            :alt="reserveBtn"
-          />
-          <p>
-            {{ reserveBtn.name }}
-          </p></RouterLink
-        >
-      </li>
-      <li>
-        <RouterLink
-          :to="shopBtn.path"
-          class="bg-blue-3"
-          id="shop-btn"
-          @click="closeHam"
-          ><img
-            :src="getImageUrl('headerFooter/shop-mobile.png')"
-            :alt="shopBtn"
-          />
-          <p>{{ shopBtn.name }}</p></RouterLink
-        >
-      </li>
-      <li v-for="link in navList" :key="link.name">
-        <RouterLink :to="link.path" class="sub-menu dark" @click="closeHam">
-          {{ link.name }}
-        </RouterLink>
-      </li>
-    </ul>
-  </nav>
+        <!--導覽列右側-->
+        <div id="nav-box">
+          <RouterLink
+            :to="reserveBtn.path"
+            class="bg-blue-3"
+            id="reserve-btn-desktop"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/reservation-mobile.png')"
+              :alt="reserveBtn"
+            />
+            <p>
+              {{ reserveBtn.name }}
+            </p></RouterLink
+          >
+
+          <RouterLink
+            :to="shopBtn.path"
+            class="bg-blue-3"
+            id="shop-btn-desktop"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/shop-mobile.png')"
+              :alt="shopBtn"
+            />
+            <p>{{ shopBtn.name }}</p></RouterLink
+          >
+
+          <!--會員登入-->
+          <button id="member-login" @click="(isOpen = !isOpen), closeHam">
+            <memberLogin :isOpen="false" />
+          </button>
+
+          <!--購物車-->
+          <RouterLink
+            to="/shopCar"
+            id="shop-car"
+            @click="closeHam"
+          ></RouterLink>
+
+          <!--平板用子選單開關-->
+
+          <label for="hambuger-tablet" id="menu-btn-tablet" class="menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
+      </div>
+
+      <ul id="menu-list">
+        <li>
+          <RouterLink
+            :to="reserveBtn.path"
+            class="bg-blue-3"
+            id="reserve-btn"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/reservation-mobile.png')"
+              :alt="reserveBtn"
+            />
+            <p>
+              {{ reserveBtn.name }}
+            </p></RouterLink
+          >
+        </li>
+        <li>
+          <RouterLink
+            :to="shopBtn.path"
+            class="bg-blue-3"
+            id="shop-btn"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/shop-mobile.png')"
+              :alt="shopBtn"
+            />
+            <p>{{ shopBtn.name }}</p></RouterLink
+          >
+        </li>
+        <li v-for="link in navList" :key="link.name">
+          <RouterLink :to="link.path" class="sub-menu dark" @click="closeHam">
+            {{ link.name }}
+          </RouterLink>
+        </li>
+      </ul>
+    </nav>
+  </section>
 </template>
 
 <style lang="scss" scoped>

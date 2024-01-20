@@ -9,7 +9,7 @@ export default {
       sourceData: [],
       search: '',
       displayData: [],
-    }
+    };
   },
   computed: {
     productCount() {
@@ -20,35 +20,33 @@ export default {
     },
     nodata() {
       return this.productCount === 0;
-    }
+    },
   },
   created() {
     //建立好vue實體=>可以呼叫vue 裡面的東西
     this.fetchData();
-
   },
-  mounted() {//以渲染dom物件，如果使用第三方gsap
-
+  mounted() {
+    //以渲染dom物件，如果使用第三方gsap
   },
-  methods: {//用fetch將json 檔案匯入
+  methods: {
+    //用fetch將json 檔案匯入
     fetchData() {
       fetch('https://fakestoreapi.com/products')
         .then(response => response.json())
         .then(json => {
           // console.log(json)
-          this.sourceData = json
-          this.displayData = json
-        })
+          this.sourceData = json;
+          this.displayData = json;
+        });
     },
     handleInput() {
-      this.displayData = this.sourceData.filter((item) => {
-        return item.title.includes(this.search)
-      })
-    }
-  }
-}
-
-
+      this.displayData = this.sourceData.filter(item => {
+        return item.title.includes(this.search);
+      });
+    },
+  },
+};
 </script>
 
 <template>
@@ -56,10 +54,14 @@ export default {
     <div class="shop-all-container">
       <div class="shop-all-banner">
         <h2>歡慶Nora商城開幕!!!</h2>
-        <input type="text" v-model.trim="search" @input="handleInput" class="shop-searchbar">
+        <input
+          type="text"
+          v-model.trim="search"
+          @input="handleInput"
+          class="shop-searchbar"
+        />
       </div>
       <div class="shop-filter">
-
         <label for="type"></label>
         <select name="type" id="type">
           <option value="">選擇類別</option>
@@ -73,10 +75,10 @@ export default {
           <option value="">價格高到低</option>
           <option value="">價格低到高</option>
         </select>
-      </div>  
+      </div>
       <ul class="shop-all-list">
         <li v-for="item in displayData" ::key="item.id" class="shop-all-card">
-          <img loading="lazy" :src="item.image" :alt="item.title">
+          <img loading="lazy" :src="item.image" :alt="item.title" />
           <article class="shop-card-content">
             <p class="shop-card-title">{{ item.title }}</p>
             <p class="shop-card-price">${{ item.price }}</p>
@@ -102,7 +104,7 @@ export default {
     height: 100%;
     margin: auto;
     padding: 20px;
-    .shop-all-banner{
+    .shop-all-banner {
       width: 100%;
       height: 200px;
       display: flex;
@@ -112,8 +114,8 @@ export default {
       gap: 24px;
       background-color: $blue-3;
       border-radius: 30px;
-      
-      .shop-searchbar{
+
+      .shop-searchbar {
         width: 200px;
       }
     }
@@ -170,4 +172,5 @@ export default {
       max-width: 1200px;
     }
   }
-}</style>
+}
+</style>
