@@ -227,37 +227,54 @@ export default {};
   );
 }
 
-<<<<<<< HEAD
-  .guide-flags {
-    display: flex;
-    justify-content: space-between;
-  }
+.guide-flags {
+  display: flex;
+  justify-content: space-between;
+}
 
-  @keyframes flagWaveLeft {
-    0% { transform: rotateZ(10deg); }
-    25% { transform: rotateZ(15deg); }
-    50% { transform: rotateZ(20deg); }
-    75% { transform: rotateZ(25deg); }
-    100% { transform: rotateZ(20deg); }
+@keyframes flagWaveLeft {
+  0% {
+    transform: rotateZ(10deg);
   }
+  25% {
+    transform: rotateZ(15deg);
+  }
+  50% {
+    transform: rotateZ(20deg);
+  }
+  75% {
+    transform: rotateZ(25deg);
+  }
+  100% {
+    transform: rotateZ(20deg);
+  }
+}
 
-  @keyframes flagWaveRight {
-    0% { transform: rotateZ(-10deg); }
-    25% { transform: rotateZ(-15deg); }
-    50% { transform: rotateZ(-20deg); }
-    75% { transform: rotateZ(-25deg); }
-    100% { transform: rotateZ(-20deg); }
+@keyframes flagWaveRight {
+  0% {
+    transform: rotateZ(-10deg);
   }
-  .guide-flag-left {
-    animation: flagWaveLeft 0.8s infinite alternate;
+  25% {
+    transform: rotateZ(-15deg);
   }
-  .guide-flag-right {
-    animation: flagWaveRight 0.8s infinite alternate;
+  50% {
+    transform: rotateZ(-20deg);
   }
+  75% {
+    transform: rotateZ(-25deg);
+  }
+  100% {
+    transform: rotateZ(-20deg);
+  }
+}
+.guide-flag-left {
+  animation: flagWaveLeft 0.8s infinite alternate;
+}
+.guide-flag-right {
+  animation: flagWaveRight 0.8s infinite alternate;
+}
 
-=======
 .guide-map img {
   width: 100%;
 }
->>>>>>> Orilla
 </style>
