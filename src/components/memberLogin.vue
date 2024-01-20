@@ -28,7 +28,7 @@
               </label>
             </div>
 
-            <button type="submit" class="main-btn">立即加入</button>
+            <button type="submit" class="main-btn" @click="alert()">立即加入</button>
           </form>
 
         <!-- 登入頁面 -->

@@ -25,7 +25,7 @@ const router = createRouter({
     {
       path: '/member',
       name: 'member',
-      component: () => import('../views/MemberView.vue'),
+      component: () => import('../views/memberCenter/MemberView.vue'),
     },
     {
       path: '/reserve',
