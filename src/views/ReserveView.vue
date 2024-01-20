@@ -34,10 +34,10 @@ export default {
 <template>
   <section class="equipment">
     <progressBar :activeDiv="1" />
+    <RouterLink to="/equipment" @click="goToNextStep"
+      >要按過這個才可以進入下一步驟:2租借設備</RouterLink
+    >
   </section>
-  <RouterLink to="/equipment" @click="goToNextStep"
-    >要按過這個才可以進入下一步驟:2租借設備</RouterLink
-  >
 </template>
 
 <style lang="scss" scoped></style>
