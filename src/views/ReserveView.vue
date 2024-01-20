@@ -35,7 +35,9 @@ export default {
   <section class="equipment">
     <progressBar :activeDiv="1" />
   </section>
-  <button @click="goToNextStep">要按過這個才可以進入下一步驟:2租借設備</button>
+  <RouterLink to="/equipment" @click="goToNextStep"
+    >要按過這個才可以進入下一步驟:2租借設備</RouterLink
+  >
 </template>
 
 <style lang="scss" scoped></style>

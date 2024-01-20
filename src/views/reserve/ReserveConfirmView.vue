@@ -37,7 +37,9 @@ export default {
   <section class="equipment">
     <progressBar :activeDiv="3" />
   </section>
-  <button @click="goToNextStep">要按過這個才可以進入下一步驟:4付款頁面</button>
+  <RouterLink to="/reservepayment" @click="goToNextStep"
+    >要按過這個才可以進入下一步驟:4付款頁面</RouterLink
+  >
 </template>
 
 <style lang="scss" scoped></style>
