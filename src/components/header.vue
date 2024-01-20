@@ -78,7 +78,7 @@ export default {
 
     <nav>
       <div id="nav-wrap">
-        <RouterLink to="/home" id="logo"></RouterLink>
+        <RouterLink to="/" id="logo"></RouterLink>
 
         <!--手機用子選單開關-->
 
