@@ -19,12 +19,14 @@ export default {};
       <img src="/src/assets/image/campGuide/map_m_ex.png" alt="立體地圖示意圖">
     </div>
 
-
     <!-- 立體地圖下方旗子區塊 -->
-
     <div class="guide-flags">
-      <img src="/src/assets/image/campGuide/flag_m_left2.png" alt="立體地圖區塊左側旗子">
-      <img src="/src/assets/image/campGuide/flag_m_right2.png" alt="立體地圖區塊右側旗子">
+      <div class="guide-flag-left">
+        <img src="/src/assets/image/campGuide/left-flag-m.svg" alt="立體地圖區塊左側旗子">
+      </div>
+      <div class="guide-flag-right">
+        <img src="/src/assets/image/campGuide/right-flag-m.svg" alt="立體地圖區塊右側旗子">
+      </div>
     </div>
 
     <!-- 導覽卡片區塊 -->
@@ -212,6 +214,33 @@ export default {};
 
   .guide-map img {
     width: 100%;
+  }
+
+  .guide-flags {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @keyframes flagWaveLeft {
+    0% { transform: rotateZ(10deg); }
+    25% { transform: rotateZ(15deg); }
+    50% { transform: rotateZ(20deg); }
+    75% { transform: rotateZ(25deg); }
+    100% { transform: rotateZ(20deg); }
+  }
+
+  @keyframes flagWaveRight {
+    0% { transform: rotateZ(-10deg); }
+    25% { transform: rotateZ(-15deg); }
+    50% { transform: rotateZ(-20deg); }
+    75% { transform: rotateZ(-25deg); }
+    100% { transform: rotateZ(-20deg); }
+  }
+  .guide-flag-left {
+    animation: flagWaveLeft 0.8s infinite alternate;
+  }
+  .guide-flag-right {
+    animation: flagWaveRight 0.8s infinite alternate;
   }
 
 </style>
