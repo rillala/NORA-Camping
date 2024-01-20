@@ -77,7 +77,18 @@ const router = createRouter({
       name: 'reservefail',
       component: () => import('../views/reserve/ReserveFailView.vue'),
     },
+    // 404頁面：沒有被配置的路由都會去NotFound
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('../views/NotFoundView.vue'),
+    },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    // 始终滚动到顶部
+    return { top: 0 };
+  },
 });
 
 export default router;
