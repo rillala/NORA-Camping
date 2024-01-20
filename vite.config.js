@@ -9,7 +9,7 @@ export default defineConfig({
     process.env.DEPLOY_TARGET === 'GITHUB_PAGES'
       ? '/NORA-Camping/' // 替換為你的 GitHub 倉庫名
       : process.env.NODE_ENV === 'production'
-        ? '/chd104/ingrid/front/'
+        ? '/chd104/g1/front/'
         : '/',
   build: {
     outDir: 'front',
