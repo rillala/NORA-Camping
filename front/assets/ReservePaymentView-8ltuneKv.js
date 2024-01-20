@@ -1,1 +1,0 @@
-import{p as o}from"./bannerStep-ZWYUkO6G.js";import{_ as s,r,a as t,b as n,o as a}from"./index-srDpnGmo.js";const c={components:{progressBar:o}},p={class:"equipment"};function _(i,m,f,d,l,u){const e=r("progressBar");return a(),t("section",p,[n(e,{activeDiv:4})])}const $=s(c,[["render",_]]);export{$ as default};
