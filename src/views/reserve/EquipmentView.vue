@@ -3,10 +3,12 @@
 import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
+import setRentalCard from '@/components/reserve/setRentalCard.vue';
 
 export default {
   components: {
     progressBar,
+    setRentalCard,
   },
   data() {
     return {
@@ -14,11 +16,17 @@ export default {
       search: '',
       productData: [],
       displayData: [],
+      products: [
+        // 假設每個商品物件都有 id 和 quantity
+        { id: 1, title: 'id1', buyNum: 0 /* 其他商品資訊 */ },
+        { id: 2, title: 'id2', buyNum: 0 /* 其他商品資訊 */ },
+        // ... 更多商品
+      ],
     };
   },
   created() {
     // this.fetchData()
-    this.axiosGetData();
+    // this.axiosGetData();
   },
   // 串API假裝一下設備卡片
   methods: {
@@ -37,20 +45,30 @@ export default {
         sessionStorage.setItem('isStep2Clicked', 'true');
       }
     },
-    axiosGetData() {
-      // 使用 axios 抓取商品資料.json
-      axios.get('https://fakestoreapi.com/products').then(res => {
-        if (res && res.data) {
-          this.productData = res.data;
-          this.displayData = res.data;
-        }
-      });
+    getImageUrl(paths) {
+      return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
-    filterHandle() {
-      this.displayData = this.productData.filter(item => {
-        // console.log(item);
-        return item.title.includes(this.search);
-      });
+    // axiosGetData() {
+    //   // 使用 axios 抓取商品資料.json
+    //   axios.get('https://fakestoreapi.com/products').then(res => {
+    //     if (res && res.data) {
+    //       this.productData = res.data;
+    //       this.displayData = res.data;
+    //     }
+    //   });
+    // },
+    // filterHandle() {
+    //   this.displayData = this.productData.filter(item => {
+    //     // console.log(item);
+    //     return item.title.includes(this.search);
+    //   });
+    // },
+    updateQuantity(productId, newQuantity) {
+      const product = this.products.find(p => p.id === productId);
+      if (product) {
+        product.buyNum = newQuantity;
+        console.log(`${product.id} :: ${product.buyNum}`);
+      }
     },
   },
 };
@@ -75,22 +93,21 @@ export default {
         </li>
       </ul>
     </div>
-  </section>
 
-  <!--以下都是測試用, 不是正式code-->
-  <RouterLink to="/reserveconfirm" @click="goToNextStep"
-    >要按過這個才可以進入下一步驟:3確認畫面</RouterLink
-  >
-
-  <!--下面抓API測試-->
-  <!-- <input type="text" v-model="search" @input="filterHandle" />
-  <div class="card-list">
-    <div v-for="card in displayData" class="card">
-      <div class="title">{{ card.title }}</div>
-      <img :src="card.image" :alt="card.title" width="150px" />
-      <p class="price">{{ card.price }}</p>
+    <!--商品卡片測試-->
+    <div v-for="product in products" :key="product.id" class="set-list">
+      <setRentalCard
+        :product="product"
+        @update-quantity="updateQuantity(product.id, $event)"
+        class="set-card"
+      />
     </div>
-  </div> -->
+
+    <!--下個步驟的按鈕-->
+    <RouterLink to="/reserveconfirm" @click="goToNextStep"
+      >要按過這個才可以進入下一步驟:3確認畫面</RouterLink
+    >
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -99,5 +116,13 @@ export default {
 .card-list {
   display: flex;
   flex-wrap: wrap;
+}
+
+.set-list {
+  width: 100%;
+  padding: 20px;
+}
+.set-card + .set-card {
+  padding-top: 20px;
 }
 </style>
