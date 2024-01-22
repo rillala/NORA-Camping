@@ -1,18 +1,32 @@
 <script>
 // 引入函式庫
-import productCard from '@/components/shop/productCard.vue';
 import axios from 'axios';
+import productCard from '@/components/shop/productCard.vue';
+import dropDownBtn from '@/components/button/dropDownBtn.vue';
 
 export default {
   components: {
-    productCard
-  },
+    productCard, dropDownBtn
+},
   data() {
     return {
       count: 10,
       sourceData: [],
       search: '',
       displayData: [],
+      groupOptions: [
+        {value: '1', label: '選擇類別▼'},
+        {value: '2', label: 'Nora文青生活'},
+        {value: '3', label: 'Nora品牌服飾'},
+        {value: '4', label: 'Nora營地用品'},
+    ],
+      selectedValue1: '', // 預設選擇的值
+      priceOptions: [
+        {value: '5', label: '選擇排序▼'},
+        {value: '6', label: '價格高到低'},
+        {value: '7', label: '價格低到高'},
+    ],
+      selectedValue2: '', // 預設選擇的值
     };
   },
   computed: {
@@ -44,11 +58,27 @@ export default {
           }
         })
     },
-    handleInput() {
-      this.displayData = this.sourceData.filter(item => {
-        return item.title.includes(this.search);
-      });
+    filterHandle() {
+      this.displayData = this.responseData.filter((item) => {
+        // console.log(item);
+        return item.title.includes(this.search)
+      })
     },
+  },
+  watch: {
+    // 每当 search 改变时，这个函数就会执行
+    search(newSearch, oldsearch) {
+      console.log('new:' + newSearch);
+      console.log('old:' + oldsearch);
+      this.filterHandle()
+    },
+    category: {
+      handler(newcCategory) {
+        console.log(newcCategory);
+      },
+      // 在组件实例创建时，强制立即执行回调，預設false
+      immediate: true
+    }
   },
 };
 </script>
@@ -57,23 +87,12 @@ export default {
   <div class="shop-all-wrap">
     <div class="shop-all-container">
       <div class="shop-all-banner">
-        <h2>歡慶Nora商城開幕!!!</h2>
+        <h2>歡慶Nora商城開幕🎪</h2>
         <input type="text" v-model.trim="search" @input="handleInput" class="shop-searchbar" />
       </div>
-      <div class="shop-filter">
-        <label for="type"></label>
-        <select name="type" id="type">
-          <option value="">選擇類別</option>
-          <option value="">Nora文青生活</option>
-          <option value="">Nora品牌服飾</option>
-          <option value="">Nora營地用品</option>
-        </select>
-        <label for="rank"></label>
-        <select name="rank" id="rank">
-          <option value="">選擇排序</option>
-          <option value="">價格高到低</option>
-          <option value="">價格低到高</option>
-        </select>
+      <div class="drop-down-button">
+        <dropDownBtn :options="groupOptions" v-model="selectedValue1" :defaultValue="1">{{selectedValue}}</dropDownBtn>
+        <dropDownBtn :options="priceOptions" v-model="selectedValue2" :defaultValue="5">{{selectedValue}}</dropDownBtn>
       </div>
 
       <div class="shop-all-list">
@@ -86,5 +105,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-  @import '@/assets/sass/page/shopView.scss';
+@import '@/assets/sass/page/shopView.scss';
 </style>
