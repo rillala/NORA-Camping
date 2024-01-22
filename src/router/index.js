@@ -34,10 +34,7 @@ const router = createRouter({
     {
       path: '/member',
       name: 'member',
-      component: () => import('../views/MemberView.vue'),
-      meta: {
-        title: '會員專區 Member',
-      },
+      component: () => import('../views/memberCenter/MemberView.vue'),
     },
     {
       path: '/reserve',

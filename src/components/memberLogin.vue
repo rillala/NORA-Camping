@@ -60,8 +60,8 @@
             </label>
           </div>
 
-          <button type="submit" class="main-btn">立即加入</button>
-        </form>
+            <button type="submit" class="main-btn" @click="alert()">立即加入</button>
+          </form>
 
         <!-- 登入頁面 -->
         <div v-else>
@@ -77,7 +77,7 @@
           /><br />
           <a class="forget-psw">忘記密碼？</a><br />
           <!-- <router-link to="/" class="main-btn">會員登入</router-link><br> -->
-          <button class="main-btn">會員登入</button>
+          <button class="main-btn" @click='signin'>會員登入</button>
           <button class="sub-btn">以Google登入</button>
         </div>
       </div>
@@ -86,6 +86,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { mapActions } from 'pinia';
+import userStore from '@/stores/user';
 export default {
   props: ['isOpen'],
 
@@ -100,9 +103,9 @@ export default {
         agreeTerms: false,
       },
       user_enter: {
-        account: '',
-        pwd: '',
-      },
+        account: 'mor_2314',
+        pwd: '83r5^_'
+      }
     };
   },
   methods: {
@@ -111,7 +114,37 @@ export default {
       if (this.isOpen) {
         this.isOpen = false;
       }
-    },
+    }
+  },
+  methods:{
+    ...mapActions(userStore,['updateToken']),
+    signin(){
+      this.updateToken(123)
+      console.log('login');
+
+      axios.post('https://fakestoreapi.com/auth/login', {
+        username: "mor_2314",
+        password: "83r5^_"
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if(response.data && response.data.token){
+          //3
+          this.updateToken(response.data.token)
+          console.log('login')
+          console.log(response.data.token)
+        }
+      })
+      .catch(error => {
+        console.error(error);  
+        //少一行
+        //登入失敗
+        //系統維護中
+      }) 
+    }
   },
 };
 </script>
