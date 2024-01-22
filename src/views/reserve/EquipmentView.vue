@@ -4,11 +4,13 @@ import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import setRentalCard from '@/components/reserve/setRentalCard.vue';
+import singleRentalCard from '@/components/reserve/singleRentalCard.vue';
 
 export default {
   components: {
     progressBar,
     setRentalCard,
+    singleRentalCard,
   },
   data() {
     return {
@@ -16,11 +18,129 @@ export default {
       search: '',
       productData: [],
       displayData: [],
-      products: [
-        // 假設每個商品物件都有 id 和 quantity
-        { id: 1, title: 'id1', buyNum: 0 /* 其他商品資訊 */ },
-        { id: 2, title: 'id2', buyNum: 0 /* 其他商品資訊 */ },
-        // ... 更多商品
+      setList: [
+        {
+          id: 1,
+          title: '基本露營兩人套組',
+          price: 800,
+          info: '雙人用帳篷 x1個,睡袋 x2個,露營墊 x2個,手電筒 x2個,露營椅 x2個,小型營地桌 x1個,小型野餐墊 x1個',
+          image: 'setforTwo.png',
+          rentNum: 0,
+        },
+        {
+          id: 2,
+          title: '基本露營四人套組',
+          price: 1200,
+          info: '四人用帳篷 x1個,睡袋 x4個,露營墊 x4個,手電筒 x4個,露營椅 x4個,中型營地桌 x1個,中型野餐墊 x1個',
+          image: 'setforFour.png',
+          rentNum: 0,
+        },
+        {
+          id: 3,
+          title: '豪華露營四人套組',
+          price: 1700,
+          info: '四人用隧道帳篷 x1個,睡袋 x4個,露營墊 x4個,手電筒 x4個,露營椅 x4個,大型營地桌 x1個,烤肉設備 x1組,中型天幕 x1個,中型野餐墊 x1個',
+          image: 'setforFourPlus.png',
+          rentNum: 0,
+        },
+      ],
+      singleList: [
+        {
+          id: 4,
+          title: '帳篷',
+          price: 500,
+          info: '適合2-4人使用的防水帳篷，簡易設置。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 5,
+          title: '睡袋',
+          price: 100,
+          info: '提供保暖的睡袋，適用於各種氣候條件。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 6,
+          title: '露營墊',
+          price: 50,
+          info: '輕便舒適的露營墊，適合放在帳篷內。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 7,
+          title: '烹飪設備',
+          price: 200,
+          info: '包括便攜式爐頭、鍋具和基本烹飪工具。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 8,
+          title: '露營椅',
+          price: 80,
+          info: '便攜式露營椅，方便在露營地休息或觀賞風景。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 9,
+          title: '手電筒/頭燈',
+          price: 50,
+          info: '提供夜間照明所需的手電筒或頭燈。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 10,
+          title: '野餐墊',
+          price: 50,
+          info: '適合戶外野餐或休憩的大型野餐墊。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 11,
+          title: '營地桌',
+          price: 100,
+          info: '便攜式折疊桌，適合飲食或聚會使用。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 12,
+          title: 'BBQ烤架',
+          price: 300,
+          info: '便攜式烤架，適用於戶外燒烤。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 13,
+          title: '天幕',
+          price: 150,
+          info: '8-10人用，提供遮陽和雨棚，適合作為露營或活動的臨時遮蔽所。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 14,
+          title: '焚火爐',
+          price: 100,
+          info: '30x30cm的焚火台，適合用做小型營火使用，取火或烤棉花糖皆可。',
+          image: '',
+          rentNum: 0,
+        },
+        {
+          id: 15,
+          title: '延長線',
+          price: 50,
+          info: '5m 防水戶外用延長線。',
+          image: '',
+          rentNum: 0,
+        },
       ],
     };
   },
@@ -46,7 +166,10 @@ export default {
       }
     },
     getImageUrl(paths) {
-      return new URL(`../assets/image/${paths}`, import.meta.url).href;
+      return new URL(
+        `../../assets/image/reserve/equipment/${paths}`,
+        import.meta.url,
+      ).href;
     },
     // axiosGetData() {
     //   // 使用 axios 抓取商品資料.json
@@ -63,12 +186,33 @@ export default {
     //     return item.title.includes(this.search);
     //   });
     // },
-    updateQuantity(productId, newQuantity) {
-      const product = this.products.find(p => p.id === productId);
-      if (product) {
-        product.buyNum = newQuantity;
-        console.log(`${product.id} :: ${product.buyNum}`);
+    updateQuantitySet(newQuantity, index) {
+      console.log(index + 'quantity:' + newQuantity);
+      let setCard = this.setList.index;
+      if (setCard) {
+        console.log(`${setCard.id} :: ${setCard.rentNum}`);
+        return (setCard.rentNum = newQuantity);
       }
+    },
+    updateQuantitySingle(cardId, newQuantity, index) {
+      console.log(cardId);
+      console.log('quantity:' + newQuantity);
+      const card = this.singleList.find(p => p.id === cardId);
+      if (card) {
+        card.rentNum = newQuantity;
+        console.log(`${card.id} :: ${card.rentNum}`);
+      }
+    },
+    isChoose() {
+      let sum = 0;
+
+      for (let i = 0; i < setList.length; i++) {
+        sum += setList[i].rentNum;
+      }
+      for (let i = 0; i < singleList.length; i++) {
+        sum += singleList[i].rentNum;
+      }
+      return sum > 0 ? true : false;
     },
   },
 };
@@ -76,7 +220,7 @@ export default {
 
 <template>
   <section class="equipment">
-    <progressBar :activeDiv="2" />
+    <progressBar :activeDiv="2" id="progressbar" />
     <div class="intro-container">
       <h4 class="title dark">裝備租借</h4>
       <ul class="intro">
@@ -93,14 +237,51 @@ export default {
         </li>
       </ul>
     </div>
-
-    <!--商品卡片測試-->
-    <div v-for="product in products" :key="product.id" class="set-list">
+    <!--套裝區域-->
+    <div class="set">
+      <img :src="getImageUrl('chair.svg')" alt="set-section" />
+      <h4>套裝租借</h4>
+      <span class="tinyp">需要的東西，我們都幫你準備好了！</span>
+      <div class="line"></div>
+    </div>
+    <!--套裝設備卡片-->
+    <div id="set-list">
       <setRentalCard
-        :product="product"
-        @update-quantity="updateQuantity(product.id, $event)"
-        class="set-card"
+        class="card"
+        v-for="(setCard, index) in setList"
+        :key="setCard.title"
+        :image="getImageUrl(setCard.image)"
+        :title="setCard.title"
+        :price="setCard.price"
+        :details="setCard.info"
+        @update-quantity="updateQuantitySet($event, index)"
       />
+    </div>
+
+    <!--單項區域-->
+    <div class="set">
+      <img :src="getImageUrl('fire.svg')" alt="single-section" />
+      <h4>單項租借</h4>
+      <span class="tinyp">還需要甚麼嗎？我們也都有哦！</span>
+      <div class="line"></div>
+    </div>
+
+    <!--單項設備卡片-->
+    <div id="single-list">
+      <singleRentalCard
+        class="card"
+        v-for="card in singleList"
+        :key="card.title"
+        :image="getImageUrl(`single${card.id}.png`)"
+        :title="card.title"
+        :price="card.price"
+        :details="card.info"
+        @update-quantity="updateQuantitySingle(card.id, $event, index)"
+      />
+    </div>
+
+    <div class="alert red01 tinyp" v-if="isChoose">
+      -您目前沒有租借任何設備-
     </div>
 
     <!--下個步驟的按鈕-->
@@ -112,17 +293,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/equipment.scss';
-
-.card-list {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.set-list {
-  width: 100%;
-  padding: 20px;
-}
-.set-card + .set-card {
-  padding-top: 20px;
-}
 </style>

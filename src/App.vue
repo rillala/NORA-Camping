@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import headerCom from '@/components/header.vue';
 import footerCom from '@/components/footer.vue';
 import backToTop from '@/components/button/backToTop.vue';
+import loading from '@/components/loading.vue';
 
 // 以下做loading畫面用
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -41,7 +42,7 @@ onUnmounted(() => {
     <div id="app-content-wrap">
       <div>
         <!-- 加載畫面 -->
-        <div v-if="isLoading" id="app-loading">Loading...</div>
+        <div v-if="isLoading" id="app-loading"><loading /></div>
 
         <!-- 路由視圖 -->
         <RouterView v-else />
@@ -82,7 +83,9 @@ body {
 // loading 畫面,測試用
 #app-loading {
   width: 100%;
-  height: 100px;
-  background: red;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

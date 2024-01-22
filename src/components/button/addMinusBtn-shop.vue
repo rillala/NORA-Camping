@@ -25,18 +25,18 @@ export default {
 </script>
 
 <template>
-  <div class="quantity-btn">
-    <button @click="minus" class="minus bg-blue-2">
-      <div class="minus-icon bg-blue-4"></div>
+  <div class="quantity-btn bg-white01">
+    <button @click="minus" class="minus bg-dark-gray">
+      <div class="minus-icon bg-dark"></div>
     </button>
 
     <div class="box">
-      <p class="blue-4">{{ quantity }}</p>
+      <p class="dark">{{ quantity }}</p>
     </div>
 
-    <button @click="add" class="add bg-blue-2">
-      <div class="minus-icon bg-blue-4"></div>
-      <div class="add-icon bg-blue-4"></div>
+    <button @click="add" class="add bg-dark-gray">
+      <div class="minus-icon bg-dark"></div>
+      <div class="add-icon bg-dark"></div>
     </button>
   </div>
 </template>
@@ -46,43 +46,36 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 235px;
+  width: 125px;
+  height: 50px;
+  border: 1px solid $dark-gray;
+  border-radius: $radius;
 }
 
 button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-  border: 3px solid $blue-4;
+  border: none;
   .minus-icon {
-    width: 20px;
-    height: 3px;
+    width: 10px;
+    height: 2px;
     border-radius: 2px;
   }
   .add-icon {
     position: absolute;
     translate: 90deg;
-    width: 3px;
-    height: 20px;
+    width: 2px;
+    height: 10px;
     border-radius: 2px;
   }
 }
 .box {
-  width: 110px;
-  height: 45px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: $white01;
-  border-radius: $radius;
-  margin: 0 20px;
-  p {
-    @include font-style(28px, 700, 10%, auto);
-  }
+  width: 40px;
+  text-align: center;
 }
 </style>
 
