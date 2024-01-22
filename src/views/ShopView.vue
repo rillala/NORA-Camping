@@ -1,8 +1,12 @@
 <script>
 // 引入函式庫
+import productCard from '@/components/shop/productCard.vue';
 import axios from 'axios';
 
 export default {
+  components: {
+    productCard
+  },
   data() {
     return {
       count: 10,
@@ -24,21 +28,21 @@ export default {
   },
   created() {
     //建立好vue實體=>可以呼叫vue 裡面的東西
-    this.fetchData();
+    this.axiosGetData();
   },
-  mounted() {
-    //以渲染dom物件，如果使用第三方gsap
-  },
+
   methods: {
     //用fetch將json 檔案匯入
-    fetchData() {
-      fetch('https://fakestoreapi.com/products')
-        .then(response => response.json())
-        .then(json => {
-          // console.log(json)
-          this.sourceData = json;
-          this.displayData = json;
-        });
+    axiosGetData() {
+      //使用axios
+      axios.get('https://api.escuelajs.co/api/v1/products')
+        .then(res => {
+          if (res && res.data) {
+            console.log(res.data);
+            this.responseData = res.data
+            this.displayData = res.data
+          }
+        })
     },
     handleInput() {
       this.displayData = this.sourceData.filter(item => {
@@ -54,12 +58,7 @@ export default {
     <div class="shop-all-container">
       <div class="shop-all-banner">
         <h2>歡慶Nora商城開幕!!!</h2>
-        <input
-          type="text"
-          v-model.trim="search"
-          @input="handleInput"
-          class="shop-searchbar"
-        />
+        <input type="text" v-model.trim="search" @input="handleInput" class="shop-searchbar" />
       </div>
       <div class="shop-filter">
         <label for="type"></label>
@@ -76,101 +75,16 @@ export default {
           <option value="">價格低到高</option>
         </select>
       </div>
-      <ul class="shop-all-list">
-        <li v-for="item in displayData" ::key="item.id" class="shop-all-card">
-          <img loading="lazy" :src="item.image" :alt="item.title" />
-          <article class="shop-card-content">
-            <p class="shop-card-title">{{ item.title }}</p>
-            <p class="shop-card-price">${{ item.price }}</p>
-            <span v-for="num in parseInt(item.rating.rate)">★</span>
-          </article>
-        </li>
-      </ul>
+
+      <div class="shop-all-list">
+        <template v-for="product in displayData" :key="product.id">
+          <productCard :item="product"></productCard>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.shop-all-wrap {
-  width: 100%;
-  height: 100%;
-  background-color: $blue-1;
-
-  .shop-all-container {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    padding: 20px;
-    .shop-all-banner {
-      width: 100%;
-      height: 200px;
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      background-color: $blue-3;
-      border-radius: 30px;
-
-      .shop-searchbar {
-        width: 200px;
-      }
-    }
-
-    .shop-all-list {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: 1fr 1fr;
-      justify-content: center;
-      margin-top: 20px;
-      @include desktop {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-      }
-
-      .shop-all-card {
-        display: flex;
-        flex-flow: column;
-        gap: 20px;
-        width: 100%;
-        height: 100%;
-        padding: 16px;
-        aspect-ratio: 285 / 340;
-        border: 2px solid $dark-gray;
-        border-radius: 50px;
-        background-color: #fff;
-
-        img {
-          width: 100%;
-          aspect-ratio: 1/1;
-          padding: 16px;
-          border: 2px solid $dark-gray;
-          border-radius: 45px;
-        }
-
-        .shop-card-title {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-        }
-      }
-    }
-  }
-
-  @include tablet {
-    .shop-all-list {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-  }
-
-  @include desktop {
-    .shop-all-container {
-      max-width: 1200px;
-    }
-  }
-}
+  @import '@/assets/sass/page/shopView.scss';
 </style>
