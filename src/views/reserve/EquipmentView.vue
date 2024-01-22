@@ -285,12 +285,33 @@ export default {
     </div>
 
     <!--下個步驟的按鈕-->
-    <RouterLink to="/reserveconfirm" @click="goToNextStep"
-      >要按過這個才可以進入下一步驟:3確認畫面</RouterLink
-    >
+    <div class="next">
+      <RouterLink
+        to="/reserveconfirm"
+        @click="goToNextStep"
+        id="confirm-btn"
+        class="white01 bg-blue-3"
+        >要按過這個才可以進入下一步驟:3確認畫面</RouterLink
+      >
+    </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/equipment.scss';
+
+.alert {
+  margin: 0 auto;
+}
+
+.next {
+  width: 100%;
+  padding: 20px;
+  @include desktop {
+    margin: 0 auto;
+  }
+}
+
+.confirm-btn {
+}
 </style>
