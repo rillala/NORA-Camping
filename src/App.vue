@@ -30,7 +30,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  // 在這裡，您需要正確移除守衛
   router.beforeEach().unbind(beforeEach);
   router.afterEach().unbind(afterEach);
 });
@@ -73,11 +72,14 @@ body {
   height: 100%;
   padding: 20px 0;
   z-index: 2;
+  pointer-events: none;
 }
 
 #app-top-btn {
   position: sticky;
   top: 85svh;
+  z-index: 3;
+  pointer-events: auto;
 }
 
 // loading 畫面,測試用
