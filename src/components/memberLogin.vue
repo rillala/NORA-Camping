@@ -64,7 +64,7 @@
           </form>
 
         <!-- 登入頁面 -->
-        <div v-else>
+        <form v-else>
           <input
             type="text"
             placeholder="請輸入信箱"
@@ -77,9 +77,9 @@
           /><br />
           <a class="forget-psw">忘記密碼？</a><br />
           <!-- <router-link to="/" class="main-btn">會員登入</router-link><br> -->
-          <button class="main-btn" @click='signin'>會員登入</button>
+          <button class="main-btn" @click.prevent='signin'>會員登入</button><br/>
           <button class="sub-btn">以Google登入</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -188,9 +188,10 @@ export default {
   left: calc((100% - 450px) / 2);
   background-color: $white01;
   padding: 20px;
-  height: 430px;
-  width: 450px;
   z-index: 5;
+  width: 470px;
+  height:500px;
+  padding: 40px 50px;
 
   @include tablet {
   }
@@ -216,8 +217,8 @@ export default {
   border: none;
   text-decoration: none;
   font-size: 32px;
-  padding: 0px 20px;
-  margin: 10px 15px;
+  padding: 0px 10px;
+  margin: 10px 15px 30px;
 
   @include tablet {
   }
@@ -235,12 +236,17 @@ p {
 }
 
 input {
-  padding: 10px 90px 10px 0px;
+  width:100%;
   font-size: 20px;
   border: none;
   border-bottom: 1px solid #000;
   outline: none;
   background-color: transparent;
+  border-left: 0px;
+  border-right: 0px;
+  line-height: 30px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
 }
 
 .login-news {
@@ -271,9 +277,22 @@ input {
 }
 
 .forget-psw {
-  display: inline-block;
+  display: block;
   text-align: end;
-  margin-top: 20px;
+  margin: 20px 0 0 auto;
   font-size: 16px;
+}
+
+input[type="checkbox"] {
+width: 20px;
+height:20px;
+}
+
+// label[for="receiveNews"] {
+//   height: 16px;
+// }
+
+.login-news{
+  height: 25px;
 }
 </style>
