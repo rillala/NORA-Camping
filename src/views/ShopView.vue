@@ -1,15 +1,33 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
+import productCard from '@/components/shop/productCard.vue';
+import dropDownBtn from '@/components/button/dropDownBtn.vue';
 
 export default {
+  components: {
+    productCard, dropDownBtn
+},
   data() {
     return {
       count: 10,
       sourceData: [],
       search: '',
       displayData: [],
-    }
+      groupOptions: [
+        {value: '1', label: '選擇類別▼'},
+        {value: '2', label: 'Nora文青生活'},
+        {value: '3', label: 'Nora品牌服飾'},
+        {value: '4', label: 'Nora營地用品'},
+    ],
+      selectedValue1: '', // 預設選擇的值
+      priceOptions: [
+        {value: '5', label: '選擇排序▼'},
+        {value: '6', label: '價格高到低'},
+        {value: '7', label: '價格低到高'},
+    ],
+      selectedValue2: '', // 預設選擇的值
+    };
   },
   computed: {
     productCount() {
@@ -20,154 +38,72 @@ export default {
     },
     nodata() {
       return this.productCount === 0;
-    }
+    },
   },
   created() {
     //建立好vue實體=>可以呼叫vue 裡面的東西
-    this.fetchData();
-
+    this.axiosGetData();
   },
-  mounted() {//以渲染dom物件，如果使用第三方gsap
 
-  },
-  methods: {//用fetch將json 檔案匯入
-    fetchData() {
-      fetch('https://fakestoreapi.com/products')
-        .then(response => response.json())
-        .then(json => {
-          // console.log(json)
-          this.sourceData = json
-          this.displayData = json
+  methods: {
+    //用fetch將json 檔案匯入
+    axiosGetData() {
+      //使用axios
+      axios.get('https://api.escuelajs.co/api/v1/products')
+        .then(res => {
+          if (res && res.data) {
+            console.log(res.data);
+            this.responseData = res.data
+            this.displayData = res.data
+          }
         })
     },
-    handleInput() {
-      this.displayData = this.sourceData.filter((item) => {
+    filterHandle() {
+      this.displayData = this.responseData.filter((item) => {
+        // console.log(item);
         return item.title.includes(this.search)
       })
+    },
+  },
+  watch: {
+    // 每当 search 改变时，这个函数就会执行
+    search(newSearch, oldsearch) {
+      console.log('new:' + newSearch);
+      console.log('old:' + oldsearch);
+      this.filterHandle()
+    },
+    category: {
+      handler(newcCategory) {
+        console.log(newcCategory);
+      },
+      // 在组件实例创建时，强制立即执行回调，預設false
+      immediate: true
     }
-  }
-}
-
-
+  },
+};
 </script>
 
 <template>
   <div class="shop-all-wrap">
     <div class="shop-all-container">
       <div class="shop-all-banner">
-        <h2>歡慶Nora商城開幕!!!</h2>
-        <input type="text" v-model.trim="search" @input="handleInput" class="shop-searchbar">
+        <h2>歡慶Nora商城開幕🎪</h2>
+        <input type="text" v-model.trim="search" @input="handleInput" class="shop-searchbar" />
       </div>
-      <div class="shop-filter">
+      <div class="drop-down-button">
+        <dropDownBtn :options="groupOptions" v-model="selectedValue1" :defaultValue="1">{{selectedValue}}</dropDownBtn>
+        <dropDownBtn :options="priceOptions" v-model="selectedValue2" :defaultValue="5">{{selectedValue}}</dropDownBtn>
+      </div>
 
-        <label for="type"></label>
-        <select name="type" id="type">
-          <option value="">選擇類別</option>
-          <option value="">Nora文青生活</option>
-          <option value="">Nora品牌服飾</option>
-          <option value="">Nora營地用品</option>
-        </select>
-        <label for="rank"></label>
-        <select name="rank" id="rank">
-          <option value="">選擇排序</option>
-          <option value="">價格高到低</option>
-          <option value="">價格低到高</option>
-        </select>
-      </div>  
-      <ul class="shop-all-list">
-        <li v-for="item in displayData" ::key="item.id" class="shop-all-card">
-          <img loading="lazy" :src="item.image" :alt="item.title">
-          <article class="shop-card-content">
-            <p class="shop-card-title">{{ item.title }}</p>
-            <p class="shop-card-price">${{ item.price }}</p>
-            <span v-for="num in parseInt(item.rating.rate)">★</span>
-          </article>
-        </li>
-      </ul>
+      <div class="shop-all-list">
+        <template v-for="product in displayData" :key="product.id">
+          <productCard :item="product"></productCard>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.shop-all-wrap {
-  width: 100%;
-  height: 100%;
-  background-color: $blue-1;
-
-  .shop-all-container {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    padding: 20px;
-    .shop-all-banner{
-      width: 100%;
-      height: 200px;
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      background-color: $blue-3;
-      border-radius: 30px;
-      
-      .shop-searchbar{
-        width: 200px;
-      }
-    }
-
-    .shop-all-list {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: 1fr 1fr;
-      justify-content: center;
-      margin-top: 20px;
-      @include desktop {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-      }
-
-      .shop-all-card {
-        display: flex;
-        flex-flow: column;
-        gap: 20px;
-        width: 100%;
-        height: 100%;
-        padding: 16px;
-        aspect-ratio: 285 / 340;
-        border: 2px solid $dark-gray;
-        border-radius: 50px;
-        background-color: #fff;
-
-        img {
-          width: 100%;
-          aspect-ratio: 1/1;
-          padding: 16px;
-          border: 2px solid $dark-gray;
-          border-radius: 45px;
-        }
-
-        .shop-card-title {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-        }
-      }
-    }
-  }
-
-  @include tablet {
-    .shop-all-list {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-  }
-
-  @include desktop {
-    .shop-all-container {
-      max-width: 1200px;
-    }
-  }
-}</style>
+@import '@/assets/sass/page/shopView.scss';
+</style>

@@ -1,24 +1,24 @@
 <template>
   <div class="Homepage-wrap">
-
     <div class="Homepage-banner bg-blue-2">
       <div class="banner-text">
-        <h1>願那些流浪，<br>
-          只是體驗而已。<br>
+        <h1>
+          願那些流浪，<br />
+          只是體驗而已。<br />
           走吧，去露營！
         </h1>
         <actionBtn class="Reserve-Now" :content="'立即預約'" />
       </div>
       <div class="things-Moving">
-        <img v-for="picsrc in things" :src="getImageUrl(`${picsrc.src}.png`)">
+        <img v-for="picsrc in things" :src="getImageUrl(`${picsrc.src}.png`)" />
       </div>
-
     </div>
 
     <div class="Knowing-nora">
       <div class="KN-content">
         <h4>認識野良</h4>
-        <p>"野良" 這一詞在日文中指流浪動物，
+        <p>
+          "野良" 這一詞在日文中指流浪動物，
           我們將這一概念融入露營體驗中，創造出一個充滿活力和溫馨的環境。
           在這裡，露營者可以根據自己的喜好選擇狗派或貓派，
           從而決定所需的露營道具和行程安排。
@@ -27,11 +27,11 @@
           我們期待創造出一個既有趣又有意義的露營文化 。
         </p>
         <div class="img-contanier">
-          <img src="@/assets/image/homeView/knowingnora-pic.jpg">
+          <img src="@/assets/image/homeView/knowingnora-pic.jpg" />
         </div>
         <div class="Weather-box bg-blue-2">
           <h4>營地目前天氣</h4>
-          <img src="">
+          <img src="" />
           <p>天氣</p>
           <p>溫度</p>
         </div>
@@ -45,18 +45,15 @@
       <h2>野良選物X最新商品</h2>
     </div>
     <div class="stray-home">
-      <h2>野良之家
-      </h2>
+      <h2>野良之家</h2>
     </div>
-
   </div>
 </template>
-
 
 <script>
 // 引入函式庫
 import axios from 'axios';
-import actionBtn from '@/components/button/actionBtn.vue'
+import actionBtn from '@/components/button/actionBtn.vue';
 
 export default {
   components: {
@@ -65,29 +62,29 @@ export default {
   data() {
     return {
       things: [
-        { src: "camp_tent_maru" },
-        { src: "camp_tent" },
-        { src: "cat_koubakozuwari_gray" },
-        { src: "cat_kuroashineko" },
-        { src: "dog_akitainu" },
-        { src: "dog_corgi_tricolor" },
-        { src: "kagu_camp_chair" },
-        { src: "neko_ushiro" },
-        { src: "takibi" },
-        { src: "youkai_jinmenken" },
+        { src: 'camp_tent_maru' },
+        { src: 'camp_tent' },
+        { src: 'cat_koubakozuwari_gray' },
+        { src: 'cat_kuroashineko' },
+        { src: 'dog_akitainu' },
+        { src: 'dog_corgi_tricolor' },
+        { src: 'kagu_camp_chair' },
+        { src: 'neko_ushiro' },
+        { src: 'takibi' },
+        { src: 'youkai_jinmenken' },
       ],
-
     };
   },
   methods: {
     getImageUrl(paths) {
-      return new URL(`../assets/image/homeView/movingThings/${paths}`, import.meta.url).href
+      return new URL(
+        `../assets/image/homeView/movingThings/${paths}`,
+        import.meta.url,
+      ).href;
     },
   },
-
 };
 </script>
-
 
 <style lang="scss" scoped>
 .Homepage-banner {
@@ -168,8 +165,6 @@ export default {
     border-radius: 30px;
   }
 }
-
-
 
 .News {
   height: 700px;

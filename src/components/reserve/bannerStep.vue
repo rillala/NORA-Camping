@@ -26,18 +26,11 @@ export default {
       const currentStep = parseInt(
         sessionStorage.getItem('currentStep') || '1',
       );
-      let passPath = '';
-      //這邊判斷完之後再給予 passPath 的值, 用 temp 來執行 router.push 動作
       if (stepNumber <= currentStep) {
-        passPath = path;
+        this.$router.push(path);
       } else {
-        passPath = this.stepList[currentStep - 1].path;
         alert('您尚未完成上一步驟！');
       }
-      this.temp(passPath); //上面判斷完之後, 這邊才做動作
-    },
-    temp(path) {
-      this.$router.push(path);
     },
   },
 };
@@ -52,8 +45,8 @@ export default {
 
     <div class="bar">
       <div v-for="(step, index) in stepList" :key="index" class="dash-box">
-        <RouterLink
-          :to="step.path"
+        <!-- 這邊不要使用RouterLink，每一個步驟的input包在div中，根據步驟選擇開啟隱藏步驟，不然會很難做 // 01/21 checked -->
+        <div
           class="each-step"
           @click="handleStepClick(index + 1, step.path, $event)"
         >
@@ -61,7 +54,7 @@ export default {
             <span>STEP</span>{{ index + 1 }}
           </div>
           <p class="dark">{{ step.step }}</p>
-        </RouterLink>
+        </div>
 
         <!-- 在每個 Router-link 之間插入一個分隔符，除了最後一個 -->
         <div v-if="index < stepList.length - 1" class="separator bg-dark"></div>
@@ -106,7 +99,7 @@ export default {
 
 .banner-top {
   @include desktop {
-    width: 1200px;
+    max-width: 1200px;
     display: flex;
     align-items: end;
     justify-content: center;
@@ -163,6 +156,7 @@ export default {
 
 .each-step {
   text-decoration: none;
+  cursor: pointer;
   .box {
     width: 40px;
     height: 40px;
