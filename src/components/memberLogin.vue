@@ -108,17 +108,23 @@ export default {
       }
     };
   },
+created(){
+  // 判斷有沒有登入過，如果沒有token等同於沒有登入
+  const user = this.checkLogin()
+  if(user){
+    //有登入資訊轉到首頁
+    this.$router.push('/')
+  }
+  },
 
-  methods: {
+  methods:{
     closeLightbox() {
       // alert()
       if (this.isOpen) {
         this.isOpen = false;
       }
-    }
-  },
-  methods:{
-    ...mapActions(userStore,['updateToken']),
+    },
+    ...mapActions(userStore,['updateToken','updateName', 'checkLogin']),
     signin(){
       this.updateToken(123)
       console.log('login');
