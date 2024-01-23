@@ -6,7 +6,7 @@ import axios from 'axios';
 
 <template>
 <div class="banner-bgc">
-    <div class="title-wrap">
+    <div class="banner-wrap">
     <h2>野良露營</h2>
     <h4>放鬆身心最優選</h4>
     </div>
@@ -53,15 +53,13 @@ import axios from 'axios';
 </div>
 
 <div class="shelter-wrap">
-    <div class="shelter-pic">
-        <img src="#" alt="野良之家環境">
-    </div>
+    <div class="shelter-pic"></div>
     <div class="shelter-title-wrap">
         <h4 class="shelter-title">野良之家</h4>
         <p class="shelter-subtitle">野良 x 中途</p>
     </div>
     <p class="tinyp">
-        我們致力於照顧、庇護和尋找新的家園給需要幫助的流浪動物，並 提供免費的志工活動，一同為這些可愛的生命奉獻愛心。
+        我們致力於照顧、庇護和尋找新的家園給需要幫助的流浪動物，並提供免費的志工活動，一同為這些可愛的生命奉獻愛心。
     </p>
     <p class="tinyp">
     志工活動包括洗狗、打掃籠舍、餵食等，讓你有機會親身參與流浪動物的照顧，同時建立起與這些可愛生物的深厚連結。
@@ -141,7 +139,7 @@ import axios from 'axios';
 @import '../src/assets/sass/base/_color.scss';
 @import '../src/assets/sass/base/_text.scss';
 /*-----------------banner&背景漸層--------------------*/
-.title-wrap { //banner標題&副標題
+.banner-wrap { //banner標題&副標題
     padding-top: 70px;
     margin-left: 80px;
     color: $blue-4;
@@ -186,25 +184,43 @@ import axios from 'axios';
     width: 210px;
     height: 285px;
 }
+/*-----------------野良之家--------------------*/
+.shelter-wrap{
+    border-top: 1px solid $dark;
+}
+.shelter-pic{
+    margin: auto;
+    background-image: url(../assets/image/aboutView/shelter.jpg);
+    width: 95vw;
+    aspect-ratio: 3/2;
+    background-position: center;
+    background-size: cover;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.more-info{
+    border: none;
+    margin: auto;
+}
 /*-----------------營業時間--------------------*/
 .business-hours{//容器
     width: 90vw;
     margin: 20px auto ;
 }
 .hours-title-wrap{ //標題(手風琴)
+    background-color: $blue-3;
     color: $white01;
     border: none;
-    background-color: $blue-3;
+    text-align: start;
     width: 90vw;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    padding: 5px;
+    padding: 1em;
 }
 .business-hours>.info{      //內文
     background-color: $blue-2;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    padding: 5px;
-    text-indent: 1em;
+    padding: 1em;
 }
 </style>
