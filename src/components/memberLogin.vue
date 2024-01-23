@@ -31,12 +31,12 @@
             type="password"
             placeholder="請輸入密碼"
             v-model="user_add.pwd"
-          /><br />
+          /><br/>
           <input
             type="password"
             placeholder="再次輸入密碼"
             v-model="user_add.pwdConfirmation"
-          /><br />
+          /><br/>
 
           <div class="login-news">
             <input
@@ -69,15 +69,14 @@
             type="text"
             placeholder="請輸入信箱"
             v-model="user_enter.account"
-          /><br />
+          /><br/>
           <input
             type="password"
             placeholder="請輸入密碼"
             v-model="user_enter.pwd"
-          /><br />
-          <a class="forget-psw">忘記密碼？</a><br />
-          <!-- <router-link to="/" class="main-btn">會員登入</router-link><br> -->
-          <button class="main-btn" @click.prevent='signin'>會員登入</button><br/>
+          /><br/>
+          <a class="forget-psw">忘記密碼？</a><br/>
+          <button class="main-btn" @click='signin'>會員登入</button><br/>
           <button class="sub-btn">以Google登入</button>
         </form>
       </div>
@@ -86,6 +85,7 @@
 </template>
 
 <script>
+import { RouterLink, RouterView } from 'vue-router';
 import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
@@ -108,6 +108,7 @@ export default {
       }
     };
   },
+
   methods: {
     closeLightbox() {
       // alert()
@@ -125,7 +126,8 @@ export default {
       axios.post('https://fakestoreapi.com/auth/login', {
         username: "mor_2314",
         password: "83r5^_"
-      }, {
+      },
+      {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -136,6 +138,7 @@ export default {
           this.updateToken(response.data.token)
           console.log('login')
           console.log(response.data.token)
+          this.$router.push('/membercenter')
         }
       })
       .catch(error => {
