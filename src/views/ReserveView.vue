@@ -208,17 +208,14 @@ export default {
       selectSiteSum: 0,
     };
   },
-  computed: {
-    siteSum() {
-      // 返回計算結果
-      const selectSum = this.selectSiteList.reduce((acc, cur) => {
-        return (acc += cur.count);
-      }, 0);
-      return (this.selectSiteSum = selectSum);
-    },
-  },
+
   mounted() {
     this.selectSiteList = this.catSiteList;
+  },
+  computed: {
+    siteSum() {
+      return this.selectSiteList.reduce((acc, cur) => acc + cur.count, 0);
+    },
   },
   watch: {
     isWarningOpen(newVal, oldVal) {
@@ -227,7 +224,7 @@ export default {
   },
   methods: {
     goToNextStep(nextPath) {
-      if (this.selectSiteSum == 0) {
+      if (this.siteSum == 0) {
         this.$router.push('/reserve');
         alert('請先選擇日期及營位數量。');
       } else {
@@ -312,6 +309,19 @@ export default {
     },
   },
 };
+
+// 儲存和讀取的方法
+// watch: {
+//   siteSum(newValue) {
+//     localStorage.setItem('siteSum', newValue);
+//   }
+// }
+// mounted() {
+//   const storedSiteSum = localStorage.getItem('siteSum');
+//   if (storedSiteSum) {
+//     this.selectSiteSum = storedSiteSum;
+//   }
+// }
 </script>
 
 <template>
@@ -446,7 +456,7 @@ export default {
       </div>
     </div>
 
-    <div class="alert red01 tinyp" v-if="selectSiteSum == 0">
+    <div class="alert red01 tinyp" v-if="siteSum == 0">
       -您目前沒有選擇任何營位-
     </div>
 
