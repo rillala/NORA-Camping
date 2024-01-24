@@ -198,8 +198,18 @@ export default {
       chosenZone: 'cat',
       leftPosition: 0, // 追蹤.time-container的left值
       selectedSpan: 1, // 追蹤哪個span被選中
-      isDiscount: false,
+      hasDiscount: false,
+      selectSiteSum: 0,
     };
+  },
+  computed: {
+    siteSum() {
+      // 返回計算結果
+      return (this.selectSiteSum = this.selectSiteList.reduce(
+        (acc, cur) => acc + cur.count,
+        0,
+      ));
+    },
   },
   mounted() {
     this.selectSiteList = this.catSiteList;
@@ -211,18 +221,23 @@ export default {
   },
   methods: {
     goToNextStep(nextPath) {
-      if (sessionStorage.getItem('isStep1Clicked')) {
-        return;
+      if (this.selectSiteSum == 0) {
+        this.$router.push('/reserve');
+        alert('請先選擇日期及營位數量。');
       } else {
-        let currentStep = parseInt(
-          sessionStorage.getItem('currentStep') || '1',
-        );
-        currentStep++;
-        sessionStorage.setItem('currentStep', currentStep.toString());
-        if (nextPath) {
-          this.$router.push(nextPath);
+        if (sessionStorage.getItem('isStep1Clicked')) {
+          return;
+        } else {
+          let currentStep = parseInt(
+            sessionStorage.getItem('currentStep') || '1',
+          );
+          currentStep++;
+          sessionStorage.setItem('currentStep', currentStep.toString());
+          if (nextPath) {
+            this.$router.push(nextPath);
+          }
+          sessionStorage.setItem('isStep1Clicked', 'true');
         }
-        sessionStorage.setItem('isStep1Clicked', 'true');
       }
     },
     formatPrice(price) {
@@ -340,7 +355,7 @@ export default {
       <div class="box dark">
         <img :src="getImageUrl('moon.svg')" alt="night" />
         <h4><span>第一天是否為</span>夜衝：</h4>
-        <input type="checkbox" v-model="isDiscount" /><span class="p">是</span>
+        <input type="checkbox" v-model="hasDiscount" /><span class="p">是</span>
         <p>
           注意事項：夜衝可能會因天氣惡劣（如暴雨、強風等）而受限制。夜衝方案為每帳第一日優惠500元。
         </p>
@@ -423,6 +438,10 @@ export default {
           </div>
         </button>
       </div>
+    </div>
+
+    <div class="alert red01 tinyp" v-if="selectSiteSum == 0">
+      -您目前沒有選擇任何營位-
     </div>
 
     <!--下個步驟的按鈕-->

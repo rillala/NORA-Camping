@@ -78,11 +78,22 @@
     border-radius: $radius;
   }
 
+  @include desktop {
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
   h3 {
     font-weight: 700;
     margin-bottom: 10px;
     @include tablet {
       margin-bottom: 20px;
+    }
+    @include desktop {
+      width: 100%;
+      font-weight: 800;
     }
   }
 }
@@ -138,6 +149,10 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     justify-items: center;
+  }
+
+  @include desktop {
+    display: contents;
   }
 
   .box {
@@ -438,7 +453,7 @@
   padding: 10px;
   button {
     display: block;
-    margin: 0 auto;
+    width: 100%;
     border: none;
     background: transparent;
 
@@ -465,6 +480,9 @@
 
 .warning {
   padding: 10px;
+  @include desktop {
+    padding: 10px 10%;
+  }
 
   ul + ul {
     margin-top: 10px;
@@ -478,5 +496,12 @@
     margin-left: 15px;
     padding-bottom: 5px;
     list-style: disc;
+  }
+}
+
+.alert {
+  text-align: center;
+  @include tablet {
+    margin: 30px 0 0;
   }
 }
