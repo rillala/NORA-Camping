@@ -37,6 +37,7 @@ export default {
       selectSiteList: [],
       catSiteList: [
         {
+          type: 'cat',
           name: '草地區',
           icon: 'grass.svg',
           picList: [
@@ -63,6 +64,7 @@ export default {
           count: 0,
         },
         {
+          type: 'cat',
           name: '棧板區',
           icon: 'pallet.svg',
           picList: [
@@ -89,6 +91,7 @@ export default {
           count: 0,
         },
         {
+          type: 'cat',
           name: '雨棚區',
           icon: 'shed.svg',
           picList: [
@@ -117,6 +120,7 @@ export default {
       ],
       dogSiteList: [
         {
+          type: 'dog',
           name: '草地區',
           icon: 'grass.svg',
           picList: [
@@ -143,6 +147,7 @@ export default {
           count: 0,
         },
         {
+          type: 'dog',
           name: '棧板區',
           icon: 'pallet.svg',
           picList: [
@@ -169,6 +174,7 @@ export default {
           count: 0,
         },
         {
+          type: 'dog',
           name: '雨棚區',
           icon: 'shed.svg',
           picList: [
@@ -205,10 +211,10 @@ export default {
   computed: {
     siteSum() {
       // 返回計算結果
-      return (this.selectSiteSum = this.selectSiteList.reduce(
-        (acc, cur) => acc + cur.count,
-        0,
-      ));
+      const selectSum = this.selectSiteList.reduce((acc, cur) => {
+        return (acc += cur.count);
+      }, 0);
+      return (this.selectSiteSum = selectSum);
     },
   },
   mounted() {

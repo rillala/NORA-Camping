@@ -70,7 +70,7 @@ body {
   top: 0;
   left: calc(90% - 50px);
   height: 100%;
-  padding: 20px 0;
+  padding: 20px 0 80px;
   z-index: 2;
   pointer-events: none;
 }
