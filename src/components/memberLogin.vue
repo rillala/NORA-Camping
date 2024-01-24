@@ -21,7 +21,7 @@
         </div>
 
         <!-- 註冊頁面 -->
-        <form v-if="showRegisterForm">
+        <form v-if="showRegisterForm" action="javascript:void(0);">
           <input
             type="text"
             placeholder="請輸入信箱"
@@ -64,7 +64,7 @@
           </form>
 
         <!-- 登入頁面 -->
-        <form v-else>
+        <form v-else action="javascript:void(0);">
           <input
             type="text"
             placeholder="請輸入信箱"
@@ -128,6 +128,8 @@ created(){
     signin(){
       this.updateToken(123)
       console.log('login');
+      //關閉燈箱
+      //this.isOpen = false;
 
       axios.post('https://fakestoreapi.com/auth/login', {
         username: "mor_2314",
