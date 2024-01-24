@@ -12,35 +12,36 @@
       <li><router-link to="/membercampsiteorders" class="memberlink">營地訂單</router-link></li>
     </ul>
   </div>
-
   <div class="info-container">
     <section class="info-box">
       <div v-if="!isEditing" >
         <h4>個人資訊</h4>
-        <p class="member-no">會員編號</p> 
-        <p >會員姓名  {{ memberInfo.name }}</p>
-        <p >會員信箱  {{ memberInfo.email }}</p>
-        <p >會員電話  {{ memberInfo.phone }}</p>
-        <p >會員地址  {{ memberInfo.address }}</p>
+        <div class="inner">
+          <p class="member-title-1 member-no">會員編號</p><span>0000001</span>
+        </div>
+        <p class="member-title-1">會員姓名  {{ memberInfo.name }}</p>
+        <p class="member-title-1">會員信箱  {{ memberInfo.email }}</p>
+        <p class="member-title-1">會員電話  {{ memberInfo.phone }}</p>
+        <p class="member-title-1">會員地址  {{ memberInfo.address }}</p>
         <div class="box"><button class="startEditing" @click="startEditing">編輯</button></div>
       </div>
 
       <div v-else >
         <h4>個人資訊</h4>
         <div class="inner">
-          <p class="member-no">會員編號</p><span class="member-no">111</span>
+          <p class="member-title-2 member-no">會員編號:</p><span>0000001</span>
         </div>
         <div class="inner">
-          <p class="info-title">會員姓名:</p>  <input v-model="editMemberInfo.name" placeholder="姓名" class="info"/>
+          <p class="member-title-2 info-title">會員姓名:</p>  <input v-model="editMemberInfo.name" placeholder="姓名" class="info-input"/>
         </div>
         <div class="inner">
-          <p>會員信箱:</p>  <input v-model="editMemberInfo.email" placeholder="email" class="info">
+          <p class="member-title-2">會員信箱:</p>  <input v-model="editMemberInfo.email" placeholder="email" class="info-input">
         </div>
         <div class="inner">
-          <p>會員電話:</p>  <input v-model="editMemberInfo.phone" placeholder="電話" class="info"/>
+          <p class="member-title-2">會員電話:</p>  <input v-model="editMemberInfo.phone" placeholder="電話" class="info-input"/>
         </div>
         <div class="inner">
-          <p>會員地址:</p>  <input v-model="editMemberInfo.address" placeholder="地址" class="info"/>
+          <p class="member-title-2">會員地址:</p>  <input v-model="editMemberInfo.address" placeholder="地址" class="info-input"/>
         </div>
 
         <div class="box">
@@ -53,9 +54,9 @@
     <section class="password-box">
       <div v-if="!isEditingPassword" >
         <h4>修改密碼</h4>
-        <p class="password">舊密碼 {{ oldPassword }}</p>
-        <p class="password">新密碼 {{ newPassword }}</p>
-        <p class="password">再次確認密碼 {{ confirmPassword }}</p>
+        <p class="password password-title-1" value="disabled">請輸入舊密碼 {{ oldPassword }}</p>
+        <p class="password password-title-1" value="disabled">請輸入新密碼 {{ newPassword }}</p>
+        <p class="password password-title-1" value="disabled">再確認新密碼 {{ confirmPassword }}</p>
         <div class="box">
           <button class="save-changes" @click="startEditingPassword">修改密碼</button>
           <button class="logout">登出</button>
@@ -64,9 +65,9 @@
       
       <div v-else>
         <h4>修改密碼</h4>
-        <label>請輸入舊密碼: <input type="password" v-model="oldPassword" placeholder="輸入舊密碼" class="info"/></label><br/>
-        <label>請輸入新密碼: <input type="password" v-model="newPassword" placeholder="輸入新密碼" class="info"/></label><br/>
-        <label>再次確認新密碼: <input type="password" v-model="confirmPassword" placeholder="再次確認新密碼" class="info"/></label><br/>  
+        <label class="password-title-2">請輸入舊密碼: <input type="password" v-model="oldPassword"  class="psw-input"/></label><br/>
+        <label class="password-title-2">請輸入新密碼: <input type="password" v-model="newPassword"  class="psw-input"/></label><br/>
+        <label class="password-title-2">再確認新密碼: <input type="password" v-model="confirmPassword" class="psw-input"/></label><br/>  
         
         <div class="box"><button class="savePasswordChanges" @click="savePasswordChanges">儲存</button></div>
       </div>
@@ -216,14 +217,21 @@ h4{
   }
 
 }
-.info{
+.info-input{
   border:none;
   outline: none;
-  padding-left:5px;
   border-bottom: 1px solid #000;
+  width:200px;
   @include font-style(16px, 400, 1%, 160%);
 }
 
+.psw-input{
+  border:none;
+  outline: none;
+  border-bottom: 1px solid #000;
+  width:180px;
+  @include font-style(16px, 400, 1%, 160%);
+}
 .startEditing, .save-changes, .savePasswordChanges {
   background-color: $blue-3;
   border: none;
@@ -284,9 +292,42 @@ p{
 
 .inner{
   display: flex;
+  align-items: center; 
 }
 
 label{
   @include font-style(16px, 400, 1%, 160%);
+}
+
+.password-title-1, 
+.password-title-2
+{
+  padding-left:20px;
+  white-space:no-wrap;
+  @include font-style(16px, 400, 1%, 160%);
+
+// 平板 + 桌機板
+  @include tablet {
+    @include font-style(20px, 400, 1%, 160%);
+  }
+}
+
+.member-title-1, 
+.member-title-2{
+  padding-left:20px;
+  margin-right:4px;
+}
+
+.password-title-1:hover {
+    cursor: not-allowed;  
+}
+
+span{
+  @include font-style(16px, 400, 1%, 160%);
+
+// 平板 + 桌機板
+  @include tablet {
+  @include font-style(20px, 400, 1%, 160%);
+  }
 }
 </style>
