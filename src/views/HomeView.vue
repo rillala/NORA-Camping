@@ -1,40 +1,43 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
-import actionBtn from '@/components/button/actionBtn.vue'
-import viewMoreBtn from '@/components/button/viewMoreBtn.vue'
+import actionBtn from '@/components/button/actionBtn.vue';
+import viewMoreBtn from '@/components/button/viewMoreBtn.vue';
 
 export default {
   components: {
     actionBtn,
-    viewMoreBtn
+    viewMoreBtn,
   },
   data() {
     return {
       things: [
-        { src: "camp_tent_maru" },
-        { src: "camp_tent" },
-        { src: "cat_koubakozuwari_gray" },
-        { src: "cat_kuroashineko" },
-        { src: "dog_akitainu" },
-        { src: "dog_corgi_tricolor" },
-        { src: "kagu_camp_chair" },
-        { src: "neko_ushiro" },
-        { src: "takibi" },
-        { src: "youkai_jinmenken" },
+        { src: 'camp_tent_maru' },
+        { src: 'camp_tent' },
+        { src: 'cat_koubakozuwari_gray' },
+        { src: 'cat_kuroashineko' },
+        { src: 'dog_akitainu' },
+        { src: 'dog_corgi_tricolor' },
+        { src: 'kagu_camp_chair' },
+        { src: 'neko_ushiro' },
+        { src: 'takibi' },
+        { src: 'youkai_jinmenken' },
       ],
       weathers: [
-        { src: "hare" },
-        { src: "hare_kumori.png" },
-        { src: "kumori_ame.png" },
-        { src: "kumori.png" }
+        { src: 'hare' },
+        { src: 'hare_kumori.png' },
+        { src: 'kumori_ame.png' },
+        { src: 'kumori.png' },
       ],
       search: '',
     };
   },
   methods: {
     getImageUrl(paths) {
-      return new URL(`../assets/image/homeView/movingThings/${paths}`, import.meta.url).href
+      return new URL(
+        `../assets/image/homeView/movingThings/${paths}`,
+        import.meta.url,
+      ).href;
     },
   },
   watch: {
@@ -50,9 +53,9 @@ export default {
       //如果畫面一開始就要監聽設定成true
       // immediate: true
       //如果監聽陣列或物件用設定成true
-      deep: true
-    }
-  }
+      deep: true,
+    },
+  },
 };
 </script>
 
@@ -91,18 +94,16 @@ export default {
           <h4>營地目前天氣</h4>
           <img src="" />
           <p>天氣</p>
-          <div id="weatherMark">
-          </div>
+          <div id="weatherMark"></div>
           <p>溫度</p>
-          <div id="weatherTemperature">
-          </div>
+          <div id="weatherTemperature"></div>
         </div>
       </div>
     </div>
     <div class="News bg-blue-3">
       <div class="News-withsearch">
         <h2>最新消息</h2>
-        <input type="text" v-model.trim="search">
+        <input type="text" v-model.trim="search" />
       </div>
       <div class="News-container white01">
         <ul>
@@ -114,8 +115,7 @@ export default {
     </div>
     <div class="New-products bg-blue-2">
       <h2>野良選物X最新商品</h2>
-      <div class="product-container">
-      </div>
+      <div class="product-container"></div>
       <viewMoreBtn :content="'逛逛其他好物'" />
     </div>
     <div class="stray-home">
@@ -123,42 +123,6 @@ export default {
     </div>
   </div>
 </template>
-
-<script>
-// 引入函式庫
-import axios from 'axios';
-import actionBtn from '@/components/button/actionBtn.vue';
-
-export default {
-  components: {
-    actionBtn,
-  },
-  data() {
-    return {
-      things: [
-        { src: 'camp_tent_maru' },
-        { src: 'camp_tent' },
-        { src: 'cat_koubakozuwari_gray' },
-        { src: 'cat_kuroashineko' },
-        { src: 'dog_akitainu' },
-        { src: 'dog_corgi_tricolor' },
-        { src: 'kagu_camp_chair' },
-        { src: 'neko_ushiro' },
-        { src: 'takibi' },
-        { src: 'youkai_jinmenken' },
-      ],
-    };
-  },
-  methods: {
-    getImageUrl(paths) {
-      return new URL(
-        `../assets/image/homeView/movingThings/${paths}`,
-        import.meta.url,
-      ).href;
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .Homepage-banner {
