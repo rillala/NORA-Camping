@@ -61,6 +61,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/shopItem/:id',
+      name: 'shopItem',
+      component: () => import('../views/ShopItemView.vue'),
+      meta: {
+        title: '野良選物 NORA Shop',
+      },
+    },
+    {
       path: '/camp',
       name: 'camp',
       component: () => import('../views/CampView.vue'),

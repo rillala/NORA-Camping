@@ -1,0 +1,507 @@
+* {
+  transform: 0.3s ease-in;
+}
+
+#switch-btn {
+  position: relative;
+  width: calc(100% - 40px);
+  height: 48px;
+  margin: 20px auto;
+
+  display: flex;
+  align-items: center;
+  border: 5px solid $blue-3;
+  border-radius: $radius;
+  overflow: hidden;
+
+  @include tablet {
+    width: 600px;
+    height: 78px;
+    border: 9px solid $blue-3;
+  }
+
+  button {
+    position: absolute;
+    z-index: 2;
+    width: 52%;
+    height: 38px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: $radius - 5px;
+    background: $blue-3;
+    color: $white01;
+    @include font-style(20px, 700, 5%, 125%);
+
+    @include tablet {
+      height: 60px;
+      @include font-style(32px, 700, 5%, 125%);
+    }
+
+    img {
+      width: 25px;
+      vertical-align: bottom;
+      margin-right: 10px;
+      @include tablet {
+        width: 45px;
+      }
+    }
+  }
+}
+
+#cat-zone-btn {
+  left: 0;
+}
+
+#dog-zone-btn {
+  right: 0;
+}
+
+.chosen-zone {
+  background: $white01 !important;
+  color: $dark !important;
+  z-index: 3 !important;
+}
+
+#time-rule {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+
+  @include tablet {
+    max-width: 600px;
+    margin: 0 auto;
+    background: $blue-2;
+    border-radius: $radius;
+  }
+
+  @include desktop {
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  h3 {
+    font-weight: 700;
+    margin-bottom: 10px;
+    @include tablet {
+      margin-bottom: 20px;
+    }
+    @include desktop {
+      width: 100%;
+      font-weight: 800;
+    }
+  }
+}
+
+.time-scroll {
+  position: relative;
+  width: 280px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  @include tablet {
+    display: contents;
+  }
+
+  .scroll-chose {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    @include tablet {
+      display: none;
+      overflow: hidden;
+    }
+
+    span {
+      display: block;
+      width: 15px;
+      height: 15px;
+      border-radius: 10px;
+      background: $light-gray;
+    }
+
+    span + span {
+      margin-left: 20px;
+    }
+
+    .chose-span {
+      background: $dark-gray;
+    }
+  }
+}
+
+.time-container {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+
+  @include tablet {
+    max-width: 600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+  }
+
+  @include desktop {
+    display: contents;
+  }
+
+  .box {
+    flex-shrink: 0;
+    width: 280px;
+    height: 150px;
+    background: $white01;
+    border: 5px solid $blue-3;
+    border-radius: $radius;
+
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    overflow: hidden;
+
+    @include tablet {
+      width: 250px;
+    }
+
+    .title {
+      padding: 10px 0;
+      @include font-style(24px, 400, 5%, 125%);
+    }
+    .time1,
+    .time2 {
+      @include font-style(20px, 400, 5%, 125%);
+    }
+  }
+}
+
+#isnight {
+  margin: 0 auto;
+
+  @include tablet {
+    margin: 20px auto;
+  }
+
+  .box {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+
+    @include tablet {
+      max-width: 600px;
+      padding: 0;
+      margin: 0 auto;
+    }
+
+    @include desktop {
+      max-width: 1200px;
+      padding: 20px 40px 0;
+    }
+
+    img {
+      width: 24px;
+      margin-right: 10px;
+      @include tablet {
+        width: 30px;
+      }
+    }
+
+    h4 {
+      font-weight: 700;
+      @include only-mobile {
+        font-size: 24px;
+      }
+
+      span {
+        @include only-mobile {
+          display: none;
+        }
+      }
+    }
+
+    p {
+      width: 100%;
+      display: block;
+      margin: 10px 0 0 0;
+      @include font-style(14px, 400, 5%, 125%);
+      @include tablet {
+        @include font-style(20px, 400, 5%, 125%);
+      }
+      @include desktop {
+        margin: 10px 0 0;
+      }
+    }
+
+    input {
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      border: 1px solid $dark;
+      margin-right: 10px;
+    }
+  }
+}
+
+.site-list {
+  width: 100%;
+  padding: 20px;
+
+  @include tablet {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0;
+  }
+
+  @include desktop {
+    max-width: 1200px;
+    padding: 40px;
+  }
+
+  .info {
+    @include desktop {
+      display: flex;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.site-list .site {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+
+  img {
+    width: 24px;
+    margin-right: 10px;
+    @include tablet {
+      width: 30px;
+    }
+  }
+
+  h4 {
+    font-weight: 700;
+    @include only-mobile {
+      font-size: 24px;
+    }
+  }
+
+  .line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 10px;
+    background: $dark;
+  }
+}
+
+.site-list .img {
+  position: relative;
+  display: flex;
+  padding: 0;
+  height: 190px;
+
+  @include tablet {
+    height: 330px;
+  }
+
+  @include desktop {
+    width: 54%;
+    height: 300px;
+    flex-shrink: 0;
+    justify-content: space-evenly;
+  }
+
+  button {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+
+    @include desktop {
+      position: static;
+    }
+
+    img {
+      width: 20px;
+
+      @include desktop {
+        width: 50px;
+      }
+    }
+  }
+
+  .left {
+    left: -15px;
+  }
+
+  .right {
+    right: -15px;
+  }
+
+  .show {
+    width: 100%;
+    padding: 8px;
+    border-radius: $radius;
+    overflow: hidden;
+
+    @include desktop {
+      width: 80%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: $radius - 8px;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+@media (width >= 1440px) {
+  .site-list .img {
+    height: 360px;
+  }
+}
+
+.site-list .text {
+  padding: 5px;
+
+  @include desktop {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+  }
+
+  .price {
+    text-align: center;
+    @include font-style(24px, 700, 20%, 125%);
+
+    @include desktop {
+      text-align: left;
+      @include font-style(32px, 700, 20%, 125%);
+    }
+  }
+}
+
+.num-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+
+  @include tablet {
+    margin: 20px auto;
+  }
+
+  @include desktop {
+    margin: 0;
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border-radius: 50%;
+    border: 3px solid $dark;
+
+    .minus-icon {
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+    }
+    .add-icon {
+      position: absolute;
+      translate: 90deg;
+      width: 3px;
+      height: 20px;
+      border-radius: 2px;
+    }
+  }
+
+  input {
+    width: 120px;
+    height: 45px;
+    margin: 0 10px;
+    border-radius: $radius;
+    border: none;
+    text-align: center;
+    @include font-style(32px, 700, 10%, 125%);
+  }
+}
+
+.notice {
+  border-radius: $radius;
+  padding: 10px;
+  button {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+
+    .btn-icon {
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 16px;
+        margin-right: 5px;
+
+        @include tablet {
+          width: 20px;
+        }
+        @include desktop {
+          width: 25px;
+        }
+      }
+    }
+  }
+}
+
+.warning {
+  padding: 10px;
+  @include desktop {
+    padding: 10px 10%;
+  }
+
+  ul + ul {
+    margin-top: 10px;
+  }
+  .title {
+    margin: 0 0 5px;
+    font-weight: 700;
+  }
+
+  .content {
+    margin-left: 15px;
+    padding-bottom: 5px;
+    list-style: disc;
+  }
+}
+
+.alert {
+  text-align: center;
+  @include tablet {
+    margin: 30px 0 0;
+  }
+}
