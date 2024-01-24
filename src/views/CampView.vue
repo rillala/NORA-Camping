@@ -23,118 +23,168 @@ export default {};
 
     <!-- 立體地圖下方旗子區塊 -->
     <div class="guide-flags">
-      <img
-        src="/src/assets/image/campGuide/flag_m_left2.png"
-        alt="立體地圖區塊左側旗子"
-      />
-      <img
-        src="/src/assets/image/campGuide/flag_m_right2.png"
-        alt="立體地圖區塊右側旗子"
-      />
+      <div class="guide-flag-left">
+        <img
+          src="/src/assets/image/campGuide/left-flag-m.svg"
+          alt="立體地圖區塊左側旗子"
+        />
+      </div>
+      <div class="guide-flag-right">
+        <img
+          src="/src/assets/image/campGuide/right-flag-m.svg"
+          alt="立體地圖區塊右側旗子"
+        />
+      </div>
     </div>
 
     <!-- 導覽卡片區塊 -->
     <div class="guide-card">
+      <img class="paw1" src="/src/assets/image/campGuide/paw.svg" alt="腳印">
+      <img class="paw2" src="/src/assets/image/campGuide/paw2.svg" alt="腳印">
+      <img class="paw3" src="/src/assets/image/campGuide/paw.svg" alt="腳印">
+      <img class="paw4" src="/src/assets/image/campGuide/paw2.svg" alt="腳印">
+      <img class="paw5" src="/src/assets/image/campGuide/paw.svg" alt="腳印">
+      <img class="paw6" src="/src/assets/image/campGuide/paw2.svg" alt="腳印">
+      <img class="paw7" src="/src/assets/image/campGuide/paw.svg" alt="腳印">
+      <img class="paw8" src="/src/assets/image/campGuide/paw.svg" alt="腳印">
+      <img class="paw9" src="/src/assets/image/campGuide/paw.svg" alt="腳印">
+      <img class="paw10" src="/src/assets/image/campGuide/paw2.svg" alt="腳印">
+      <img class="dog-icon" src="/src/assets/image/campGuide/dog_card_icon.svg" alt="狗狗icon">
       <!-- 狗區導覽卡片 -->
-      <div class="area-card">
-        <img src="" alt="狗區導覽圖一" />
-        <img src="" alt="狗區導覽圖二" />
-        <p class="area-title">狗區</p>
-        <p class="area-dtl">
-          舒適寬敞的大空間，<br />讓毛孩能自在跑跑跳跳！<br />跟主人一起創造美好又快樂的回憶！<br />
-        </p>
-        <p class="area-dtl">
-          本區配有安全圍欄，<br />確保寵物在視線範圍內自由玩耍，<br />同時區內設有專門的寵物廢物處理站，以保持環境衛生。
-        </p>
-        <p class="area-list-title">營地類型：</p>
-        <ul class="area-list">
-          <li>草地區：15個營位，有足夠空間讓狗狗活動。</li>
-          <li>雨棚區：10個營位，為愛犬和主人提供額外遮蔽空間。</li>
-          <li>棧板區：10個營位，保持乾燥，適合帶狗露營者。</li>
-        </ul>
+      <div class="area-card area-dog-card">
+        <img src="/src/assets/image/campGuide/campsite-dog-grass-3.png" alt="狗區導覽圖一" />
+        <img src="/src/assets/image/campGuide/campsite-dog-pallet-4.png" alt="狗區導覽圖二" />
+        <div class="dog-card-dtl card-dtl">
+          <h4 class="area-title">狗區</h4>
+          <p class="area-dtl text">
+            舒適寬敞的大空間，<br>
+            讓毛孩能自在跑跑跳跳！<br>
+            跟主人一起創造美好又快樂的回憶！
+          </p>
+          <p class="area-dtl text">
+            本區配有安全圍欄，<br>
+            確保寵物在視線範圍內自由玩耍，<br>
+            區內設有專門寵物排泄物處理站，以保持環境衛生。
+          </p>
+          <p class="area-list-title">營地類型：</p>
+          <ul class="area-list list">
+            <li>草地區：有足夠空間讓狗狗活動。</li>
+            <li>雨棚區：為愛犬和主人提供額外遮蔽空間。</li>
+            <li>棧板區：保持乾燥，適合帶狗露營者。</li>
+          </ul>
+        </div>
         <button class="reserve-btn">我要預約</button>
       </div>
 
       <!-- 貓區導覽卡片 -->
-      <div class="area-card">
-        <img src="" alt="貓區導覽圖一" />
-        <img src="" alt="貓區導覽圖二" />
-        <p class="area-title">貓區</p>
-        <p class="area-dtl">
-          安靜又舒適的環境，<br />讓貓咪和貓奴們可以享受寧靜的露營體驗。
-        </p>
-        <p class="area-dtl">
-          專為喜歡安靜休息的露營者及其貓咪同伴而設。<br />
-          本區提供良好遮蔽，並有貓爬架和多個休憩處，<br />讓貓咪能在自然環境中探索，而不會遠離主人的視線。
-        </p>
-        <p class="area-list-title">營地類型：</p>
-        <ul class="area-list">
-          <li>草地區：10個營位</li>
-          <li>雨棚區：5個營位，提供給需要額外遮蔽的露營者。</li>
-          <li>棧板區：5個營位，適合全天候使用。</li>
-        </ul>
+      <img class="cat-icon" src="/src/assets/image/campGuide/cat_card_icon.svg" alt="貓咪icon">
+      <div class="area-card area-cat-card">
+        <img src="/src/assets/image/campGuide/campsite-cat-pallet-3.png" alt="貓區導覽圖一" />
+        <img src="/src/assets/image/campGuide/campsite-cat-pallet-4.png" alt="貓區導覽圖二" />
+        <div class="cat-card-dtl card-dtl">
+          <h4 class="area-title">貓區</h4>
+          <p class="area-dtl text">
+            安靜又舒適的環境，<br>
+            讓貓咪和貓奴們可以享受寧靜的露營體驗。
+          </p>
+          <p class="area-dtl text">
+            專為喜歡安靜的露營者及貓咪同伴而設，<br>
+            提供良好遮蔽及貓爬架和多個休憩處，<br>
+            讓貓咪能在自然環境中探索，<br>
+            不會遠離主人的視線。
+          </p>
+          <p class="area-list-title">營地類型：</p>
+          <ul class="area-list list">
+            <li>草地區：適合貓咪與主人一起悠哉躺平！</li>
+            <li>雨棚區：提供給需要額外遮蔽的露營者。</li>
+            <li>棧板區：適合全天候使用。</li>
+          </ul>
+        </div>
         <button class="reserve-btn">我要預約</button>
+      </div>
+
+      <!-- 草跟貓咪的圖區塊 -->
+      <div class="cat-area-grass-img">
+        <img src="/src/assets/image/campGuide/grass_icon.svg" alt="草的圖片">
+        <img src="/src/assets/image/campGuide/gray_cat_icon.svg" alt="灰色貓咪圖片">
+        <img src="/src/assets/image/campGuide/grass_icon.svg" alt="草的圖片">
       </div>
     </div>
 
-    <!-- 中途之家區塊 -->
-    <div class="guide-shelter">
-      <img src="" alt="中途之家區塊大圖" />
-      <img src="" alt="中途之家愛心圖形" />
-      <p class="shelter-title">中途之家</p>
-      <p class="shelter-dtl">
-        小小安置流浪貓狗的臨時住所，<br />
-        若喜歡貓貓狗狗的你，<br />
-        這裡的小動物都在等待他們的家，<br />
-        歡迎在旅途中來看看牠們！<br />
-        給彼此一個互相認識的機會！
-      </p>
-      <button class="shelter-btn">更多中途之家介紹</button>
-    </div>
+    <div class="shelter-office-bg">
+      <!-- 中途之家區塊 -->
+      <div class="guide-shelter">
+        <img src="/src/assets/image/campGuide/shelter_big_img.jpg" alt="中途之家區塊大圖" />
+        <div class="guide-shelter-info">
+          <h4 class="guide-shelter-title">中途之家</h4>
+          <p class="guide-shelter-dtl text">
+            小小安置流浪貓狗的臨時住所，<br />
+            若喜歡貓貓狗狗的你，<br />
+            這裡的小動物都在等待他們的家，<br />
+            歡迎在旅途中來看看牠們！<br />
+            給彼此一個互相認識的機會！
+          </p>
+          <button class="guide-shelter-btn">更多中途之家介紹</button>
+        </div>
+      </div>
 
-    <!-- 辦公區區塊 -->
-    <div class="guide-office">
-      <img src="" alt="" />
-      <div class="area-office">
-        <p class="office-title">辦公區</p>
-        <p>位於營地入口處，包含</p>
-        <ul>
-          <li>裝備租借區</li>
-          <li>小型倉庫可存放裝備</li>
-          <li>男、女廁及無障礙廁所各一間</li>
-          <li>緊急醫療站</li>
-          <li>販賣機一部、冰箱一台</li>
-        </ul>
+      <!-- 辦公區區塊 -->
+      <div class="guide-office">
+        <img src="/src/assets/image/campGuide/office_m.jpg" alt="辦公區域圖片" />
+        <div class="area-office">
+          <h4 class="office-title">辦公區</h4>
+          <p class="office-text text">位於營地入口處，包含</p>
+          <ul class="office-list list">
+            <li>裝備租借區</li>
+            <li>小型倉庫可存放裝備</li>
+            <li>男、女廁及無障礙廁所各一間</li>
+            <li>緊急醫療站</li>
+            <li>販賣機一部、冰箱一台</li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <!-- 跑馬燈 -->
     <div class="guide-marquee">
-      <p class="guide-marquee-dtl">WELCOME TO NORA CAMP !</p>
-      <p class="guide-marquee-dtl">LET’S GO CAMPING !</p>
+      <img src="/src/assets/image/campGuide/marquee.svg" alt="跑馬燈">
     </div>
 
     <!-- 營地資訊區塊 -->
     <div class="guide-camp-info-bg">
       <div class="guide-camp-info-title">
-        <img src="" alt="營地資訊標題掛旗" />
-        <p class="camp-info-title">營地資訊</p>
+        <img src="/src/assets/image/campGuide/signboard_m.svg" alt="營地資訊標題掛旗" />
+        <h4 class="camp-info-title">營地資訊</h4>
       </div>
       <div class="camp-cloud">
-        <img src="" alt="營地資訊裝飾大雲朵" />
+        <img src="/src/assets/image/campGuide/cloud_m_large.svg" alt="營地資訊裝飾大雲朵" />
+        <img src="/src/assets/image/campGuide/cloud_m_small.svg" alt="營地資訊裝飾小雲朵" />
         <p class="camp-cloud-words">遠離塵囂！<br />放鬆身心靈！</p>
-        <img src="" alt="營地資訊裝飾小雲朵" />
       </div>
       <div class="guide-camp-info">
-        <img src="" alt="營地資訊帳篷圖形" />
+        <img class="bigtent" src="/src/assets/image/campGuide/guide_info_bigtent.svg" alt="營地資訊帳篷圖形" />
         <ul class="camp-info">
           <li>地址：南投縣仙山鄉翠湖路1號</li>
           <li>電話：0988-123-456</li>
           <li>Email：info@noracamp.com</li>
-          <li>@NORACampOfficial</li>
-          <li>@noracamp_adventures</li>
-          <li>@NORACamp</li>
         </ul>
+      </div>
+      <div class="camp-info-social">
+        <div class="fb">
+          <img src="/src/assets/image/campGuide/fb_icon.svg" alt="Facebook icon">
+          <p>@NORACampOfficial</p>
+        </div>
+        <div class="ig">
+          <img src="/src/assets/image/campGuide/ig_icon.svg" alt="Instagram icon">
+          <p>@noracamp_adventures</p>
+        </div>
+        <div class="line">
+          <img src="/src/assets/image/campGuide/line_icon.svg" alt="Line icon">
+          <p>@NORACamp</p>
+        </div>
+      </div>
+      <div class="camp-info-map">
+        <img src="" alt="手繪地圖">
       </div>
     </div>
 
@@ -143,7 +193,7 @@ export default {};
       <img src="" alt="設施介紹區塊三角旗" />
       <div class="guide-facility-intro-title">
         <img src="" alt="設施介紹標題掛旗" />
-        <p class="facility-intro-title">設施介紹</p>
+        <h4 class="facility-intro-title">設施介紹</h4>
       </div>
       <div class="facility-cloud">
         <img src="" alt="設施介紹裝飾大雲朵" />
@@ -179,7 +229,7 @@ export default {};
       <img src="" alt="營區規範區塊三角旗" />
       <div class="guide-rules-title">
         <img src="" alt="營區規範標題掛旗" />
-        <p class="rules-title">營區規範</p>
+        <h4 class="rules-title">營區規範</h4>
       </div>
       <div class="rules-cloud">
         <img src="" alt="營區規範裝飾大雲朵" />
@@ -211,28 +261,35 @@ export default {};
 </template>
 
 <style lang="scss" scoped>
-.guide-banner {
+
+.guide-banner { //Banner區塊
   height: 200px;
   width: 100%;
   background-color: $blue-1;
   color: $blue-4;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.guide-map {
+.guide-map { //立體地圖區塊
   width: 100%;
   background: linear-gradient(
     to bottom,
     rgba(139, 252, 239, 0.7),
+    rgba(139, 252, 239, 0.5),
     rgba(139, 252, 239, 0)
   );
 }
 
-.guide-flags {
+.guide-flags { //旗子區塊
   display: flex;
   justify-content: space-between;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-@keyframes flagWaveLeft {
+@keyframes flagWaveLeft { //左旗動畫
   0% {
     transform: rotateZ(10deg);
   }
@@ -250,7 +307,7 @@ export default {};
   }
 }
 
-@keyframes flagWaveRight {
+@keyframes flagWaveRight { //右旗動畫
   0% {
     transform: rotateZ(-10deg);
   }
@@ -267,14 +324,282 @@ export default {};
     transform: rotateZ(-20deg);
   }
 }
-.guide-flag-left {
+.guide-flag-left { //左旗動畫
   animation: flagWaveLeft 0.8s infinite alternate;
 }
-.guide-flag-right {
+.guide-flag-right { //右旗動畫
   animation: flagWaveRight 0.8s infinite alternate;
 }
 
-.guide-map img {
+.guide-map img { //立體地圖
   width: 100%;
 }
+
+.guide-card { //導覽卡片最外層
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(226, 219, 62, 0.7),
+    rgba(226, 219, 62, 0.5),
+    rgba(226, 219, 62, 0.3),
+  );
+  position: relative;
+}
+
+.paw1 { //腳印
+  position: absolute;
+  right: 0;
+}
+.paw2 { //腳印
+  position: absolute;
+  left: 0;
+  top: 3%;
+}
+
+.paw3 { //腳印
+  position: absolute;
+  left: 0;
+  top: 15%;
+}
+
+.paw4 { //腳印
+  position: absolute;
+  right: 0;
+  top: 12%;
+}
+
+.paw5 { //腳印
+  position: absolute;
+  right: 0;
+  top: 23%;
+}
+
+.paw6 { //腳印
+  position: absolute;
+  left: 0;
+  top: 38%;
+}
+.paw7 { //腳印
+  position: absolute;
+  right: 0;
+  top: 35%;
+}
+
+.paw8 { //腳印
+  position: absolute;
+  left: 0;
+  top: 55%;
+}
+
+.paw9 { //腳印
+  position: absolute;
+  right: 0;
+  top: 62%;
+}
+
+.paw10 { //腳印
+  position: absolute;
+  right: 0;
+  top: 42%;
+}
+
+.cat-area-grass-img { //草跟貓的圖
+  display: flex;
+  align-items: last baseline;
+}
+
+h4 {
+  text-align: center;
+}
+
+.area-card { //導覽卡片內層
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  border-radius: $radius;
+  background-color: $blue-3;
+  color: $white01;
+}
+
+.area-card img { //導覽卡片內層圖片
+  padding-bottom: 10px;
+  width: 100%;
+  border-radius: $radius;
+}
+
+.card-dtl { //狗區貓區的卡片內容
+  padding: 10px 0px;
+}
+
+.area-dtl { //狗區貓區的卡片內容p
+  padding: 10px 0px;
+}
+
+.list { //狗區貓區的清單
+  list-style-type: disc;
+}
+
+.shelter-office-bg {
+  background: linear-gradient(
+    to bottom,
+    rgba(226, 219, 62, 0.3),
+    rgba(226, 219, 62, 0)
+  );
+}
+
+.guide-shelter { //中途之家大區塊
+  position: relative;
+}
+
+.guide-shelter img { //中途之家的圖片
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.guide-shelter-info { //中途之家的資訊
+  position: absolute;
+  top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: $white01;
+  padding: 20px 0px;
+}
+
+.guide-shelter-dtl {
+  padding: 20px 0px;
+}
+
+.guide-office { 
+  position: relative;
+}
+
+.guide-office img { //辦公區圖片
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.area-office {
+  position: absolute;
+  top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: $dark;
+  padding: 20px 0px;
+}
+
+.office-text {
+  padding-top: 10px;
+}
+
+.office-list {
+  padding: 10px 0px;
+}
+
+.guide-marquee { //跑馬燈
+  padding: 20px 0px;
+  color: $white01;
+  background-color: $blue-3;
+  white-space: nowrap; //內容保持在同一行
+  overflow: hidden; //超出的先隱藏
+}
+
+.guide-marquee img { //跑馬燈圖片設置動畫
+  animation: marquee 12s linear infinite;
+}
+
+@keyframes marquee { //跑馬燈動畫
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.guide-camp-info-bg { //營地資訊背景
+  background: linear-gradient(
+    to bottom,
+    rgba(213, 250, 255, 1),
+    rgba(213, 250, 255, 0.8),
+    rgba(213, 250, 255, 1)
+  );
+}
+.guide-camp-info-title { //營地資訊
+  position: relative;
+}
+.guide-camp-info-title img { //營地資訊招牌
+  width: 100%;
+  padding-top: 50px;
+}
+
+.guide-camp-info-title h4 { //營地資訊標題
+  position: absolute;
+  right: 19%;
+  top: 48%;
+  color: $white01 ;
+}
+.camp-cloud { //營地資訊雲朵一
+  position: relative;
+}
+
+.camp-cloud :nth-child(2){ //營地資訊雲朵二
+  padding-left: 50%;
+}
+
+.camp-cloud-words { //營地資訊雲朵文字
+  position: absolute;
+  top: 20%;
+  left: 25%;
+  color: $yellow-3;
+}
+
+.guide-camp-info { //營地資訊帳篷區塊
+  position: relative;
+  color: $white01;
+  display: flex;
+}
+
+.guide-camp-info .bigtent { //營地資訊帳篷的圖片
+  width: 100%;
+}
+
+.camp-info { //營地資訊帳篷文字
+  position: absolute;
+  top: 36%;
+  left: 25%;
+}
+
+.camp-info li {
+  padding-top: 5px;
+}
+
+.camp-info-social { //營地資訊帳篷社群媒體區塊
+  display: flex;
+  flex-direction: column;
+  color: $white01;
+}
+
+.fb ,
+.ig ,
+.line { //營地資訊帳篷社群媒體文字
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+}
+
+.fb p ,
+.ig p ,
+.line p {
+  padding-left: 5px;
+}
+
 </style>
