@@ -27,28 +27,28 @@ import axios from 'axios';
         </div>
     </div>
     <div class="opinion-wrap">
-    <div class="opinion">
-        <img src="#" alt="動物友善">
-        <h4>動物友善</h4>
-        <p class="tinyp">歡迎毛絨伙伴一同加入露營冒險！營區提供了寬敞而安全的空間，讓牠們與您一同享受大自然的美好。</p>
-        <p class="tinyp">
-        我們打造了友善的環境，讓毛孩子能夠在安心的氛圍中探索、遊玩並結識新朋友。
-        </p>
-    </div>
-    <div class="opinion">
-        <img src="#" alt="環境友善">
-        <h4>環境保護</h4>
-        <p class="tinyp">
-            我們打造了一個環境友善的營地，讓您在大自然中享受的同時，也能共同保護這片美麗的土地。。</p>
-        <p class="tinyp">
-            我們深知地球的寶貴，因此竭盡所能提供一個綠色、可持續的露營體驗，期待您與我們攜手共創一個更美好的環境。
-        </p>
-    </div>
-    <div class="opinion">
-        <img src="#" alt="生態復育">
-        <h4>生態復育</h4>
-        <p class="tinyp">融合自然之美和生態復育的理念，將這裡打造成一個讓您與大自然深度互動的場所，更是您參與保育努力的一步。透過生態導覽以及環保教育活動，讓來此的每位露營者成為生態復育的推動者。。</p>
-    </div>
+        <div class="opinion animal">
+            <img src="../assets/image/aboutView/animalFriendly.jpg" alt="動物友善">
+            <h4>動物友善</h4>
+            <p class="tinyp">歡迎毛絨伙伴一同加入露營冒險！營區提供了寬敞而安全的空間，讓牠們與您一同享受大自然的美好。</p>
+            <p class="tinyp">
+            我們打造了友善的環境，讓毛孩子能夠在安心的氛圍中探索、遊玩並結識新朋友。
+            </p>
+        </div>
+        <div class="opinion environment">
+            <img src="../assets/image/aboutView/environment.jpg" alt="環境友善">
+            <h4>環境保護</h4>
+            <p class="tinyp">
+                我們打造了一個環境友善的營地，讓您在大自然中享受的同時，也能共同保護這片美麗的土地。</p>
+            <p class="tinyp">
+                我們深知地球的寶貴，因此竭盡所能提供一個綠色、可持續的露營體驗，期待您與我們攜手共創一個更美好的環境。
+            </p>
+        </div>
+        <div class="opinion eco">
+            <img src="../assets/image/aboutView/ecology.jpg" alt="生態復育">
+            <h4>生態復育</h4>
+            <p class="tinyp">融合自然之美和生態復育的理念，將這裡打造成一個讓您與大自然深度互動的場所，更是您參與保育努力的一步。透過生態導覽以及環保教育活動，讓來此的每位露營者成為生態復育的推動者。</p>
+        </div>
     </div>
 </div>
 
@@ -150,7 +150,6 @@ import axios from 'axios';
     width: 100%;
 }
 .origin-linear { //頂部漸層
-    height: 1000px;
     background: linear-gradient(to bottom, $blue-1 10%, $white01);
 }
 /*-----------------緣起--------------------*/
@@ -174,15 +173,36 @@ import axios from 'axios';
     background-color: rgba($yellow-2, 50%);
 }
 /*-----------------三大理念--------------------*/
-.opinion-wrap{      //理念容器
-    height: 200px;
+.opinion-wrap{//理念容器
+    width: 100%;      
     display: flex;
-    overflow: hidden;
+    justify-content: space-between;
+    overflow-x: auto;
 }
-.opinion{       //理念卡片 橫向scroll
-    margin: 5px 10px;
-    width: 210px;
-    height: 285px;
+.opinion{ 
+    margin: 50px auto;
+    width: 100%;
+    flex-shrink: 0;
+    height: auto;
+}
+.opinion p,.opinion h4{
+    width: 80%;
+    margin: 5px auto;
+}
+.opinion img{
+    display: block;
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
+    width: 80%;
+    aspect-ratio: 25/21;
+    border-radius: 15px;
+}
+.animal img{
+    object-position: 0 40%;
+}
+.eco img{
+    object-position: 0 80%;
 }
 /*-----------------野良之家--------------------*/
 .shelter-wrap{
@@ -192,6 +212,7 @@ import axios from 'axios';
     margin: auto;
     background-image: url(../assets/image/aboutView/shelter.jpg);
     width: 95vw;
+    height: auto;
     aspect-ratio: 3/2;
     background-position: center;
     background-size: cover;
