@@ -32,14 +32,6 @@ const router = createRouter({
       },
     },
     {
-      path: '/member',
-      name: 'member',
-      component: () => import('../views/MemberView.vue'),
-      meta: {
-        title: '會員專區 Member',
-      },
-    },
-    {
       path: '/reserve',
       name: 'reserve',
       component: () => import('../views/ReserveView.vue'),
@@ -115,6 +107,25 @@ const router = createRouter({
       name: 'reservefail',
       component: () => import('../views/reserve/ReserveFailView.vue'),
     },
+
+    {
+      path: '/membercenter',
+      name: 'membercenter',
+      component: () => import('../views/member/MemberCenterView.vue'),
+      // meta: { requiresAuth: true },
+    }
+    ,
+    {
+      path: '/membercampsiteorders',
+      name: 'membercampsiteorders',
+      component: () => import('../views/member/MemberCampsiteOrdersView.vue'),
+    }
+    ,
+    {
+      path: '/memberorderhistory',
+      name: 'memberorderhistoryr',
+      component: () => import('../views/member/MemberOrderHistoryView.vue'),
+    },
     // 404頁面：沒有被配置的路由都會去NotFound
     {
       path: '/:pathMatch(.*)*',
@@ -123,7 +134,7 @@ const router = createRouter({
     },
   ],
   scrollBehavior(to, from, savedPosition) {
-    // return 期望滚动到哪个的位置
+    // return 期望滚到哪个的位置
     // 始终滚动到顶部
     return { top: 0 };
   },

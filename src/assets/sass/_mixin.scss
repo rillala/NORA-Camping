@@ -18,6 +18,8 @@
   line-height: $line-height;
   font-family: 'Inter', sans-serif;
 }
+// 使用範本:
+// @include font-style(16px, 400, 1%, 160%);
 
 // RWD 媒體查詢函式
 @mixin only-mobile {
