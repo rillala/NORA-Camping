@@ -5,12 +5,14 @@ import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import setRentalCard from '@/components/reserve/setRentalCard.vue';
 import singleRentalCard from '@/components/reserve/singleRentalCard.vue';
+import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 
 export default {
   components: {
     progressBar,
     setRentalCard,
     singleRentalCard,
+    nextPageBtn,
   },
   data() {
     return {
@@ -142,13 +144,24 @@ export default {
           rentNum: 0,
         },
       ],
+      rentSum: 0,
     };
   },
   created() {
     // this.fetchData()
     // this.axiosGetData();
   },
-  // 串API假裝一下設備卡片
+  computed: {
+    rentSum() {
+      const setListSum = this.setList.reduce((acc, cur) => {
+        return (acc += cur.rentNum);
+      }, 0);
+      const singleListSum = this.singleList.reduce((acc, cur) => {
+        return (acc += cur.rentNum);
+      }, 0);
+      return (this.rentSum = setListSum + singleListSum);
+    },
+  },
   methods: {
     goToNextStep(nextPath) {
       if (sessionStorage.getItem('isStep2Clicked')) {
@@ -171,24 +184,10 @@ export default {
         import.meta.url,
       ).href;
     },
-    // axiosGetData() {
-    //   // 使用 axios 抓取商品資料.json
-    //   axios.get('https://fakestoreapi.com/products').then(res => {
-    //     if (res && res.data) {
-    //       this.productData = res.data;
-    //       this.displayData = res.data;
-    //     }
-    //   });
-    // },
-    // filterHandle() {
-    //   this.displayData = this.productData.filter(item => {
-    //     // console.log(item);
-    //     return item.title.includes(this.search);
-    //   });
-    // },
+    // 更新setList裡選取的數量(rentNum)
     updateQuantitySet(newQuantity, index) {
       console.log(index + 'quantity:' + newQuantity);
-      let setCard = this.setList.index;
+      let setCard = this.setList[index];
       if (setCard) {
         console.log(`${setCard.id} :: ${setCard.rentNum}`);
         return (setCard.rentNum = newQuantity);
@@ -202,17 +201,6 @@ export default {
         card.rentNum = newQuantity;
         console.log(`${card.id} :: ${card.rentNum}`);
       }
-    },
-    isChoose() {
-      let sum = 0;
-
-      for (let i = 0; i < setList.length; i++) {
-        sum += setList[i].rentNum;
-      }
-      for (let i = 0; i < singleList.length; i++) {
-        sum += singleList[i].rentNum;
-      }
-      return sum > 0 ? true : false;
     },
   },
 };
@@ -280,38 +268,19 @@ export default {
       />
     </div>
 
-    <div class="alert red01 tinyp" v-if="isChoose">
+    <div class="alert red01 tinyp" v-if="rentSum == 0">
       -您目前沒有租借任何設備-
     </div>
 
     <!--下個步驟的按鈕-->
-    <div class="next">
-      <RouterLink
-        to="/reserveconfirm"
-        @click="goToNextStep"
-        id="confirm-btn"
-        class="white01 bg-blue-3"
-        >要按過這個才可以進入下一步驟:3確認畫面</RouterLink
-      >
-    </div>
+    <nextPageBtn
+      @click="goToNextStep(`/reserveconfirm`)"
+      :text="`前往結帳`"
+      :path="`/reserveconfirm`"
+    />
   </section>
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/equipment.scss';
-
-.alert {
-  margin: 0 auto;
-}
-
-.next {
-  width: 100%;
-  padding: 20px;
-  @include desktop {
-    margin: 0 auto;
-  }
-}
-
-.confirm-btn {
-}
 </style>
