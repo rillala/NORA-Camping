@@ -35,17 +35,6 @@ export default {
       this.quantity = newQuantity;
       this.$emit('update-quantity', newQuantity);
     },
-    formatInfo(info) {
-      const newInfo = info.split(',');
-      let formatted = '';
-      for (let i = 0; i < newInfo.length; i++) {
-        formatted += `<span style="white-space: nowrap;">${newInfo[i]}</span>`;
-        if (i < newInfo.length - 1) {
-          formatted += ' | ';
-        }
-      }
-      return formatted;
-    },
     formatPrice(price) {
       return price.toLocaleString('en-US');
     },
@@ -67,7 +56,9 @@ export default {
 
     <!-- 商品介紹 -->
     <div class="product-details dark">
-      <p class="tinyp" v-html="formatInfo(details)"></p>
+      <p class="tinyp">
+        {{ details }}
+      </p>
     </div>
     <!-- 數量選擇器 -->
     <div class="box">
@@ -91,6 +82,9 @@ $padding: 15px; // 定義外層padding
   padding: $padding;
   display: flex;
   flex-direction: column;
+  @include tablet {
+    margin: 10px 0;
+  }
 
   .product-image {
     width: 100%;
@@ -152,9 +146,18 @@ $padding: 15px; // 定義外層padding
   }
 }
 .box {
+  width: 100%;
   margin: 0 auto;
   flex-grow: 1;
   display: flex;
   align-items: end;
+  .btn {
+    width: 100%;
+    flex-shrink: 1;
+  }
+}
+
+.tinyp {
+  white-space: wrap;
 }
 </style>
