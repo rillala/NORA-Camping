@@ -99,7 +99,7 @@ export default {
 
 .banner-top {
   @include desktop {
-    width: 1200px;
+    max-width: 1200px;
     display: flex;
     align-items: end;
     justify-content: center;

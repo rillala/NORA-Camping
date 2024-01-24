@@ -21,6 +21,12 @@
 }
 
 // RWD 媒體查詢函式
+@mixin only-mobile {
+  @media (width < 480px) {
+    @content;
+  }
+}
+
 @mixin tablet {
   @media (width >=480px) {
     @content;
