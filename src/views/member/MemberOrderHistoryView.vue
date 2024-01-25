@@ -7,9 +7,21 @@
 
   <nav>
     <ul class="nav-list">
-      <li><router-link to="/membercenter" class="memberlink">會員資料</router-link></li>
-      <li><router-link to="/memberorderhistory" class="memberlink member-page">訂單歷史</router-link></li>
-      <li><router-link to="/membercampsiteorders" class="memberlink">營地訂單</router-link></li>
+      <li>
+        <router-link to="/membercenter" class="memberlink"
+          >會員資料</router-link
+        >
+      </li>
+      <li>
+        <router-link to="/memberorderhistory" class="memberlink member-page"
+          >訂單歷史</router-link
+        >
+      </li>
+      <li>
+        <router-link to="/membercampsiteorders" class="memberlink"
+          >營地訂單</router-link
+        >
+      </li>
     </ul>
   </nav>
 
@@ -19,9 +31,13 @@
         <tr>
           <th class="table-title">訂單日期</th>
           <th class="table-title">訂單編號</th>
-          <th class="table-title responsive-cell-01" v-if="!isSmallScreen">訂單金額</th>
-          <th class="table-title" >運送方式</th>
-          <th class="table-title responsive-cell-02" v-if="!isSmallScreen" >訂單狀態</th>
+          <th class="table-title responsive-cell-01" v-if="!isSmallScreen">
+            訂單金額
+          </th>
+          <th class="table-title">運送方式</th>
+          <th class="table-title responsive-cell-02" v-if="!isSmallScreen">
+            訂單狀態
+          </th>
           <th class="table-title">查看詳情</th>
           <th class="table-title">取消訂單</th>
         </tr>
@@ -30,11 +46,21 @@
         <tr v-for="order in orders" :key="order.id">
           <td class="table-content">{{ truncatedDate(order.orderDate) }}</td>
           <td class="table-content">{{ order.orderNumber }}</td>
-          <td class="table-title responsive-cell-01" v-if="!isSmallScreen">{{ order.orderAmount }}</td>
+          <td class="table-title responsive-cell-01" v-if="!isSmallScreen">
+            {{ order.orderAmount }}
+          </td>
           <td class="table-title">{{ order.orderStatus }}</td>
-          <td class="table-content responsive-cell-02" v-if="!isSmallScreen">{{ order.orderStatus }}</td>
-          <td class="table-content"><button class="btn-view-details" @click="viewDetails(order)">查看</button></td>
-          <td class="table-content"><button class="btn-cancel" @click="cancelOrder(order)">取消</button></td>
+          <td class="table-content responsive-cell-02" v-if="!isSmallScreen">
+            {{ order.orderStatus }}
+          </td>
+          <td class="table-content">
+            <button class="btn-view-details" @click="viewDetails(order)">
+              查看
+            </button>
+          </td>
+          <td class="table-content">
+            <button class="btn-cancel" @click="cancelOrder(order)">取消</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -48,7 +74,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      orders: [ {
+      orders: [
+        {
           id: 1,
           orderDate: '2023/12/01',
           orderNumber: '#111111',
@@ -72,8 +99,8 @@ export default {
           shippingMethod: '宅配',
           orderStatus: '完成',
         },
-      ],// 從資料庫獲取的訂單數據
-      
+      ], // 從資料庫獲取的訂單數據
+
       isSmallScreen: false,
     };
   },
@@ -83,7 +110,7 @@ export default {
     this.checkScreenSize();
     window.addEventListener('resize', this.checkScreenSize);
   },
-  
+
   methods: {
     fetchOrdersFromDatabase() {
       // 實際從資料庫中獲取數據的邏輯
@@ -101,25 +128,25 @@ export default {
     },
 
     checkScreenSize() {
-    this.isSmallScreen = window.innerWidth <= 480; 
+      this.isSmallScreen = window.innerWidth <= 480;
     },
 
     truncatedDate(fullDate) {
       return fullDate.slice(5); // 截取月份和日期部分，忽略年份
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-*{
+* {
   font-family: 'Inter', sans-serif;
 }
 .member-page {
-  font-weight: bold; 
+  font-weight: bold;
   color: $blue-4;
 }
-nav ul{
+nav ul {
   margin: 50px;
   display: flex;
   justify-content: center;
@@ -127,14 +154,14 @@ nav ul{
 }
 .memberlink {
   text-decoration: none;
-  color:$blue-3;
+  color: $blue-3;
   font-size: 26px;
-  padding:10px;
+  padding: 10px;
   white-space: nowrap;
 }
 
-.memberlink:hover{
-  color:$blue-4;
+.memberlink:hover {
+  color: $blue-4;
 }
 .title-wrap {
   padding-top: 70px;
@@ -147,34 +174,28 @@ nav ul{
   width: 100%;
 }
 
-.order-container{
-  margin:auto;
+.order-container {
+  margin: auto;
   margin-bottom: 10px;
   @include tablet {
     max-width: 800px;
   }
-    @include desktop {
+  @include desktop {
     max-width: 800px;
   }
 }
-.responsive-cell-01, .responsive-cell-02{
-  display: none;
-
-  @include tablet {
-    background-color: red;
-    display: inline-block; 
-    width: calc(100% / 7);
-  }
-  @include desktop {
-    display:inline-block; 
-    display: inline-block; 
-    width: calc(100% / 7);
+.responsive-cell-01,
+.responsive-cell-02 {
+  @include only-mobile {
+    display: none;
   }
 }
-.table-title, .table-content{
-  text-align:center;
+
+.table-title,
+.table-content {
+  text-align: center;
   font-size: 14px;
-  border: 1px solid #ddd; 
+  border: 1px solid #ddd;
   padding: 8px;
   width: calc(100% / 5);
   // overflow-wrap: break-word; /* 折行方式 */
@@ -188,7 +209,7 @@ nav ul{
     font-size: 16px;
     width: calc(100% / 7);
   }
-  .btn-view-details{
+  .btn-view-details {
     background-color: $blue-3;
     border: none;
     padding: 6px 10px;
@@ -202,8 +223,8 @@ nav ul{
     }
   }
 
-  .btn-cancel{
-    background-color:$light-gray;
+  .btn-cancel {
+    background-color: $light-gray;
     border: none;
     padding: 6px 10px;
     border-radius: 50px;

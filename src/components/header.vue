@@ -35,6 +35,7 @@ export default {
           path: '/shelter',
         },
       ],
+      isLoginOpen: false,
     };
   },
   watch: {
@@ -51,6 +52,10 @@ export default {
       this.$refs.hamburgerTablet.checked = false;
       document.body.style.overflow = 'auto';
       this.isMenuOpen = false;
+    },
+    handleClose() {
+      this.isLoginOpen = false; // 這將關閉燈箱
+      console.log(this.isLoginOpen);
     },
   },
 };
@@ -117,8 +122,11 @@ export default {
           >
 
           <!--會員登入-->
-          <button id="member-login" @click="(isOpen = !isOpen), closeHam">
-            <memberLogin :isOpen="false" />
+          <button
+            id="member-login"
+            @click="(isLoginOpen = !isLoginOpen), closeHam"
+          >
+            <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
 
           <!--購物車-->

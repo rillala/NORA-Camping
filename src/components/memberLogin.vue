@@ -31,12 +31,12 @@
             type="password"
             placeholder="請輸入密碼"
             v-model="user_add.pwd"
-          /><br/>
+          /><br />
           <input
             type="password"
             placeholder="再次輸入密碼"
             v-model="user_add.pwdConfirmation"
-          /><br/>
+          /><br />
 
           <div class="login-news">
             <input
@@ -60,8 +60,10 @@
             </label>
           </div>
 
-            <button type="submit" class="main-btn" @click="alert()">立即加入</button>
-          </form>
+          <button type="submit" class="main-btn" @click="alert()">
+            立即加入
+          </button>
+        </form>
 
         <!-- 登入頁面 -->
         <form v-else action="javascript:void(0);">
@@ -69,14 +71,14 @@
             type="text"
             placeholder="請輸入信箱"
             v-model="user_enter.account"
-          /><br/>
+          /><br />
           <input
             type="password"
             placeholder="請輸入密碼"
             v-model="user_enter.pwd"
-          /><br/>
-          <a class="forget-psw">忘記密碼？</a><br/>
-          <button class="main-btn" @click='signin'>會員登入</button><br/>
+          /><br />
+          <a class="forget-psw">忘記密碼？</a><br />
+          <button class="main-btn" @click="signin">會員登入</button><br />
           <button class="sub-btn">以Google登入</button>
         </form>
       </div>
@@ -90,7 +92,7 @@ import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
 export default {
-  props: ['isOpen'],
+  props: { isOpen: Boolean },
 
   data() {
     return {
@@ -104,58 +106,66 @@ export default {
       },
       user_enter: {
         account: 'mor_2314',
-        pwd: '83r5^_'
-      }
+        pwd: '83r5^_',
+      },
     };
   },
-created(){
-  // 判斷有沒有登入過，如果沒有token等同於沒有登入
-  const user = this.checkLogin()
-  if(user){
-    //有登入資訊轉到首頁
-    this.$router.push('/')
-  }
+  created() {
+    // 判斷有沒有登入過，如果沒有token等同於沒有登入
+    const user = this.checkLogin();
+    if (user) {
+      //有登入資訊轉到首頁
+      this.$router.push('/');
+    }
+  },
+  watch: {
+    isOpen(newVal) {
+      console.log(`isOpen changed to ${newVal}`);
+    },
   },
 
-  methods:{
+  methods: {
     closeLightbox() {
       // alert()
       if (this.isOpen) {
         this.isOpen = false;
       }
     },
-    ...mapActions(userStore,['updateToken','updateName', 'checkLogin']),
-    signin(){
-      this.updateToken(123)
+    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
+    signin() {
+      this.updateToken(123);
       console.log('login');
       //關閉燈箱
-      //this.isOpen = false;
+      // this.isOpen = false;
 
-      axios.post('https://fakestoreapi.com/auth/login', {
-        username: "mor_2314",
-        password: "83r5^_"
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => {
-        if(response.data && response.data.token){
-          //3
-          this.updateToken(response.data.token)
-          console.log('login')
-          console.log(response.data.token)
-          this.$router.push('/membercenter')
-        }
-      })
-      .catch(error => {
-        console.error(error);  
-        //少一行
-        //登入失敗
-        //系統維護中
-      }) 
-    }
+      axios
+        .post(
+          'https://fakestoreapi.com/auth/login',
+          {
+            username: 'mor_2314',
+            password: '83r5^_',
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(response => {
+          if (response.data && response.data.token) {
+            this.updateToken(response.data.token); // 更新 token
+            console.log('login success', response.data.token);
+            this.$emit('close'); // 登入成功後，關閉燈箱
+            this.$router.push('/membercenter'); // 跳轉到會員中心頁面
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          //少一行
+          //登入失敗
+          //系統維護中
+        });
+    },
   },
 };
 </script>
@@ -201,7 +211,7 @@ created(){
   padding: 20px;
   z-index: 5;
   width: 470px;
-  height:500px;
+  height: 500px;
   padding: 40px 50px;
 
   @include tablet {
@@ -247,7 +257,7 @@ p {
 }
 
 input {
-  width:100%;
+  width: 100%;
   font-size: 20px;
   border: none;
   border-bottom: 1px solid #000;
@@ -294,16 +304,16 @@ input {
   font-size: 16px;
 }
 
-input[type="checkbox"] {
-width: 20px;
-height:20px;
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
 }
 
 // label[for="receiveNews"] {
 //   height: 16px;
 // }
 
-.login-news{
+.login-news {
   height: 25px;
 }
 </style>
