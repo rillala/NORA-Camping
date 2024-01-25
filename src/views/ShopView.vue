@@ -1,6 +1,8 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
+import { mapState, mapActions } from 'pinia';
+import productStore from '@/stores/productStore';
 import productCard from '@/components/shop/productCard.vue';
 import dropDownBtn from '@/components/button/dropDownBtn.vue';
 
@@ -13,16 +15,16 @@ export default {
       count: 10,
       sourceData: [],
       search: '',
-      displayData: [],
+      // displayData: [],
       groupOptions: [
-        {value: '1', label: '選擇類別▼'},
+        {value: '1', label: '選擇類別'},
         {value: '2', label: 'Nora文青生活'},
         {value: '3', label: 'Nora品牌服飾'},
         {value: '4', label: 'Nora營地用品'},
     ],
       selectedValue1: '', // 預設選擇的值
       priceOptions: [
-        {value: '5', label: '選擇排序▼'},
+        {value: '5', label: '選擇排序'},
         {value: '6', label: '價格高到低'},
         {value: '7', label: '價格低到高'},
     ],
@@ -30,6 +32,9 @@ export default {
     };
   },
   computed: {
+
+    ...mapState(productStore, ['displayData']),
+
     productCount() {
       return Array.isArray(this.displayData) ? this.displayData.length : 0;
     },
@@ -46,18 +51,8 @@ export default {
   },
 
   methods: {
-    //用fetch將json 檔案匯入
-    axiosGetData() {
-      //使用axios
-      axios.get('https://api.escuelajs.co/api/v1/products')
-        .then(res => {
-          if (res && res.data) {
-            console.log(res.data);
-            this.responseData = res.data
-            this.displayData = res.data
-          }
-        })
-    },
+    ...mapActions(productStore, ['axiosGetData']),
+
     filterHandle() {
       this.displayData = this.responseData.filter((item) => {
         // console.log(item);

@@ -11,27 +11,40 @@
 					<img :src="responseData.images" alt="responseData.title">
 				</div>
 				<p>{{ responseData.description }}</p>
+
+				<DropDownBtn></DropDownBtn>
 				<addMinusBtn></addMinusBtn>
+				<ActionBtn :content='"加入購物車"'></ActionBtn>
+				<ActionBtn :content='"直接購買"'></ActionBtn>
 			</div>
 		</div>
 	</main>
 </template>
+
 <script>
 import axios from 'axios';
+import { mapState, mapActions } from 'pinia';
+import productStore from '@/stores/productStore';
 import addMinusBtn from '@/components/button/addMinusBtn.vue';
+import ActionBtn from '@/components/button/actionBtn.vue';
+import DropDownBtn from '@/components/button/dropDownBtn.vue';
 export default {
 	components: {
-		addMinusBtn
+		addMinusBtn,
+		ActionBtn,
+		DropDownBtn
 	},
+	
 	data() {
 		return {
 			responseData: {}
 		}
 	},
 	created() {
-		this.axiosGetData()
+		this.axiosGetDataId()
 	},
 	computed: {
+		...mapState(productStore, ['responseData']),
 		nodata() {
 			return Object.keys(this.responseData).length === 0
 		}
@@ -45,7 +58,8 @@ export default {
 		// }
 	},
 	methods: {
-		axiosGetData() {
+		// ...mapActions(productStore,['axiosGetData']),
+		axiosGetDataId() {
 			const pageId = this.$route.params.id
 			console.log(pageId);
 
@@ -58,21 +72,21 @@ export default {
 					}
 				})
 
-			//如果後端不支援，需要把全部商品取回再find相同id(與URL參數相同)
-			// axios.get('https://tibamef2e.com/chd103/g2/api/getProducts.php')
-			//   .then(res => {
-			//     if (res && res.data) {
-			//       const allProduct = res.data
-			//       const result = allProduct.find((item) =>{
-			//         return item.prod_id == pageId
-			//       })
-			//       this.responseData = result
-			//     }
-			//   })
+			// 	//如果後端不支援，需要把全部商品取回再find相同id(與URL參數相同)
+			// 	// axios.get('https://tibamef2e.com/chd103/g2/api/getProducts.php')
+			// 	//   .then(res => {
+			// 	//     if (res && res.data) {
+			// 	//       const allProduct = res.data
+			// 	//       const result = allProduct.find((item) =>{
+			// 	//         return item.prod_id == pageId
+			// 	//       })
+			// 	//       this.responseData = result
+			// 	//     }
+			// 	//   })
+			// }
 		}
 	}
 }
-
 </script>
 
 <style lang="scss" scoped>

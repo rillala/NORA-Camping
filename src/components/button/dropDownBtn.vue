@@ -1,7 +1,7 @@
 <template>
 	<select class="dropdown-btn" v-model="selectedValue">
 		<option v-for="option in options" :key="option.value" :value="option.value">
-			<p>{{ option.label }}</p>
+			<p>{{ option.label }}▼</p>
 		</option>
 	</select>
 </template>
