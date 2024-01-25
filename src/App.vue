@@ -37,7 +37,7 @@ onUnmounted(() => {
 
 <template>
   <section>
-    <headerCom />
+    <headerCom id="app-header" />
     <div id="app-content-wrap">
       <div>
         <!-- 加載畫面 -->
@@ -61,6 +61,11 @@ body {
   padding: 0;
 }
 
+#app-header{
+position:relative;
+  z-index: 20;
+}
+
 #app-content-wrap {
   position: relative;
 }
@@ -70,7 +75,7 @@ body {
   top: 0;
   left: calc(90% - 50px);
   height: 100%;
-  padding: 20px 0;
+  padding: 20px 0 80px;
   z-index: 2;
   pointer-events: none;
 }

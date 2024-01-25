@@ -21,7 +21,7 @@
         </div>
 
         <!-- 註冊頁面 -->
-        <form v-if="showRegisterForm">
+        <form v-if="showRegisterForm" action="javascript:void(0);">
           <input
             type="text"
             placeholder="請輸入信箱"
@@ -31,12 +31,12 @@
             type="password"
             placeholder="請輸入密碼"
             v-model="user_add.pwd"
-          /><br />
+          /><br/>
           <input
             type="password"
             placeholder="再次輸入密碼"
             v-model="user_add.pwdConfirmation"
-          /><br />
+          /><br/>
 
           <div class="login-news">
             <input
@@ -60,32 +60,35 @@
             </label>
           </div>
 
-          <button type="submit" class="main-btn">立即加入</button>
-        </form>
+            <button type="submit" class="main-btn" @click="alert()">立即加入</button>
+          </form>
 
         <!-- 登入頁面 -->
-        <div v-else>
+        <form v-else action="javascript:void(0);">
           <input
             type="text"
             placeholder="請輸入信箱"
             v-model="user_enter.account"
-          /><br />
+          /><br/>
           <input
             type="password"
             placeholder="請輸入密碼"
             v-model="user_enter.pwd"
-          /><br />
-          <a class="forget-psw">忘記密碼？</a><br />
-          <!-- <router-link to="/" class="main-btn">會員登入</router-link><br> -->
-          <button class="main-btn">會員登入</button>
+          /><br/>
+          <a class="forget-psw">忘記密碼？</a><br/>
+          <button class="main-btn" @click='signin'>會員登入</button><br/>
           <button class="sub-btn">以Google登入</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { RouterLink, RouterView } from 'vue-router';
+import axios from 'axios';
+import { mapActions } from 'pinia';
+import userStore from '@/stores/user';
 export default {
   props: ['isOpen'],
 
@@ -100,18 +103,59 @@ export default {
         agreeTerms: false,
       },
       user_enter: {
-        account: '',
-        pwd: '',
-      },
+        account: 'mor_2314',
+        pwd: '83r5^_'
+      }
     };
   },
-  methods: {
+created(){
+  // 判斷有沒有登入過，如果沒有token等同於沒有登入
+  const user = this.checkLogin()
+  if(user){
+    //有登入資訊轉到首頁
+    this.$router.push('/')
+  }
+  },
+
+  methods:{
     closeLightbox() {
       // alert()
       if (this.isOpen) {
         this.isOpen = false;
       }
     },
+    ...mapActions(userStore,['updateToken','updateName', 'checkLogin']),
+    signin(){
+      this.updateToken(123)
+      console.log('login');
+      //關閉燈箱
+      //this.isOpen = false;
+
+      axios.post('https://fakestoreapi.com/auth/login', {
+        username: "mor_2314",
+        password: "83r5^_"
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if(response.data && response.data.token){
+          //3
+          this.updateToken(response.data.token)
+          console.log('login')
+          console.log(response.data.token)
+          this.$router.push('/membercenter')
+        }
+      })
+      .catch(error => {
+        console.error(error);  
+        //少一行
+        //登入失敗
+        //系統維護中
+      }) 
+    }
   },
 };
 </script>
@@ -155,9 +199,10 @@ export default {
   left: calc((100% - 450px) / 2);
   background-color: $white01;
   padding: 20px;
-  height: 430px;
-  width: 450px;
   z-index: 5;
+  width: 470px;
+  height:500px;
+  padding: 40px 50px;
 
   @include tablet {
   }
@@ -183,8 +228,8 @@ export default {
   border: none;
   text-decoration: none;
   font-size: 32px;
-  padding: 0px 20px;
-  margin: 10px 15px;
+  padding: 0px 10px;
+  margin: 10px 15px 30px;
 
   @include tablet {
   }
@@ -202,12 +247,17 @@ p {
 }
 
 input {
-  padding: 10px 90px 10px 0px;
+  width:100%;
   font-size: 20px;
   border: none;
   border-bottom: 1px solid #000;
   outline: none;
   background-color: transparent;
+  border-left: 0px;
+  border-right: 0px;
+  line-height: 30px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
 }
 
 .login-news {
@@ -238,9 +288,22 @@ input {
 }
 
 .forget-psw {
-  display: inline-block;
+  display: block;
   text-align: end;
-  margin-top: 20px;
+  margin: 20px 0 0 auto;
   font-size: 16px;
+}
+
+input[type="checkbox"] {
+width: 20px;
+height:20px;
+}
+
+// label[for="receiveNews"] {
+//   height: 16px;
+// }
+
+.login-news{
+  height: 25px;
 }
 </style>
