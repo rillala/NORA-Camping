@@ -78,8 +78,8 @@ export default {
 </script>
 
 <template>
-  <div class="Homepage-wrap">
-    <div class="Homepage-banner bg-blue-2">
+  <main>
+    <section class="Homepage-banner bg-blue-2">
       <div class="banner-text">
         <h1>
           願那些流浪，<br />
@@ -91,9 +91,9 @@ export default {
       <div class="things-Moving">
         <img v-for="picsrc in things" :src="getThingUrl(`${picsrc.src}.png`)" />
       </div>
-    </div>
+    </section>
 
-    <div class="Knowing-nora">
+    <section class="Knowing-nora">
 
       <div class="KN-mountain-background">
         <img src="@/assets/image/homeView/mountainBgL.png" class="Mountain-left">
@@ -124,29 +124,35 @@ export default {
         <div id="AirTemperature"></div>
       </div>
 
-    </div>
+    </section>
 
 
-    <div class="News bg-blue-3">
+    <section class="News bg-blue-3">
       <div class="News-withsearch">
         <h2>最新消息</h2>
-        <!-- <input type="text" v-model.trim="search"> -->
+        <input type="text" v-model.trim="search">
       </div>
-      <div class="News-container white01">
+      <div class="News-container">
         <ul>
-          <li>文章文章文章</li>
-          <li></li>
-          <li></li>
+          <!-- 這邊要把清單for出來 -->
+          <li>
+            <article>
+              <h3>標題</h3>
+              <p>文章</p>
+            </article>
+          </li>
         </ul>
       </div>
-    </div>
-    <div class="New-products bg-blue-2">
+    </section>
+
+    <section class="New-products bg-blue-2">
       <h2>野良選物X最新商品</h2>
       <div class="product-container">
       </div>
       <viewMoreBtn :content="'逛逛其他好物'" />
-    </div>
-    <div class="stray-home">
+    </section>
+
+    <section class="stray-home">
       <h2>野良之家</h2>
       <div class="stray-home-context">
         <p>
@@ -162,8 +168,8 @@ export default {
       </div>
       <viewMoreBtn :content="'了解更多'" />
       <actionBtn :content="'報名志工活動'" />
-    </div>
-  </div>
+    </section>
+  </main>
 </template>
 
 
@@ -343,14 +349,16 @@ export default {
 
 .News-withsearch {
   display: flex;
-  padding: 30px;
+  justify-content: center;
+  gap: 25px;
+
+  h2 {
+    color: $white01;
+  }
 }
 
 .News-container {
-  height: 550px;
-  width: 90%;
-  background-color: #fff;
-  margin: auto;
+  border: 1px solid red;
 }
 
 .New-products {
