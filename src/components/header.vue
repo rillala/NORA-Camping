@@ -55,6 +55,7 @@ export default {
     },
     handleClose() {
       this.isLoginOpen = false; // 這將關閉燈箱
+      this.isMenuOpen = false; // 關閉子選單-->手機板需要
       console.log(this.isLoginOpen);
     },
   },
