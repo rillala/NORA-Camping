@@ -3,10 +3,12 @@
 import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
+import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 
 export default {
   components: {
     progressBar,
+    nextPageBtn,
   },
   data() {
     return {
@@ -36,10 +38,53 @@ export default {
 <template>
   <section class="equipment">
     <progressBar :activeDiv="3" />
+    <div class="reserve dark">
+      <h2>營地預約訂單</h2>
+      <div class="reserve-list">
+        <div class="title">營位資訊</div>
+        <div class="box">
+          <div class="item">入營日期</div>
+          <div class="value">拔營日期</div>
+        </div>
+        <div class="box">
+          <div class="item">露營天數</div>
+          <div class="value">第一天是否為夜衝</div>
+        </div>
+        <div class="zone box">
+          <div class="item">營區</div>
+          <div class="value"></div>
+        </div>
+        <div class="site box">
+          <div class="item">營位</div>
+          <div class="value"></div>
+        </div>
+        <div class="box">
+          <div class="item">營位總數</div>
+          <div class="value"></div>
+        </div>
+        <div class="box">
+          <div class="item">營位預約小計</div>
+          <div class="value"></div>
+        </div>
+        <div class="box">
+          <div class="item"></div>
+          <div class="value"></div>
+        </div>
+        <div class="box">
+          <div class="item"></div>
+          <div class="value"></div>
+        </div>
+      </div>
+    </div>
+    <div class="rent dark"></div>
+
+    <!--下個步驟的按鈕-->
+    <nextPageBtn
+      @click="goToNextStep(`/reservepayment`)"
+      :text="`前往付款`"
+      :path="`/reservepayment`"
+    />
   </section>
-  <RouterLink to="/reservepayment" @click="goToNextStep"
-    >要按過這個才可以進入下一步驟:4付款頁面</RouterLink
-  >
 </template>
 
 <style lang="scss" scoped></style>
