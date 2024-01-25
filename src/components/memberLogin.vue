@@ -196,18 +196,23 @@ created(){
 .lightbox-content {
   position: relative;
   top: calc((100% - 430px) / 2);
-  left: calc((100% - 450px) / 2);
+  width: calc(100% - 20px); 
   background-color: $white01;
   padding: 20px;
   z-index: 5;
-  width: 470px;
+  width: 100%;
   height:500px;
-  padding: 40px 50px;
+  padding: 40px 15px;
 
   @include tablet {
+    left: calc((100% - 470px) / 2);
+    width: 470px;
+    padding: 40px 50px;
   }
 
   @include desktop {
+    left: calc((100% - 470px) / 2);
+    width: 470px;
   }
 }
 
@@ -230,6 +235,7 @@ created(){
   font-size: 32px;
   padding: 0px 10px;
   margin: 10px 15px 30px;
+  white-space: nowrap;
 
   @include tablet {
   }
@@ -262,8 +268,7 @@ input {
 
 .login-news {
   display: flex;
-  margin: 10px 0px;
-  padding-left: 20px;
+  margin: 10px 0px 20px;
 }
 
 .main-btn {

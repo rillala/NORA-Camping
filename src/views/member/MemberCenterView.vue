@@ -12,6 +12,13 @@
       <li><router-link to="/membercampsiteorders" class="memberlink">營地訂單</router-link></li>
     </ul>
   </div>
+
+  <div>
+    <div id="dropzone" class="drop-area" @dragover.prevent="dragOver" @drop.prevent="dropped">
+      <img v-if="imageSrc" :src="imageSrc" alt="Dropped Image">
+    </div>
+  </div>
+
   <div class="info-container">
     <section class="info-box">
       <div v-if="!isEditing" >
@@ -100,6 +107,7 @@ export default {
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
+      imageSrc: '',
     };
   },
   methods: {
@@ -130,7 +138,21 @@ export default {
     aa() {
       this.memberInfo = {...this.editMemberInfo}
     },
-  },
+
+    dragOver(e) {
+      e.preventDefault();
+    },
+    
+    dropped(e) {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      const readFile = new FileReader();
+      readFile.readAsDataURL(file);
+      readFile.onload = () => {
+      this.imageSrc = readFile.result;
+      } ;
+    }
+  }
 };
 </script>
 
@@ -329,5 +351,26 @@ span{
   @include tablet {
   @include font-style(20px, 400, 1%, 160%);
   }
+}
+
+.drop-area {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 50%; /* 將邊框設置為圓形 */
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f0f0f0; /* 設置背景顏色 */
+  margin:auto;
+  margin-bottom: 10px;
+}
+
+#dropzone {
+  border: 2px dashed #ccc;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 </style>
