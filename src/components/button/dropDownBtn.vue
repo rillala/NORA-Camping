@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 .dropdown-btn {
 	appearance: none;
 	-moz-appearance: none;
@@ -50,4 +50,4 @@ export default {
 		width: 100%;
 	}
 }
-</style>
+</style> -->

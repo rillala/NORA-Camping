@@ -33,5 +33,13 @@ export const useProductStore = defineStore('productStore', {
           }
         });
     },
+    
+    sortByPriceHighToLow() {
+      this.displayData.sort((a, b) => b.price - a.price);
+    },
+    sortByPriceLowToHigh() {
+      this.displayData.sort((a, b) => a.price - b.price);
+    },
   },
 });
+

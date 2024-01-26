@@ -40,7 +40,7 @@
 			display: grid;
 			gap: 20px;
 			grid-template-columns: 1fr 1fr;
-			width: 100%;
+			max-width: 100%;
 			justify-content: center;
 			margin-top: 20px;
 
@@ -52,7 +52,7 @@
 				display: flex;
 				flex-flow: column;
 				gap: 20px;
-				width: 100%;
+				max-width: 285px;
 				height: 100%;
 				padding: 20px;
 				aspect-ratio: 285 / 340;
