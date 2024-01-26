@@ -58,7 +58,14 @@ export default {
   },
 
   methods: {
-    // ...mapActions(productStore, ['axiosGetData']),
+    async priceHighToLow(){
+      const productStore = useProductStore();
+      await productStore.sortByPriceHighToLow();
+    },
+    async priceLowToHigh(){
+      const productStore = useProductStore();
+      await productStore.sortByPriceLowToHigh();
+    },
 
     filterHandle() {
       this.displayData = this.responseData.filter(item => {
@@ -97,20 +104,8 @@ export default {
           class="shop-searchbar"
         />
       </div>
-      <div class="drop-down-button">
-        <dropDownBtn
-          :options="groupOptions"
-          v-model="selectedValue1"
-          :defaultValue="1"
-          >{{ selectedValue }}</dropDownBtn
-        >
-        <dropDownBtn
-          :options="priceOptions"
-          v-model="selectedValue2"
-          :defaultValue="5"
-          >{{ selectedValue }}</dropDownBtn
-        >
-      </div>
+      <button type="button" @click="priceHighToLow">HighToLow</button>
+      <button type="button" @click="priceLowToHigh">LowToHigh</button>
 
       <div class="shop-all-list">
         <template v-for="product in displayData" :key="product.id">

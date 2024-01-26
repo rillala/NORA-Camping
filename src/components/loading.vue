@@ -48,6 +48,10 @@ export default {};
 
 <style lang="scss" scoped>
 .loading{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
     .spinner {
   position: absolute;
   width: 25px;
