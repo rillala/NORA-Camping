@@ -17,9 +17,7 @@ export default {
   data() {
     return {
       isNextStepClick: false,
-      search: '',
-      productData: [],
-      displayData: [],
+
       setList: [
         {
           id: 1,
@@ -147,9 +145,32 @@ export default {
       rentSum: 0,
     };
   },
-  created() {
-    // this.fetchData()
-    // this.axiosGetData();
+  mounted() {
+    let storedEquipmentStr = sessionStorage.getItem('equipmentList');
+    if (storedEquipmentStr) {
+      let equipmentDataArray = storedEquipmentStr
+        .split(',')
+        .filter(item => item) // 移除空字串
+        .map(item => {
+          let [id, title, price, rentNum] = item.split(':');
+          return {
+            id: Number(id),
+            title: title,
+            price: Number(price),
+            rentNum: Number(rentNum),
+          };
+        });
+
+      // 遍歷解析後的陣列，根據 id 分配到 setList 或 singleList
+      equipmentDataArray.forEach(item => {
+        let matchedItem =
+          this.setList.find(setItem => setItem.id === item.id) ||
+          this.singleList.find(singleItem => singleItem.id === item.id);
+        if (matchedItem) {
+          matchedItem.rentNum = item.rentNum;
+        }
+      });
+    }
   },
   computed: {
     rentSum() {
@@ -165,8 +186,13 @@ export default {
   methods: {
     goToNextStep(nextPath) {
       if (sessionStorage.getItem('isStep2Clicked')) {
+        // 更新選擇的裝備及數量
+        this.updateEquipmentRent();
         return;
       } else {
+        // 更新選擇的裝備及數量
+        sessionStorage.setItem('isStep2Clicked', 'true');
+        this.updateEquipmentRent();
         let currentStep = parseInt(
           sessionStorage.getItem('currentStep') || '1',
         );
@@ -175,7 +201,43 @@ export default {
         if (nextPath) {
           this.$router.push(nextPath);
         }
-        sessionStorage.setItem('isStep2Clicked', 'true');
+      }
+    },
+    updateEquipmentRent() {
+      // 更新或建立 equipmentList
+      if (this.rentNum !== 0) {
+        let updatedSiteChoseString =
+          this.setList
+            .filter(item => item.rentNum !== 0)
+            .map(
+              item =>
+                item.id +
+                ':' +
+                item.title +
+                ':' +
+                item.price +
+                ':' +
+                item.rentNum,
+            )
+            .join(',') +
+          ',' +
+          this.singleList
+            .filter(item => item.rentNum !== 0)
+            .map(
+              item =>
+                item.id +
+                ':' +
+                item.title +
+                ':' +
+                item.price +
+                ':' +
+                item.rentNum,
+            )
+            .join(',');
+
+        sessionStorage.setItem('equipmentList', updatedSiteChoseString);
+      } else {
+        sessionStorage.setItem('equipmentList', false);
       }
     },
     getImageUrl(paths) {
@@ -242,6 +304,7 @@ export default {
         :title="setCard.title"
         :price="setCard.price"
         :details="setCard.info"
+        :quantity="setCard.rentNum"
         @update-quantity="updateQuantitySet($event, index)"
       />
     </div>
@@ -264,6 +327,7 @@ export default {
         :title="card.title"
         :price="card.price"
         :details="card.info"
+        :quantity="card.rentNum"
         @update-quantity="updateQuantitySingle(card.id, $event, index)"
       />
     </div>

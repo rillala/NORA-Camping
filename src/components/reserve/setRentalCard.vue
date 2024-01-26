@@ -27,12 +27,12 @@ export default {
   },
   data() {
     return {
-      quantity: 0, // 租借初始數量
+      // quantity: 0, // 租借初始數量
     };
   },
   methods: {
     getQuantity(newQuantity) {
-      this.quantity = newQuantity;
+      // this.quantity = newQuantity;
       this.$emit('update-quantity', newQuantity);
     },
     formatInfo(info) {

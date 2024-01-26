@@ -1,6 +1,12 @@
 <script>
 export default {
   name: 'addMinusBtn',
+  props: {
+    initialQuantity: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       quantity: 0,

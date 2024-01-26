@@ -217,6 +217,13 @@ export default {
     this.hasDiscount = sessionStorage.getItem('hasDiscount') || false;
 
     // 如果有儲存過選擇的營區和數量, 則讀取值
+    let StoredZone = sessionStorage.getItem('chosenZone');
+    if (StoredZone == 'cat') {
+      this.choseCatZone();
+    } else {
+      this.choseDogZone();
+    }
+
     let storedDataString = sessionStorage.getItem('selectedSites');
     let siteDataArray = [];
 
@@ -225,13 +232,6 @@ export default {
         let [id, count] = item.split(':').map(Number);
         return { id, count };
       });
-      if (parseInt(siteDataArray[0].id) < 4) {
-        this.selectSiteList = this.catSiteList;
-      } else {
-        this.selectSiteList = this.dogSiteList;
-      }
-    } else {
-      this.selectSiteList = this.catSiteList;
     }
 
     siteDataArray.forEach(itemStored => {
@@ -317,22 +317,14 @@ export default {
     },
 
     updateSiteChose() {
-      // 先判斷是否已經建立過 siteChoseList
-      if (sessionStorage.getItem('selectedSites')) {
-        // true->更新為目前所選種類數量和日期
-        let updatedSiteChoseString = this.selectSiteList
-          .filter(item => item.count !== 0)
-          .map(item => item.id + ':' + item.count)
-          .join(',');
-        sessionStorage.setItem('selectedSites', updatedSiteChoseString);
-      } else {
-        // false->依目前所選種類數量和日期, 建立相對應的sessionStorage資料
-        let newSiteChoseString = this.selectSiteList
-          .filter(item => item.count !== 0)
-          .map(item => item.id + ':' + item.count)
-          .join(',');
-        sessionStorage.setItem('selectedSites', newSiteChoseString);
-      }
+      // 更新或建立 siteChoseList 和 chosenZone
+      let updatedSiteChoseString = this.selectSiteList
+        .filter(item => item.count !== 0)
+        .map(item => item.id + ':' + item.count)
+        .join(',');
+      sessionStorage.setItem('selectedSites', updatedSiteChoseString);
+
+      sessionStorage.setItem('chosenZone', this.chosenZone);
     },
     formatPrice(price) {
       return price.toLocaleString('en-US');
