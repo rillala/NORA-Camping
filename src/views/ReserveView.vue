@@ -12,6 +12,9 @@ export default {
   },
   data() {
     return {
+      // 保留兩個變數用來擷取入住和退房日期
+      startDate: '',
+      endDate: '',
       timeRules: [
         {
           title: '一般平日、假日',
@@ -37,7 +40,7 @@ export default {
       selectSiteList: [],
       catSiteList: [
         {
-          type: 'cat',
+          id: 1,
           name: '草地區',
           icon: 'grass.svg',
           picList: [
@@ -64,7 +67,7 @@ export default {
           count: 0,
         },
         {
-          type: 'cat',
+          id: 2,
           name: '棧板區',
           icon: 'pallet.svg',
           picList: [
@@ -91,7 +94,7 @@ export default {
           count: 0,
         },
         {
-          type: 'cat',
+          id: 3,
           name: '雨棚區',
           icon: 'shed.svg',
           picList: [
@@ -113,14 +116,13 @@ export default {
             '設有專為貓咪設計的休憩和娛樂區域。',
             '雨棚區鄰近貓咪專用的衛生設施，包括貓砂盒和清潔用品。',
           ],
-
           isWarningOpen: false,
           count: 0,
         },
       ],
       dogSiteList: [
         {
-          type: 'dog',
+          id: 4,
           name: '草地區',
           icon: 'grass.svg',
           picList: [
@@ -147,7 +149,7 @@ export default {
           count: 0,
         },
         {
-          type: 'dog',
+          id: 5,
           name: '棧板區',
           icon: 'pallet.svg',
           picList: [
@@ -174,7 +176,7 @@ export default {
           count: 0,
         },
         {
-          type: 'dog',
+          id: 6,
           name: '雨棚區',
           icon: 'shed.svg',
           picList: [
@@ -208,29 +210,100 @@ export default {
       selectSiteSum: 0,
     };
   },
-
   mounted() {
-    this.selectSiteList = this.catSiteList;
+    // 如果有儲存過選擇的日期和夜衝, 則讀取值
+    this.startDate = sessionStorage.getItem('startDate') || '';
+    this.endDate = sessionStorage.getItem('endDate') || '';
+    this.hasDiscount = sessionStorage.getItem('hasDiscount') || false;
+
+    // 如果有儲存過選擇的營區和數量, 則讀取值
+    let storedDataString = sessionStorage.getItem('selectedSites');
+    let siteDataArray = [];
+
+    if (storedDataString) {
+      siteDataArray = storedDataString.split(',').map(item => {
+        let [id, count] = item.split(':').map(Number);
+        return { id, count };
+      });
+      if (parseInt(siteDataArray[0].id) < 4) {
+        this.selectSiteList = this.catSiteList;
+      } else {
+        this.selectSiteList = this.dogSiteList;
+      }
+    } else {
+      this.selectSiteList = this.catSiteList;
+    }
+
+    siteDataArray.forEach(itemStored => {
+      let matchedItem = this.selectSiteList.find(
+        itemPage => itemPage.id === itemStored.id,
+      );
+      if (matchedItem) {
+        matchedItem.count = itemStored.count;
+      }
+    });
   },
   computed: {
     siteSum() {
       return this.selectSiteList.reduce((acc, cur) => acc + cur.count, 0);
+    },
+    stayDuration() {
+      if (this.startDate && this.endDate) {
+        // 將日期字符串轉換為 Date 物件
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+
+        // 計算兩個日期之間的差異（以毫秒為單位）
+        const diff = end.getTime() - start.getTime();
+
+        // 將毫秒轉換為天數
+        return diff / (1000 * 3600 * 24);
+      }
+      return 0; // 如果日期未設定，則返回 0
     },
   },
   watch: {
     isWarningOpen(newVal, oldVal) {
       imageSrc = newVal ? '關閉icon' : '打開icon';
     },
+    stayDuration(newValue) {
+      // 住宿天數改變時，更新 sessionStorage
+      sessionStorage.setItem('stayDuration', newValue.toString());
+    },
+    // 日期改變時，更新 sessionStorage
+    startDate(newVal) {
+      sessionStorage.setItem('startDate', newVal);
+      this.updateDuration();
+    },
+    endDate(newVal) {
+      sessionStorage.setItem('endDate', newVal);
+      this.updateDuration();
+    },
+    hasDiscount(newVal) {
+      sessionStorage.setItem('hasDiscount', newVal);
+    },
   },
   methods: {
+    updateDuration() {
+      if (this.stayDuration > 0) {
+        sessionStorage.setItem('stayDuration', this.stayDuration.toString());
+      }
+    },
     goToNextStep(nextPath) {
-      if (this.siteSum == 0) {
+      if (this.siteSum == 0 || this.stayDuration == 0) {
         this.$router.push('/reserve');
-        alert('請先選擇日期及營位數量。');
+        alert('請先選擇住宿日期及營位數量。');
       } else {
+        // 1.確認這個步驟是否重複過了, 有的話就: 更新日期和挑選營位資訊 + 跳轉
         if (sessionStorage.getItem('isStep1Clicked')) {
+          this.updateSiteChose();
           return;
         } else {
+          // 1. 更新日期和挑選營位資訊
+          this.updateSiteChose();
+          // 2. 建立此步驟已被選擇過的 isStep1Clicked = true
+          sessionStorage.setItem('isStep1Clicked', 'true');
+          // 3. 建立記錄步驟數的 currentStep
           let currentStep = parseInt(
             sessionStorage.getItem('currentStep') || '1',
           );
@@ -239,8 +312,26 @@ export default {
           if (nextPath) {
             this.$router.push(nextPath);
           }
-          sessionStorage.setItem('isStep1Clicked', 'true');
         }
+      }
+    },
+
+    updateSiteChose() {
+      // 先判斷是否已經建立過 siteChoseList
+      if (sessionStorage.getItem('selectedSites')) {
+        // true->更新為目前所選種類數量和日期
+        let updatedSiteChoseString = this.selectSiteList
+          .filter(item => item.count !== 0)
+          .map(item => item.id + ':' + item.count)
+          .join(',');
+        sessionStorage.setItem('selectedSites', updatedSiteChoseString);
+      } else {
+        // false->依目前所選種類數量和日期, 建立相對應的sessionStorage資料
+        let newSiteChoseString = this.selectSiteList
+          .filter(item => item.count !== 0)
+          .map(item => item.id + ':' + item.count)
+          .join(',');
+        sessionStorage.setItem('selectedSites', newSiteChoseString);
       }
     },
     formatPrice(price) {
@@ -309,19 +400,6 @@ export default {
     },
   },
 };
-
-// 儲存和讀取的方法
-// watch: {
-//   siteSum(newValue) {
-//     localStorage.setItem('siteSum', newValue);
-//   }
-// }
-// mounted() {
-//   const storedSiteSum = localStorage.getItem('siteSum');
-//   if (storedSiteSum) {
-//     this.selectSiteSum = storedSiteSum;
-//   }
-// }
 </script>
 
 <template>
@@ -343,7 +421,11 @@ export default {
     </div>
 
     <!--預約時間日曆-->
-    <div class="bg-red01">日歷在這</div>
+    <div class="bg-red01">
+      日曆還沒, 先在變數存值測試 入營日期:
+      <input type="date" v-model="startDate" /> 拔營日期:
+      <input type="date" v-model="endDate" />
+    </div>
     <!--營區時間規定-->
     <div id="time-rule">
       <h3 class="dark">營區時間規定</h3>
@@ -456,8 +538,13 @@ export default {
       </div>
     </div>
 
-    <div class="alert red01 tinyp" v-if="siteSum == 0">
-      -您目前沒有選擇任何營位-
+    <div class="alert">
+      <div class="red01 tinyp" v-if="stayDuration == 0">
+        -您目前沒有選擇露營日期-
+      </div>
+      <div class="red01 tinyp" v-if="siteSum == 0">
+        -您目前沒有選擇任何營位-
+      </div>
     </div>
 
     <!--下個步驟的按鈕-->
