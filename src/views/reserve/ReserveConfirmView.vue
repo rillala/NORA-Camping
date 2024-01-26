@@ -72,7 +72,7 @@ export default {
     // 讀取 equipmentList
 
     let storedEquipmentStr = sessionStorage.getItem('equipmentList');
-    if (storedEquipmentStr) {
+    if (storedEquipmentStr.length > 2) {
       let siteDataArray = storedEquipmentStr
         .split(',')
         .filter(item => item) // 移除空字串
@@ -103,7 +103,7 @@ export default {
     },
     sitePriceSum() {
       return this.selectedSites.reduce(
-        (acc, cur) => acc + cur.count * cur.price,
+        (acc, cur) => acc + cur.count * cur.price * this.stayDuration,
         0,
       );
     },
@@ -111,7 +111,7 @@ export default {
       return this.hasDiscount ? 500 : 0;
     },
     siteTotalPrice() {
-      return this.sitePriceSum - this.discountPrice * this.stayDuration;
+      return this.sitePriceSum - this.discountPrice * this.siteCountSum;
     },
     equipmentTotalPrice() {
       if (this.equipmentList) {
@@ -123,7 +123,11 @@ export default {
     },
 
     totalPrice() {
-      return this.sitePriceSum + this.equipmentTotalPrice;
+      if (this.equipmentList) {
+        return this.siteTotalPrice + this.equipmentTotalPrice;
+      } else {
+        return this.siteTotalPrice;
+      }
     },
   },
   methods: {
@@ -155,69 +159,76 @@ export default {
     <div class="reserve dark">
       <h2>營地預約訂單</h2>
       <div class="reserve-list">
-        <div class="title">營位資訊</div>
+        <div class="title h4">營位資訊</div>
 
-        <div class="box">
-          <div class="item">入營日期</div>
-          <div class="value">{{ startDate }}</div>
-        </div>
-        <div class="box">
-          <div class="item">拔營日期</div>
-          <div class="value">{{ endDate }}</div>
-        </div>
-        <div class="box">
-          <div class="item">露營天數</div>
-          <div class="value">{{ stayDuration }}晚</div>
-        </div>
-        <div class="box">
-          <div class="item">第一天是否為夜衝</div>
-          <div class="value">{{ hasDiscount }}</div>
-        </div>
-        <div class="zone box">
-          <div class="item">營區</div>
-          <div class="value">{{ chosenZone }}</div>
-        </div>
-        <div class="site box" v-for="site in selectedSites">
-          <div class="item">營位</div>
-          <div class="value">
-            {{ site.area }}｜{{ site.count }}帳｜{{
-              formatPrice(site.price * site.count)
-            }}
+        <div class="info">
+          <div class="box p">
+            <div class="item">入營日期</div>
+            <div class="value">{{ startDate }}</div>
           </div>
-        </div>
-        <div class="box">
-          <div class="item">營位總數</div>
-          <div class="value">{{ siteCountSum }}帳</div>
-        </div>
-        <div class="box">
-          <div class="item">營位預約小計</div>
-          <div class="value">
-            {{ formatPrice(sitePriceSum) }}
-            <span v-if="hasDiscount">
-              - {{ formatPrice(discountPrice) }} x {{ stayDuration }} =
-              {{ SiteTotalPrice }}</span
-            >
+          <div class="box p">
+            <div class="item">拔營日期</div>
+            <div class="value">{{ endDate }}</div>
+          </div>
+          <div class="box p">
+            <div class="item">露營天數</div>
+            <div class="value">{{ stayDuration }}晚</div>
+          </div>
+          <div class="box p">
+            <div class="item">第一天是否為夜衝</div>
+            <div class="value">{{ hasDiscount ? '是' : '否' }}</div>
+          </div>
+          <div class="zone box p">
+            <div class="item">營區</div>
+            <div class="value">{{ chosenZone }}</div>
+          </div>
+          <div class="site box p" v-for="site in selectedSites">
+            <div class="item">營位</div>
+            <div class="value">
+              {{ site.area }}｜{{ site.count }}帳｜{{
+                formatPrice(site.price * site.count * stayDuration)
+              }}
+            </div>
+          </div>
+          <div class="box p">
+            <div class="item">營位總數</div>
+            <div class="value">{{ siteCountSum }}帳</div>
+          </div>
+          <div class="box p">
+            <div class="item">營位預約小計</div>
+            <div class="value">
+              {{ formatPrice(sitePriceSum) }}
+              <span v-if="hasDiscount">
+                - {{ formatPrice(discountPrice) }} x
+                {{ siteCountSum }}(夜衝優惠) =
+                {{ formatPrice(siteTotalPrice) }}</span
+              >
+            </div>
           </div>
         </div>
       </div>
+
       <div class="rent-list" v-if="equipmentList">
-        <div class="title">租借設備</div>
+        <div class="title h4">租借設備</div>
 
-        <div class="box" v-for="item in equipmentList">
-          <div class="item">{{ item.title }}</div>
-          <div class="value">
-            {{ formatPrice(item.price * item.rentNum) }}｜{{ item.rentNum }}組
+        <div class="info">
+          <div class="box p" v-for="item in equipmentList">
+            <div class="item">{{ item.title }}</div>
+            <div class="value">
+              {{ formatPrice(item.price * item.rentNum) }}｜{{ item.rentNum }}組
+            </div>
           </div>
-        </div>
-
-        <div class="box">
-          <div class="item">設備租借小計</div>
-          <div class="value">{{ formatPrice(equipmentTotalPrice) }}</div>
+          <div class="box p">
+            <div class="item">設備租借小計</div>
+            <div class="value">{{ formatPrice(equipmentTotalPrice) }}</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="total-price">總計 NT{{ formatPrice(totalPrice) }}</div>
+    <div class="total-price h2">
+      總計 <br class="mobile" />NT{{ formatPrice(totalPrice) }}
+    </div>
 
     <!--下個步驟的按鈕-->
     <nextPageBtn
@@ -228,4 +239,6 @@ export default {
   </section>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '@/assets/sass/page/reserveConfirm.scss';
+</style>

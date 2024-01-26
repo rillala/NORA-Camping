@@ -4,14 +4,14 @@ import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import setRentalCard from '@/components/reserve/setRentalCard.vue';
-import singleRentalCard from '@/components/reserve/singleRentalCard.vue';
+// import singleRentalCard from '@/components/reserve/singleRentalCard.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 
 export default {
   components: {
     progressBar,
     setRentalCard,
-    singleRentalCard,
+    // singleRentalCard,
     nextPageBtn,
   },
   data() {
@@ -184,6 +184,15 @@ export default {
     },
   },
   methods: {
+    // 頁面基本函式
+    getImageUrl(paths) {
+      return new URL(
+        `../../assets/image/reserve/equipment/${paths}`,
+        import.meta.url,
+      ).href;
+    },
+
+    // 前往下一步驟:
     goToNextStep(nextPath) {
       if (sessionStorage.getItem('isStep2Clicked')) {
         // 更新選擇的裝備及數量
@@ -240,30 +249,34 @@ export default {
         sessionStorage.setItem('equipmentList', false);
       }
     },
-    getImageUrl(paths) {
-      return new URL(
-        `../../assets/image/reserve/equipment/${paths}`,
-        import.meta.url,
-      ).href;
+
+    // 更新設備選取的數量
+    addRentNum(listName, index) {
+      // 根據輸入的index值, 修改相對應的rentNum
+      this[listName][index].rentNum++;
     },
-    // 更新setList裡選取的數量(rentNum)
-    updateQuantitySet(newQuantity, index) {
-      console.log(index + 'quantity:' + newQuantity);
-      let setCard = this.setList[index];
-      if (setCard) {
-        console.log(`${setCard.id} :: ${setCard.rentNum}`);
-        return (setCard.rentNum = newQuantity);
+    minusRentNum(listName, index) {
+      // 根據輸入的index值, 修改相對應的rentNum
+      if (this[listName][index].rentNum > 0) {
+        this[listName][index].rentNum--;
       }
     },
-    updateQuantitySingle(cardId, newQuantity, index) {
-      console.log(cardId);
-      console.log('quantity:' + newQuantity);
-      const card = this.singleList.find(p => p.id === cardId);
-      if (card) {
-        card.rentNum = newQuantity;
-        console.log(`${card.id} :: ${card.rentNum}`);
-      }
-    },
+
+    // updateQuantitySet(newQuantity, index) {
+    //   let setCard = this.setList[index];
+    //   if (setCard) {
+    //     return (setCard.rentNum = newQuantity);
+    //   }
+    // },
+    // updateQuantitySingle(cardId, newQuantity, index) {
+    //   console.log(cardId);
+    //   console.log('quantity:' + newQuantity);
+    //   const card = this.singleList.find(p => p.id === cardId);
+    //   if (card) {
+    //     card.rentNum = newQuantity;
+    //     console.log(`${card.id} :: ${card.rentNum}`);
+    //   }
+    // },
   },
 };
 </script>
@@ -305,7 +318,8 @@ export default {
         :price="setCard.price"
         :details="setCard.info"
         :quantity="setCard.rentNum"
-        @update-quantity="updateQuantitySet($event, index)"
+        @add-rentNum="addRentNum('setList', index)"
+        @minus-rentNum="minusRentNum('setList', index)"
       />
     </div>
 
@@ -319,16 +333,17 @@ export default {
 
     <!--單項設備卡片-->
     <div id="single-list">
-      <singleRentalCard
+      <setRentalCard
         class="card"
-        v-for="card in singleList"
-        :key="card.title"
-        :image="getImageUrl(`single${card.id}.png`)"
-        :title="card.title"
-        :price="card.price"
-        :details="card.info"
-        :quantity="card.rentNum"
-        @update-quantity="updateQuantitySingle(card.id, $event, index)"
+        v-for="(singleCard, index) in singleList"
+        :key="singleCard.title"
+        :image="getImageUrl(`single${singleCard.id}.png`)"
+        :title="singleCard.title"
+        :price="singleCard.price"
+        :details="singleCard.info"
+        :quantity="singleCard.rentNum"
+        @add-rentNum="addRentNum('singleList', index)"
+        @minus-rentNum="minusRentNum('singleList', index)"
       />
     </div>
 
@@ -347,4 +362,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/equipment.scss';
+
+#single-list > div {
+  @include tablet {
+    margin: 10px 0;
+  }
+}
 </style>
