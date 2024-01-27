@@ -73,7 +73,7 @@
 
   @include tablet {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto 0;
     background: $blue-2;
     border-radius: $radius;
   }
@@ -169,7 +169,7 @@
     overflow: hidden;
 
     @include tablet {
-      width: 250px;
+      width: 240px;
     }
 
     .title {
@@ -512,5 +512,22 @@
   text-align: center;
   @include tablet {
     margin: 30px 0 0;
+  }
+}
+
+.calendar {
+  width: 100%;
+  padding: 20px;
+  border-radius: $radius;
+
+  @include tablet {
+    background: $blue-2;
+    max-width: 600px;
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  @include desktop {
+    max-width: 1200px;
   }
 }

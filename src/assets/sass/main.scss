@@ -28,3 +28,106 @@ a,
 button {
   cursor: pointer;
 }
+
+// vcalendar 使用
+.vc-nora-calendar {
+  --vc-accent-50: #d5faff; /* 湖水亮色，最淺 */
+  --vc-accent-100: #bae6ec; /* 湖水預設色，較淺 */
+  --vc-accent-200: #a0dbdf; /* 湖水預設色與主視覺預設色的漸層中間色 */
+  --vc-accent-300: #77cfd1; /* 主視覺預設色的亮色 */
+  --vc-accent-400: #3eb3c2; /* 主視覺預設色 */
+  --vc-accent-500: #3aa6b0; /* 主視覺預設色與湖水深色的漸層中間色 */
+  --vc-accent-600: #347781; /* 湖水深色，較深 */
+  --vc-accent-700: #2d6570; /* 湖水深色的深色 */
+  --vc-accent-800: #26535f; /* 湖水深色的更深色 */
+  --vc-accent-900: #1f414e; /* 湖水深色的最深色 */
+}
+
+.vc-container {
+  @include only-mobile {
+    border: 5px solid $blue-3;
+    border-radius: 30px;
+  }
+  @include tablet {
+    border-radius: 20px;
+  }
+  .vc-weekday-1,
+  .vc-weekday-7 {
+    color: $red01;
+    font-weight: 700;
+
+    @include tablet {
+      font-size: 18px;
+    }
+    @include desktop {
+      font-size: 20px;
+    }
+  }
+  .vc-weekday-2,
+  .vc-weekday-3,
+  .vc-weekday-4,
+  .vc-weekday-5,
+  .vc-weekday-6 {
+    color: $dark;
+    font-weight: 700;
+    @include tablet {
+      font-size: 18px;
+    }
+    @include desktop {
+      font-size: 20px;
+    }
+  }
+  .vc-pane-header-wrapper {
+    background: $blue-3;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: 5px;
+  }
+  .vc-header {
+    height: 40px;
+    @include tablet {
+      margin: 10px 10px 0;
+    }
+    @include desktop {
+      height: 50px;
+      margin: 10px 20px 0;
+    }
+  }
+  .vc-title-wrapper {
+    z-index: 1;
+  }
+  .vc-title {
+    background: transparent;
+    font-size: 20px;
+    span {
+      color: $white01;
+    }
+    @include tablet {
+      font-size: 24px;
+    }
+  }
+  .vc-weeks {
+    margin-top: 10px;
+
+    @include desktop {
+      margin: 20px 100px 0;
+    }
+  }
+
+  .vc-day-content {
+    @include tablet {
+      font-size: 18px;
+    }
+    @include desktop {
+      font-size: 20px;
+    }
+  }
+
+  .vc-day {
+    @include tablet {
+      min-height: 36px;
+    }
+    @include desktop {
+      min-height: 40px;
+    }
+  }
+}
