@@ -2,11 +2,26 @@
 // 引入函式庫
 import mainFAQ from '../components/FAQ/mainFAQ.vue';
 import contactForm from '../components/FAQ/contactForm.vue';
-import { ref } from 'vue';
+import { ref, onMounted,onBeforeUnmount } from 'vue';
+
+const windows768 = ref(window.innerWidth);
 const flag = ref(true);
 const changeFlag = ()=>{
   flag.value = !flag.value;
 }
+function updataWindows(){
+  windows768.value = window.innerWidth;
+}
+onMounted(() => {
+  updataWindows();
+  window.addEventListener('resize',updataWindows);
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize',updataWindows);
+})
+
+
 </script>
 
 <template>
@@ -17,30 +32,12 @@ const changeFlag = ()=>{
     </div>
   </div>
 
-  <mainFAQ v-if="flag" 
+  <mainFAQ v-if="windows768 > 1024 || flag" 
   @changeToForm="changeFlag"
   />
-  <contactForm v-if="!flag"/>
-  <!-- 分隔線 -->
-  <!-- <div class="otherquestion">
-    <img src="../assets/image/FAQView/faqBox.png" alt="問號箱箱">
-    <button>我有其他問題</button>
-  </div> -->
-  <!-- 分隔線 -->
-  <!-- <div class="FAQtype">
-    <div id="reservation">
-      <button><h4>營地預約</h4></button>
-    </div>
-    <div id="rental">
-      <button><h4>裝備租借</h4></button>
-    </div>
-    <div id="shelter">
-      <button><h4>野良之家</h4></button>
-    </div>
-    <div id="shopping">
-      <button><h4>商品購物</h4></button>
-    </div>
-  </div> -->
+  <contactForm v-if=" windows768 > 1024 || !flag "
+  @changeToMain="changeFlag"
+  />
 </template>
 
 <style lang="scss" scoped>
@@ -57,13 +54,5 @@ const changeFlag = ()=>{
     height: 200px;
     width: 100%;
 }
-// /*---------------分隔線--------------*/
-// .FAQtype button{
-//   width: 80vw;
-//   height: 20vw;
-//   border: none;
-//   border-radius: 10px;
-//   background-color: $blue-2;
-//   margin: 10px;
-// }
+
 </style>

@@ -4,7 +4,7 @@ import {ref} from 'vue';
 const props = defineProps({
     title:{
         type:String,
-        default:'忘記輸入標題ㄌ',
+        default:'you忘記輸入標題ㄌ',
     }
 });
 const isOpen = ref(false);
