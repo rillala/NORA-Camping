@@ -111,7 +111,7 @@ export default {
     };
   },
   methods: {
-    emailSubmit() {},
+    emailSubmit() { },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
@@ -127,11 +127,8 @@ export default {
           <p class="dark title">{{ item.title }}</p>
           <ul v-if="item.sublist">
             <li v-for="subItem in item.sublist" :key="subItem.linkName">
-              <router-link
-                :to="`{path: '${item.routerLink}', hash: '${subItem.hash}'}`"
-                class="dark sub-link"
-                >{{ subItem.linkName }}</router-link
-              >
+              <router-link :to="`{path: '${item.routerLink}', hash: '${subItem.hash}'}`" class="dark sub-link">{{
+                subItem.linkName }}</router-link>
             </li>
           </ul>
         </li>
@@ -140,21 +137,15 @@ export default {
       <ul class="btn-area">
         <li>
           <RouterLink :to="reserveBtn.path" id="reserve-btn-footer">
-            <img
-              :src="getImageUrl('headerFooter/reservation-footer.png')"
-              :alt="reserveBtn"
-            />
-            <p class="dark">{{ reserveBtn.name }}</p></RouterLink
-          >
+            <img :src="getImageUrl('headerFooter/reservation-footer.png')" :alt="reserveBtn" />
+            <p class="dark">{{ reserveBtn.name }}</p>
+          </RouterLink>
         </li>
         <li>
-          <RouterLink :to="shopBtn.path" id="shop-btn-footer"
-            ><img
-              :src="getImageUrl('headerFooter/shop-footer.png')"
-              :alt="shopBtn"
-            />
-            <p class="dark">{{ shopBtn.name }}</p></RouterLink
-          >
+          <RouterLink :to="shopBtn.path" id="shop-btn-footer"><img :src="getImageUrl('headerFooter/shop-footer.png')"
+              :alt="shopBtn" />
+            <p class="dark">{{ shopBtn.name }}</p>
+          </RouterLink>
         </li>
       </ul>
     </div>
@@ -163,44 +154,24 @@ export default {
       <div class="subscribe">
         <p class="white01">
           訂閱 NORA Camp
-          <br class="br-mobile" />電子報，<br />與我們一同分享露營<br
-            class="br-mobile"
-          />和貓狗的美好時光！
+          <br class="br-mobile" />電子報，<br />與我們一同分享露營<br class="br-mobile" />和貓狗的美好時光！
         </p>
         <div class="box">
-          <input
-            type="email"
-            name="email"
-            id="email-input"
-            placeholder="請輸入您的電子郵件"
-            v-model="inputEmail"
-          />
-          <jelloBtn
-            :content="'送出'"
-            id="email-submit"
-            class="tinyp"
-            @click="emailSubmit"
-          />
+          <input type="email" name="email" id="email-input" placeholder="請輸入您的電子郵件" v-model="inputEmail" />
+          <jelloBtn :content="'送出'" id="email-submit" class="tinyp" @click="emailSubmit" />
         </div>
       </div>
 
       <div class="information">
         <div class="logo">
-          <img
-            :src="getImageUrl('headerFooter/logo-mobile-light.png')"
-            alt="logo-image"
-          />
+          <img :src="getImageUrl('headerFooter/logo-mobile-light.png')" alt="logo-image" />
         </div>
         <p class="title white01">聯絡我們</p>
         <p class="info white01">地址：南投縣仙山鄉翠湖路1號</p>
         <p class="info white01">電話：0988-123-456</p>
         <p class="info white01">Email：info@noracamp.com</p>
         <div class="social-media">
-          <a
-            v-for="media in mediaLink"
-            :href="media.link"
-            :key="media.mediaType"
-          >
+          <a v-for="media in mediaLink" :href="media.link" :key="media.mediaType">
             <img :src="getImageUrl(media.imgPath)" :alt="media.mediaType" />
           </a>
         </div>
