@@ -1,10 +1,5 @@
 <script>
-import addMinusBtn from '@/components/button/addMinusBtn.vue';
-
 export default {
-  components: {
-    addMinusBtn,
-  },
   props: {
     product: Object,
     quantity: Number,
@@ -25,21 +20,12 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      quantity: 0, // 租借初始數量
-    };
-  },
   methods: {
-    getQuantity(newQuantity) {
-      this.quantity = newQuantity;
-      this.$emit('update-quantity', newQuantity);
-    },
     formatInfo(info) {
       const newInfo = info.split(',');
       let formatted = '';
       for (let i = 0; i < newInfo.length; i++) {
-        formatted += `<span style="white-space: nowrap;">${newInfo[i]}</span>`;
+        formatted += `<span class="explain">${newInfo[i]}</span>`;
         if (i < newInfo.length - 1) {
           formatted += ' | ';
         }
@@ -48,6 +34,20 @@ export default {
     },
     formatPrice(price) {
       return price.toLocaleString('en-US');
+    },
+    getImageUrl(paths) {
+      return new URL(`../../assets/image/${paths}`, import.meta.url).href;
+    },
+
+    // 按鈕數量相關
+
+    add() {
+      this.$emit('add-rentNum');
+    },
+    minus() {
+      if (this.quantity > 0) {
+        this.$emit('minus-rentNum');
+      }
     },
   },
 };
@@ -71,11 +71,20 @@ export default {
     </div>
     <!-- 數量選擇器 -->
     <div class="box">
-      <addMinusBtn
-        :quantity="quantity"
-        @update:quantity="getQuantity"
-        class="btn"
-      />
+      <div class="btn quantity-btn">
+        <button @click="minus" class="minus bg-blue-2">
+          <div class="minus-icon bg-blue-4"></div>
+        </button>
+
+        <div class="box">
+          <p class="blue-4">{{ quantity }}</p>
+        </div>
+
+        <button @click="add" class="add bg-blue-2">
+          <div class="minus-icon bg-blue-4"></div>
+          <div class="add-icon bg-blue-4"></div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -156,5 +165,47 @@ $padding: 15px; // 定義外層padding
   flex-grow: 1;
   display: flex;
   align-items: end;
+}
+
+.quantity-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 235px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid $blue-4;
+    .minus-icon {
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+    }
+    .add-icon {
+      position: absolute;
+      translate: 90deg;
+      width: 3px;
+      height: 20px;
+      border-radius: 2px;
+    }
+  }
+  .box {
+    width: 110px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: $white01;
+    border-radius: $radius;
+    margin: 0 20px;
+    p {
+      @include font-style(28px, 700, 10%, auto);
+    }
+  }
 }
 </style>

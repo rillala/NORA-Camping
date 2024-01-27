@@ -4,22 +4,20 @@ import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import setRentalCard from '@/components/reserve/setRentalCard.vue';
-import singleRentalCard from '@/components/reserve/singleRentalCard.vue';
+// import singleRentalCard from '@/components/reserve/singleRentalCard.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 
 export default {
   components: {
     progressBar,
     setRentalCard,
-    singleRentalCard,
+    // singleRentalCard,
     nextPageBtn,
   },
   data() {
     return {
       isNextStepClick: false,
-      search: '',
-      productData: [],
-      displayData: [],
+
       setList: [
         {
           id: 1,
@@ -147,9 +145,32 @@ export default {
       rentSum: 0,
     };
   },
-  created() {
-    // this.fetchData()
-    // this.axiosGetData();
+  mounted() {
+    let storedEquipmentStr = sessionStorage.getItem('equipmentList');
+    if (storedEquipmentStr) {
+      let equipmentDataArray = storedEquipmentStr
+        .split(',')
+        .filter(item => item) // 移除空字串
+        .map(item => {
+          let [id, title, price, rentNum] = item.split(':');
+          return {
+            id: Number(id),
+            title: title,
+            price: Number(price),
+            rentNum: Number(rentNum),
+          };
+        });
+
+      // 遍歷解析後的陣列，根據 id 分配到 setList 或 singleList
+      equipmentDataArray.forEach(item => {
+        let matchedItem =
+          this.setList.find(setItem => setItem.id === item.id) ||
+          this.singleList.find(singleItem => singleItem.id === item.id);
+        if (matchedItem) {
+          matchedItem.rentNum = item.rentNum;
+        }
+      });
+    }
   },
   computed: {
     rentSum() {
@@ -163,10 +184,24 @@ export default {
     },
   },
   methods: {
+    // 頁面基本函式
+    getImageUrl(paths) {
+      return new URL(
+        `../../assets/image/reserve/equipment/${paths}`,
+        import.meta.url,
+      ).href;
+    },
+
+    // 前往下一步驟:
     goToNextStep(nextPath) {
       if (sessionStorage.getItem('isStep2Clicked')) {
+        // 更新選擇的裝備及數量
+        this.updateEquipmentRent();
         return;
       } else {
+        // 更新選擇的裝備及數量
+        sessionStorage.setItem('isStep2Clicked', 'true');
+        this.updateEquipmentRent();
         let currentStep = parseInt(
           sessionStorage.getItem('currentStep') || '1',
         );
@@ -175,33 +210,73 @@ export default {
         if (nextPath) {
           this.$router.push(nextPath);
         }
-        sessionStorage.setItem('isStep2Clicked', 'true');
       }
     },
-    getImageUrl(paths) {
-      return new URL(
-        `../../assets/image/reserve/equipment/${paths}`,
-        import.meta.url,
-      ).href;
-    },
-    // 更新setList裡選取的數量(rentNum)
-    updateQuantitySet(newQuantity, index) {
-      console.log(index + 'quantity:' + newQuantity);
-      let setCard = this.setList[index];
-      if (setCard) {
-        console.log(`${setCard.id} :: ${setCard.rentNum}`);
-        return (setCard.rentNum = newQuantity);
+    updateEquipmentRent() {
+      // 更新或建立 equipmentList
+      if (this.rentNum !== 0) {
+        let updatedSiteChoseString =
+          this.setList
+            .filter(item => item.rentNum !== 0)
+            .map(
+              item =>
+                item.id +
+                ':' +
+                item.title +
+                ':' +
+                item.price +
+                ':' +
+                item.rentNum,
+            )
+            .join(',') +
+          ',' +
+          this.singleList
+            .filter(item => item.rentNum !== 0)
+            .map(
+              item =>
+                item.id +
+                ':' +
+                item.title +
+                ':' +
+                item.price +
+                ':' +
+                item.rentNum,
+            )
+            .join(',');
+
+        sessionStorage.setItem('equipmentList', updatedSiteChoseString);
+      } else {
+        sessionStorage.setItem('equipmentList', false);
       }
     },
-    updateQuantitySingle(cardId, newQuantity, index) {
-      console.log(cardId);
-      console.log('quantity:' + newQuantity);
-      const card = this.singleList.find(p => p.id === cardId);
-      if (card) {
-        card.rentNum = newQuantity;
-        console.log(`${card.id} :: ${card.rentNum}`);
+
+    // 更新設備選取的數量
+    addRentNum(listName, index) {
+      // 根據輸入的index值, 修改相對應的rentNum
+      this[listName][index].rentNum++;
+    },
+    minusRentNum(listName, index) {
+      // 根據輸入的index值, 修改相對應的rentNum
+      if (this[listName][index].rentNum > 0) {
+        this[listName][index].rentNum--;
       }
     },
+
+    // updateQuantitySet(newQuantity, index) {
+    //   let setCard = this.setList[index];
+    //   if (setCard) {
+    //     return (setCard.rentNum = newQuantity);
+    //   }
+    // },
+    // updateQuantitySingle(cardId, newQuantity, index) {
+    //   console.log(cardId);
+    //   console.log('quantity:' + newQuantity);
+    //   const card = this.singleList.find(p => p.id === cardId);
+    //   if (card) {
+    //     card.rentNum = newQuantity;
+    //     console.log(`${card.id} :: ${card.rentNum}`);
+    //   }
+    // },
   },
 };
 </script>
@@ -242,7 +317,9 @@ export default {
         :title="setCard.title"
         :price="setCard.price"
         :details="setCard.info"
-        @update-quantity="updateQuantitySet($event, index)"
+        :quantity="setCard.rentNum"
+        @add-rentNum="addRentNum('setList', index)"
+        @minus-rentNum="minusRentNum('setList', index)"
       />
     </div>
 
@@ -256,15 +333,17 @@ export default {
 
     <!--單項設備卡片-->
     <div id="single-list">
-      <singleRentalCard
+      <setRentalCard
         class="card"
-        v-for="card in singleList"
-        :key="card.title"
-        :image="getImageUrl(`single${card.id}.png`)"
-        :title="card.title"
-        :price="card.price"
-        :details="card.info"
-        @update-quantity="updateQuantitySingle(card.id, $event, index)"
+        v-for="(singleCard, index) in singleList"
+        :key="singleCard.title"
+        :image="getImageUrl(`single${singleCard.id}.png`)"
+        :title="singleCard.title"
+        :price="singleCard.price"
+        :details="singleCard.info"
+        :quantity="singleCard.rentNum"
+        @add-rentNum="addRentNum('singleList', index)"
+        @minus-rentNum="minusRentNum('singleList', index)"
       />
     </div>
 
@@ -283,4 +362,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/equipment.scss';
+
+#single-list > div {
+  @include tablet {
+    margin: 10px 0;
+  }
+}
 </style>
