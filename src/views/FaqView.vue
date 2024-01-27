@@ -1,8 +1,12 @@
-<script>
+<script setup>
 // 引入函式庫
-import axios from 'axios';
-
-export default {};
+import mainFAQ from '../components/FAQ/mainFAQ.vue';
+import contactForm from '../components/FAQ/contactForm.vue';
+import { ref } from 'vue';
+const flag = ref(true);
+const changeFlag = ()=>{
+  flag.value = !flag.value;
+}
 </script>
 
 <template>
@@ -12,13 +16,18 @@ export default {};
     <h4>疑難雜症大解惑</h4>
     </div>
   </div>
+
+  <mainFAQ v-if="flag" 
+  @changeToForm="changeFlag"
+  />
+  <contactForm v-if="!flag"/>
   <!-- 分隔線 -->
-  <div class="otherquestion">
+  <!-- <div class="otherquestion">
     <img src="../assets/image/FAQView/faqBox.png" alt="問號箱箱">
     <button>我有其他問題</button>
-  </div>
+  </div> -->
   <!-- 分隔線 -->
-  <div class="FAQtype">
+  <!-- <div class="FAQtype">
     <div id="reservation">
       <button><h4>營地預約</h4></button>
     </div>
@@ -31,7 +40,7 @@ export default {};
     <div id="shopping">
       <button><h4>商品購物</h4></button>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>
@@ -48,13 +57,13 @@ export default {};
     height: 200px;
     width: 100%;
 }
-/*---------------分隔線--------------*/
-.FAQtype button{
-  width: 80vw;
-  height: 20vw;
-  border: none;
-  border-radius: 10px;
-  background-color: $blue-2;
-  margin: 10px;
-}
+// /*---------------分隔線--------------*/
+// .FAQtype button{
+//   width: 80vw;
+//   height: 20vw;
+//   border: none;
+//   border-radius: 10px;
+//   background-color: $blue-2;
+//   margin: 10px;
+// }
 </style>

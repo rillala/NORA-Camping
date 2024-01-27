@@ -1,6 +1,9 @@
 <script setup>
 // 引入函式庫
-import axios from 'axios';
+
+import actionBtn from '../components/button/actionBtn.vue';
+import businessHours from '../components/about/businessHours.vue';
+
 
 </script>
 
@@ -64,8 +67,7 @@ import axios from 'axios';
     <p class="tinyp">
     志工活動包括洗狗、打掃籠舍、餵食等，讓你有機會親身參與流浪動物的照顧，同時建立起與這些可愛生物的深厚連結。
     </p>
-
-    <button class="more-info">更多詳細資訊</button>
+    <actionBtn class="more-info" :content="'更多詳細資訊'" />
 </div>
 
 <div class="tags">
@@ -73,63 +75,48 @@ import axios from 'axios';
     <hr>
 </div>
 
-<div class="business-hours-wrap">
-    <div class="administrative-center business-hours">
-        <button class="hours-title-wrap">
-            <h4>管理中心</h4>
-        </button>
-        <div class="info ">
-            <p>營業時間：06:30~21:00</p>
-            <p>管理人員巡場時間：08:00~20:00</p>
-            <p>管理中心電話：(049) 2222106－81／非營業時間請撥0988-123-456</p>
-            <p><br></p>
-            <p>進場時間：<br></p>
-            <p>
-                一律為當日下午13:00，若提前入場則酌收露營費用300元。
-            </p>
-            <p>
-                退場時間：
-                <p>平日下午12:00前<span class="tinyp">(逾時需額外支付半日費用/帳)</span></p>
-                <p>假日上午11:00前<span class="tinyp">(逾時需額外支付一日費用/帳)</span></p>
-            </p>
-            <p><br></p>
-            <p>預訂國定假日之兩天一夜露營者，請於隔日上午11:00前離場，以提供清潔人員進行打掃，造成不便敬請見諒。</p>
-            
-            <p>提前進場酌收每帳半價<span class="tinyp">（現場收費）</span></p>
-            
-            <p>欲提前進場請於露營日2天前電話連絡確認有無營位可供入住。</p>
-            
-            <p>18:00後到場請於23:00前搭營完成，避免打擾已就寢露友。</p>
-            
-            <p>連續假日期間、星期六晚上不提供夜衝服務</p>
-        </div>
-    </div>
-    <div class="shelter business-hours">
-        <button class="hours-title-wrap">
-            <h4>野良之家</h4>
-        </button>
-        <div class="info">
-            <p>野良之家開放時間：1100~1900</p>
-            <p>野良之家電話：(049) 2222106－11（非開放時間請聯繫管理中心）</p>
-            <p>活動報名請洽官網或提前三日來電聯繫本所。</p>
-            <p>為分配當日志工工作及事前準備等，恕不接受當日報名，若造成不便敬請見諒。</p>
-        </div>
-    </div>
-    <div class="bus-info business-hours">
-        <button class="hours-title-wrap">
-            <h4>接駁車時段</h4>
-        </button>
-        <div class="info">
-            <p>仙山區區公所↔野良露營</p>
-            <p>頭末班車</p>
-            <p>平日：10:30／19:00</p>
-            <p>假日：08:30／20:00</p>
-            <p>平日班表－1030 1230 1430 1630 1830</p>
-            <p>假日班表－0830 1030 1230 1430 1630 1830 2000</p>
-            <p>預訂營區消費者免費，如未告知預約訂單大名，一律酌收新台幣30元/人。</p>
-            <p>服務電話 : (049) 2222106－81</p>
-        </div>
-    </div>
+<div class="business-hours-wrap accordion">
+    <businessHours title="管理中心">
+        <p>營業時間：06:30~21:00</p>
+        <p>管理人員巡場時間：08:00~20:00</p>
+        <p>管理中心電話：(049) 2222106－81／非營業時間請撥0988-123-456</p>
+        <p><br></p>
+        <p>進場時間：<br></p>
+        <p>
+            一律為當日下午13:00，若提前入場則酌收露營費用300元。
+        </p>
+        <p>
+            退場時間：
+            <p>平日下午12:00前<span class="tinyp">(逾時需額外支付半日費用/帳)</span></p>
+            <p>假日上午11:00前<span class="tinyp">(逾時需額外支付一日費用/帳)</span></p>
+        </p>
+        <p><br></p>
+        <p>預訂國定假日之兩天一夜露營者，請於隔日上午11:00前離場，以提供清潔人員進行打掃，造成不便敬請見諒。</p>
+        
+        <p>提前進場酌收每帳半價<span class="tinyp">（現場收費）</span></p>
+        
+        <p>欲提前進場請於露營日2天前電話連絡確認有無營位可供入住。</p>
+        
+        <p>18:00後到場請於23:00前搭營完成，避免打擾已就寢露友。</p>
+        
+        <p>連續假日期間、星期六晚上不提供夜衝服務。</p> 
+    </businessHours>    
+    <businessHours title="野良之家">            
+        <p>野良之家開放時間：1100~1900</p>
+        <p>野良之家電話：(049) 2222106－11（非開放時間請聯繫管理中心）</p>
+        <p>活動報名請洽官網或提前三日來電聯繫本所。</p>
+        <p>為分配當日志工工作及事前準備等，恕不接受當日報名，若造成不便敬請見諒。</p></businessHours>
+    <businessHours title="接駁車時段">
+        <p>仙山區區公所↔野良露營</p>
+        <p>頭末班車</p>
+        <p>平日：10:30／19:00</p>
+        <p>假日：08:30／20:00</p>
+        <p>平日班表－1030 1230 1430 1630 1830</p>
+        <p>假日班表－0830 1030 1230 1430 1630 1830 2000</p>
+        <p>預訂營區消費者免費，如未告知預約訂單大名，一律酌收新台幣30元/人。</p>
+        <p>服務電話 : (049) 2222106－81</p>
+    </businessHours>
+
 </div>
 
 </template>
@@ -204,44 +191,46 @@ import axios from 'axios';
 .eco img{
     object-position: 0 80%;
 }
+
 /*-----------------野良之家--------------------*/
 .shelter-wrap{
     border-top: 1px solid $dark;
+    margin: 10px auto;
+    width: 100vw;
 }
 .shelter-pic{
     margin: auto;
     background-image: url(../assets/image/aboutView/shelter.jpg);
-    width: 95vw;
+    width: 95%;
     height: auto;
     aspect-ratio: 3/2;
     background-position: center;
     background-size: cover;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
-.more-info{
-    border: none;
+.shelter-title-wrap{
+    display: flex;
+    width: 90%;
+    margin: 10px auto;
+}
+.shelter-subtitle{
+    margin-left: 5%;
+}
+.shelter-wrap>.tinyp{
+    width: 90%;
     margin: auto;
 }
-/*-----------------營業時間--------------------*/
-.business-hours{//容器
-    width: 90vw;
-    margin: 20px auto ;
+.more-info{
+    display: block;
+    margin: 10px auto;
 }
-.hours-title-wrap{ //標題(手風琴)
-    background-color: $blue-3;
-    color: $white01;
+.action-btn-01{
+    border-radius: 20px;
     border: none;
-    text-align: start;
-    width: 90vw;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 1em;
+    color: $white01;
 }
-.business-hours>.info{      //內文
-    background-color: $blue-2;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 1em;
+.action-btn-01:hover{
+    border: none;
 }
 </style>
