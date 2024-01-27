@@ -11,7 +11,8 @@ const toForm= ()=> {
 <template>
     <div class="otherquestion">
         <img src="../../assets/image/FAQView/faqBox.png" alt="問號箱箱">
-        <button @click="toForm">我有其他問題</button>
+        <button @click="toForm"
+        class="p">我有其他問題</button>
     </div>
         <!-- 分隔線 -->
     <div class="FAQtype">
@@ -31,13 +32,39 @@ const toForm= ()=> {
 </template>
 
 <style lang="scss" scoped>
+.otherquestion {
+    img{
+    width: 50%;
+    }
+    button{
+        transform: translate(-30%,-10%);
+        border: none;
+        background: none;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+/*------------------*/
+.FAQtype{
+    width:100%;
+    
+    button{
+        display:block;
+        width: 80vw;
+        height: 20vw;
+        border: none;
+        border-radius: 10px;
+        background-color: $blue-2;
+        margin: 10px auto;
 
-.FAQtype button{
-    width: 80vw;
-    height: 20vw;
-    border: none;
-    border-radius: 10px;
-    background-color: $blue-2;
-    margin: 10px;
+        h4{
+            font-weight: bold;
+        }
+        &:hover{
+            background-color: $blue-3;
+            color: $white01;
+        }
+    }
 }
 </style>
