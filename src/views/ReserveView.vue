@@ -5,13 +5,21 @@ import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 
+import { DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
+
 export default {
   components: {
     progressBar,
     nextPageBtn,
+    DatePicker,
   },
   data() {
     return {
+      range: {
+        start: '',
+        end: '',
+      },
       // 保留兩個變數用來擷取入住和退房日期
       startDate: '',
       endDate: '',
@@ -214,6 +222,17 @@ export default {
     // 如果有儲存過選擇的日期和夜衝, 則讀取值
     this.startDate = sessionStorage.getItem('startDate') || '';
     this.endDate = sessionStorage.getItem('endDate') || '';
+
+    if (this.startDate && this.endDate) {
+      const storedStart = this.startDate.split('-').map(Number);
+      const storedEnd = this.endDate.split('-').map(Number);
+
+      this.range = {
+        start: new Date(storedStart[0], storedStart[1] - 1, storedStart[2]),
+        end: new Date(storedEnd[0], storedEnd[1] - 1, storedEnd[2]),
+      };
+    }
+
     this.hasDiscount = sessionStorage.getItem('hasDiscount') || false;
 
     // 如果有儲存過選擇的營區和數量, 則讀取值
@@ -242,6 +261,16 @@ export default {
         matchedItem.count = itemStored.count;
       }
     });
+
+    // 輪播動畫自動播放的部分
+    this.checkAutoScroll();
+    window.addEventListener('resize', this.checkAutoScroll);
+  },
+  beforeUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    window.removeEventListener('resize', this.checkAutoScroll);
   },
   computed: {
     siteSum() {
@@ -282,8 +311,22 @@ export default {
     hasDiscount(newVal) {
       sessionStorage.setItem('hasDiscount', newVal);
     },
+    range(newVal) {
+      if (newVal.start) {
+        this.startDate = this.formatDate(newVal.start);
+      }
+      if (newVal.end) {
+        this.endDate = this.formatDate(newVal.end);
+      }
+    },
   },
   methods: {
+    formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從0開始，所以加1
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
     updateDuration() {
       if (this.stayDuration > 0) {
         sessionStorage.setItem('stayDuration', this.stayDuration.toString());
@@ -372,6 +415,21 @@ export default {
       this.leftPosition = index * -300;
       this.selectedSpan = index + 1;
     },
+    startAutoScroll() {
+      const spanCount = 4; // 假设有 4 个 span
+      this.intervalId = setInterval(() => {
+        const nextIndex = this.selectedSpan % spanCount;
+        this.updatePosition(nextIndex);
+      }, 1000);
+    },
+    checkAutoScroll() {
+      if (window.innerWidth < 480 && !this.intervalId) {
+        this.startAutoScroll();
+      } else if (window.innerWidth >= 480 && this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+    },
 
     // 營區種類圖片左右動作
     changePicShowMinus(index) {
@@ -413,11 +471,19 @@ export default {
     </div>
 
     <!--預約時間日曆-->
-    <div class="bg-red01">
-      日曆還沒, 先在變數存值測試 入營日期:
-      <input type="date" v-model="startDate" /> 拔營日期:
-      <input type="date" v-model="endDate" />
+    <div class="calendar">
+      <DatePicker
+        id="v-calendar"
+        v-model.range="range"
+        mode="date"
+        is-required
+        color="nora-calendar"
+        borderless
+        expanded
+        :min-date="new Date()"
+      />
     </div>
+
     <!--營區時間規定-->
     <div id="time-rule">
       <h3 class="dark">營區時間規定</h3>
