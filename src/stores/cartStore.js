@@ -12,14 +12,28 @@ export const useCartStore = defineStore('cartStore', {
   },
   actions: {
     addToCart(productId, qty = 1){
+      //取得已經有加入購物車的商品，如果購物車已有則+1，沒有則新增項目
+      const currentCart = this.cart.find((item) => item.productId === productId)
+      if(currentCart){
+        currentCart.qty += qty;
+      }else{
+        this.cart.push({
+          id: new Date().getTime(),
+          productId,
+          qty
+        })
+      }
+      console.log(this.cart);
       console.log(productId, qty);
-      this.cart.push({
-        id: new Date().getTime(),
-        productId,
-        qty
-      })
-      // console.log(this.cart);
-    }
+    },
+    setCartQty(id, event){
+      const currentCart = this.cart.find((item) => item.id === id);
+      currentCart.qty = parseInt(event.target.value) 
+    },
+    removeCartItem(id){
+      const index = this.cart.findIndex((item) => item.id === id);
+      this.cart.splice(index, 1)
+    },
   },
   getters: {
     cartList: ({cart})=> {
