@@ -4,6 +4,7 @@
     .#{$k} {
       color: $v;
     }
+
     .bg-#{$k} {
       background-color: $v;
     }
@@ -29,13 +30,13 @@
 }
 
 @mixin tablet {
-  @media (width >= 480px) {
+  @media (width >=480px) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media (width >= 1024px) {
+  @media (width >=1024px) {
     @content;
   }
 }
@@ -55,3 +56,8 @@
 //     background-color: red;
 //   }
 // }
+
+//顏色透明度
+@mixin fade-in($color, $amount) {
+  background-color: rgba($color, $amount);
+}
