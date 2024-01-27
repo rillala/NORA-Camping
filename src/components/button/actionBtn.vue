@@ -30,6 +30,7 @@ export default {
     max-height: 100px;
 
     span {
+      padding: 0 10px;
       font-size: 24px;
       font-weight: bold;
     }

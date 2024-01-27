@@ -19,7 +19,7 @@ export default {
   height: 10vw;
   min-height: 20px;
   border-radius: 1000px;
-  border: 1px solid;
+  border: 1px solid $brown-2;
   background-color: $brown-2;
 
   span {

@@ -11,7 +11,7 @@ export default {
   },
   data() {
     return {
-      things: [
+      animals: [
         { src: "camp_tent_maru" },
         { src: "camp_tent" },
         { src: "cat_koubakozuwari_gray" },
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     getThingUrl(paths) {
-      return new URL(`../assets/image/homeView/movingThings/${paths}`, import.meta.url).href
+      return new URL(`../assets/image/homeView/animalMarquee/${paths}`, import.meta.url).href
     },
     getweatherUrl(paths) {
       return new URL(`../assets/image/homeView/weatherMark/${paths}`, import.meta.url).href
@@ -60,9 +60,9 @@ export default {
   },
   watch: {
     search(newSearch, oldSearch) {
-      // console.log(this.search);
-      // console.log('new:' + newSearch);
-      // console.log('old:' + oldSearch);
+      console.log(this.search);
+      console.log('new:' + newSearch);
+      console.log('old:' + oldSearch);
     },
     responseData: {
       handler(newcData) {
@@ -79,30 +79,34 @@ export default {
 
 <template>
   <main>
-    <section class="Homepage-banner bg-blue-2">
-      <div class="banner-text">
+
+    <section class="Homepage-banner ">
+      <div class="Banner-text">
         <h1>
-          願那些流浪，<br />
-          只是體驗而已。<br />
+          願那些流浪，<br>
+          只是體驗而已。<br>
           走吧，去露營！
         </h1>
         <actionBtn class="Reserve-Now" :content="'立即預約'" />
       </div>
-      <div class="things-Moving">
-        <img v-for="picsrc in things" :src="getThingUrl(`${picsrc.src}.png`)" />
+
+      <div class="Banner-background bg-blue-2">
+
+        <!-- <div class="Animal-marquee-contanier">
+          <img v-for="picsrc in animals" :src="getThingUrl(`${picsrc.src}.png`)" />
+        </div> -->
       </div>
+
     </section>
 
     <section class="Knowing-nora">
-
       <div class="KN-mountain-background">
         <img src="@/assets/image/homeView/mountainBgL.png" class="Mountain-left">
         <img src="@/assets/image/homeView/mountainBgR.png" class="Mountain-right">
       </div>
-
       <div class="KN-content">
         <div class="KN-text">
-          <h3>認識野良</h3>
+          <h3>認識野良</h3><img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1">
           <p>
             "野良" 這一詞在日文中指流浪動物，
             我們將這一概念融入露營體驗中，創造出一個充滿活力和溫馨的環境。
@@ -117,28 +121,54 @@ export default {
           <img src="@/assets/image/homeView/knowingnora-pic.jpg" />
         </div>
       </div>
-
       <div class="KN-weather-box ">
         <span>營地目前天氣</span>
         <div id="Weather"></div>
         <div id="AirTemperature"></div>
       </div>
-
     </section>
 
-
     <section class="News bg-blue-3">
-      <div class="News-withsearch">
-        <h2>最新消息</h2>
-        <input type="text" v-model.trim="search">
-      </div>
+
       <div class="News-container">
+        <div class="News-Title-search">
+          <h3>最新消息</h3>
+          <input type="text" placeholder="   搜尋關鍵字" v-model.trim="search">
+        </div>
         <ul>
-          <!-- 這邊要把清單for出來 -->
           <li>
-            <article>
-              <h3>標題</h3>
-              <p>文章</p>
+            <article class="Article-with-picture">
+
+              <div class="News-text">
+                <div class="title">
+                  <h4>2024春季優惠開跑中</h4>
+                  <p class="tinyp">2024/1/24</p>
+                </div>
+                <p>探險春季，NORA Camp誠摯邀請您攜帶心愛的寵物一同感受大自然的懷抱！
+                  透過我們獨家的「春季寵物露營樂享包」優惠，
+                  獲得精心準備的狗狗貓貓歡迎禮 包，內含美味零食、趣味玩具及特別的寵物地圖。
+                  優惠僅限春季特定日期，請提前預訂，確保您和寵物共享這春之樂。期待您們一家人一起加入NORA Camp的大家庭，享受春日露營的美好時光！
+                </p>
+              </div>
+
+              <div id="News-img">
+                <div id="News-large-image">
+                  <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                </div>
+                <div class="images-row">
+                  <div id="News-small-image">
+                    <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                  </div>
+                  <div id="News-small-image">
+                    <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                  </div>
+                  <div id="News-small-image">
+                    <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                  </div>
+                </div>
+
+              </div>
+
             </article>
           </li>
         </ul>
@@ -148,225 +178,51 @@ export default {
     <section class="New-products bg-blue-2">
       <h2>野良選物X最新商品</h2>
       <div class="product-container">
+        <ul>
+          <li></li>
+        </ul>
       </div>
       <viewMoreBtn :content="'逛逛其他好物'" />
     </section>
 
-    <section class="stray-home">
-      <h2>野良之家</h2>
-      <div class="stray-home-context">
-        <p>
-          野良露營也是流浪動物的中途之家。
-          我們致力於照顧、
-          庇護和尋找新的家園給需要幫助的流浪動物
-          我們提供免費的志工活動，
-          一同為這些可愛的生命奉獻愛心。
-          志工活動包括洗狗、打掃籠舍、餵食等，
-          讓你有機會親身參與流浪動物的照顧，
-          同時建立起與這些可愛生物的深厚連結。
-        </p>
+    <section class="Stray-home">
+
+      <div class="Stray-home-content">
+        <div class="SH-text">
+          <h2>野良之家</h2>
+          <img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1">
+          <p>
+            野良露營也是流浪動物的中途之家。
+            我們致力於照顧、
+            庇護和尋找新的家園給需要幫助的流浪動物
+            我們提供免費的志工活動，
+            一同為這些可愛的生命奉獻愛心。
+            志工活動包括洗狗、打掃籠舍、餵食等，
+            讓你有機會親身參與流浪動物的照顧，
+            同時建立起與這些可愛生物的深厚連結。
+          </p>
+          <div class="SH-btn">
+            <viewMoreBtn class="SH-btn1" :content="'了解更多'" />
+            <actionBtn :content="'報名志工活動'" />
+          </div>
+        </div>
       </div>
-      <viewMoreBtn :content="'了解更多'" />
-      <actionBtn :content="'報名志工活動'" />
+
+      <div class="SH-tent-container">
+        <img src="@/assets/image/homeView/Tent_with_ground.png" alt="帳篷框">
+
+      </div>
+
+
+      <div class="Stray-home-background">
+        <img src="@/assets/image/homeView/Stray_home_bg.png" alt="野良之家背景">
+        <div class="The-ground"></div>
+      </div>
     </section>
   </main>
 </template>
 
 
 <style lang="scss" scoped>
-.Homepage-banner {
-  height: 700px;
-
-  .banner-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 700px;
-    position: relative;
-    z-index: 3;
-  }
-
-  .things-Moving {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    left: 180px;
-    width: 40%;
-    height: 700px;
-    overflow: hidden;
-    z-index: 1;
-
-    @include tablet {
-      flex-direction: row;
-      left: 0;
-      top: 480px;
-      width: 100%;
-      height: 200px;
-    }
-  }
-
-  .things-Moving img {
-    filter: grayscale(100%);
-    width: 100%;
-    margin: 30px 0;
-
-    @include tablet {
-      width: 50%;
-      margin: 0 30px;
-    }
-  }
-}
-
-.Knowing-nora {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.KN-mountain-background {
-  display: flex;
-  flex-direction: row;
-  align-items: end;
-  height: 100%;
-  width: 110%;
-  min-width: 600px;
-  justify-content: space-between;
-  position: absolute;
-  z-index: -100;
-  margin: 0 auto;
-
-  img {
-    height: 400px;
-    width: 300px;
-  }
-}
-
-.KN-content {
-  max-width: 1200px;
-  width: 90%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @include desktop {
-    flex-direction: row;
-    align-items: center;
-    margin: 50px 0;
-  }
-}
-
-.KN-text {
-  padding: 30px 0;
-  text-align: center;
-
-  h3 {
-    padding: 30px 0;
-    font-weight: bold;
-  }
-
-  p {
-    line-height: 180%;
-    font-size: 20px;
-  }
-
-  @include desktop {
-    text-align: start;
-    margin: 0 50px;
-  }
-}
-
-.KN-img-contanier {
-  overflow: hidden;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  top: 15px;
-
-  img {
-    height: 300px;
-    width: 75%;
-    border-radius: 30px;
-    object-fit: cover;
-    object-position: center;
-
-    @include desktop {
-      height: 300px;
-      width: 100%;
-    }
-  }
-}
-
-.KN-weather-box {
-  min-width: 200px;
-  width: 50%;
-  padding: 50px 0;
-  margin: 50px;
-  border-radius: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  @include fade-in(#d5faff, 0.7);
-
-  span {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 10px;
-  }
-
-  @include desktop {
-    flex-direction: row;
-
-    span {
-      font-size: 30px;
-    }
-  }
-}
-
-#Weather {
-  font-size: 30px;
-  font-weight: bold;
-  margin: 10px;
-}
-
-#AirTemperature {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.News {
-  height: 700px;
-}
-
-.News-withsearch {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-
-  h2 {
-    color: $white01;
-  }
-}
-
-.News-container {
-  border: 1px solid red;
-}
-
-.New-products {
-  height: 700px;
-}
-
-.stray-home {
-  height: 700px;
-  background-color: #aaa;
-}
+@import'@/assets/sass/page/homeView.scss';
 </style>
