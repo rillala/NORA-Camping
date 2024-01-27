@@ -9,24 +9,10 @@
           <img :src="responseData.images" alt="responseData.title" />
         </div>
         <p>{{ responseData.description }}</p>
-        <p>{{ responseData.id }}</p>
 
         <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
         <ActionBtn @click.prevent="addIntoCart(responseData.id)" :content="'加入購物車'"></ActionBtn>
         <ActionBtn :content="'直接購買'"></ActionBtn>
-
-        <h2>購物車</h2>
-        <div v-if="cartItem">
-          <h4>已選擇商品：</h4>
-          <img :src="cartItem.images" alt="">
-          <p>{{ cartItem.title }} - NT${{ cartItem.price }} x<addMinusBtn @update:quantity="handleQuantityUpdate">
-            </addMinusBtn>
-          </p>
-          <p>{{ `總計${cartItem.price * selectedQuantity}` }}</p>
-
-
-        </div>
-
       </div>
     </div>
   </main>
@@ -82,21 +68,6 @@ export default {
       const cartStore = useCartStore();
       await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
     }
-    // addToCart(product) {
-    //   const productStore = useProductStore();
-
-    //   // 將商品資料包裝成物件
-    //   const cartItem = {
-    //     id: product.id,
-    //     images: product.images,
-    //     title: product.title,
-    //     price: product.price,
-    //     quantity: this.selectedQuantity,
-    //   };
-    //   // 將 cartItem 資訊存儲到 data 中
-    //   this.cartItem = cartItem;
-    //   console.log(cartItem);
-    // },
   },
 }
 
