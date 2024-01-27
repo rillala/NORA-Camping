@@ -1,7 +1,8 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
-import { useCartStore } from '@/stores/cartStore'; // 導入 Pinia Store
+import { useCartStore } from '@/stores/cartStore'; 
+import { mapState, mapActions } from 'pinia';
 
 
 export default {
@@ -10,17 +11,11 @@ export default {
 
     }
   },
-  methods: {},
+  methods: {
+    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty'])
+  },
   computed: {
-    getCartList(){
-      const cartStore = useCartStore()
-      return cartStore.cartList
-    }
-    
-    // displayData() {//全部商品
-    //   const productStore = useProductStore();
-    //   return productStore.cartItem;
-    // },
+    ...mapState(useCartStore, ['cartList'])
   },
   created() {
     // const productStore = useProductStore();
@@ -31,23 +26,40 @@ export default {
 </script>
 
 <template>
-  {{ getCartList.total }}
-  <!-- <tr v-for="item in cartList.cart">
+  <div v-if="!cartList.carts.length">購物車沒有任何品項</div>
+<table v-else>
+  <tbody>
+    <tr v-for="item in cartList.carts" :key="item.id">
     <td>
-      <a href=""></a>
+      <a href="#" @click.prevent="removeCartItem(item.id)">X</a>
     </td>
     <td>
-      <img src="" alt="">
+      <img :src="item.product.images" alt="">
     </td>
     <td>
-      <p>delicious</p>
+      <p>{{item.product.title}}</p>
     </td>
     <td>
-      <select name="" id="">
-        <option value="">14</option>
+      <select name="" id="" :value="item.qty" @change="(event) => setCartQty(item.id, event)">
+        <option :value="i" v-for="i in 20" :key="i">{{ i }}</option>
       </select>
     </td>
-  </tr> -->
+    <td>
+      $ {{ item.subtatal }}
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>總金額 NT$ {{cartList.total}}</td>
+    </tr>
+  </tfoot>
+</table>
+  
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  img{
+    width: 200px;
+  }
+</style>
