@@ -261,22 +261,6 @@ export default {
         this[listName][index].rentNum--;
       }
     },
-
-    // updateQuantitySet(newQuantity, index) {
-    //   let setCard = this.setList[index];
-    //   if (setCard) {
-    //     return (setCard.rentNum = newQuantity);
-    //   }
-    // },
-    // updateQuantitySingle(cardId, newQuantity, index) {
-    //   console.log(cardId);
-    //   console.log('quantity:' + newQuantity);
-    //   const card = this.singleList.find(p => p.id === cardId);
-    //   if (card) {
-    //     card.rentNum = newQuantity;
-    //     console.log(`${card.id} :: ${card.rentNum}`);
-    //   }
-    // },
   },
 };
 </script>
