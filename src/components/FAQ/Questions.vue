@@ -34,13 +34,15 @@ p{
 button{
     display:block;
     width: 80vw;
-    height: 3em;
+    height: auto;
     border: none;
     border-radius: 10px;
     background-color: $blue-2;
     margin: 10px auto;
 
     h4{
+        padding: 0.5rem 0.5rem;
+        text-align: start;
         font-size: 20px;
         font-weight: 500;
     }
