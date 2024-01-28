@@ -3,11 +3,13 @@
 import axios from 'axios';
 import actionBtn from '@/components/button/actionBtn.vue';
 import viewMoreBtn from '@/components/button/viewMoreBtn.vue';
+import productCard from '@/components/shop/productCard.vue';
 
 export default {
   components: {
     actionBtn,
     viewMoreBtn,
+    productCard,
   },
   data() {
     return {
@@ -30,6 +32,7 @@ export default {
         "kumori"
       ],
       search: '',
+
     };
   },
   mounted() {
@@ -50,7 +53,7 @@ export default {
     weather();
   },
   methods: {
-    getThingUrl(paths) {
+    getAnimalUrl(paths) {
       return new URL(`../assets/image/homeView/animalMarquee/${paths}`, import.meta.url).href
     },
     getweatherUrl(paths) {
@@ -93,7 +96,7 @@ export default {
       <div class="Banner-background bg-blue-2">
 
         <!-- <div class="Animal-marquee-contanier">
-          <img v-for="picsrc in animals" :src="getThingUrl(`${picsrc.src}.png`)" />
+          <img v-for="picsrc in animals" :src="getAnimalUrl(`${picsrc.src}.png`)" />
         </div> -->
       </div>
 
@@ -135,43 +138,66 @@ export default {
           <h3>最新消息</h3>
           <input type="text" placeholder="   搜尋關鍵字" v-model.trim="search">
         </div>
-        <ul>
-          <li>
-            <article class="Article-with-picture">
+        <div class="News-viewport">
+          <ul>
+            <li>
+              <article class="Article-with-picture">
 
-              <div class="News-text">
-                <div class="title">
-                  <h4>2024春季優惠開跑中</h4>
-                  <p class="tinyp">2024/1/24</p>
-                </div>
-                <p>探險春季，NORA Camp誠摯邀請您攜帶心愛的寵物一同感受大自然的懷抱！
-                  透過我們獨家的「春季寵物露營樂享包」優惠，
-                  獲得精心準備的狗狗貓貓歡迎禮 包，內含美味零食、趣味玩具及特別的寵物地圖。
-                  優惠僅限春季特定日期，請提前預訂，確保您和寵物共享這春之樂。期待您們一家人一起加入NORA Camp的大家庭，享受春日露營的美好時光！
-                </p>
-              </div>
-
-              <div id="News-img">
-                <div id="News-large-image">
-                  <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
-                </div>
-                <div class="images-row">
-                  <div id="News-small-image">
-                    <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                <div class="News-text">
+                  <div class="title">
+                    <h4>2024春季優惠開跑中</h4>
+                    <p class="tinyp">2024/1/24</p>
                   </div>
-                  <div id="News-small-image">
-                    <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
-                  </div>
-                  <div id="News-small-image">
-                    <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
-                  </div>
+                  <p>探險春季，NORA Camp誠摯邀請您攜帶心愛的寵物一同感受大自然的懷抱！
+                    透過我們獨家的「春季寵物露營樂享包」優惠，
+                    獲得精心準備的狗狗貓貓歡迎禮 包，內含美味零食、趣味玩具及特別的寵物地圖。
+                    優惠僅限春季特定日期，請提前預訂，確保您和寵物共享這春之樂。期待您們一家人一起加入NORA Camp的大家庭，享受春日露營的美好時光！
+                  </p>
                 </div>
 
-              </div>
+                <div id="News-img">
+                  <div class="large-images">
+                    <div id="News-large-image">
+                      <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                    </div>
+                  </div>
 
-            </article>
-          </li>
-        </ul>
+                  <div class="images-row">
+                    <div id="News-small-image">
+                      <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                    </div>
+                    <div id="News-small-image">
+                      <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                    </div>
+                    <div id="News-small-image">
+                      <img src="@/assets/image/homeView/Camping_dog_lake.jpg" alt="消息圖片">
+                    </div>
+                  </div>
+
+                </div>
+
+              </article>
+            </li>
+            <li>
+              <article class="Article-onlytext">
+
+                <div class="News-text">
+                  <div class="title">
+                    <h4>營地設備維修公告</h4>
+                    <p class="tinyp">2024/1/10</p>
+                  </div>
+                  <p>為提供更良好的露營體驗，我們即將進行狗狗專屬營區烤肉區設備的定期維修。維修時間為下週二上午9時至下午3時。在此期間，狗狗專屬營區的烤肉區域將無法使用。請見諒造成的不便。
+                    
+                    我們將盡快完成維修，以確保您和您的毛小孩在安全和愉快的環境中度過美好的露營時光。在維修期間，為確保您的安全，請勿進入烤肉區域。如有任何緊急需要使用烤肉設備的情況，請聯繫我們的服務人員，我們將協助您找到合適的解決辦法。
+                    感謝您的理解和支持。期待在維修完成後，為您呈獻一個更舒適、更便利的露營環境。如有任何疑問或需要進一步協助，請隨時與我們聯絡。
+
+                  </p>
+                </div>
+
+              </article>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -179,15 +205,12 @@ export default {
       <h2>野良選物X最新商品</h2>
       <div class="product-container">
         <ul>
-          <li></li>
+          <li>
+            <productCard />
+          </li>
         </ul>
       </div>
-
-      <div class="New-products bg-blue-2">
-        <h2>野良選物X最新商品</h2>
-        <div class="product-container"></div>
-        <viewMoreBtn :content="'逛逛其他好物'" />
-      </div>
+      <viewMoreBtn :content="'逛逛其他好物'" />
     </section>
 
     <section class="Stray-home">
