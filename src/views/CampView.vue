@@ -11,6 +11,15 @@ export default {
         '/src/assets/image/campGuide/bathroom_m_3.png',
       ],
       currentIndex: 0,
+      areas: [ //立體地圖顯示區域資訊
+        { name: "貓區", description: "貓咪與主人能愜意發懶的舒服環境。" },
+        { name: "狗區", description: "狗狗與主人能安心玩耍的舒適空間。" },
+        { name: "野良之家", description: "這裡有一群等待家的可愛毛孩們。" },
+        { name: "辦公區域", description: "裝備租借、基本設施樣樣有。" }
+      ],
+      showPopup: false,
+      showDetails: false,
+      currentArea: {}
     };
   },
   computed: {
@@ -25,6 +34,15 @@ export default {
     nextSlide() {
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
     },
+    showInfo(area) {
+      this.currentArea = area;
+      this.showPopup = true;
+    },
+    goToDetails() {
+      // 根據需要實現跳轉到完整區域介紹的該區塊資訊的邏輯
+      // 例如，使用路由或者直接切換顯示狀態
+      this.showDetails = true;
+    }
   },
 };
 </script>
@@ -39,10 +57,25 @@ export default {
 
     <!-- 立體地圖區塊 -->
     <div class="guide-map">
-      <img
-        src="/src/assets/image/campGuide/map_m_ex.png"
-        alt="立體地圖示意圖"
-      />
+      
+      <div class="camp-map" @mouseover="showInfo" @click="goToDetails">
+        <img
+          src="/src/assets/image/campGuide/map_m_ex.png"
+          alt="立體地圖示意圖"
+        />
+      </div>
+
+      <div class="map-info-popup" v-if="showPopup">
+        <!-- 區域資訊浮現時顯示的內容 -->
+        <h3>{{ currentArea.name }}</h3>
+        <p>{{ currentArea.dtl }}</p>
+      </div>
+
+      <div v-if="showDetails">
+      <!-- 完整區域介紹的該區塊資訊區域 -->
+      <!-- 在這裡添加你的完整區域介紹的該區塊資訊 -->
+      </div>
+
     </div>
 
     <!-- 立體地圖下方旗子區塊 -->
@@ -140,11 +173,11 @@ export default {
     </div>
 
     <div class="shelter-office-bg">
-      <!-- 中途之家區塊 -->
+      <!-- 野良之家區塊 -->
       <div class="guide-shelter">
-        <img src="/src/assets/image/campGuide/shelter_big_img.jpg" alt="中途之家區塊大圖" />
+        <img src="/src/assets/image/campGuide/shelter_big_img.jpg" alt="野良之家區塊大圖" />
         <div class="guide-shelter-info">
-          <h4 class="guide-shelter-title">中途之家</h4>
+          <h4 class="guide-shelter-title">野良之家</h4>
           <p class="guide-shelter-dtl text">
             小小安置流浪貓狗的臨時住所，<br />
             若喜歡貓貓狗狗的你，<br />
@@ -152,7 +185,7 @@ export default {
             歡迎在旅途中來看看牠們！<br />
             給彼此一個互相認識的機會！
           </p>
-          <button class="guide-shelter-btn">更多中途之家介紹</button>
+          <button class="guide-shelter-btn">更多野良之家介紹</button>
         </div>
       </div>
 
@@ -180,15 +213,18 @@ export default {
 
     <!-- 營地資訊區塊 -->
     <div class="guide-camp-info-bg">
+
       <div class="guide-camp-info-title">
         <img src="/src/assets/image/campGuide/signboard_m.svg" alt="營地資訊標題掛旗" />
         <h4 class="camp-info-title">營地資訊</h4>
       </div>
+
       <div class="camp-cloud">
         <img src="/src/assets/image/campGuide/cloud_m_large.svg" alt="營地資訊裝飾大雲朵" />
         <img src="/src/assets/image/campGuide/cloud_m_small.svg" alt="營地資訊裝飾小雲朵" />
         <p class="camp-cloud-words">遠離塵囂！<br />放鬆身心靈！</p>
       </div>
+
       <div class="guide-camp-info">
         <img class="bigtent" src="/src/assets/image/campGuide/guide_info_bigtent.svg" 
         alt="營地資訊帳篷圖形" />
@@ -198,6 +234,7 @@ export default {
           <li>Email：info@noracamp.com</li>
         </ul>
       </div>
+
       <div class="camp-info-social">
         <div class="fb">
           <img src="/src/assets/image/campGuide/fb_icon.svg" alt="Facebook icon">
@@ -212,9 +249,11 @@ export default {
           <p>@NORACamp</p>
         </div>
       </div>
+
       <div class="camp-info-map">
         <img src="" alt="手繪地圖">
       </div>
+      
     </div>
 
     <!-- 設施介紹區塊 -->
@@ -239,8 +278,12 @@ export default {
         alt="設施介紹底圖" />
 
         <div class="facility-slider-btn">
-          <button class="facility-btn" @click="prevSlide">＜</button>
-          <button class="facility-btn" @click="nextSlide">＞</button>
+          <button class="facility-btn" @click="prevSlide">
+            <img src="/src/assets/image/campGuide/left_button_m.svg" alt="左邊箭頭按鈕">
+          </button>
+          <button class="facility-btn" @click="nextSlide">
+            <img src="/src/assets/image/campGuide/right_button_m.svg" alt="右邊箭頭按鈕">
+          </button>
         </div>
 
         <div class="facility-slider-container">
@@ -252,30 +295,22 @@ export default {
         <div class="facility-txt">
           <p class="facility-top">
             各營位有一個插頭、一組水槽、一盞路燈<br>
-            各區域有男性和女性衛浴設施、冷凍庫和冷藏冰箱</p>
-
-          <p class="female-wc-title">女性衛浴設施</p>
+            各區域有冷凍庫、冷藏冰箱及衛浴設施
+          </p>
           <ul class="female-wc-list p">
+            <li>衛浴設施：</li>
             <li>廁所：多間分隔單位，有環保節水馬桶</li>
             <li>淋浴間：獨立淋浴空間，提供熱水和隱私空間</li>
             <li>洗手台：配備肥皂、烘手機及鏡子</li>
           </ul>
-
-          <p class="male-wc-title">男性衛浴設施</p>
-          <ul class="male-wc-list p">
-            <li>廁所：多間分隔單位，內有環保節水馬桶</li>
-            <li>淋浴間：獨立淋浴空間，提供熱水</li>
-            <li>洗手台：配備肥皂、烘手機及鏡子</li>
-          </ul>
-
-          <!-- <div class="facility_trees">
-            <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" 
-            alt="棕梠樹圖一" />
-            <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" 
-            alt="棕梠樹圖二" />
-          </div> -->
         </div>
 
+        <div class="facility_trees">
+          <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" 
+            alt="棕梠樹圖一" />
+          <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" 
+            alt="棕梠樹圖二" />
+        </div>
       </div>
     </div>
 

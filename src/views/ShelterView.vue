@@ -15,7 +15,7 @@ export default {};
 
     <!-- 野良之家大圖區塊 -->
     <div class="shelter-top-area">
-      <img src="" alt="中途之家大圖" />
+      <img src="" alt="野良之家大圖" />
     </div>
 
     <!-- 相愛相伴區塊 -->
@@ -119,4 +119,8 @@ export default {};
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+@import url(/src/assets/sass/page/shelter.scss);
+
+</style>
