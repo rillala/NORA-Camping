@@ -57,6 +57,9 @@ export default {
         <p class="blue-4">開啟你的野良計畫！</p>
         <p class="slogan blue-4">距離你的行程尚有{{ dateToCamp }}天。</p>
       </div>
+      <div class="box">
+        <img src="@/assets/image/reserve/flag.png" alt="nore-flag" />
+      </div>
     </div>
     <div class="reserve dark">
       <h2>謝謝，我們已收到您的訂單。</h2>
@@ -142,6 +145,31 @@ export default {
     width: 100%;
     @include desktop {
       margin-top: 20px;
+    }
+  }
+
+  .box {
+    position: relative;
+    width: 100%;
+    margin-top: -20px;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+
+    @include tablet {
+      margin-top: -80px;
+    }
+
+    @include desktop {
+      margin: -140px auto 0;
+      max-width: 1200px;
+    }
+
+    img {
+      position: relative;
+      left: -2%;
+      top: 0;
+      width: 104%;
     }
   }
 }
