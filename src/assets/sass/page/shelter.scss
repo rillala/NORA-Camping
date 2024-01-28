@@ -1,0 +1,10 @@
+.shelter-banner { // Banner區塊
+    height: 200px;
+    width: 100%;
+    background-color: $blue-1;
+    color: $blue-4;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
