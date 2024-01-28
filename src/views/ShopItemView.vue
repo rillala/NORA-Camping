@@ -3,16 +3,35 @@
     <div class="shop-item-container">
       <loading v-if="nodata"></loading>
       <div v-else class="shop-item-content">
-        <h2>{{ responseData.title }}</h2>
-        <h3>NT${{ responseData.price }}</h3>
-        <div>
-          <img :src="responseData.images" alt="responseData.title" />
-        </div>
-        <p>{{ responseData.description }}</p>
+        <!-- 該如何引進多張圖片，用icon做切換? -->
+        <div class="shop-item-top">
 
-        <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
-        <ActionBtn @click.prevent="addIntoCart(responseData.id)" :content="'加入購物車'"></ActionBtn>
-        <ActionBtn :content="'直接購買'"></ActionBtn>
+          <div class="shop-item-images">
+            <img class="shop-arrow-icon" @click="prevImage" src="/src/assets/image/universe/left-arrow-btn.svg"
+              alt="icon">
+            <div class="shop-item-imagesSlider">
+              <img :src="responseData.images" alt="responseData.title" />
+            </div>
+            <img class="shop-arrow-icon" @click="nextImage" src="/src/assets/image/universe/right-arrow-btn.svg"
+              alt="icon">
+          </div>
+          <div class="shop-item-words">
+            <h2>{{ responseData.title }}</h2>
+            <h3>NT${{ responseData.price }}</h3>
+            <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
+            <div class="shop-item-actionBtns">
+              <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
+              <ActionBtn :content="'直接購買'"></ActionBtn>
+            </div>
+          </div>
+        </div>
+        <section class="shop-item-intro">
+          <div class="shop-intro-title">
+            <h4>商品詳情</h4>
+          </div>
+          <p>{{ responseData.description }}</p>
+        </section>
+        <div class="shop-item-rec">Nora 推薦加購</div>
       </div>
     </div>
   </main>
@@ -37,8 +56,7 @@ export default {
   data() {
     return {
       selectedQuantity: 0,
-      cartItem: null, // 新增 cartItem 屬性用於顯示選擇的商品資訊
-      //   responseData: {}, 這邊已經在 pinia 中定義了, 在下方的 computed 裡調用
+      currentIndex: 0,//還沒用到，如果多張圖片可能用到
     };
   },
   created() {
@@ -67,7 +85,16 @@ export default {
     async addIntoCart() {
       const cartStore = useCartStore();
       await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
-    }
+    },
+    prevImage() {
+      // 切換到前一張圖片
+      this.currentIndex = (this.currentIndex - 1 + this.responseData.images.length) % this.responseData.images.length;
+      console.log('click');
+    },
+    nextImage() {
+      // 切換到下一張圖片
+      this.currentIndex = (this.currentIndex + 1) % this.responseData.images.length;
+    },
   },
 }
 
@@ -79,7 +106,6 @@ export default {
 .shop-item-wrap {
   width: 100%;
   height: 100%;
-  background-color: $blue-1;
 
   .shop-item-container {
     width: 100%;
@@ -87,16 +113,114 @@ export default {
     margin: auto;
     padding: 20px;
 
+
     .shop-item-content {
       display: flex;
       flex-flow: column;
       align-items: center;
       gap: 20px;
+      width: 100%;
+
+      .shop-item-top {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        gap: 20px;
+        text-align: center;
+
+
+        .shop-item-words {
+          display: flex;
+          flex-flow: column;
+          gap: 20px;
+          align-items: center;
+        }
+        @include desktop{
+          text-align: left;
+        }
+
+        @include desktop {
+          .shop-item-words {
+            width: 50%;
+            align-items: flex-start;
+            gap: 40px;
+          }
+        }
+      }
+
+      @include desktop {
+        .shop-item-top {
+          display: flex;
+          flex-flow: row;
+          align-items: flex-start;
+          gap: 40px;
+        }
+
+        .shop-item-images {
+          width: 50%;
+        }
+      }
+      .shop-item-images {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .shop-arrow-icon {
+          width: 50px;
+          height: 50px;
+        }
+
+        .shop-item-imagesSlider {
+          width: 100%;
+
+          img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            vertical-align: middle;
+            border: solid 5px $yellow-3;
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .shop-item-actionBtns {
+        display: flex;
+        gap: 8px;
+
+        .addCart-btn {
+          background-color: $blue-2;
+        }
+      }
+
+      .shop-item-intro {
+        background-color: $yellow-1;
+        margin-top: 20px;
+        border-radius: 20px;
+
+        p {
+          padding: 20px;
+        }
+
+        .shop-intro-title {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 40px;
+          background-color: $yellow-2;
+          border-radius: 20px 20px 0 0;
+
+        }
+      }
     }
   }
-}
 
-img {
-  width: 100px;
+  @include desktop {
+    .shop-item-container {
+      max-width: 1200px;
+      height: 100%;
+      margin: auto;
+      padding: 40px ;
+    }
+  }
 }
 </style>
