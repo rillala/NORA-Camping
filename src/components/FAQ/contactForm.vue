@@ -1,5 +1,11 @@
 <script setup>
+const emits = defineEmits([
+    'changeToMain'
+]);
 // 狗頭位置 中42.5 L=9 R=76
+function goBack(){
+    emits('changeToMain');
+}
 </script>
 
 <template>
@@ -54,7 +60,10 @@
             <input type="checkbox">
             <p class="tinyp">我同意本網站的隱私權政策*</p>
         </div>
-        <button type="submit" class="submit">填寫完成</button>
+        <div class="btns">
+            <button type="button" class="submit" @click="goBack">返回前頁</button>
+            <button type="submit" class="submit">填寫完成</button>
+        </div>
     </form>
 </template>
 
@@ -122,6 +131,7 @@
         background-color: $yellow-2;
         border-radius: 10px;
         padding: 10px;
+        resize: none;
         &::placeholder{
             color: $white01;
         }
@@ -158,20 +168,29 @@
     justify-content: center;
     width: 100%;
 }
-
-.submit {
-    display: block;
-    width: 150px;
-    height: 30px;
-    border: none;
-    background-color: $blue-2;
-    margin: 10px auto 50px;
-    border-radius: 30px;
-    font-size: 18px;
-    font-weight: 600;
-    &:hover{
-        background-color: $blue-3;
-        color: $white01;
+.btns{
+    display: flex;
+    justify-content: space-evenly;
+    .submit{
+        display: block;
+        width: 100px;
+        height: 30px;
+        border: none;
+        background-color: $blue-2;
+        margin: 10px 0 50px;
+        border-radius: 30px;
+        font-size: 16px;
+        &:hover{
+            background-color: $blue-3;
+            color: $white01;
+        }
+        &:nth-child(2){
+            background-color: $blue-3;
+            font-weight: 600;
+            &:hover{
+                background-color: $blue-2;
+            }
+        }
     }
 }
 </style>

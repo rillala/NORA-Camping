@@ -1,11 +1,26 @@
 <script setup>
-
+import { ref } from 'vue';
+import FAQtype from '../FAQ/FAQtype.vue';
 const emits = defineEmits([
-    'changeToForm'
+    'changeToForm',
 ]);
 const toForm= ()=> {
-    emits('changeToForm')
-}
+    emits('changeToForm');
+};
+const qaData = ref([
+    {
+        title:'我如何在線上預約營位？',
+        ans:'您可以通過我們的官網訪問營地預約系統，選擇理想的日期和營位類型，然後按照指示完成預約過程。',
+    },
+    {
+        title:'我如何在線上預約營位？',
+        ans:'您可以通過我們的官網訪問營地預約系統，選擇理想的日期和營位類型，然後按照指示完成預約過程。',
+    },
+    {
+        title:'我如何在線上預約營位？',
+        ans:'您可以通過我們的官網訪問營地預約系統，選擇理想的日期和營位類型，然後按照指示完成預約過程。',
+    },
+])
 </script>
 
 <template>
@@ -16,7 +31,11 @@ const toForm= ()=> {
     </div>
         <!-- 分隔線 -->
     <div class="FAQtype">
-        <div id="reservation">
+        <FAQtype title="營地預約" :QAs="qaData"/>
+        <FAQtype title="裝備租借" :QAs="qaData"/>
+        <FAQtype title="野良之家" :QAs="qaData"/>
+        <FAQtype title="商品購物" :QAs="qaData"/>
+        <!-- <div id="reservation">
             <button><h4>營地預約</h4></button>
         </div>
         <div id="rental">
@@ -27,7 +46,7 @@ const toForm= ()=> {
         </div>
         <div id="shopping">
             <button><h4>商品購物</h4></button>
-        </div>
+        </div> -->
     </div>
 </template>
 
