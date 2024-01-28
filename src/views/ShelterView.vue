@@ -2,80 +2,133 @@
 // 引入函式庫
 import axios from 'axios';
 
-export default {};
+export default {
+  data() {
+    return {
+      bannerImages: [ //首頁大圖輪播
+        '/src/assets/image/shelter/shelter_bg_m_2.png',
+        '/src/assets/image/shelter/shelter_bg_m_1.png',
+        '/src/assets/image/shelter/shelter_bg_m_3.png',
+      ],
+      currentIndex: 0,
+      animalImages: [ //貓狗圓形圖片輪播
+        { src: 'src/assets/image/shelter/round_cat_1.png' },
+        { src: 'src/assets/image/shelter/round_dogs_1.png' },
+        { src: 'src/assets/image/shelter/round_dog_1.png' }
+      ],
+      activeIndex: 0,
+    }
+  },
+  computed: {
+    currentImage() {
+      return this.bannerImages[this.currentIndex];
+    },
+  },
+  mounted() {
+    setInterval(() => {
+      this.nextImage();
+    }, 3000); // 切換圖片的時間間隔設3秒
+  },
+  methods: {
+    prevSlide() { //上一張
+      this.currentIndex = (this.currentIndex - 1 + this.bannerImages.length) % this.bannerImages.length;
+    },
+    nextSlide() { //下一張
+      this.currentIndex = (this.currentIndex + 1) % this.bannerImages.length;
+    },
+    nextImage() {
+      this.activeIndex = (this.activeIndex + 1) % this.animalImages.length;
+    },
+  },
+};
 </script>
 
 <template>
   <div class="shelter-wrap">
+
     <!-- Banner區塊 -->
     <div class="shelter-banner">
       <h1 class="shelter-title">野良之家</h1>
-      <h2 class="shelter-subtitle">因為有你，讓牠們不再流浪！</h2>
+      <h2 class="shelter-subtitle">讓牠們不再流浪！</h2>
     </div>
 
-    <!-- 野良之家大圖區塊 -->
-    <div class="shelter-top-area">
-      <img src="" alt="野良之家大圖" />
+    <!-- 首頁大圖輪播區塊 -->
+    <div class="shelter-slider-container">
+      <transition name="fade" mode="out-in">
+        <img :src="currentImage" :key="currentImage" class="slider-image" />
+      </transition>
+    </div>
+
+    <div class="shelter-slider-btn">
+      <button class="shelter-btn" @click="prevSlide">
+        <img src="/src/assets/image/campGuide/left_button_m.svg" alt="左邊箭頭按鈕">
+      </button>
+      <button class="shelter-btn" @click="nextSlide">
+        <img src="/src/assets/image/campGuide/right_button_m.svg" alt="右邊箭頭按鈕">
+      </button>
     </div>
 
     <!-- 相愛相伴區塊 -->
     <div class="shelter-love-bg">
-      <img src="" alt="相愛相伴布條圖片" />
+      <img class="slogan-img" src="/src/assets/image/shelter/shelter_slogan_m_1.svg" alt="相愛相伴布條圖片" />
+      
       <div class="shelter-slogan">
         <p class="shelter-slogan-words">
           讓我們一起<br />尋找尾巴搖曳的快樂，<br />分享彼此擁抱的溫暖！
         </p>
-        <img src="" alt="白色愛心圖片" />
+        <img src="/src/assets/image/shelter/white_heart.svg" alt="白色愛心圖片" />
       </div>
+
       <div class="shelter-round-imgs">
-        <img src="" alt="相愛相伴圓形貓狗圖片一" />
-        <img src="" alt="相愛相伴圓形貓狗圖片二" />
-        <img src="" alt="相愛相伴圓形貓狗圖片三" />
+        <img src="/src/assets/image/shelter/red_heart.svg" alt="愛心icon" /> 
+        <div v-for="(item, index) in animalImages" :key="index" class="round" :class="{ 'active': index === activeIndex }">
+        <img :src="item.src" alt="Round Image">
+        </div>
+        <img src="/src/assets/image/shelter/line_2.svg" alt="線條二" />
       </div>
-    </div>
 
     <!-- 不再流浪區塊 -->
 
-    <div class="shelter-home-bg">
-      <img src="" alt="不再流浪布條圖片" />
+      <img class="slogan-img" src="/src/assets/image/shelter/shelter_slogan_m_2.svg" alt="不再流浪布條圖片" />
       <div class="home-cloud">
         <p class="home-cloud-words">我們都在期待…<br />擁有一個溫暖的家</p>
+        <img src="/src/assets/image/shelter/big_cloud.svg" alt="雲朵對話圖片">
       </div>
-      <div class="walk-cat">
-        <img src="" alt="走進來的貓咪icon" />
+      
+      <div class="dog-cat-home">
+        <div class="walk-cat">
+          <img src="/src/assets/image/shelter/walking_cat.svg" alt="走進來的貓咪icon" />
+        </div>
+        <div class="walk-dog">
+          <img src="/src/assets/image/shelter/walking_dog.svg" alt="走進來的狗狗icon" />
+        </div>
+        <div class="shelter-home-icon">
+          <img src="/src/assets/image/shelter/house.svg" alt="不再流浪房子圖片" />
+        </div>
       </div>
-      <div class="walk-dog">
-        <img src="" alt="走進來的狗狗icon" />
-      </div>
-      <div class="shelter-home-icon">
-        <img src="" alt="不再流浪房子圖片" />
-      </div>
+
       <div class="foot-print">
-        <img src="" alt="狗狗腳印" />
-        <img src="" alt="狗狗腳印" />
+        <img src="/src/assets/image/shelter/big_paw.svg" alt="狗狗腳印" />
+        <img src="/src/assets/image/shelter/medium_paw.svg" alt="狗狗腳印" />
       </div>
     </div>
 
     <!-- 跑馬燈 -->
     <div class="shelter-marquee-first">
-      <img src="" alt="腳印icon" />
-      <p class="shelter-marquee-dtl">Warm Paws, Loving Homes.</p>
-      <img src="" alt="房子icon" />
-      <img src="" alt="愛心icon" />
-      <img src="" alt="腳印icon" />
+      <img src="/src/assets/image/shelter/shelter_marquee.svg" alt="跑馬燈">
     </div>
 
     <!-- 我們的理念區塊 -->
 
     <div class="shelter-idea-bg">
       <div class="shelter-idea">
-        <img src="" alt="我們的理念標題招牌圖片" />
-        <p class="shelter-idea-title">我們的理念</p>
-        <img src="" alt="腳印icon" />
+        <img class="sign_board" src="/src/assets/image/shelter/sign_board.svg" alt="我們的理念標題招牌圖片" />
+        <img class="idea_paw" src="/src/assets/image/shelter/idea_paw.svg" alt="腳印icon" />
+        <h4 class="shelter-idea-title">我們的理念</h4>
       </div>
 
       <div class="shelter-idea-dog">
-        <img src="" alt="我們的理念狗狗大圖" />
+        <img src="/src/assets/image/shelter/big_dog.png" alt="我們的理念狗狗大圖" />
         <p class="shelter-idea-dog-word">
           流浪的貓狗日趨增多，<br />
           野良希望能為流浪貓狗盡一份心力！<br />
@@ -85,7 +138,7 @@ export default {};
       </div>
 
       <div class="shelter-idea-cat">
-        <img src="" alt="我們的理念貓咪大圖" />
+        <img src="/src/assets/image/shelter/big_cat.png" alt="我們的理念貓咪大圖" />
         <p class="shelter-idea-cat-word">
           讓這裡不僅是暫時的棲身之所，<br />
           更是個能夠啟發貓狗活力和希望的場所，<br />
@@ -97,30 +150,142 @@ export default {};
 
     <!-- 跑馬燈 -->
     <div class="shelter-marquee-second">
-      <img src="" alt="腳印icon" />
-      <p class="shelter-marquee-dtl">Joyful Tails, Caring Hearts.</p>
-      <img src="" alt="愛心icon" />
-      <img src="" alt="腳印icon" />
+      <img src="/src/assets/image/shelter/shelter_marquee2.svg" alt="跑馬燈二">
     </div>
 
+    <!-- 領養流程區塊 -->
     <div class="shelter-adopt-bg">
+
       <div class="shelter-adopt">
-        <img src="" alt="黑貓icon" />
-        <img src="" alt="領養流程標題招牌圖片" />
-        <p class="shelter-adopt-title">領養流程</p>
+        <img class="black-cat" src="/src/assets/image/shelter/blackcat.svg" alt="黑貓icon" />
+        <img class="sign_board" src="/src/assets/image/shelter/sign_board_r.svg" alt="領養流程標題招牌圖片" />
+        <h4 class="shelter-adopt-title">領養流程</h4>
       </div>
+
       <div class="adopt-cloud-dog">
         <div class="adopt-cloud">
           <p class="adopt-cloud-words">謝謝你，選擇了我。</p>
-          <img src="" alt="舉手狗狗圖片" />
+          <img class="white_cloud" src="/src/assets/image/shelter/white_cloud.svg" alt="白色雲朵">
+          <img class="hand-dog" src="/src/assets/image/shelter/hand_dog.png" alt="舉手狗狗圖片" />
         </div>
       </div>
+
+      <!-- 領養步驟一到六 -->
+      <div class="adopt-steps">
+        
+        <div class="adopt-step1">
+            <img src="/src/assets/image/shelter/step_circle_s.svg" alt="領養步驟一">
+            <p class="step1">STEP 1</p>
+            <p class="step1-dtl">選擇想要領養的動物</p>
+        </div>
+
+        <div class="adopt-step2">
+          <img src="/src/assets/image/shelter/step_circle_s.svg" alt="領養步驟二">
+          <p class="step2">STEP 2</p>
+          <div class="step2-dtls">
+            <p class="step2-dtl">填寫領養申請表</p>
+            <div class="step2-dtl-wrap">
+              <p>提供基本資料，確保領養者生活方式<br>適合貓狗需求。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="adopt-step3">
+          <img src="/src/assets/image/shelter/step_circle_s.svg" alt="領養步驟三">
+          <p>專屬互動時間</p>
+          <div>
+            <p>確認雙方是否適應彼此</p>
+          </div>
+        </div>
+
+        <div class="adopt-step4">
+          <img src="/src/assets/image/shelter/step_circle_s.svg" alt="領養步驟四">
+          <p>簽署領養合約</p>
+          <div>
+            <p>討論並簽署領養條件，確保是負責任的領養者。</p>
+          </div>
+        </div>
+
+        <div class="adopt-step5">
+          <img src="/src/assets/image/shelter/step_circle_s.svg" alt="領養步驟五">
+          <p>支付領養費用</p>
+          <div>
+            <p>支付相應費用，以支持中途之家的營運。</p>
+          </div>
+        </div>
+
+        <div class="adopt-step6">
+          <img src="/src/assets/image/shelter/step_circle_s.svg" alt="領養步驟六">
+          <p>接回寵物至家庭</p>
+          <div>
+            <p>將領養的貓狗帶回家，正式開始共同的生活。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 領養須知 -->
+      <div class="adopt-attention">
+        <img src="/src/assets/image/shelter/adopt_dog.png" alt="領養須知狗狗大圖">
+        <p>領養後須知</p>
+        <ol>
+          <li>適應期觀察：給予寵物適應新環境的時間，注意觀察行為變化。</li>
+          <li>定期醫療照顧：定期帶寵物至獸醫院檢查、預防注射及處理寄生蟲。</li>
+          <li>建立規律生活：規律飲食、遊戲和散步時間，確保穩定的生活節奏。</li>
+          <li>社交化訓練：逐步引導寵物與其他寵物及人類建立良好的社交關係。</li>
+          <li>提供愛與關懷：給予寵物足夠的關愛、陪伴和注意，建立牠們與家庭成員的情感連結。</li>
+        </ol>
+      </div>
     </div>
+
+      <!-- 跑馬燈 -->
+      <div class="shelter-marquee-third">
+        <img src="/src/assets/image/shelter/shelter_marquee3.svg" alt="跑馬燈三">
+      </div>
+
+      <!-- 志工活動 -->
+      <div class="shelter-volunteer-bg">
+
+        <div class="shelter-volunteer">
+          <img src="/src/assets/image/shelter/blackcat.svg" alt="黑貓icon" />
+          <img src="/src/assets/image/shelter/sign_board.svg" alt="志工活動標題招牌圖片" />
+          <p class="shelter-volunteer-title">志工活動</p>
+        </div>
+
+        <div class="volunteer-cloud">
+          <p>一起為浪浪盡點心力吧！</p>
+          <img src="/src/assets/image/shelter/volunteer_cloud.svg" alt="志工活動雲朵圖片">
+        </div>
+
+        <!-- 志工活動介紹區塊 -->
+        <div class="circle-imgs-wrap">
+
+          <div class="circle-img-top">
+            <img src="" alt="圓形圖一">
+            <img src="" alt="圓形圖二">
+          </div>
+
+          <div class="volunteer-info">
+            <p>中途之家的日常工作：
+              如餵食、遛狗、環境清潔等。
+              參與中途之家志工活動的客人，營位費用享有優惠！
+              若有興趣參與，歡迎聯絡我們！</p>
+            <img src="/src/assets/image/shelter/volunteer_shape.svg" alt="志工活動介紹多邊形">
+            <button class="contact-btn">聯絡我們</button>
+          </div>
+
+          <div class="circle-img-bottom">
+            <img src="" alt="圓形圖三">
+            <img src="" alt="圓形圖四">
+          </div>
+
+        </div>
+
+      </div>
+
   </div>
 </template>
 
 <style lang="scss" scoped>
-
 @import url(/src/assets/sass/page/shelter.scss);
-
 </style>

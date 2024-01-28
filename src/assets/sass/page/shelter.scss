@@ -8,3 +8,304 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.shelter-slider-container {
+    position: relative;
+
+    .slider-image {
+        width: 100%;
+        vertical-align: bottom;
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.6s , filter 0.6s;
+}
+
+.fade-enter,
+.fade-leave-to { //淡入淡出
+    opacity: 0;
+    filter: blur(5px); //濾鏡模糊感
+}
+
+.shelter-slider-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+
+    .shelter-btn {
+        background: none;
+        border: none;
+    }
+}
+
+.shelter-love-bg { //相愛相伴區塊
+    background: linear-gradient(to bottom,
+    rgba(243, 227, 91, 0.8),
+    rgba(243, 227, 91, 0.5),
+    rgba(243, 227, 91, 0.3));
+
+    .slogan-img { //相愛相伴&不再流浪布條
+        width: 100%;
+    }
+
+    .shelter-slogan {
+        position: relative;
+
+        img {
+            width: 100%;
+        }
+    
+        p {
+            position: absolute;
+            top: 30%;
+            left: 5%;
+            font-size: 32px;
+            color: $dark;
+        }
+    }
+
+    .shelter-round-imgs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .round {
+            width: 100%;
+            overflow: hidden;
+            transition: all 0.5s ease;
+
+            img {
+                width: 80%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .home-cloud {
+        position: relative;
+        padding: 40px 0px 0px 20px;
+
+        .home-cloud-words {
+            position: absolute;
+            left: 25%;
+            top: 50%;
+            z-index: 0;
+        }
+    }
+
+    .dog-cat-home { //貓咪跟狗狗icon
+        display: flex;
+        align-items: last baseline;
+        padding-top: 30px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .foot-print { //狗狗腳印
+        display: flex;
+        justify-content: center;
+        align-items: self-start;
+        padding-top: 20px;
+    }
+
+}
+
+.round.active { //圓形圖片動畫
+    transform: rotateY(180deg);
+}
+
+// 跑馬燈動畫一到三
+.shelter-marquee-first {
+    background-color: $blue-3;
+    white-space: nowrap; //內容保持在同一行
+    overflow: hidden; //超出的先隱藏
+
+    img { //跑馬燈圖片設置動畫
+        animation: marquee 10s linear infinite;
+    }
+
+    @keyframes marquee { //跑馬燈動畫
+        from {
+            transform: translateX(100%);
+        }
+    
+        to {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+.shelter-marquee-second {
+    background-color: $yellow-2;
+    white-space: nowrap; //內容保持在同一行
+    overflow: hidden; //超出的先隱藏
+
+    img { //跑馬燈圖片設置動畫
+        animation: marquee 10s linear infinite;
+    }
+
+    @keyframes marquee { //跑馬燈動畫
+        from {
+            transform: translateX(100%);
+        }
+    
+        to {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+.shelter-idea-bg {
+    background-color: rgba(225, 202, 167, 0.5);
+
+    .shelter-idea {
+        position: relative;
+
+        .sign_board {
+            width: 100%;
+            padding: 50px 20px 0px 0px ;
+        }
+
+        .shelter-idea-title {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+        }
+    }
+
+    .shelter-idea-dog {
+        position: relative;
+
+        img {
+            width: 100%;
+            vertical-align: bottom;
+        }
+
+        .shelter-idea-dog-word {
+            position: absolute;
+            top: 30%;
+            left: 10%;
+            color: $white01;
+        }
+    }
+
+    .shelter-idea-cat {
+        position: relative;
+
+        img {
+            width: 100%;
+            vertical-align: bottom;
+        }
+
+        .shelter-idea-cat-word {
+            position: absolute;
+            top: 30%;
+            left: 8%;
+            color: $white01;
+        }
+    }
+}
+
+.shelter-adopt-bg {
+    background-color: rgba(225, 202, 167, 0.5);
+
+    .shelter-adopt {
+        position: relative;
+
+        .black-cat {
+            position: absolute;
+            right: 5%;
+            top: 5%;
+        }
+
+        .sign_board {
+            padding: 50px 0px 0px 20px;
+            width: 100%;
+        }
+
+        .shelter-adopt-title {
+            position: absolute;
+            top:55%;
+            left:25%;
+        }
+    }
+
+    .adopt-cloud {
+        position: relative;
+        
+        .hand-dog {
+            padding-left: 80px;
+        }
+
+        .adopt-cloud-words {
+            position: absolute;
+            top: 20%;
+            left: 20%;
+        }
+
+        .white_cloud {
+            padding: 20px 0px 0px 20px;
+        }
+    }
+
+    .adopt-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .adopt-step1 {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .step1 {
+                color: $blue-1;
+                position: absolute;
+                left: 6%;
+                top: 40%;
+            }
+
+            .step1-dtl {
+                padding-left: 10px;
+            }
+        }
+
+        .adopt-step2 {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .step2 {
+                color: $blue-1;
+                position: absolute;
+                left: 6%;
+                top: 40%;
+            }
+
+            .step2-dtls {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .step2-dtl-wrap {
+                    background-color: $white01;
+                    border-radius: $radius;
+                    padding: 10px;
+                }
+
+                .step2-dtl {
+                    padding-left: 10px;
+                }
+            }
+        }
+    }
+}
