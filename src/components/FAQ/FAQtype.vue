@@ -28,6 +28,7 @@ const typeOpen = () => {
 </template>
 
 <style lang="scss" scoped>
+// @import url(../../assets/sass/_mixin.scss);
 button{
     display:block;
     width: 80vw;
@@ -43,6 +44,12 @@ button{
     &:hover{
         background-color: $blue-3;
         color: $white01;
+    }
+    
+    @include desktop{
+        width: 15vw;
+        height: 5vw;
+        margin:  auto;
     }
 }
 .active{

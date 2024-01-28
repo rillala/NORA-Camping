@@ -4,13 +4,14 @@ import mainFAQ from '../components/FAQ/mainFAQ.vue';
 import contactForm from '../components/FAQ/contactForm.vue';
 import { ref, onMounted,onBeforeUnmount } from 'vue';
 
-const windows768 = ref(window.innerWidth);
 const flag = ref(true);
 const changeFlag = ()=>{
   flag.value = !flag.value;
 }
+
+const windows1024 = ref(window.innerWidth);
 function updataWindows(){
-  windows768.value = window.innerWidth;
+  windows1024.value = window.innerWidth;
 }
 onMounted(() => {
   updataWindows();
@@ -32,10 +33,10 @@ onBeforeUnmount(() => {
     </div>
   </div>
 
-  <mainFAQ v-if="windows768 > 1024 || flag" 
+  <mainFAQ v-if="windows1024 > 1023 || flag" 
   @changeToForm="changeFlag"
   />
-  <contactForm v-if=" windows768 > 1024 || !flag "
+  <contactForm v-if=" windows1024 > 1023 || !flag "
   @changeToMain="changeFlag"
   />
 </template>
