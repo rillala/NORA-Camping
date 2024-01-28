@@ -133,6 +133,7 @@ export default {
   methods: {
     goToNextStep(nextPath) {
       if (sessionStorage.getItem('isStep3Clicked')) {
+        this.generateReserveInfo();
         return;
       } else {
         let currentStep = parseInt(
@@ -144,10 +145,17 @@ export default {
           this.$router.push(nextPath);
         }
         sessionStorage.setItem('isStep3Clicked', 'true');
+        this.generateReserveInfo();
       }
     },
     formatPrice(price) {
       return '$' + price.toLocaleString('en-US');
+    },
+    generateReserveInfo() {
+      let currentDate = new Date();
+      let reserveId = currentDate.getTime();
+      sessionStorage.setItem('reserveId', reserveId);
+      sessionStorage.setItem('totalPrice', this.totalPrice);
     },
   },
 };

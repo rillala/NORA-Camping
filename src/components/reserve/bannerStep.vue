@@ -117,7 +117,7 @@ export default {
 
   @include tablet {
     width: 600px;
-    margin: 30px auto 0;
+    margin: 20px auto 0;
   }
   @include tablet {
     width: 80%;
@@ -126,26 +126,35 @@ export default {
   }
 
   p {
-    display: none;
+    // display: none;
+    margin-top: 10px;
+    text-align: center;
+    @include font-style(12px, 400, 5%, auto);
+
+    @include tablet {
+      @include font-style(16px, 400, 5%, auto);
+    }
+
     @include desktop {
       display: block;
-      margin-top: 10px;
-      text-align: center;
       @include font-style(24px, 700, 10%, auto);
     }
   }
 
   .separator {
+    align-self: start;
     width: 10px;
     height: 3px;
+    margin-top: 20px;
 
     @include tablet {
       width: 20px;
+      margin-top: 40px;
     }
     @include desktop {
       width: 90px;
       flex-shrink: 1;
-      margin: 0 20px 30px;
+      margin: 40px 20px 30px;
     }
   }
 }
@@ -160,6 +169,7 @@ export default {
   .box {
     width: 40px;
     height: 40px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;

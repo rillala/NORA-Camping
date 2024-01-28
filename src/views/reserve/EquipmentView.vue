@@ -4,14 +4,12 @@ import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import setRentalCard from '@/components/reserve/setRentalCard.vue';
-// import singleRentalCard from '@/components/reserve/singleRentalCard.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 
 export default {
   components: {
     progressBar,
     setRentalCard,
-    // singleRentalCard,
     nextPageBtn,
   },
   data() {
