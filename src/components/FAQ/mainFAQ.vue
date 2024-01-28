@@ -1,6 +1,8 @@
 <script setup>
 import { ref,onMounted,onBeforeUnmount } from 'vue';
 import FAQtype from '../FAQ/FAQtype.vue';
+import Questions from './Questions.vue';
+const DESKTOP = 1024;
 const emits = defineEmits([
     'changeToForm',
 ]);
@@ -25,7 +27,7 @@ onBeforeUnmount(()=>{
 })
 
 
-const qaData = ref([
+const qaData1 = ref([
     {//營地預約
         title:'我如何在線上預約營位？',
         ans:'您可以通過我們的官網訪問營地預約系統，選擇理想的日期和營位類型，然後按照指示完成預約過程。',
@@ -57,7 +59,9 @@ const qaData = ref([
     {
         title:'入住和退房時間是什麼時候？',
         ans:'入住時間通常是下午2點，退房時間是上午11點。如有特殊需求，請提前通知我們。',
-    },
+    }
+    ])
+const qaData2 = ref([
     {//中途
         title:'如何參與動物的領養程序？',
         ans:'您可以訪問我們的官方網站上的中途之家部分，選擇您想要領養的動物，並按照領養指南的步驟進行。',
@@ -87,9 +91,11 @@ const qaData = ref([
         ans:'預約不是必須的，但為了確保有充足的時間和資源提供給訪客，我們建議提前預約。',
     },
     {
-        title:'中途之家的開放時間是什麼？',
-        ans:'我們的中途之家每天開放，開放時間是上午9點至下午5點。',
-    },//租借
+    title:'中途之家的開放時間是什麼？',
+    ans:'我們的中途之家每天開放，開放時間是上午9點至下午5點。'
+    }
+])
+const qaData3 = ref([
     {
         title:'如何租借露營裝備？',
         ans:'您可以在預約營位時選擇租借裝備，或者直接在營地的租借中心選擇所需裝備。',
@@ -118,6 +124,8 @@ const qaData = ref([
         title:'裝備租借是否有數量限制？',
         ans:'根據營地的裝備庫存，可能會對單一預約的租借數量有所限制。詳情請咨詢營地接待處。',
     },
+])
+const qaData4 = ref([
     {//shop
         title:'我如何在線上購買露營用品？',
         ans:'您可以訪問我們的網站，瀏覽商品分類，選擇所需商品並添加至購物車，然後按照結帳流程完成購買。',
@@ -147,28 +155,58 @@ const qaData = ref([
         ans:'大多數商品提供生產商的標準保修期。具體保修條款請參閱商品描述或聯絡我們獲取更多信息。',
     },
 ])
+const targetData = ref([]);
+onMounted(()=>{
+    targetData.value = qaData1.value;
+})
+const touched = ref(1);
+function changeData(qa,t){
+    touched.value = t;
+    targetData.value = qa;
+}
 </script>
 
 <template>
-    <div class="otherquestion">
-        <img src="../../assets/image/FAQView/faqBox.png" alt="問號箱箱">
-        <button @click="toForm"
-        class="p" v-if="nowWindow<1023">我有其他問題！</button>
+    <div class="typeWrap">
+        <div class="otherquestion">
+            <img src="../../assets/image/FAQView/faqBox.png" alt="問號箱箱">
+            <button @click="toForm"
+            class="p">我有其他問題！</button>
+        </div>
+            <!-- 分隔線 -->
+        <div class="FAQtype" v-if="nowWindow<DESKTOP">
+            <FAQtype title="營地預約" :QAs="qaData1"/>
+            <FAQtype title="野良之家" :QAs="qaData2"/>
+            <FAQtype title="裝備租借" :QAs="qaData3"/>
+            <FAQtype title="商品購物" :QAs="qaData4"/>
+        </div>
+        <div class="FAQtype" v-else>
+            <button @click="changeData(qaData1,1)" :class="{active:touched==1}"><h4>營地預約</h4></button>
+            <button :class="{active:touched==2}" @click="changeData(qaData2,2)"><h4>野良之家</h4></button>
+            <button :class="{active:touched==3}" @click="changeData(qaData3,3)"><h4>裝備租借</h4></button>
+            <button :class="{active:touched==4}" @click="changeData(qaData4,4)"><h4>商品購物</h4></button>
+        </div>
     </div>
-        <!-- 分隔線 -->
-    <div class="FAQtype">
-        <FAQtype title="營地預約" :QAs="qaData"/>
-        <FAQtype title="裝備租借" :QAs="qaData"/>
-        <FAQtype title="野良之家" :QAs="qaData"/>
-        <FAQtype title="商品購物" :QAs="qaData"/>
+    <div v-if="nowWindow >= DESKTOP">
+        <Questions v-for="(data,index) in targetData" :key="index" :title="data.title" :ans="data.ans"/>
     </div>
 </template>
 
 <style lang="scss" scoped>
+.typeWrap{
+    @include desktop{
+        display: flex;
+        justify-content: flex-start;
+        align-items: baseline;
+    }
+}
 .otherquestion {
-    img{
-    width: 50%;
     max-width: 340px;
+    img{
+        width: 50%;
+        @include desktop{
+            width: 100%;
+        }
     }
     button{
         transform: translate(-30%,-10%);
@@ -177,32 +215,48 @@ const qaData = ref([
         &:hover{
             cursor: pointer;
         }
+
+        @include desktop{
+            display: none;
+        }
+    }
+    @include desktop{
+        width:10%;
+        background-color: #0ff;
     }
 }
 /*------------------*/
 .FAQtype{
     width:100%;
-    
-    button{
-        display:block;
-        width: 80vw;
-        height: 20vw;
-        border: none;
-        border-radius: 10px;
-        background-color: $blue-2;
-        margin: 10px auto;
-
-        h4{
-            font-weight: bold;
-        }
-        &:hover{
-            background-color: $blue-3;
-            color: $white01;
-        }
-    }
-
     @include desktop{
-        
+        width: 50%;
+        display: flex;
+        flex-wrap: nowrap;
     }
+
+    button{
+    display:block;
+    width: 80vw;
+    height: 20vw;
+    border: none;
+    border-radius: 10px;
+    background-color: $blue-2;
+    margin: 10px auto;
+    @include desktop{
+        border-radius: 30px;
+        }
+    h4{
+        font-weight: bold;
+    }
+    @include desktop{
+        width: 15vw;
+        height: 3rem;
+        margin:  auto;
+    }
+}
+.active{
+    background-color: $blue-3;
+    color: $white01;
+}
 }
 </style>
