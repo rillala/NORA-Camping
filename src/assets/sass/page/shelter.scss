@@ -130,7 +130,7 @@
     overflow: hidden; //超出的先隱藏
 
     img { //跑馬燈圖片設置動畫
-        animation: marquee 10s linear infinite;
+        animation: marquee 12s linear infinite;
     }
 
     @keyframes marquee { //跑馬燈動畫
@@ -150,7 +150,7 @@
     overflow: hidden; //超出的先隱藏
 
     img { //跑馬燈圖片設置動畫
-        animation: marquee 10s linear infinite;
+        animation: marquee 12s linear infinite;
     }
 
     @keyframes marquee { //跑馬燈動畫
@@ -164,7 +164,27 @@
     }
 }
 
-.shelter-idea-bg {
+.shelter-marquee-third {
+    background-color: $brown-2;
+    white-space: nowrap; //內容保持在同一行
+    overflow: hidden; //超出的先隱藏
+
+    img { //跑馬燈圖片設置動畫
+        animation: marquee 12s linear infinite;
+    }
+
+    @keyframes marquee { //跑馬燈動畫
+        from {
+            transform: translateX(100%);
+        }
+    
+        to {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+.shelter-idea-bg { //我們的理念
     background-color: rgba(225, 202, 167, 0.5);
 
     .shelter-idea {
@@ -261,6 +281,7 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
+        padding-bottom: 50px;
 
         .adopt-step1 {
             display: flex;
@@ -278,7 +299,6 @@
                 padding-left: 10px;
             }
         }
-
         .adopt-step2 {
             display: flex;
             align-items: center;
@@ -307,5 +327,207 @@
                 }
             }
         }
+        .adopt-step3 {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .step3 {
+                color: $blue-1;
+                position: absolute;
+                left: 6%;
+                top: 40%;
+            }
+
+            .step3-dtls {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .step3-dtl-wrap {
+                    background-color: $white01;
+                    border-radius: $radius;
+                    padding: 10px;
+                }
+
+                .step3-dtl {
+                    padding-left: 10px;
+                }
+            }
+        }
+        .adopt-step4 {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .step4 {
+                color: $blue-1;
+                position: absolute;
+                left: 6%;
+                top: 40%;
+            }
+
+            .step4-dtls {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .step4-dtl-wrap {
+                    background-color: $white01;
+                    border-radius: $radius;
+                    padding: 10px;
+                }
+
+                .step4-dtl {
+                    padding-left: 10px;
+                }
+            }
+        }
+        .adopt-step5 {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .step5 {
+                color: $blue-1;
+                position: absolute;
+                left: 6%;
+                top: 40%;
+            }
+
+            .step5-dtls {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .step5-dtl-wrap {
+                    background-color: $white01;
+                    border-radius: $radius;
+                    padding: 10px;
+                }
+
+                .step5-dtl {
+                    padding-left: 10px;
+                }
+            }
+        }
+        .adopt-step6 {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .step6 {
+                color: $blue-1;
+                position: absolute;
+                left: 6%;
+                top: 40%;
+            }
+
+            .step6-dtls {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .step6-dtl-wrap {
+                    background-color: $white01;
+                    border-radius: $radius;
+                    padding: 10px;
+                }
+
+                .step6-dtl {
+                    padding-left: 10px;
+                }
+            }
+        }
+    }
+
+    .adopt-attention {
+        position: relative;
+        color: $white01;
+
+        .adopt-dog {
+            width: 100%;
+            vertical-align: bottom;
+        }
+
+        .attention-dtl {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            gap: 10px;
+            top: 10%;
+            left: 10%;
+
+            .attention-title {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            li {
+                list-style: decimal;
+            }
+        }
+    }
+}
+
+.shelter-volunteer-bg { //志工活動
+    background-color: rgba(225, 202, 167, 0.3);
+
+    .shelter-volunteer {
+        position: relative;
+
+        .sign_board {
+            width: 100%;
+            padding: 50px 20px 0px 0px;
+        }
+
+        .black-cat {
+            position: absolute;
+            top: 5%;
+        }
+
+        .shelter-volunteer-title {
+            position: absolute;
+            top:55%;
+            right:25%;
+        }
+    }
+
+    .volunteer-cloud {
+        position: relative;
+        padding: 20px 0px 20px 30px;
+
+        .volunteer-txt {
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            color: $white01;
+        }
+    }
+
+    .circle-img-top {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .volunteer-info {
+        position: relative;
+
+        img {
+            width: 100%;
+        }
+
+        .volunteer-dtls {
+            position: absolute;
+            top: 40%;
+            left: 10%;
+        }
+    }
+
+    .circle-img-bottom {
+        display: flex;
+        justify-content: space-around;
     }
 }
