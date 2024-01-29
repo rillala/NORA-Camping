@@ -58,27 +58,27 @@
       </div>
     </section>
       
-    <section class="password-box">
-      <div v-if="!isEditingPassword" >
-        <h4>修改密碼</h4>
-        <p class="password password-title-1" value="disabled">請輸入舊密碼 {{ oldPassword }}</p>
-        <p class="password password-title-1" value="disabled">請輸入新密碼 {{ newPassword }}</p>
-        <p class="password password-title-1" value="disabled">再確認新密碼 {{ confirmPassword }}</p>
-        <div class="box">
-          <button class="save-changes" @click="startEditingPassword">修改密碼</button>
-          <button class="logout">登出</button>
-        </div>
+  <form class="password-box">
+    <div v-if="!isEditingPassword" >
+      <h4>修改密碼</h4>
+      <p class="password password-title-1" value="disabled">請輸入舊密碼 <span>*****************</span> {{ oldPassword }}</p>
+      <p class="password password-title-1" value="disabled">請輸入新密碼 <span>*****************</span> {{ newPassword }}</p>
+      <p class="password password-title-1" value="disabled">再確認新密碼 <span>*****************</span> {{ confirmPassword }}</p>
+      <div class="box">
+        <button class="save-changes" @click="startEditingPassword">修改密碼</button>
+        <button class="logout">登出</button>
       </div>
+    </div>
+    
+    <div v-else>
+      <h4>修改密碼</h4>
+      <label class="password-title-2">請輸入舊密碼: <input type="password" v-model="oldPassword"  class="psw-input"/></label><br/>
+      <label class="password-title-2">請輸入新密碼: <input type="password" v-model="newPassword"  class="psw-input"/></label><br/>
+      <label class="password-title-2">再確認新密碼: <input type="password" v-model="confirmPassword" class="psw-input"/></label><br/>  
       
-      <div v-else>
-        <h4>修改密碼</h4>
-        <label class="password-title-2">請輸入舊密碼: <input type="password" v-model="oldPassword"  class="psw-input"/></label><br/>
-        <label class="password-title-2">請輸入新密碼: <input type="password" v-model="newPassword"  class="psw-input"/></label><br/>
-        <label class="password-title-2">再確認新密碼: <input type="password" v-model="confirmPassword" class="psw-input"/></label><br/>  
-        
-        <div class="box"><button class="savePasswordChanges" @click="savePasswordChanges">儲存</button></div>
-      </div>
-    </section>
+      <div class="box"><button class="savePasswordChanges" @click="savePasswordChanges">儲存</button></div>
+    </div>
+  </form>
   </div>
 </template>
 
@@ -370,5 +370,10 @@ span{
   height: 150px;
   border-radius: 50%;
   overflow: hidden;
+}
+
+.password-title-1 span {
+  color:white;
+  border-bottom: 1px solid $dark;
 }
 </style>
