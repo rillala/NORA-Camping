@@ -14,7 +14,7 @@
       </li>
       <li>
         <router-link to="/memberorderhistory" class="memberlink member-page"
-          >訂單歷史</router-link
+          >商品訂單</router-link
         >
       </li>
       <li>

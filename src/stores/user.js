@@ -5,7 +5,7 @@ export default defineStore('userStore', {
   // 對應 data
   state: () => ({
     token: '',
-    userData:{},
+    userData:{},//補php
   }),
 
   actions: {

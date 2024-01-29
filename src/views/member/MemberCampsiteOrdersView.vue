@@ -8,7 +8,7 @@
   <nav>
     <ul class="nav-list">
       <li><router-link to="/membercenter" class="memberlink">會員資料</router-link></li>
-      <li><router-link to="/memberorderhistory" class="memberlink">訂單歷史</router-link></li>
+      <li><router-link to="/memberorderhistory" class="memberlink">商品訂單</router-link></li>
       <li><router-link to="/membercampsiteorders" class="memberlink member-page">營地訂單</router-link></li>
     </ul>
   </nav>

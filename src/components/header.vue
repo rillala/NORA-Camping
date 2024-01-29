@@ -1,6 +1,8 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router';
 import memberLogin from '@/components/memberLogin.vue';
+import { mapState, mapActions } from 'pinia'
+import userStore from '@/stores/user'
 
 export default {
   components: {
@@ -35,7 +37,7 @@ export default {
           path: '/shelter',
         },
       ],
-      isLoginOpen: false,
+      // token:'',
     };
   },
   watch: {
@@ -44,6 +46,12 @@ export default {
     },
   },
   methods: {
+    // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
+    ...mapActions(userStore, ['updateToken']),
+        logout(){
+            // 調用pinia的updateToken
+            this.updateToken('')
+        },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
@@ -57,8 +65,12 @@ export default {
       this.isLoginOpen = false; // 這將關閉燈箱
       this.isMenuOpen = false; // 關閉子選單-->手機板需要
       console.log(this.isLoginOpen);
-    },
+    }
   },
+  computed: {
+  //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
+    ...mapState(userStore, ['token'])
+  }
 };
 </script>
 
@@ -127,6 +139,14 @@ export default {
             id="member-login"
             @click="(isLoginOpen = !isLoginOpen), closeHam"
           >
+            <!-- <div class="sub-menu-container" v-show="token"> 
+              <ul>
+                <li><RouterLink :to="membercenter">會員中心</RouterLink></li>
+                <li><RouterLink :to="membercampsiteorders">商品訂單</RouterLink></li>
+                <li><RouterLink :to="memberorderhistory">營地訂單</RouterLink></li>
+                <button @click="logout">登出</button>
+              </ul>
+            </div> -->
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
 

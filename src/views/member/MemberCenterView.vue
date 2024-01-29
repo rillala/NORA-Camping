@@ -8,14 +8,14 @@
   <div>
     <ul class="nav-list">
       <li><router-link to="/membercenter" class="memberlink member-page">會員資料</router-link></li>
-      <li><router-link to="/memberorderhistory" class="memberlink">訂單歷史</router-link></li>
+      <li><router-link to="/memberorderhistory" class="memberlink">商品訂單</router-link></li>
       <li><router-link to="/membercampsiteorders" class="memberlink">營地訂單</router-link></li>
     </ul>
   </div>
 
-  <div>
+  <div class="drop-box">
     <div id="dropzone" class="drop-area" @dragover.prevent="dragOver" @drop.prevent="dropped">
-      <img v-if="imageSrc" :src="imageSrc" alt="Dropped Image">新增頭貼
+      <img v-if="imageSrc" :src="imageSrc" alt="Dropped Image"><p class="added-photo">新增頭貼</p>
     </div>
   </div>
 
@@ -213,14 +213,15 @@ h4{
     @include tablet {
     display:flex;
     justify-content: center;
-    max-width: 800px;
+    max-width: 700px;
     margin: 0 auto;
+    margin-right:50px;
   }
     @include desktop {
     display:flex;
     justify-content: center;
-    max-width: 800px;
-    margin: 0 auto
+    max-width: 700px;
+    margin: auto;
   }
 }
 .info-box{
@@ -230,6 +231,7 @@ h4{
   height:250px;
   @include tablet {
     height:400px;
+
   }
   
   @include desktop {
@@ -375,5 +377,25 @@ span{
 .password-title-1 span {
   color:white;
   border-bottom: 1px solid $dark;
+}
+
+.drop-box{
+  margin-bottom:20px;
+}
+
+.added-photo {
+  text-align: center;
+}
+
+.drop-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.added-photo {
+  margin-top: 2px; /* 調整上下間距 */
+  margin-right:2px;
 }
 </style>

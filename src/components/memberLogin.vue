@@ -63,15 +63,42 @@
 
           <div v-if="showPrivacyPolicy" class="privacy-policy-lightbox">
             <div class="privacy-policy-content">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula, nisl sed aliquam pulvinar, tortor enim condimentum urna, id bibendum elit neque nec velit.
+            <p class="privacy-message">我們重視您的隱私權。本隱私權政策旨在向您說明我們如何收集、使用、存儲和保護您的個人資訊。請仔細閱讀本政策，以了解我們對您個人資訊的處理方式。
+
+            收集的資訊
+
+            在使用本網站或應用程式時，我們可能會收集並處理以下類型的資訊：
+
+            您提供的個人資訊，例如姓名、電子郵件地址、聯絡方式等；
+            使用本網站或應用程式的行為資訊，例如瀏覽歷史、點擊活動、設備資訊等；
+            其他在您使用本網站或應用程式時自動收集的技術資訊，例如 IP 地址、Cookie 等。
+            使用的方式
+
+            我們可能會使用收集的資訊來：
+
+            提供、維護和改進本網站或應用程式的服務；
+            與您溝通，例如回應您的查詢、提供客戶支援等；
+            進行市場營銷活動，例如向您發送推廣訊息、優惠等；
+            遵守法律規定和法律程序。
+            資訊的分享
+
+            我們不會將您的個人資訊出售、租賃或以其他方式分享給第三方，除非：
+
+            獲得您的同意；
+            根據法律規定或法院命令；
+            為了保護我們的權利、財產或安全，或者保護其他用戶的權利、財產或安全。
+            資訊的存儲和保護
+
+            我們將採取合理的技術和組織措施來保護您的個人資訊安全，並避免未經授權的訪問、使用、修改、披露或刪除。儘管我們將盡力保護您的個人資訊，但由於互聯網的本質，我們無法保證絕對的安全性。
+
+            隱私權政策的更新
+
+            我們保留隨時修改本隱私權政策的權利，修改後的政策將在本網站或應用程式上發布。我們建議您定期查看本政策，以了解任何修改。繼續使用本網站或應用程式將視為您接受修改後的隱私權政策。
             </p>
             </div>
-            <button @click="closePrivacyPolicy" class="close-button">X</button>
+            <button @click="showPrivacyPolicy=false" class="close-button">X</button>
           </div>
         </form>
-
-
 
         <!-- 登入頁面 -->
         <form v-else action="javascript:void(0);">
@@ -116,6 +143,7 @@ export default {
         account: 'mor_2314',
         pwd: '83r5^_',
       },
+      showPrivacyPolicy:false,
     };
   },
   created() {
@@ -147,17 +175,12 @@ export default {
       // this.isOpen = false;
 
       axios
-        .post(
-          'https://fakestoreapi.com/auth/login',
+        .post('https://fakestoreapi.com/auth/login',
           {
-            username: 'mor_2314',
-            password: '83r5^_',
+            username: this.user_enter.account,
+            password: this.user_enter.pwd,
           },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
+
         )
         .then(response => {
           if (response.data && response.data.token) {
@@ -169,9 +192,16 @@ export default {
         })
         .catch(error => {
           console.error(error);
-          //少一行
-          //登入失敗
-          //系統維護中
+          
+          if (error.response && error.response.status === 401) {
+          alert('Invalid username or password.')
+          } 
+          
+          else { alert('An error occurred while logging in. Please try again later.')
+          }
+          // 調用pinia的updateToken
+          // 將/src/stores/user裡的token清除
+          this.updateToken('');
         });
     },
   },
@@ -278,8 +308,6 @@ input {
 .login-news {
   display: flex;
   white-space:no-wrap;
-  // justify-content: center; 
-  // margin: 10px 0px 20px;
 }
 
 
@@ -325,10 +353,24 @@ input[type='checkbox'] {
 .privacy-policy-lightbox{
   height:300px;
   position:fixed;
-  z-index:999;
-  background-color:gray;
+  z-index:6;
+  background-color:$light-gray;
   top: calc((100% - 430px) / 2);
-  width:350px;
+  height: 500px;
+  padding: 40px 50px;
+  overflow-y: auto;
+
+  @include tablet {
+    width: 470px;
+    top:65px;
+    left:400px;
+  }
+
+  @include desktop {
+    width: 470px;
+    top:65px;
+    left:400px;
+  }
 }
 
 .close-button {
@@ -349,5 +391,13 @@ input[type='checkbox'] {
   font: inherit;
   cursor: pointer;
   color:$blue-3;
+}
+
+.privacy-policy-content{
+  background-color:$light-gray;
+}
+
+.privacy-message{
+  text-align: left;
 }
 </style>
