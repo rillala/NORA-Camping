@@ -290,7 +290,9 @@
   }
 
   h4 {
+    align-self: center;
     font-weight: 700;
+    line-height: 100%;
     @include only-mobile {
       font-size: 24px;
     }

@@ -1,6 +1,6 @@
 <script setup>
 // 引入函式庫
-import {ref} from 'vue'
+import {ref,onMounted,onBeforeUnmount} from 'vue'
 import Questions from './Questions.vue';
 
 const props = defineProps({
@@ -18,26 +18,40 @@ const types = ref(false);
 const typeOpen = () => {
     types.value = !types.value;
 };
+
+//windows width
+const nowWidth = ref(window.innerWidth);
+function updataWidth(){
+    nowWidth.value = window.innerWidth;
+}
+onMounted(() => {
+    updataWidth();
+    window.addEventListener('resize',updataWidth);
+})
+onBeforeUnmount(()=>{
+    window.removeEventListener('resize',updataWidth);
+})
+const DESKTOP = 1024;
 </script>
 
 <template>
     <button :class="{active:types}" @click="typeOpen()"><h4>{{props.title}}</h4></button>
-    <div v-for="(data,index) in QAs" :key="index">
-        <Questions v-if="types" :title="data.title" :ans="data.ans"/>
-    </div>
+    <Questions v-for="(data,index) in QAs" :key="index" v-if=" nowWidth < DESKTOP && types" :title="data.title" :ans="data.ans"/>
 </template>
 
 <style lang="scss" scoped>
-// @import url(../../assets/sass/_mixin.scss);
+
 button{
     display:block;
     width: 80vw;
     height: 20vw;
     border: none;
     border-radius: 10px;
-    background-color: $blue-1;
+    background-color: $blue-2;
     margin: 10px auto;
-
+    @include desktop{
+            border-radius: 30px;
+        }
     h4{
         font-weight: bold;
     }
@@ -48,7 +62,7 @@ button{
     
     @include desktop{
         width: 15vw;
-        height: 5vw;
+        height: 3rem;
         margin:  auto;
     }
 }

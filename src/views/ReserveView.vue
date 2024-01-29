@@ -7,6 +7,7 @@ import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 
 import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
+import { useScreens } from 'vue-screen-utils';
 
 export default {
   components: {
@@ -16,6 +17,7 @@ export default {
   },
   data() {
     return {
+      screen: null,
       range: {
         start: '',
         end: '',
@@ -218,6 +220,16 @@ export default {
       selectSiteSum: 0,
     };
   },
+  created() {
+    // 初始化 useScreens
+    const { mapCurrent } = useScreens({
+      xs: '0px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+    });
+    this.screen = mapCurrent({ lg: 2 }, 1);
+  },
   mounted() {
     // 如果有儲存過選擇的日期和夜衝, 則讀取值
     this.startDate = sessionStorage.getItem('startDate') || '';
@@ -289,6 +301,10 @@ export default {
         return diff / (1000 * 3600 * 24);
       }
       return 0; // 如果日期未設定，則返回 0
+    },
+    columns() {
+      // 根據當前屏幕尺寸返回列數
+      return this.screen;
     },
   },
   watch: {
@@ -481,6 +497,7 @@ export default {
         borderless
         expanded
         :min-date="new Date()"
+        :columns="columns"
       />
     </div>
 
@@ -608,7 +625,7 @@ export default {
     <!--下個步驟的按鈕-->
     <nextPageBtn
       @click="goToNextStep(`/equipment`)"
-      :text="`下一步：裝備租借`"
+      :text="`裝備租借`"
       :path="`/equipment`"
     />
   </section>

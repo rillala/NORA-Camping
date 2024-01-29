@@ -22,6 +22,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize',updataWindows);
 })
 
+const DESKTOP = 1024;
 
 </script>
 
@@ -33,10 +34,10 @@ onBeforeUnmount(() => {
     </div>
   </div>
 
-  <mainFAQ v-if="windows1024 > 1023 || flag" 
+  <mainFAQ v-if="windows1024 > DESKTOP || flag" 
   @changeToForm="changeFlag"
   />
-  <contactForm v-if=" windows1024 > 1023 || !flag "
+  <contactForm v-if=" windows1024 > DESKTOP || !flag "
   @changeToMain="changeFlag"
   />
 </template>

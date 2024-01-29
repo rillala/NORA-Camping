@@ -10,10 +10,9 @@ export default {
   data() {
     return {
       stepList: [
-        { step: '營位預約', path: '/reserve' },
-        { step: '裝備租借', path: '/equipment' },
-        { step: '確認預定', path: '/reserveconfirm' },
-        { step: '前往付款', path: '/reservepayment' },
+        { step: '購物車', path: '/reserve' },
+        { step: '訂購資訊及付款', path: '/equipment' },
+        { step: '訂單完成', path: '/reserveconfirm' },
       ],
     };
   },
@@ -38,10 +37,6 @@ export default {
 
 <template>
   <div class="banner bg-blue-1">
-    <div class="banner-top">
-      <h1 class="blue-4">立即預約</h1>
-      <p class="blue-4">開啟你的野良計畫！</p>
-    </div>
 
     <div class="bar">
       <div v-for="(step, index) in stepList" :key="index" class="dash-box">
@@ -68,14 +63,16 @@ export default {
   width: 100%;
   height: 200px;
   padding: 20px 0;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @include tablet {
-    height: 300px;
+    height: 200px;
   }
 
   @include desktop {
-    height: 400px;
-    padding: 120px 0 0;
+    height: 200px;
+    padding: 40px 0 0;
   }
 
   h1 {
@@ -103,58 +100,54 @@ export default {
     display: flex;
     align-items: end;
     justify-content: center;
-    margin: 0 auto;
+    margin: auto;
   }
 }
 
 .bar {
-  width: 250px;
-  margin: 20px auto;
+  width: 100%;
+  margin: auto;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 
   @include tablet {
-    width: 600px;
-    margin: 20px auto 0;
+    width: 100%;
+    margin:  auto;
   }
   @include tablet {
     width: 80%;
     max-width: 1000px;
-    // margin: 30px auto 0;
+    // margin: 40px auto 0;
+  }
+  @include desktop{
+    // margin:  auto ;
+    
   }
 
   p {
-    // display: none;
-    margin-top: 10px;
-    text-align: center;
-    @include font-style(12px, 400, 5%, auto);
-
-    @include tablet {
-      @include font-style(16px, 400, 5%, auto);
-    }
-
+    display: none;
     @include desktop {
       display: block;
+      margin-top: 10px;
+      text-align: center;
       @include font-style(24px, 700, 10%, auto);
     }
   }
 
   .separator {
-    align-self: start;
-    width: 10px;
+    width: 20px;
     height: 3px;
-    margin-top: 20px;
 
     @include tablet {
       width: 20px;
-      margin-top: 40px;
     }
     @include desktop {
       width: 90px;
       flex-shrink: 1;
-      margin: 40px 20px 30px;
+      margin: 0 20px 30px;
     }
   }
 }
@@ -167,9 +160,8 @@ export default {
   text-decoration: none;
   cursor: pointer;
   .box {
-    width: 40px;
-    height: 40px;
-    margin: 0 auto;
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -177,11 +169,10 @@ export default {
     background: $white01;
     border-radius: 50%;
     color: $dark-gray;
-    @include font-style(24px, 700, 10%, auto);
+    @include font-style(64px, 700, 10%, auto);
 
     @include tablet {
-      width: 80px;
-      height: 80px;
+      
       @include font-style(64px, 700, 10%, auto);
     }
 

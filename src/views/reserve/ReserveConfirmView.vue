@@ -133,6 +133,7 @@ export default {
   methods: {
     goToNextStep(nextPath) {
       if (sessionStorage.getItem('isStep3Clicked')) {
+        this.generateReserveInfo();
         return;
       } else {
         let currentStep = parseInt(
@@ -144,10 +145,17 @@ export default {
           this.$router.push(nextPath);
         }
         sessionStorage.setItem('isStep3Clicked', 'true');
+        this.generateReserveInfo();
       }
     },
     formatPrice(price) {
       return '$' + price.toLocaleString('en-US');
+    },
+    generateReserveInfo() {
+      let currentDate = new Date();
+      let reserveId = currentDate.getTime();
+      sessionStorage.setItem('reserveId', reserveId);
+      sessionStorage.setItem('totalPrice', this.totalPrice);
     },
   },
 };
@@ -155,8 +163,13 @@ export default {
 
 <template>
   <section class="equipment">
+    <div class="decoration">
+      <img class="cat" src="@/assets/image/reserve/cat.png" alt="cat" />
+    </div>
     <progressBar :activeDiv="3" />
     <div class="reserve dark">
+      <img class="paw" src="@/assets/image/reserve/paw.png" alt="paw" />
+
       <h2>營地預約訂單</h2>
       <div class="reserve-list">
         <div class="title h4">營位資訊</div>

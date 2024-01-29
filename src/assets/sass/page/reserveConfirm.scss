@@ -4,6 +4,7 @@
   padding: 20px;
 
   @include tablet {
+    position: relative;
     max-width: 600px;
     padding: 0;
   }
@@ -98,5 +99,53 @@ h2 {
 
   @include tablet {
     margin-bottom: 20px;
+  }
+}
+
+.next {
+  @include desktop {
+    margin: 0 auto;
+    padding: 10px 0 60px;
+  }
+}
+
+.decoration {
+  // position: relative;
+  .cat {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    @include only-mobile {
+      display: none;
+    }
+
+    display: block;
+    left: 5%;
+    bottom: -30px;
+
+    @include desktop {
+      left: 10%;
+    }
+  }
+}
+.paw {
+  @include only-mobile {
+    display: none;
+  }
+
+  display: block;
+  width: 180px;
+
+  position: absolute;
+  right: -80px;
+  top: -30px;
+  z-index: 2;
+
+  pointer-events: none;
+
+  @include desktop {
+    right: 0;
+    top: -80px;
+    width: 280px;
   }
 }
