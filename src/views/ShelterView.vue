@@ -5,18 +5,21 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      bannerImages: [ //首頁大圖輪播
+      bannerImages: [ //Banner輪播
         '/src/assets/image/shelter/shelter_bg_m_2.png',
         '/src/assets/image/shelter/shelter_bg_m_1.png',
         '/src/assets/image/shelter/shelter_bg_m_3.png',
       ],
-      currentIndex: 0,
-      animalImages: [ //貓狗圓形圖片輪播
-        { src: 'src/assets/image/shelter/round_cat_1.png' },
-        { src: 'src/assets/image/shelter/round_dogs_1.png' },
-        { src: 'src/assets/image/shelter/round_dog_1.png' }
+      currentIndex: 0, //當前圖片
+      autoPlayInterval: null, // 新增屬性來儲存自動播放定時器
+
+      animalImages: [ //貓狗圓形圖片
+        { src: 'src/assets/image/shelter/round_cat_m1.png' },
+        { src: 'src/assets/image/shelter/round_dogs_m1.png' },
+        { src: 'src/assets/image/shelter/round_dog_m1.png' }
       ],
       activeIndex: 0,
+
     }
   },
   computed: {
@@ -24,18 +27,31 @@ export default {
       return this.bannerImages[this.currentIndex];
     },
   },
+
   mounted() {
-    setInterval(() => {
+    this.startAutoPlay(); //自動播放
+
+    setInterval(() => { //設置時間
       this.nextImage();
-    }, 3000); // 切換圖片的時間間隔設3秒
+    }, 3000); // 切換圖片時間間隔3秒
+
   },
   methods: {
-    prevSlide() { //上一張
+    prevSlide() { //按鈕上一張
       this.currentIndex = (this.currentIndex - 1 + this.bannerImages.length) % this.bannerImages.length;
     },
-    nextSlide() { //下一張
+    nextSlide() { //按鈕下一張
       this.currentIndex = (this.currentIndex + 1) % this.bannerImages.length;
     },
+    startAutoPlay() { //開始自動播放，隔一段時間切換到下一張
+      this.autoPlayInterval = setInterval(() => {
+        this.nextSlide();
+      }, 3000); // 設定間隔時間每3秒切換一次
+    },
+    stopAutoPlay() { // 停止自動播放
+      clearInterval(this.autoPlayInterval);
+    },
+
     nextImage() {
       this.activeIndex = (this.activeIndex + 1) % this.animalImages.length;
     },
@@ -52,13 +68,14 @@ export default {
       <h2 class="shelter-subtitle">讓牠們不再流浪！</h2>
     </div>
 
-    <!-- 首頁大圖輪播區塊 -->
+    <!-- Banner輪播區塊 -->
     <div class="shelter-slider-container">
       <transition name="fade" mode="out-in">
         <img :src="currentImage" :key="currentImage" class="slider-image" />
       </transition>
     </div>
 
+    <!-- Banner輪播按鈕 -->
     <div class="shelter-slider-btn">
       <button class="shelter-btn" @click="prevSlide">
         <img src="/src/assets/image/campGuide/left_button_m.svg" alt="左邊箭頭按鈕">
@@ -76,16 +93,31 @@ export default {
         <p class="shelter-slogan-words">
           讓我們一起<br />尋找尾巴搖曳的快樂，<br />分享彼此擁抱的溫暖！
         </p>
-        <img src="/src/assets/image/shelter/white_heart.svg" alt="白色愛心圖片" />
+
+        <img class="white-heart" src="/src/assets/image/shelter/white_heart.svg" alt="白色愛心圖片" />
+
+        <div class="paws">
+          <img class="paw1" src="/src/assets/image/shelter/paw1.svg" alt="腳印icon">
+          <img class="paw2" src="/src/assets/image/shelter/paw1.svg" alt="腳印icon">
+        </div>
       </div>
 
+      <!-- 圓形翻轉圖片 -->
       <div class="shelter-round-imgs">
-        <img src="/src/assets/image/shelter/red_heart.svg" alt="愛心icon" />
+
+        <img class="red-heart" src="/src/assets/image/shelter/red_heart.svg" alt="紅色愛心icon" />
+
+        <img class="yellow-heart" src="/src/assets/image/shelter/yellow_heart.svg" alt="黃色愛心icon" />
+
+        <!-- <img class="line-1" src="/src/assets/image/shelter/line_1.svg" alt="線條一"> -->
+
         <div v-for="(item, index) in animalImages" :key="index" class="round"
           :class="{ 'active': index === activeIndex }">
           <img :src="item.src" alt="Round Image">
         </div>
-        <img src="/src/assets/image/shelter/line_2.svg" alt="線條二" />
+
+        <!-- <img class="line-2" src="/src/assets/image/shelter/line_2.svg" alt="線條二" /> -->
+
       </div>
 
       <!-- 不再流浪區塊 -->
@@ -93,7 +125,7 @@ export default {
       <img class="slogan-img" src="/src/assets/image/shelter/shelter_slogan_m_2.svg" alt="不再流浪布條圖片" />
       <div class="home-cloud">
         <p class="home-cloud-words">我們都在期待…<br />擁有一個溫暖的家</p>
-        <img src="/src/assets/image/shelter/big_cloud.svg" alt="雲朵對話圖片">
+        <img class="blue-cloud" src="/src/assets/image/shelter/big_cloud.svg" alt="雲朵對話圖片">
       </div>
 
       <div class="dog-cat-home">
@@ -167,8 +199,9 @@ export default {
         <div class="adopt-cloud">
           <p class="adopt-cloud-words">謝謝你，選擇了我。</p>
           <img class="white_cloud" src="/src/assets/image/shelter/white_cloud.svg" alt="白色雲朵">
-          <img class="hand-dog" src="/src/assets/image/shelter/hand_dog.png" alt="舉手狗狗圖片" />
         </div>
+          <img class="hand-dog" src="/src/assets/image/shelter/hand_dog.png" alt="舉手狗狗圖片" />
+          <img class="line3" src="/src/assets/image/shelter/line3.svg" alt="線條三">
       </div>
 
       <!-- 領養步驟一到六 -->
@@ -186,8 +219,7 @@ export default {
           <div class="step2-dtls">
             <p class="step2-dtl">填寫領養申請表</p>
             <div class="step2-dtl-wrap">
-              <p>提供基本資料，確保領養者生活方式<br>
-                適合貓狗需求。
+              <p>確保領養者生活方式適合貓狗需求
               </p>
             </div>
           </div>
@@ -210,7 +242,7 @@ export default {
           <div class="step4-dtls">
             <p class="step4-dtl">簽署領養合約</p>
             <div class="step4-dtl-wrap">
-              <p>討論並簽署領養條件，確保是負責的領養者。</p>
+              <p>討論並簽署領養條件</p>
             </div>
           </div>
         </div>
@@ -221,7 +253,7 @@ export default {
           <div class="step5-dtls">
             <p class="step5-dtl">支付領養費用</p>
             <div class="step5-dtl-wrap">
-              <p>支付相應費用，以支持中途之家的營運。</p>
+              <p>支付相應費用以支持野良之家營運</p>
             </div>
           </div>
         </div>
@@ -231,9 +263,6 @@ export default {
           <p class="step6">STEP 6</p>
           <div class="step6-dtls">
             <p class="step6-dtl">接回寵物至家庭</p>
-            <div class="step6-dtl-wrap">
-              <p>將領養的貓狗帶回家，正式開始共同的生活。</p>
-            </div>
           </div>
         </div>
       </div>
