@@ -155,18 +155,10 @@ nav ul{
     max-width: 800px;
   }
 }
-.responsive-cell-01{
-  display: none;
 
-  @include tablet {
-    background-color: red;
-    display: inline-block; 
-    width: calc(100% / 6);
-  }
-  @include desktop {
-    display:inline-block; 
-    display: inline-block; 
-    width: calc(100% / 6);
+.responsive-cell-01 {
+  @include only-mobile {
+    display: none;
   }
 }
 .table-title, .table-content{

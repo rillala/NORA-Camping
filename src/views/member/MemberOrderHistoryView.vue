@@ -198,8 +198,6 @@ nav ul {
   border: 1px solid #ddd;
   padding: 8px;
   width: calc(100% / 5);
-  // overflow-wrap: break-word; /* 折行方式 */
-  // word-break: break-all; /* 在單詞內斷行 */
   white-space: nowrap;
   @include tablet {
     font-size: 16px;
