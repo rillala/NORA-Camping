@@ -39,7 +39,7 @@
           <p class="member-title-2 member-no">會員編號:</p><span>0000001</span>
         </div>
         <div class="inner">
-          <p class="member-title-2 info-title">會員姓名:</p>  <input v-model="editMemberInfo.name" placeholder="姓名" class="info-input"/>
+          <p class="member-title-2 info-title">會員姓名:</p><input v-model="editMemberInfo.name" placeholder="姓名" class="info-input"/>
         </div>
         <div class="inner">
           <p class="member-title-2">會員信箱:</p>  <input v-model="editMemberInfo.email" placeholder="email" class="info-input">
@@ -116,6 +116,7 @@ export default {
     },
     saveChanges() {
       // 在這裡處理保存變更的邏輯
+      this.memberInfo = {...this.editMemberInfo};
       this.isEditing = false;
     },
     cancelEditing() {
@@ -134,9 +135,6 @@ export default {
     cancelPasswordEditing() {
     // 在這裡處理取消密碼修改的邏輯
     this.isEditingPassword = false;
-    },
-    aa() {
-      this.memberInfo = {...this.editMemberInfo}
     },
 
     dragOver(e) {
