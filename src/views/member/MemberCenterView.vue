@@ -15,7 +15,7 @@
 
   <div>
     <div id="dropzone" class="drop-area" @dragover.prevent="dragOver" @drop.prevent="dropped">
-      <img v-if="imageSrc" :src="imageSrc" alt="Dropped Image">
+      <img v-if="imageSrc" :src="imageSrc" alt="Dropped Image">新增頭貼
     </div>
   </div>
 

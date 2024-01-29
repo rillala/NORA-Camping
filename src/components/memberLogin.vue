@@ -56,12 +56,22 @@
               id="agreeTerms"
             />
             <label for="agreeTerms">
-              <p>我同意網站服務條款及隱私權政策</p>
+              <p>我同意網站服務條款及<button @click="showPrivacyPolicy = true">隱私權政策</button></p>
             </label>
           </div>
-
             <button type="submit" class="main-btn" @click="alert()">立即加入</button>
-          </form>
+
+          <div v-if="showPrivacyPolicy" class="privacy-policy-lightbox">
+            <div class="privacy-policy-content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula, nisl sed aliquam pulvinar, tortor enim condimentum urna, id bibendum elit neque nec velit.
+            </p>
+            </div>
+            <button @click="closePrivacyPolicy" class="close-button">X</button>
+          </div>
+        </form>
+
+
 
         <!-- 登入頁面 -->
         <form v-else action="javascript:void(0);">
@@ -105,19 +115,24 @@ export default {
       user_enter: {
         account: 'mor_2314',
         pwd: '83r5^_'
-      }
+      },
+      showPrivacyPolicy: false,
     };
   },
-created(){
-  // 判斷有沒有登入過，如果沒有token等同於沒有登入
-  const user = this.checkLogin()
-  if(user){
-    //有登入資訊轉到首頁
-    this.$router.push('/')
-  }
+  created(){
+    // 判斷有沒有登入過，如果沒有token等同於沒有登入
+    const user = this.checkLogin()
+    if(user){
+      //有登入資訊轉到首頁
+      this.$router.push('/')
+    }
   },
 
   methods:{
+    closePrivacyPolicy() {
+      this.showPrivacyPolicy = false;
+    },
+
     closeLightbox() {
       // alert()
       if (this.isOpen) {
@@ -155,6 +170,7 @@ created(){
         //登入失敗
         //系統維護中
       }) 
+      
     }
   },
 };
@@ -195,13 +211,11 @@ created(){
 
 .lightbox-content {
   position: relative;
-  top: calc((100% - 430px) / 2);
+  top: calc((100% - 500px) / 2);
   width: calc(100% - 20px); 
   background-color: $white01;
   padding: 20px;
   z-index: 5;
-  width: 100%;
-  height:500px;
   padding: 40px 15px;
 
   @include tablet {
@@ -311,4 +325,24 @@ height:20px;
 .login-news{
   height: 25px;
 }
+
+.privacy-policy-lightbox{
+  height:300px;
+  position:fixed;
+  z-index:999;
+  background-color:gray;
+  top: calc((100% - 430px) / 2);
+  width:350px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 16px;
+}
+
 </style>
