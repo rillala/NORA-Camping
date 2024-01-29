@@ -138,19 +138,37 @@ import businessHours from '../components/about/businessHours.vue';
 }
 .origin-linear { //頂部漸層
     background: linear-gradient(to bottom, $blue-1 10%, $white01);
+    @include desktop{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 /*-----------------緣起--------------------*/
-.origin-pic img{ //緣起環境照，script秒數切換
+.origin{
+    @include desktop{
+        width: 50%;
+        order: 1;
+        // background-color: #f0f;
+    }
+}
+.origin-pic{ 
+    img{ //緣起環境照，script秒數切換
     width: 100%;
     aspect-ratio: 1/1;
     max-height: 580px;
     object-fit: cover;
     object-position: bottom;
-}
-.origin h4{ //緣起標題
-    width: 90vw;
-    border-radius: 10px;
-    margin: 10px auto;
+    }
+    @include desktop{
+        order:2;    
+    }
+
+    h4{ //緣起標題
+        width: 90vw;
+        border-radius: 10px;
+        margin: 10px auto;
+    }
 }
 .text-wrap { //緣起內文
     width: 90vw;
@@ -158,6 +176,10 @@ import businessHours from '../components/about/businessHours.vue';
     padding: 10px 20px;
     margin: auto;
     background-color: rgba($yellow-2, 50%);
+    @include desktop{
+        width: 100%;
+        background-color: rgba($yellow-2, 0);
+    }
 }
 /*-----------------三大理念--------------------*/
 .opinion-wrap{//理念容器
@@ -165,6 +187,9 @@ import businessHours from '../components/about/businessHours.vue';
     display: flex;
     justify-content: space-between;
     overflow-x: auto;
+    @include desktop{
+        order: 3;
+    }
 }
 .opinion{ 
     margin: 50px auto;
