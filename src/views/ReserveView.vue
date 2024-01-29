@@ -585,13 +585,13 @@ export default {
       <div class="notice bg-blue-1 dark">
         <div class="warning" v-if="site.isWarningOpen === true">
           <ul>
-            <p class="title">注意事項：</p>
+            <p class="title dark">注意事項：</p>
             <li class="content tinyp" v-for="content in site.warning">
               {{ content }}
             </li>
           </ul>
           <ul>
-            <p class="title">公共設備：</p>
+            <p class="title dark">公共設備：</p>
             <li class="content tinyp" v-for="content in site.public">
               {{ content }}
             </li>
