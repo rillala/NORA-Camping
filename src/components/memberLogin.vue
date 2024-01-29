@@ -56,14 +56,22 @@
               id="agreeTerms"
             />
             <label for="agreeTerms">
-              <p>我同意網站服務條款及隱私權政策</p>
+              <p>我同意網站服務條款及<button @click="showPrivacyPolicy = true">隱私權政策</button></p>
             </label>
           </div>
+            <button type="submit" class="main-btn" @click="alert()">立即加入</button>
 
-          <button type="submit" class="main-btn" @click="alert()">
-            立即加入
-          </button>
+          <div v-if="showPrivacyPolicy" class="privacy-policy-lightbox">
+            <div class="privacy-policy-content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula, nisl sed aliquam pulvinar, tortor enim condimentum urna, id bibendum elit neque nec velit.
+            </p>
+            </div>
+            <button @click="closePrivacyPolicy" class="close-button">X</button>
+          </div>
         </form>
+
+
 
         <!-- 登入頁面 -->
         <form v-else action="javascript:void(0);">
@@ -205,8 +213,8 @@ export default {
 
 .lightbox-content {
   position: relative;
-  top: calc((100% - 430px) / 2);
-  left: calc((100% - 450px) / 2);
+  top: calc((100% - 500px) / 2);
+  width: calc(100% - 20px); 
   background-color: $white01;
   padding: 20px;
   z-index: 5;
@@ -215,9 +223,14 @@ export default {
   padding: 40px 50px;
 
   @include tablet {
+    left: calc((100% - 470px) / 2);
+    width: 470px;
+    padding: 40px 50px;
   }
 
   @include desktop {
+    left: calc((100% - 470px) / 2);
+    width: 470px;
   }
 }
 
@@ -240,6 +253,7 @@ export default {
   font-size: 32px;
   padding: 0px 10px;
   margin: 10px 15px 30px;
+  white-space: nowrap;
 
   @include tablet {
   }
@@ -272,8 +286,7 @@ input {
 
 .login-news {
   display: flex;
-  margin: 10px 0px;
-  padding-left: 20px;
+  margin: 10px 0px 20px;
 }
 
 .main-btn {
@@ -316,4 +329,24 @@ input[type='checkbox'] {
 .login-news {
   height: 25px;
 }
+
+.privacy-policy-lightbox{
+  height:300px;
+  position:fixed;
+  z-index:999;
+  background-color:gray;
+  top: calc((100% - 430px) / 2);
+  width:350px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 16px;
+}
+
 </style>
