@@ -625,7 +625,7 @@ export default {
     <!--下個步驟的按鈕-->
     <nextPageBtn
       @click="goToNextStep(`/equipment`)"
-      :text="`下一步：裝備租借`"
+      :text="`裝備租借`"
       :path="`/equipment`"
     />
   </section>
