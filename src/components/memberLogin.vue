@@ -45,7 +45,7 @@
               id="receiveNews"
             />
             <label for="receiveNews">
-              <p>我願意接收野良的最新消息、優惠相關訊息</p>
+              <p class="msg">我願意接收野良的最新消息、優惠相關訊息</p>
             </label>
           </div>
 
@@ -56,7 +56,7 @@
               id="agreeTerms"
             />
             <label for="agreeTerms">
-              <p>我同意網站服務條款及<button @click="showPrivacyPolicy = true">隱私權政策</button></p>
+              <p  class="msg">我同意服務條款及<button @click="showPrivacyPolicy = true" class="privacy-policy">隱私權政策</button></p>
             </label>
           </div>
             <button type="submit" class="main-btn" @click="alert()">立即加入</button>
@@ -187,11 +187,6 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 3;
-
-  @include tablet {
-  }
-  @include desktop {
-  }
 }
 
 .lightbox-container {
@@ -214,22 +209,18 @@ export default {
 .lightbox-content {
   position: relative;
   top: calc((100% - 500px) / 2);
-  width: calc(100% - 20px); 
   background-color: $white01;
-  padding: 20px;
   z-index: 5;
-  width: 470px;
+  margin:auto;
+  width: 350px;
   height: 500px;
   padding: 40px 50px;
 
   @include tablet {
-    left: calc((100% - 470px) / 2);
     width: 470px;
-    padding: 40px 50px;
   }
 
   @include desktop {
-    left: calc((100% - 470px) / 2);
     width: 470px;
   }
 }
@@ -286,7 +277,16 @@ input {
 
 .login-news {
   display: flex;
-  margin: 10px 0px 20px;
+  white-space:no-wrap;
+  // justify-content: center; 
+  // margin: 10px 0px 20px;
+}
+
+
+label p {
+  @include only-mobile {
+  display: flex;
+  }
 }
 
 .main-btn {
@@ -318,16 +318,8 @@ input {
 }
 
 input[type='checkbox'] {
-  width: 20px;
-  height: 20px;
-}
-
-// label[for="receiveNews"] {
-//   height: 16px;
-// }
-
-.login-news {
-  height: 25px;
+  width: 15px;
+  height: 15px;
 }
 
 .privacy-policy-lightbox{
@@ -349,4 +341,13 @@ input[type='checkbox'] {
   font-size: 16px;
 }
 
+.privacy-policy{
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  color:$blue-3;
+}
 </style>
