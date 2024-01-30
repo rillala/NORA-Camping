@@ -61,6 +61,11 @@ const DESKTOP = 1024;
       font-size: 64px;
     }
   }
+  h4{
+    @include desktop{
+    font-size: 40px;
+    }
+  }
 }
 .banner-bgc {
     background-color: $blue-1;

@@ -1,9 +1,12 @@
 <script setup>
 // 引入函式庫
-
 import actionBtn from '../components/button/actionBtn.vue';
 import businessHours from '../components/about/businessHours.vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
+function toSheleter(){
+    router.push('/shelter');
+}
 
 </script>
 
@@ -67,7 +70,9 @@ import businessHours from '../components/about/businessHours.vue';
     <p class="tinyp">
     志工活動包括洗狗、打掃籠舍、餵食等，讓你有機會親身參與流浪動物的照顧，同時建立起與這些可愛生物的深厚連結。
     </p>
-    <actionBtn class="more-info" :content="'更多詳細資訊'" />
+    <!-- <router-link to="/shelter"> -->
+        <actionBtn class="more-info" :content="'更多詳細資訊'" @clickEvent="toSheleter" />
+    <!-- </router-link> -->
 </div>
 
 <div class="tags">
@@ -127,14 +132,36 @@ import businessHours from '../components/about/businessHours.vue';
 @import '../src/assets/sass/base/_text.scss';
 /*-----------------banner&背景漸層--------------------*/
 .banner-wrap { //banner標題&副標題
-    padding-top: 70px;
-    margin-left: 80px;
+    padding-top: 10vw;
+    margin-left: 10vw;
     color: $blue-4;
+    @include desktop{
+    padding-top: 8vw;
+    width: 50%;
+    }
+    h2{
+        @include desktop{
+            // width: 20dvw;
+            // background-color: #ff0;
+            font-size: 64px;
+        }
+    }
+    h4{
+        @include desktop{
+            // width: 20dvw;
+// background-color: #0ff;
+        font-size: 40px;
+        }
+    }
 }
 .banner-bgc {
     background-color: $blue-1;
     height: 200px;
     width: 100%;
+    @include desktop{
+        height: auto;
+        padding-bottom: 3rem ;
+    }
 }
 .origin-linear { //頂部漸層
     background: linear-gradient(to bottom, $blue-1 10%, $white01);
@@ -146,6 +173,15 @@ import businessHours from '../components/about/businessHours.vue';
 }
 /*-----------------緣起--------------------*/
 .origin{
+
+    h4{ //緣起標題
+        width: 90vw;
+        border-radius: 10px;
+        margin: 10px auto;
+    @include desktop{
+        width: 60%;
+    }
+    }
     @include desktop{
         width: 50%;
         order: 1;
@@ -159,16 +195,16 @@ import businessHours from '../components/about/businessHours.vue';
     max-height: 580px;
     object-fit: cover;
     object-position: bottom;
+    @include desktop{
+        border-radius: 30px;
+    }
     }
     @include desktop{
+        width: 50%;
         order:2;    
     }
 
-    h4{ //緣起標題
-        width: 90vw;
-        border-radius: 10px;
-        margin: 10px auto;
-    }
+
 }
 .text-wrap { //緣起內文
     width: 90vw;
@@ -177,8 +213,9 @@ import businessHours from '../components/about/businessHours.vue';
     margin: auto;
     background-color: rgba($yellow-2, 50%);
     @include desktop{
-        width: 100%;
+        width: 50%;
         background-color: rgba($yellow-2, 0);
+        background-color: #f0f;
     }
 }
 /*-----------------三大理念--------------------*/
@@ -196,6 +233,9 @@ import businessHours from '../components/about/businessHours.vue';
     width: 100%;
     flex-shrink: 0;
     height: auto;
+    @include desktop{
+        width: 30vw;
+    }
 }
 .opinion p,.opinion h4{
     width: 80%;
@@ -218,10 +258,13 @@ import businessHours from '../components/about/businessHours.vue';
 }
 
 /*-----------------野良之家--------------------*/
+a{
+    text-decoration: none;
+}
 .shelter-wrap{
     border-top: 1px solid $dark;
     margin: 10px auto;
-    width: 100vw;
+    width: 100%;
 }
 .shelter-pic{
     margin: auto;
