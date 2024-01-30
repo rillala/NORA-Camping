@@ -1,4 +1,5 @@
-.shelter-banner { // Banner區塊
+.shelter-banner {
+    // Banner區塊
     height: 200px;
     width: 100%;
     background-color: $blue-1;
@@ -10,33 +11,34 @@
 }
 
 .shelter-slider-container {
+    //Banner輪播區塊
     position: relative;
 
     .slider-image {
         width: 100%;
         vertical-align: bottom;
     }
-}
 
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.6s , filter 0.6s;
-}
+    // .fade-enter-active,
+    // .fade-leave-active {
+    //     transition: opacity 0.6s ;
+    // }
 
-.fade-enter,
-.fade-leave-to { //淡入淡出
-    opacity: 0;
-    filter: blur(5px); //濾鏡模糊感
+    // .fade-enter,
+    // .fade-leave-to { //淡入淡出
+    //     opacity: 0;
+    // }
 }
 
 .shelter-slider-btn {
+    //輪播按鈕
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 1;
     position: absolute;
-    top: 0;
+    top: 5%;
 
     .shelter-btn {
         background: none;
@@ -44,37 +46,132 @@
     }
 }
 
-.shelter-love-bg { //相愛相伴區塊
+.shelter-love-bg {
+    //相愛相伴區塊
     background: linear-gradient(to bottom,
-    rgba(243, 227, 91, 0.8),
-    rgba(243, 227, 91, 0.5),
-    rgba(243, 227, 91, 0.3));
+            rgba(243, 227, 91, 0.8),
+            rgba(243, 227, 91, 0.5),
+            rgba(243, 227, 91, 0.3));
 
-    .slogan-img { //相愛相伴&不再流浪布條
+    .slogan-img {
+        //相愛相伴&不再流浪布條
         width: 100%;
+        animation: shine 2s infinite alternate;
     }
 
     .shelter-slogan {
         position: relative;
 
-        img {
+        .white-heart {
+            //白色愛心圖片
             width: 100%;
         }
-    
+
         p {
             position: absolute;
             top: 30%;
             left: 5%;
             font-size: 32px;
             color: $dark;
+            animation: movingWord 3s infinite linear;
+        }
+
+        @keyframes movingWord {
+            0% {
+                transform: translateX(10px);
+            }
+
+            25% {
+                transform: translateX(25px);
+            }
+
+            50% {
+                transform: translateX(40px);
+            }
+
+            75% {
+                transform: translateX(25px);
+            }
+
+            100% {
+                transform: translateX(10px);
+            }
+        }
+
+        .paw1 {
+            position: absolute;
+            bottom: 5%;
+            left: 10%;
+        }
+
+        .paw2 {
+            position: absolute;
+            top: 5%;
+            right: 10%;
         }
     }
 
     .shelter-round-imgs {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        padding-bottom: 20px;
+
+        .red-heart {
+            position: absolute;
+            top: 0;
+            right: 10%;
+            transform: rotate(-45deg);
+            animation: floatHeart 2s infinite linear;
+        }
+
+        .yellow-heart {
+            position: absolute;
+            top: 35%;
+            right: 10%;
+            transform: rotate(-45deg);
+            animation: floatHeart 2s infinite linear;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateZ(0) rotate(-25deg);
+            }
+
+            50% {
+                transform: translateZ(-50px) rotate(25deg);
+            }
+
+            100% {
+                transform: translateZ(0) rotate(-25deg);
+            }
+        }
+
+        .line-1 {
+            position: absolute;
+            left: 0;
+            bottom: 5%;
+            animation: shine 2s infinite alternate;
+        }
+
+        .line-2 { //線條
+            position: absolute;
+            right: 5%;
+            bottom: 5%;
+            animation: shine 2s infinite alternate;
+        }
+
+        @keyframes shine { //閃亮動畫            
+            0% {
+                filter: brightness(0.5);
+            }
+
+            100% {
+                filter: brightness(1.2); // 調整亮度
+            }
+        }
 
         .round {
             width: 100%;
@@ -82,21 +179,41 @@
             transition: all 0.5s ease;
 
             img {
-                width: 80%;
                 object-fit: cover;
             }
         }
     }
 
     .home-cloud {
+        max-width: 390px;
         position: relative;
-        padding: 40px 0px 0px 20px;
+        padding-top: 40px;
+        animation: cloudMove 4s infinite linear;
+        overflow-x: hidden;
 
         .home-cloud-words {
             position: absolute;
             left: 25%;
             top: 50%;
             z-index: 0;
+        }
+
+        @keyframes cloudMove {
+            0% {
+                transform: translateX(-60px) translateY(10px);
+            }
+            25% {
+                transform: translateX(-40px) translateY(20px);
+            }
+            50% {
+                transform: translateX(-20px) translateY(15px);
+            }
+            75% {
+                transform: translateX(10px) translateY(20px);
+            }
+            100% {
+                transform: translateX(20px) translateY(10px);
+            }
         }
     }
 
@@ -116,10 +233,10 @@
         align-items: self-start;
         padding-top: 20px;
     }
-
 }
 
-.round.active { //圓形圖片動畫
+.round.active {
+    //圓形圖片動畫
     transform: rotateY(180deg);
 }
 
@@ -129,15 +246,18 @@
     white-space: nowrap; //內容保持在同一行
     overflow: hidden; //超出的先隱藏
 
-    img { //跑馬燈圖片設置動畫
+    img {
+        //跑馬燈圖片設置動畫
         animation: marquee 12s linear infinite;
     }
 
-    @keyframes marquee { //跑馬燈動畫
+    @keyframes marquee {
+
+        //跑馬燈動畫
         from {
             transform: translateX(100%);
         }
-    
+
         to {
             transform: translateX(-100%);
         }
@@ -149,15 +269,18 @@
     white-space: nowrap; //內容保持在同一行
     overflow: hidden; //超出的先隱藏
 
-    img { //跑馬燈圖片設置動畫
+    img {
+        //跑馬燈圖片設置動畫
         animation: marquee 12s linear infinite;
     }
 
-    @keyframes marquee { //跑馬燈動畫
+    @keyframes marquee {
+
+        //跑馬燈動畫
         from {
             transform: translateX(100%);
         }
-    
+
         to {
             transform: translateX(-100%);
         }
@@ -169,22 +292,26 @@
     white-space: nowrap; //內容保持在同一行
     overflow: hidden; //超出的先隱藏
 
-    img { //跑馬燈圖片設置動畫
+    img {
+        //跑馬燈圖片設置動畫
         animation: marquee 12s linear infinite;
     }
 
-    @keyframes marquee { //跑馬燈動畫
+    @keyframes marquee {
+
+        //跑馬燈動畫
         from {
             transform: translateX(100%);
         }
-    
+
         to {
             transform: translateX(-100%);
         }
     }
 }
 
-.shelter-idea-bg { //我們的理念
+.shelter-idea-bg {
+    //我們的理念
     background-color: rgba(225, 202, 167, 0.5);
 
     .shelter-idea {
@@ -192,7 +319,8 @@
 
         .sign_board {
             width: 100%;
-            padding: 50px 20px 0px 0px ;
+            padding: 50px 20px 0px 0px;
+            animation: shine 2s infinite alternate;
         }
 
         .shelter-idea-title {
@@ -250,43 +378,83 @@
         .sign_board {
             padding: 50px 0px 0px 20px;
             width: 100%;
+            animation: shine 2s infinite alternate;
         }
 
         .shelter-adopt-title {
             position: absolute;
-            top:55%;
-            left:25%;
+            top: 55%;
+            left: 25%;
+        }
+    }
+
+    .adopt-cloud-dog {
+        position: relative;
+
+        .hand-dog {
+            padding-left: 80px;
+            animation: movingDog 1s infinite linear;
+    
+            @keyframes movingDog {
+                0% {
+                    transform: translateY(5px);
+                }
+                50% {
+                    transform: translateY(10px);
+                }
+                100% {
+                    transform: translateY(5px);
+                }
+            }
+        }
+    
+        .line3 {
+            position: absolute;
+            left: 8%;
+            bottom: -5%;
         }
     }
 
     .adopt-cloud {
+        max-width: 300px;
         position: relative;
-        
-        .hand-dog {
-            padding-left: 80px;
+        overflow-x: hidden;
+        animation: whiteCloudMove 3s infinite linear;
+
+        @keyframes whiteCloudMove {
+            0% {
+                transform: translateX(-10px) translateY(10px);
+            }
+            50% {
+                transform: translateX(20px) translateY(15px);
+            }
+            100% {
+                transform: translateX(35px) translateY(10px);
+            }
         }
 
         .adopt-cloud-words {
             position: absolute;
-            top: 20%;
-            left: 20%;
+            top: 50%;
+            left: 25%;
         }
 
         .white_cloud {
-            padding: 20px 0px 0px 20px;
+            padding-top: 20px;
         }
     }
 
     .adopt-steps {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        padding-bottom: 50px;
+        gap: 20px;
+        padding: 50px 15px;
 
         .adopt-step1 {
             display: flex;
             align-items: center;
             position: relative;
+            gap: 10px;
 
             .step1 {
                 color: $blue-1;
@@ -299,10 +467,12 @@
                 padding-left: 10px;
             }
         }
+
         .adopt-step2 {
             display: flex;
             align-items: center;
             position: relative;
+            gap: 10px;
 
             .step2 {
                 color: $blue-1;
@@ -327,10 +497,12 @@
                 }
             }
         }
+
         .adopt-step3 {
             display: flex;
             align-items: center;
             position: relative;
+            gap: 10px;
 
             .step3 {
                 color: $blue-1;
@@ -355,10 +527,12 @@
                 }
             }
         }
+
         .adopt-step4 {
             display: flex;
             align-items: center;
             position: relative;
+            gap: 10px;
 
             .step4 {
                 color: $blue-1;
@@ -383,10 +557,12 @@
                 }
             }
         }
+
         .adopt-step5 {
             display: flex;
             align-items: center;
             position: relative;
+            gap: 10px;
 
             .step5 {
                 color: $blue-1;
@@ -411,10 +587,12 @@
                 }
             }
         }
+
         .adopt-step6 {
             display: flex;
             align-items: center;
             position: relative;
+            gap: 10px;
 
             .step6 {
                 color: $blue-1;
@@ -427,12 +605,6 @@
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
-
-                .step6-dtl-wrap {
-                    background-color: $white01;
-                    border-radius: $radius;
-                    padding: 10px;
-                }
 
                 .step6-dtl {
                     padding-left: 10px;
@@ -472,7 +644,8 @@
     }
 }
 
-.shelter-volunteer-bg { //志工活動
+.shelter-volunteer-bg {
+    //志工活動
     background-color: rgba(225, 202, 167, 0.3);
 
     .shelter-volunteer {
@@ -490,8 +663,8 @@
 
         .shelter-volunteer-title {
             position: absolute;
-            top:55%;
-            right:25%;
+            top: 55%;
+            right: 25%;
         }
     }
 
@@ -519,10 +692,22 @@
             width: 100%;
         }
 
-        .volunteer-dtls {
+        .volunteer-dtl {
             position: absolute;
-            top: 40%;
-            left: 10%;
+            top: 35%;
+            left: 15%;
+        }
+
+        .contact-btn {
+            position: absolute;
+            top: 70%;
+            left: 25%;
+            width: 160px;
+            height: 40px;
+            border: 0;
+            background-color: $blue-4;
+            color: $white01;
+            border-radius: $radius;
         }
     }
 
