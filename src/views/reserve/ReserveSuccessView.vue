@@ -62,7 +62,7 @@ export default {
       </div>
     </div>
     <div class="reserve dark">
-      <h2>謝謝，我們已收到您的訂單。</h2>
+      <h2>謝謝，<span>我們已收到您的訂單。</span></h2>
       <div class="reserve-list">
         <div class="title h4">訂單資訊</div>
 
@@ -98,17 +98,18 @@ export default {
       </div>
     </div>
     <!--下個步驟的按鈕-->
-    <nextPageBtn
-      @click="goToNextStep(`/membercampsiteorders`)"
-      :text="`回到會員專區`"
-      :path="`/membercampsiteorders`"
-    />
+    <nextPageBtn :text="`回到會員專區`" :path="`/membercampsiteorders`" />
   </main>
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/reserveConfirm.scss';
 
+.reserve {
+  span {
+    white-space: nowrap;
+  }
+}
 .banner {
   width: 100%;
   height: 200px;
