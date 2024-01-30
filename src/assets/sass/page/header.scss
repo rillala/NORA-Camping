@@ -6,6 +6,7 @@ nav {
 }
 
 #nav-wrap {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
 
@@ -70,6 +71,7 @@ nav {
 
 // 會員登入
 #member-login {
+  // position: relative;
   width: 50px;
   height: 50px;
   border: 0;

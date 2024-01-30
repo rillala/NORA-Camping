@@ -12,7 +12,6 @@ export default {
     return {
       isMenuOpen: false, // 漢堡選單
       isLoginOpen: false, // 登入燈箱
-      isLogin: true, // 判斷是否已經登入
       isMemberSubOpen: false, // 會員中心子選單
       reserveBtn: {
         name: '線上預約',
@@ -53,6 +52,7 @@ export default {
     logout() {
       // 調用pinia的updateToken
       this.updateToken('');
+      this.isMemberSubOpen = false;
     },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
@@ -71,16 +71,20 @@ export default {
     memberCenter() {
       if (this.isLogin) {
         // 如果已經登入了 token = true, 則開啟子選單
-        console.log('isLogin=true');
+        console.log(`${this.isLogin}`);
         this.isMemberSubOpen = true;
       } else {
-        this.isOpen = true;
+        console.log('memberCenter')
+        this.isLoginOpen = true;
       }
     },
   },
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(userStore, ['token']),
+    isLogin() {
+      return !!this.token
+    }
   },
 };
 </script>
@@ -146,18 +150,18 @@ export default {
           >
 
           <!--會員登入-->
-          <button id="member-login" @click="memberCenter, closeHam">
+          <button id="member-login" @click="memberCenter(); closeHam()">
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
-                <li><RouterLink to="/membercenter">會員中心</RouterLink></li>
+                <li><RouterLink class="sub-menu" to="/membercenter">會員中心</RouterLink></li>
                 <li>
-                  <RouterLink to="/membercampsiteorders">商品訂單</RouterLink>
+                  <RouterLink class="sub-menu" to="/membercampsiteorders">商品訂單</RouterLink>
                 </li>
                 <li>
-                  <RouterLink to="/memberorderhistory">營地訂單</RouterLink>
+                  <RouterLink class="sub-menu" to="/memberorderhistory">營地訂單</RouterLink>
                 </li>
-                <button @click="logout">登出</button>
+                <button class="logout" @click.stop="logout">登出</button>
               </ul>
             </div>
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
@@ -221,4 +225,52 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
+@mixin only-mobile {
+
+}
+.sub-menu-container{
+  display: none;
+  @include tablet{
+  display: block;
+  position:absolute;
+  width:100px;
+  background-color:$blue-4;
+  color:$white01;
+  height:120px;
+  top:80px;
+  padding:10px 8px;
+  border-radius: 20px;
+  }
+
+  @include desktop {
+  display: block;
+  position:absolute;
+  width:100px;
+  background-color:$blue-4;
+  color:$white01;
+  height:120px;
+  top:80px;
+  padding:10px 8px;
+  border-radius: 20px;
+  }
+
+}
+.sub-menu{
+  margin:10px 0;
+  text-decoration: none;
+  color:$white01;
+  border-bottom: 1px solid $white01;
+  padding:4px;
+  line-height: 1.5%;
+  @include font-style(16px, 400, 1%, 160%);
+}
+
+.logout{
+  border-bottom: 1px solid $white01;
+  background-color: transparent;
+  border: none;
+  color:$white01;
+  @include font-style(16px, 400, 1%, 160%);
+  
+}
 </style>
