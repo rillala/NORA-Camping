@@ -156,14 +156,17 @@
             animation: shine 2s infinite alternate;
         }
 
-        .line-2 { //線條
+        .line-2 {
+            //線條
             position: absolute;
             right: 5%;
             bottom: 5%;
             animation: shine 2s infinite alternate;
         }
 
-        @keyframes shine { //閃亮動畫            
+        @keyframes shine {
+
+            //閃亮動畫            
             0% {
                 filter: brightness(0.5);
             }
@@ -202,22 +205,27 @@
             0% {
                 transform: translateX(-60px) translateY(10px);
             }
+
             25% {
                 transform: translateX(-40px) translateY(20px);
             }
+
             50% {
                 transform: translateX(-20px) translateY(15px);
             }
+
             75% {
                 transform: translateX(10px) translateY(20px);
             }
+
             100% {
                 transform: translateX(20px) translateY(10px);
             }
         }
     }
 
-    .dog-cat-home { //貓咪跟狗狗icon
+    .dog-cat-home {
+        //貓咪跟狗狗icon
         display: flex;
         align-items: last baseline;
         padding-top: 30px;
@@ -227,7 +235,8 @@
         }
     }
 
-    .foot-print { //狗狗腳印
+    .foot-print {
+        //狗狗腳印
         display: flex;
         justify-content: center;
         align-items: self-start;
@@ -394,20 +403,22 @@
         .hand-dog {
             padding-left: 80px;
             animation: movingDog 1s infinite linear;
-    
+
             @keyframes movingDog {
                 0% {
                     transform: translateY(5px);
                 }
+
                 50% {
                     transform: translateY(10px);
                 }
+
                 100% {
                     transform: translateY(5px);
                 }
             }
         }
-    
+
         .line3 {
             position: absolute;
             left: 8%;
@@ -425,9 +436,11 @@
             0% {
                 transform: translateX(-10px) translateY(10px);
             }
+
             50% {
                 transform: translateX(20px) translateY(15px);
             }
+
             100% {
                 transform: translateX(35px) translateY(10px);
             }
@@ -644,8 +657,7 @@
     }
 }
 
-.shelter-volunteer-bg {
-    //志工活動
+.shelter-volunteer-bg { //志工活動
     background-color: rgba(225, 202, 167, 0.3);
 
     .shelter-volunteer {
@@ -654,6 +666,7 @@
         .sign_board {
             width: 100%;
             padding: 50px 20px 0px 0px;
+            animation: shine 2s infinite alternate;
         }
 
         .black-cat {
@@ -671,6 +684,21 @@
     .volunteer-cloud {
         position: relative;
         padding: 20px 0px 20px 30px;
+        animation: blueCloudMove 3s infinite linear;
+
+        @keyframes blueCloudMove {
+            0% {
+                transform: translateX(-20px) translateY(-5px);
+            }
+
+            50% {
+                transform: translateX(-10px) translateY(0px);
+            }
+
+            100% {
+                transform: translateX(5px) translateY(-5px);
+            }
+        }
 
         .volunteer-txt {
             position: absolute;
@@ -680,39 +708,100 @@
         }
     }
 
-    .circle-img-top {
-        display: flex;
-        justify-content: space-around;
-    }
+    .circle-imgs-wrap {
+        padding-bottom: 50px;
 
-    .volunteer-info {
-        position: relative;
+        .circle-img-top {
+            display: flex;
+            justify-content: space-around;
 
-        img {
-            width: 100%;
+            :nth-child(1) {
+                animation: circleLeft 3s Infinite linear;
+            }
+
+            :nth-child(2) {
+                animation: circleRight 3s Infinite linear;
+            }
         }
 
-        .volunteer-dtl {
-            position: absolute;
-            top: 35%;
-            left: 15%;
+        @keyframes circleLeft {
+            0% {
+                transform: rotateZ(30deg);
+            }
+
+            50% {
+                transform: rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateZ(30deg);
+            }
         }
 
-        .contact-btn {
-            position: absolute;
-            top: 70%;
-            left: 25%;
-            width: 160px;
-            height: 40px;
-            border: 0;
-            background-color: $blue-4;
-            color: $white01;
-            border-radius: $radius;
-        }
-    }
+        @keyframes circleRight {
+            0% {
+                transform: rotateZ(-30deg);
+            }
 
-    .circle-img-bottom {
-        display: flex;
-        justify-content: space-around;
+            50% {
+                transform: rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateZ(-30deg);
+            }
+        }
+
+        .volunteer-info {
+            position: relative;
+
+            .lines1 {
+                position: absolute;
+                left: 40%;
+                top: -10%;
+            }
+
+            .lines4 {
+                position: absolute;
+                right: 3%;
+                bottom: 0;
+            }
+
+            .shape {
+                width: 100%;
+            }
+
+            .volunteer-dtl {
+                position: absolute;
+                top: 35%;
+                left: 15%;
+            }
+
+            .contact-btn {
+                position: absolute;
+                top: 70%;
+                left: 25%;
+                width: 160px;
+                height: 40px;
+                border: 0;
+                background-color: $blue-4;
+                color: $white01;
+                border-radius: $radius;
+            }
+        }
+
+        .circle-img-bottom {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 10px;
+
+            :nth-child(1) {
+                animation: circleLeft 3s Infinite linear;
+            }
+
+            :nth-child(2) {
+                animation: circleRight 3s Infinite linear;
+            }
+        }
     }
 }
