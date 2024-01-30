@@ -73,6 +73,9 @@ function goBack(){
     width: 80%;
     margin: 30px auto 10px;
     display: block;
+    @include desktop{
+
+    }
 }
 /*狗頭*/
 .checkPoints{
@@ -80,6 +83,9 @@ function goBack(){
     justify-content: space-around;
     position: relative;
     margin: 40px auto 50px;
+    @include desktop{
+        width: 100%;
+    }
     .check{
         display: flex;
         justify-content: center;
@@ -180,6 +186,10 @@ function goBack(){
         margin: 10px 0 50px;
         border-radius: 30px;
         font-size: 16px;
+        @include desktop{
+            width: 200px;
+            height: 3rem;
+        }
         &:hover{
             background-color: $blue-3;
             color: $white01;

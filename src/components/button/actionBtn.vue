@@ -4,8 +4,18 @@ export default {
 };
 </script>
 
+<!-- 新增點擊事件的emit -->
+<!-- 導入元件後，在頁面上新增所需的事件 
+<actionBtn :content="'buttonContent'" @clickEvent="要執行的fuction" />
+-->
+<script setup>
+const emit = defineEmits([
+  'clickEvent'
+]);
+</script>
+
 <template>
-  <button class="action-btn-01" blue-3>
+  <button class="action-btn-01" blue-3 @click="emit('clickEvent')">
     <span>{{ content }}</span>
   </button>
 </template>

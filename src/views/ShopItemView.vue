@@ -21,7 +21,8 @@
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-actionBtns">
               <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
-              <ActionBtn :content="'直接購買'"></ActionBtn>
+              <router-link to="shopCar"><ActionBtn :content="'直接購買'"></ActionBtn></router-link>
+              
             </div>
           </div>
         </div>
