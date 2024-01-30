@@ -47,14 +47,34 @@ const DESKTOP = 1024;
 @import '../src/assets/sass/base/_color.scss';
 @import '../src/assets/sass/base/_text.scss';
 .title-wrap { //banner標題&副標題
-    padding-top: 70px;
-    margin-left: 80px;
-    color: $blue-4;
+  width: 100%;
+  padding-top: 10vw;
+  padding-left: 10vw;
+  // margin-left: 10px;
+  color: $blue-4;
+  @include desktop{
+    padding-top: 8vw;
+    width: 100%;
+  }
+  h2{
+    @include desktop{
+      font-size: 64px;
+    }
+  }
+  h4{
+    @include desktop{
+    font-size: 40px;
+    }
+  }
 }
 .banner-bgc {
     background-color: $blue-1;
     height: 200px;
     width: 100%;
+    @include desktop{
+      height: auto;
+      padding-bottom: 3rem ;
+    }
 }
 
 </style>

@@ -8,7 +8,7 @@
   <nav>
     <ul class="nav-list">
       <li><router-link to="/membercenter" class="memberlink">會員資料</router-link></li>
-      <li><router-link to="/memberorderhistory" class="memberlink">訂單歷史</router-link></li>
+      <li><router-link to="/memberorderhistory" class="memberlink">商品訂單</router-link></li>
       <li><router-link to="/membercampsiteorders" class="memberlink member-page">營地訂單</router-link></li>
     </ul>
   </nav>
@@ -29,7 +29,7 @@
         <tr v-for="order in orders" :key="order.id">
           <td class="table-content">{{ truncatedDate(order.orderDate) }}</td>
           <td class="table-content">{{ order.orderNumber }}</td>
-          <td class="table-title responsive-cell-01" v-if="!isSmallScreen">{{ order.orderAmount }}</td>
+          <td class="table-content responsive-cell-01" v-if="!isSmallScreen">{{ order.orderAmount }}</td>
           <td class="table-content">{{ order.orderStatus }}</td>
           <td class="table-content"><button class="btn-view-details" @click="viewDetails(order)">查看</button></td>
           <td class="table-content"><button class="btn-cancel" @click="cancelOrder(order)">取消</button></td>
@@ -155,18 +155,10 @@ nav ul{
     max-width: 800px;
   }
 }
-.responsive-cell-01{
-  display: none;
 
-  @include tablet {
-    background-color: red;
-    display: inline-block; 
-    width: calc(100% / 6);
-  }
-  @include desktop {
-    display:inline-block; 
-    display: inline-block; 
-    width: calc(100% / 6);
+.responsive-cell-01 {
+  @include only-mobile {
+    display: none;
   }
 }
 .table-title, .table-content{

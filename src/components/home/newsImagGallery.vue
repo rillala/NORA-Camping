@@ -20,6 +20,7 @@ export default {
         showLarge(index) {
             // 點擊小圖片時，將大圖片更新為相應的小圖片
             this.large = { ...this.smalls[index] };
+            //複製一個新的陣列
         },
         init() {
         },
@@ -37,9 +38,7 @@ export default {
 <template>
     <div class="News-img">
         <div class="large-images">
-            <div class="News-large-image">
-                <img :src=getNewsImgUrl(large.src) :alt="large.alt" id="large" />
-            </div>
+            <img :src=getNewsImgUrl(large.src) :alt="large.alt" id="large" />
         </div>
 
         <div class="images-row">
@@ -52,21 +51,23 @@ export default {
 
 <style lang="scss" scoped>
 .News-img {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
+    margin: 0 auto;
+    width: fit-content;
 }
 
 .large-images {
     display: flex;
     justify-content: center;
-    width: 320px;
-    height: 320px;
+    width: 74vw;
+    height: 74vw;
     overflow: hidden;
     margin-bottom: 5px;
     border-radius: 20px;
 
+    @include tablet {
+        width: 320px;
+        height: 320px;
+    }
 }
 
 #large {
@@ -81,11 +82,19 @@ export default {
 }
 
 .small {
-    width: 100px;
-    height: 100px;
+    width: 23vw;
+    height: 23vw;
     object-fit: cover;
     object-position: center;
     border-radius: 10px;
-    margin: 5px;
+    margin: 1vw;
+    cursor: pointer;
+
+    @include tablet {
+        width: 100px;
+        height: 100px;
+        margin: 3px;
+
+    }
 }
 </style>

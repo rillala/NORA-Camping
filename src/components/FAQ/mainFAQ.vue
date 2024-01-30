@@ -187,7 +187,7 @@ function changeData(qa,t){
             <button :class="{active:touched==4}" @click="changeData(qaData4,4)"><h4>商品購物</h4></button>
         </div>
     </div>
-    <div v-if="nowWindow >= DESKTOP">
+    <div v-if="nowWindow >= DESKTOP" class="qaArr">
         <Questions v-for="(data,index) in targetData" :key="index" :title="data.title" :ans="data.ans"/>
     </div>
 </template>
@@ -196,8 +196,9 @@ function changeData(qa,t){
 .typeWrap{
     @include desktop{
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: baseline;
+        
     }
 }
 .otherquestion {
@@ -222,7 +223,7 @@ function changeData(qa,t){
     }
     @include desktop{
         width:10%;
-        background-color: #0ff;
+        // background-color: #0ff;
     }
 }
 /*------------------*/
@@ -231,7 +232,7 @@ function changeData(qa,t){
     @include desktop{
         width: 50%;
         display: flex;
-        flex-wrap: nowrap;
+        
     }
 
     button{
@@ -242,21 +243,25 @@ function changeData(qa,t){
     border-radius: 10px;
     background-color: $blue-2;
     margin: 10px auto;
-    @include desktop{
-        border-radius: 30px;
-        }
-    h4{
-        font-weight: bold;
-    }
+
     @include desktop{
         width: 15vw;
         height: 3rem;
-        margin:  auto;
+        margin:  10% 1%;
+        border-radius: 30px;
+    }
+    h4{
+        font-weight: bold;
+    }
+    }
+    .active{
+        background-color: $blue-3;
+        color: $white01;
     }
 }
-.active{
-    background-color: $blue-3;
-    color: $white01;
-}
+.qaArr{
+    margin: auto;
+    width: 80%;
+    // background-color: #ff0;
 }
 </style>

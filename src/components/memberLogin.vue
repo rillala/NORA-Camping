@@ -1,6 +1,36 @@
 <template>
   <div class="lightbox" @click.stop="isOpen = !isOpen">
     <div class="lightbox-container" v-if="isOpen">
+      <div
+        v-if="showPrivacyPolicy"
+        class="privacy-policy-lightbox"
+        @click="closePrivacy()"
+        v-on:click.stop
+      >
+        <div class="privacy-policy-content">
+          <p class="privacy-message">
+            我們重視您的隱私權。本隱私權政策旨在向您說明我們如何收集、使用、存儲和保護您的個人資訊。請仔細閱讀本政策，以了解我們對您個人資訊的處理方式。
+            收集的資訊
+            在使用本網站或應用程式時，我們可能會收集並處理以下類型的資訊：
+            您提供的個人資訊，例如姓名、電子郵件地址、聯絡方式等；
+            使用本網站或應用程式的行為資訊，例如瀏覽歷史、點擊活動、設備資訊等；
+            其他在您使用本網站或應用程式時自動收集的技術資訊，例如 IP
+            地址、Cookie 等。 使用的方式 我們可能會使用收集的資訊來：
+            提供、維護和改進本網站或應用程式的服務；
+            與您溝通，例如回應您的查詢、提供客戶支援等；
+            進行市場營銷活動，例如向您發送推廣訊息、優惠等；
+            遵守法律規定和法律程序。 資訊的分享
+            我們不會將您的個人資訊出售、租賃或以其他方式分享給第三方，除非：
+            獲得您的同意； 根據法律規定或法院命令；
+            為了保護我們的權利、財產或安全，或者保護其他用戶的權利、財產或安全。
+            資訊的存儲和保護
+            我們將採取合理的技術和組織措施來保護您的個人資訊安全，並避免未經授權的訪問、使用、修改、披露或刪除。儘管我們將盡力保護您的個人資訊，但由於互聯網的本質，我們無法保證絕對的安全性。
+            隱私權政策的更新
+            我們保留隨時修改本隱私權政策的權利，修改後的政策將在本網站或應用程式上發布。我們建議您定期查看本政策，以了解任何修改。繼續使用本網站或應用程式將視為您接受修改後的隱私權政策。
+          </p>
+        </div>
+        <div class="close-button">X</div>
+      </div>
       <div class="lightbox-content" v-on:click.stop>
         <!-- 切換表單的按鈕 -->
         <div class="tab-container">
@@ -44,9 +74,9 @@
               v-model="user_add.receiveNews"
               id="receiveNews"
             />
-            <label for="receiveNews">
-              <p>我願意接收野良的最新消息、優惠相關訊息</p>
-            </label>
+            <div class="box">
+              <p class="msg">我願意接收野良的最新消息、優惠相關訊息</p>
+            </div>
           </div>
 
           <div class="login-news">
@@ -55,11 +85,13 @@
               v-model="user_add.agreeTerms"
               id="agreeTerms"
             />
-            <label for="agreeTerms">
-              <p>我同意網站服務條款及隱私權政策</p>
-            </label>
+            <div class="box">
+              <p class="msg">我同意本網站服務條款及</p>
+              <button @click="showPrivacyPolicy = true" class="privacy-policy">
+                隱私權政策
+              </button>
+            </div>
           </div>
-
           <button type="submit" class="main-btn" @click="alert()">
             立即加入
           </button>
@@ -108,6 +140,7 @@ export default {
         account: 'mor_2314',
         pwd: '83r5^_',
       },
+      showPrivacyPolicy: false,
     };
   },
   created() {
@@ -125,6 +158,9 @@ export default {
   },
 
   methods: {
+    closePrivacy() {
+      this.showPrivacyPolicy = false;
+    },
     closeLightbox() {
       // alert()
       if (this.isOpen) {
@@ -139,18 +175,10 @@ export default {
       // this.isOpen = false;
 
       axios
-        .post(
-          'https://fakestoreapi.com/auth/login',
-          {
-            username: 'mor_2314',
-            password: '83r5^_',
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        )
+        .post('https://fakestoreapi.com/auth/login', {
+          username: this.user_enter.account,
+          password: this.user_enter.pwd,
+        })
         .then(response => {
           if (response.data && response.data.token) {
             this.updateToken(response.data.token); // 更新 token
@@ -161,9 +189,17 @@ export default {
         })
         .catch(error => {
           console.error(error);
-          //少一行
-          //登入失敗
-          //系統維護中
+
+          if (error.response && error.response.status === 401) {
+            alert('Invalid username or password.');
+          } else {
+            alert(
+              'An error occurred while logging in. Please try again later.',
+            );
+          }
+          // 調用pinia的updateToken
+          // 將/src/stores/user裡的token清除
+          this.updateToken('');
         });
     },
   },
@@ -179,11 +215,6 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 3;
-
-  @include tablet {
-  }
-  @include desktop {
-  }
 }
 
 .lightbox-container {
@@ -195,41 +226,30 @@ export default {
   background-color: rgba(0, 0, 0, 0.7);
 
   z-index: 4;
-
-  @include tablet {
-  }
-
-  @include desktop {
-  }
 }
 
 .lightbox-content {
   position: relative;
-  top: calc((100% - 430px) / 2);
-  left: calc((100% - 450px) / 2);
+  top: calc((100% - 500px) / 2);
   background-color: $white01;
-  padding: 20px;
   z-index: 5;
-  width: 470px;
+  margin: auto;
+  width: 350px;
   height: 500px;
-  padding: 40px 50px;
+  padding: 40px 30px;
 
   @include tablet {
+    width: 470px;
   }
 
   @include desktop {
+    width: 470px;
   }
 }
 
 .tab-container {
   display: flex;
   justify-content: center;
-
-  @include tablet {
-  }
-
-  @include desktop {
-  }
 }
 
 .tab-add,
@@ -240,6 +260,7 @@ export default {
   font-size: 32px;
   padding: 0px 10px;
   margin: 10px 15px 30px;
+  white-space: nowrap;
 
   @include tablet {
   }
@@ -272,8 +293,22 @@ input {
 
 .login-news {
   display: flex;
-  margin: 10px 0px;
-  padding-left: 20px;
+  white-space: no-wrap;
+  input {
+    margin-top: 5px;
+  }
+
+  .box {
+    display: flex;
+    align-items: start;
+    p {
+      padding-left: 10px;
+      text-align-last: left;
+    }
+    button {
+      margin-top: 3px;
+    }
+  }
 }
 
 .main-btn {
@@ -305,15 +340,55 @@ input {
 }
 
 input[type='checkbox'] {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
 }
 
-// label[for="receiveNews"] {
-//   height: 16px;
-// }
+.privacy-policy-lightbox {
+  position: fixed;
+  top: calc((100% - 500px) / 2);
+  left: 0;
+  z-index: 6;
+  width: 350px;
+  height: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: $white01;
 
-.login-news {
-  height: 25px;
+  @include tablet {
+    left: calc((100% - 470px) / 2);
+    width: 470px;
+    padding: 40px;
+  }
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 16px;
+}
+
+.privacy-policy {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  color: $blue-3;
+  word-wrap: break-word;
+}
+
+.privacy-policy-content {
+  background-color: $light-gray;
+}
+
+.privacy-message {
+  text-align: left;
 }
 </style>

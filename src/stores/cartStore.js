@@ -5,6 +5,7 @@ import { useProductStore } from '@/stores/productStore';
 
 export const useCartStore = defineStore('cartStore', {
   // 上用命名的辦法輸出 "useProductStore"
+  
   state: () => {
     return {
       cart: [],
@@ -23,8 +24,8 @@ export const useCartStore = defineStore('cartStore', {
           qty
         })
       }
-      console.log(this.cart);
-      console.log(productId, qty);
+      // console.log(this.cart);
+      // console.log(productId, qty);
     },
     setCartQty(id, event){
       const currentCart = this.cart.find((item) => item.id === id);
@@ -49,10 +50,10 @@ export const useCartStore = defineStore('cartStore', {
           ...item,
           product,
           // 計算小記金額
-          subtatal: product.price * item.qty
+          subtotal: product.price * item.qty
         }
       });
-      const total = carts.reduce((a,b) => a + b.subtatal, 0);
+      const total = carts.reduce((a,b) => a + b.subtotal, 0);
       console.log(total);
       console.log(carts);
       return{
@@ -60,6 +61,6 @@ export const useCartStore = defineStore('cartStore', {
         total,
       }
     }
-  }
+  },
 },
 );

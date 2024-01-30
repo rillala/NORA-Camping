@@ -5,7 +5,8 @@ import actionBtn from '@/components/button/actionBtn.vue';
 import viewMoreBtn from '@/components/button/viewMoreBtn.vue';
 import dogAnimation from '@/components/home/dogAnimation.vue';
 import catAnimation from '@/components/home/catAnimation.vue';
-import newsImgGallery from '@/components/home/newsImagGallery.vue';
+import newsArticle from '@/components/home/newsArticle.vue';
+import { gsap } from 'gsap';
 
 export default {
   components: {
@@ -13,43 +14,101 @@ export default {
     viewMoreBtn,
     dogAnimation,
     catAnimation,
-    newsImgGallery,
+    newsArticle,
   },
   data() {
     return {
-      weathers: [
-        "hare",
-        "hare_kumori",
-        "kumori_ame",
-        "kumori"
+      bannerBg: [
+        'riverBg.png',
+        'riverBg.png'
       ],
+      currentIndex: 0,
+      slideWidth: 0,
+      animation: null,
+      //banner動畫
+      weather: '',
+      airTemperature: '',
+      //天氣和溫度
+      weatherMark: [
+        'hare.png',
+        'hare_kumori.png',
+        'kumori.png',
+        'kumori_ame.png',
+        'umbrella.png',
+        'kaminari.png',
+      ],
+      //天氣圖片
       search: '',
-      newsTitle: '2024春季優惠開跑中',
-      newsText: '探險春季，NORA Camp誠摯邀請您攜帶心愛的寵物一同感受大自然的懷抱！透過我們獨家的「春季寵物露營樂享包」優惠，獲得精心準備的狗狗貓貓歡迎禮 包，內含美味零食、趣味玩具及特別的寵物地圖。優惠僅限春季特定日期，請提前預訂，確保您和寵物共享這春之樂。期待您們一家人一起加入NORA Camp的大家庭，享受春日露營的美好時光！',
-      newProds: [
-        {
-          title: "野良NORA折疊椅",
-          price: 900,
-        }
-      ]
     };
   },
   mounted() {
-    async function weather() {
-      try {
-        let result = await fetch('https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-FA772AA0-8D0C-4FEF-B569-7DE1EEF2453D')
-        let data = await result.json();
-        console.log(data);
-        const locationWeather = data.records.Station[9].WeatherElement.Weather;
-        const airTemperature = data.records.Station[9].WeatherElement.AirTemperature;
-        let wea = document.querySelector(`#Weather`).innerHTML = locationWeather;
-        let tem = document.querySelector(`#AirTemperature`).innerHTML = airTemperature + "°C";
+    this.CatIn();
+    this.Dogin();
+    this.moriSlide();
+    this.getWeather();
+  },
+  methods: {
+    getBannerImageUrl(paths) {
+      return new URL(`../assets/image/homeView/animation/${paths}`, import.meta.url).href;
+    },
+    CatIn() {
+      // 取得 catAnimation 組件的 DOM 元素
+      const catElement = this.$refs.cat.$el;
+      //$els
+      // 使用 GSAP 創建動畫
+      gsap.from(catElement, {
+        x: '100%', // 從右邊畫面外開始
+        duration: 3, // 動畫時間
+      });
+    },
+    Dogin() {
+      const dogElement = this.$refs.dog.$el;
+      gsap.from(dogElement, {
+        x: '100%',
+        duration: 1.8,
+      });
+    },
+    moriSlide() {
+      gsap.fromTo(this.$refs.moriSlider,
+        { x: '-100%' },
+        {
+          x: '0%',
+          duration: 15,
+          ease: 'linear',
+          repeat: -1,
+        });
+    },
 
+    async getWeather() {
+      try {
+        let result = await fetch('https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-FA772AA0-8D0C-4FEF-B569-7DE1EEF2453D');
+        let data = await result.json();
+
+        this.weather = data.records.Station[9].WeatherElement.Weather;
+        this.airTemperature = Math.round(data.records.Station[9].WeatherElement.AirTemperature);
+        //數據取得第9筆
       } catch (e) {
         console.log(e);
       }
-    }
-    weather();
+    },
+    //串接氣象API取得資料
+    getWeatherImageUrl(paths) {
+      return new URL(`../assets/image/homeView/weatherMark/${paths}`, import.meta.url).href;
+    },
+    //天氣圖片路徑
+    getWeatherImage() {
+      // 使用 this.weatherMark拿data中的陣列
+      const weatherImages = {
+        '晴': this.getWeatherImageUrl(this.weatherMark[0]),
+        '多雲': this.getWeatherImageUrl(this.weatherMark[2]),
+        '陰': this.getWeatherImageUrl(this.weatherMark[2]),
+        '雨': this.getWeatherImageUrl(this.weatherMark[3]),
+      };
+
+      // 如果 this.weather的內容在 weatherImages 中有對應的圖片，返回該路徑，否則返回預設圖片路徑
+      return weatherImages[this.weather] || this.getWeatherImageUrl(this.weatherMark[0]);
+    },
+    //顯示對應天氣圖片
   },
   watch: {
     search(newSearch, oldSearch) {
@@ -71,21 +130,28 @@ export default {
 </script>
 
 <template>
-  <section class="Homepage-banner ">
+  <section class="Homepage-banner">
     <div class="Banner-text">
       <h1>
         願那些流浪，<br>
         只是體驗而已。<br>
         走吧，去露營！
       </h1>
-      <actionBtn class="Reserve-Now" :content="'立即預約'" />
+      <router-link to="/reserve">
+        <actionBtn class="Reserve-Now" :content="'立即預約'" />
+      </router-link>
 
     </div>
-    <catAnimation class="Cat" />
-    <dogAnimation class="Dog" />
+    <catAnimation class="Cat" ref="cat" />
+    <dogAnimation class="Dog" ref="dog" />
     <div class="Banner-background bg-blue-1">
-      <div class="Banner-ground"></div>
+
+      <div class="mori-slider">
+        <img v-for="mori in bannerBg" :src="getBannerImageUrl(mori)" alt="Banner背景森林" ref="moriSlider">
+      </div>
+
     </div>
+    <div class="Banner-ground"></div>
   </section>
 
   <section class="Knowing-nora">
@@ -112,8 +178,10 @@ export default {
     </div>
     <div class="KN-weather-box ">
       <span>營地目前天氣</span>
-      <div id="Weather"></div>
-      <div id="AirTemperature"></div>
+      <img :src="getWeatherImage()" :alt="weather" v-show="weather !== ''" />
+      <!-- weather不是空字串 -->
+      <div id="Weather">{{ weather }}</div>
+      <div id="AirTemperature">{{ airTemperature }}°C</div>
     </div>
   </section>
 
@@ -121,32 +189,23 @@ export default {
 
     <div class="News-container">
       <div class="News-Title-search">
-        <h3>最新消息</h3>
-        <input type="text" placeholder="   搜尋關鍵字" v-model.trim="search">
+        <h3>野良露營 X 最新消息</h3>
+        <div class="search-input">
+          <input class="Search-bar" type="text" placeholder="搜尋關鍵字" v-model.trim="search">
+          <span v-if="search !== ''">正在搜尋：</span>{{ search }}
+        </div>
       </div>
       <div class="News-viewport">
         <ul>
           <li>
-            <article class="Article-with-picture">
-
-              <div class="News-text">
-                <div class="title">
-                  <h4>{{ newsTitle }}</h4>
-                  <p class="tinyp">2024/1/24</p>
-                </div>
-                <p>{{ newsText }}</p>
-              </div>
-
-              <newsImgGallery />
-
-            </article>
+            <newsArticle />
           </li>
           <li>
             <article class="Article-onlytext">
 
               <div class="News-text">
                 <div class="title">
-                  <h4>營地設備維修公告</h4>
+                  <h2>營地設備維修公告</h2>
                   <p class="tinyp">2024/1/10</p>
                 </div>
                 <p>為提供更良好的露營體驗，我們即將進行狗狗專屬營區烤肉區設備的定期維修。維修時間為下週二上午9時至下午3時。在此期間，狗狗專屬營區的烤肉區域將無法使用。請見諒造成的不便。
@@ -158,6 +217,9 @@ export default {
               </div>
 
             </article>
+          </li>
+          <li>
+            <newsArticle />
           </li>
         </ul>
       </div>
@@ -204,17 +266,14 @@ export default {
           <h4>野良NORA折疊椅</h4>
           <p>NTD$900</p>
         </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片">
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
 
       </div>
     </div>
-    <viewMoreBtn class="See-more-prod" :content="'逛逛其他好物'" />
+
+    <router-link to="/shop">
+      <viewMoreBtn class="See-more-prod" :content="'逛逛其他好物'" />
+    </router-link>
+
   </section>
 
   <section class="Stray-home">

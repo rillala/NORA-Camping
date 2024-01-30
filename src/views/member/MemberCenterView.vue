@@ -8,39 +8,47 @@
   <div>
     <ul class="nav-list">
       <li><router-link to="/membercenter" class="memberlink member-page">會員資料</router-link></li>
-      <li><router-link to="/memberorderhistory" class="memberlink">訂單歷史</router-link></li>
+      <li><router-link to="/memberorderhistory" class="memberlink">商品訂單</router-link></li>
       <li><router-link to="/membercampsiteorders" class="memberlink">營地訂單</router-link></li>
     </ul>
+  </div>
+
+  <div class="drop-box">
+    <div id="dropzone" class="drop-area" @dragover.prevent="dragOver" @drop.prevent="dropped">
+      <img v-if="imageSrc" :src="imageSrc" alt="Dropped Image"><p class="added-photo">新增頭貼</p>
+    </div>
   </div>
 
   <div class="info-container">
     <section class="info-box">
       <div v-if="!isEditing" >
         <h4>個人資訊</h4>
-        <p class="member-no">會員編號</p> 
-        <p >會員姓名  {{ memberInfo.name }}</p>
-        <p >會員信箱  {{ memberInfo.email }}</p>
-        <p >會員電話  {{ memberInfo.phone }}</p>
-        <p >會員地址  {{ memberInfo.address }}</p>
+        <div class="inner">
+          <p class="member-title-1 member-no">會員編號</p><span>0000001</span>
+        </div>
+        <p class="member-title-1">會員姓名  {{ memberInfo.name }}</p>
+        <p class="member-title-1">會員信箱  {{ memberInfo.email }}</p>
+        <p class="member-title-1">會員電話  {{ memberInfo.phone }}</p>
+        <p class="member-title-1">會員地址  {{ memberInfo.address }}</p>
         <div class="box"><button class="startEditing" @click="startEditing">編輯</button></div>
       </div>
 
       <div v-else >
         <h4>個人資訊</h4>
         <div class="inner">
-          <p class="member-no">會員編號</p><span class="member-no">111</span>
+          <p class="member-title-2 member-no">會員編號:</p><span>0000001</span>
         </div>
         <div class="inner">
-          <p class="info-title">會員姓名:</p>  <input v-model="editMemberInfo.name" placeholder="姓名" class="info"/>
+          <p class="member-title-2 info-title">會員姓名:</p><input v-model="editMemberInfo.name" placeholder="姓名" class="info-input"/>
         </div>
         <div class="inner">
-          <p>會員信箱:</p>  <input v-model="editMemberInfo.email" placeholder="email" class="info">
+          <p class="member-title-2">會員信箱:</p>  <input v-model="editMemberInfo.email" placeholder="email" class="info-input">
         </div>
         <div class="inner">
-          <p>會員電話:</p>  <input v-model="editMemberInfo.phone" placeholder="電話" class="info"/>
+          <p class="member-title-2">會員電話:</p>  <input v-model="editMemberInfo.phone" placeholder="電話" class="info-input"/>
         </div>
         <div class="inner">
-          <p>會員地址:</p>  <input v-model="editMemberInfo.address" placeholder="地址" class="info"/>
+          <p class="member-title-2">會員地址:</p>  <input v-model="editMemberInfo.address" placeholder="地址" class="info-input"/>
         </div>
 
         <div class="box">
@@ -50,27 +58,27 @@
       </div>
     </section>
       
-    <section class="password-box">
-      <div v-if="!isEditingPassword" >
-        <h4>修改密碼</h4>
-        <p class="password">舊密碼 {{ oldPassword }}</p>
-        <p class="password">新密碼 {{ newPassword }}</p>
-        <p class="password">再次確認密碼 {{ confirmPassword }}</p>
-        <div class="box">
-          <button class="save-changes" @click="startEditingPassword">修改密碼</button>
-          <button class="logout">登出</button>
-        </div>
+  <form class="password-box">
+    <div v-if="!isEditingPassword" >
+      <h4>修改密碼</h4>
+      <p class="password password-title-1" value="disabled">請輸入舊密碼 <span>*****************</span> {{ oldPassword }}</p>
+      <p class="password password-title-1" value="disabled">請輸入新密碼 <span>*****************</span> {{ newPassword }}</p>
+      <p class="password password-title-1" value="disabled">再確認新密碼 <span>*****************</span> {{ confirmPassword }}</p>
+      <div class="box">
+        <button class="save-changes" @click="startEditingPassword">修改密碼</button>
+        <button class="logout">登出</button>
       </div>
+    </div>
+    
+    <div v-else>
+      <h4>修改密碼</h4>
+      <label class="password-title-2">請輸入舊密碼: <input type="password" v-model="oldPassword"  class="psw-input"/></label><br/>
+      <label class="password-title-2">請輸入新密碼: <input type="password" v-model="newPassword"  class="psw-input"/></label><br/>
+      <label class="password-title-2">再確認新密碼: <input type="password" v-model="confirmPassword" class="psw-input"/></label><br/>  
       
-      <div v-else>
-        <h4>修改密碼</h4>
-        <label>請輸入舊密碼: <input type="password" v-model="oldPassword" placeholder="輸入舊密碼" class="info"/></label><br/>
-        <label>請輸入新密碼: <input type="password" v-model="newPassword" placeholder="輸入新密碼" class="info"/></label><br/>
-        <label>再次確認新密碼: <input type="password" v-model="confirmPassword" placeholder="再次確認新密碼" class="info"/></label><br/>  
-        
-        <div class="box"><button class="savePasswordChanges" @click="savePasswordChanges">儲存</button></div>
-      </div>
-    </section>
+      <div class="box"><button class="savePasswordChanges" @click="savePasswordChanges">儲存</button></div>
+    </div>
+  </form>
   </div>
 </template>
 
@@ -99,6 +107,7 @@ export default {
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
+      imageSrc: '',
     };
   },
   methods: {
@@ -107,6 +116,7 @@ export default {
     },
     saveChanges() {
       // 在這裡處理保存變更的邏輯
+      this.memberInfo = {...this.editMemberInfo};
       this.isEditing = false;
     },
     cancelEditing() {
@@ -126,10 +136,21 @@ export default {
     // 在這裡處理取消密碼修改的邏輯
     this.isEditingPassword = false;
     },
-    aa() {
-      this.memberInfo = {...this.editMemberInfo}
+
+    dragOver(e) {
+      e.preventDefault();
     },
-  },
+    
+    dropped(e) {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      const readFile = new FileReader();
+      readFile.readAsDataURL(file);
+      readFile.onload = () => {
+      this.imageSrc = readFile.result;
+      } ;
+    }
+  }
 };
 </script>
 
@@ -192,14 +213,15 @@ h4{
     @include tablet {
     display:flex;
     justify-content: center;
-    max-width: 800px;
+    max-width: 700px;
     margin: 0 auto;
+    margin-right:50px;
   }
     @include desktop {
     display:flex;
     justify-content: center;
-    max-width: 800px;
-    margin: 0 auto
+    max-width: 700px;
+    margin: auto;
   }
 }
 .info-box{
@@ -209,6 +231,7 @@ h4{
   height:250px;
   @include tablet {
     height:400px;
+
   }
   
   @include desktop {
@@ -216,14 +239,21 @@ h4{
   }
 
 }
-.info{
+.info-input{
   border:none;
   outline: none;
-  padding-left:5px;
   border-bottom: 1px solid #000;
+  width:200px;
   @include font-style(16px, 400, 1%, 160%);
 }
 
+.psw-input{
+  border:none;
+  outline: none;
+  border-bottom: 1px solid #000;
+  width:180px;
+  @include font-style(16px, 400, 1%, 160%);
+}
 .startEditing, .save-changes, .savePasswordChanges {
   background-color: $blue-3;
   border: none;
@@ -284,9 +314,88 @@ p{
 
 .inner{
   display: flex;
+  align-items: center; 
 }
 
 label{
   @include font-style(16px, 400, 1%, 160%);
+}
+
+.password-title-1, 
+.password-title-2
+{
+  padding-left:20px;
+  white-space:no-wrap;
+  @include font-style(16px, 400, 1%, 160%);
+
+// 平板 + 桌機板
+  @include tablet {
+    @include font-style(20px, 400, 1%, 160%);
+  }
+}
+
+.member-title-1, 
+.member-title-2{
+  padding-left:20px;
+  margin-right:4px;
+}
+
+.password-title-1:hover {
+    cursor: not-allowed;  
+}
+
+span{
+  @include font-style(16px, 400, 1%, 160%);
+
+// 平板 + 桌機板
+  @include tablet {
+  @include font-style(20px, 400, 1%, 160%);
+  }
+}
+
+.drop-area {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 50%; /* 將邊框設置為圓形 */
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f0f0f0; /* 設置背景顏色 */
+  margin:auto;
+  margin-bottom: 10px;
+}
+
+#dropzone {
+  border: 2px dashed #ccc;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.password-title-1 span {
+  color:white;
+  border-bottom: 1px solid $dark;
+}
+
+.drop-box{
+  margin-bottom:20px;
+}
+
+.added-photo {
+  text-align: center;
+}
+
+.drop-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.added-photo {
+  margin-top: 2px; /* 調整上下間距 */
+  margin-right:2px;
 }
 </style>
