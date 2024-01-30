@@ -22,6 +22,461 @@ export default {
         start: '',
         end: '',
       },
+      calendarAttributes: '',
+      remainRoomList: [
+        { date: '2024-02-01', rooms: 4 },
+        { date: '2024-02-02', rooms: 7 },
+        { date: '2024-02-03', rooms: 5 },
+        { date: '2024-02-04', rooms: 3 },
+        { date: '2024-02-05', rooms: 0 },
+        { date: '2024-02-06', rooms: 2 },
+        { date: '2024-02-07', rooms: 8 },
+        { date: '2024-02-08', rooms: 1 },
+        { date: '2024-02-09', rooms: 5 },
+        { date: '2024-02-10', rooms: 4 },
+        { date: '2024-02-11', rooms: 0 },
+        { date: '2024-02-12', rooms: 6 },
+        { date: '2024-02-13', rooms: 3 },
+        { date: '2024-02-14', rooms: 2 },
+        { date: '2024-02-15', rooms: 0 },
+        { date: '2024-02-16', rooms: 4 },
+        { date: '2024-02-17', rooms: 7 },
+        { date: '2024-02-18', rooms: 6 },
+        { date: '2024-02-19', rooms: 1 },
+        { date: '2024-02-20', rooms: 3 },
+        { date: '2024-02-21', rooms: 0 },
+        { date: '2024-02-22', rooms: 4 },
+        { date: '2024-02-23', rooms: 2 },
+        { date: '2024-02-24', rooms: 7 },
+        { date: '2024-02-25', rooms: 0 },
+        { date: '2024-02-26', rooms: 3 },
+        { date: '2024-02-27', rooms: 0 },
+        { date: '2024-02-28', rooms: 0 },
+      ],
+      disabledDates: [],
+      campsiteAvailabilities: [
+        {
+          campsiteId: '1',
+          date: '2024-02-01',
+          remaining: 9,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-01',
+          remaining: 6,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-01',
+          remaining: 2,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-01',
+          remaining: 6,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-01',
+          remaining: 0,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-01',
+          remaining: 9,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-02',
+          remaining: 6,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-02',
+          remaining: 6,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-02',
+          remaining: 0,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-02',
+          remaining: 0,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-02',
+          remaining: 8,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-02',
+          remaining: 0,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-03',
+          remaining: 7,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-03',
+          remaining: 5,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-03',
+          remaining: 4,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-03',
+          remaining: 5,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-03',
+          remaining: 6,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-03',
+          remaining: 9,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-04',
+          remaining: 9,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-04',
+          remaining: 8,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-04',
+          remaining: 0,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-04',
+          remaining: 5,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-04',
+          remaining: 2,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-04',
+          remaining: 4,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-05',
+          remaining: 0,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-05',
+          remaining: 2,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-05',
+          remaining: 8,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-05',
+          remaining: 6,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-05',
+          remaining: 7,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-05',
+          remaining: 2,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-06',
+          remaining: 1,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-06',
+          remaining: 8,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-06',
+          remaining: 9,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-06',
+          remaining: 2,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-06',
+          remaining: 3,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-06',
+          remaining: 7,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-07',
+          remaining: 3,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-07',
+          remaining: 6,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-07',
+          remaining: 4,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-07',
+          remaining: 2,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-07',
+          remaining: 2,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-07',
+          remaining: 9,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-08',
+          remaining: 4,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-08',
+          remaining: 1,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-08',
+          remaining: 8,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-08',
+          remaining: 3,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-08',
+          remaining: 3,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-08',
+          remaining: 7,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-09',
+          remaining: 3,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-09',
+          remaining: 6,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-09',
+          remaining: 4,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-09',
+          remaining: 2,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-09',
+          remaining: 6,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-09',
+          remaining: 6,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-10',
+          remaining: 1,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-10',
+          remaining: 1,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-10',
+          remaining: 8,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-10',
+          remaining: 7,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-10',
+          remaining: 6,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-10',
+          remaining: 9,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-11',
+          remaining: 4,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-11',
+          remaining: 6,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-11',
+          remaining: 3,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-11',
+          remaining: 0,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-11',
+          remaining: 6,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-11',
+          remaining: 6,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-12',
+          remaining: 4,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-12',
+          remaining: 3,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-12',
+          remaining: 4,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-12',
+          remaining: 7,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-12',
+          remaining: 3,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-12',
+          remaining: 2,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-13',
+          remaining: 1,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-13',
+          remaining: 0,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-13',
+          remaining: 3,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-13',
+          remaining: 2,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-13',
+          remaining: 2,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-13',
+          remaining: 1,
+        },
+        {
+          campsiteId: '1',
+          date: '2024-02-14',
+          remaining: 3,
+        },
+        {
+          campsiteId: '2',
+          date: '2024-02-14',
+          remaining: 1,
+        },
+        {
+          campsiteId: '3',
+          date: '2024-02-14',
+          remaining: 7,
+        },
+        {
+          campsiteId: '4',
+          date: '2024-02-14',
+          remaining: 6,
+        },
+        {
+          campsiteId: '5',
+          date: '2024-02-14',
+          remaining: 8,
+        },
+        {
+          campsiteId: '6',
+          date: '2024-02-14',
+          remaining: 4,
+        },
+      ],
+      selectedAvailabilities: [],
       // 保留兩個變數用來擷取入住和退房日期
       startDate: '',
       endDate: '',
@@ -229,6 +684,11 @@ export default {
       lg: '1024px',
     });
     this.screen = mapCurrent({ lg: 2 }, 1);
+    // 日曆變數
+
+    this.calendarAttributes = this.transformToCalendarAttributes(
+      this.remainRoomList,
+    );
   },
   mounted() {
     // 如果有儲存過選擇的日期和夜衝, 則讀取值
@@ -337,6 +797,32 @@ export default {
     },
   },
   methods: {
+    transformToCalendarAttributes(roomData) {
+      // 禁用的日期
+      this.disabledDates = roomData
+        .filter(item => item.rooms === 0)
+        .map(item => item.date);
+
+      // red dot 的顯示日期
+      const emptySiteDays = roomData
+        .filter(item => item.rooms === 0)
+        .map(item => ({
+          key: 'emptySiteDay',
+          dot: 'red',
+          dates: item.date,
+        }));
+
+      // green dot 的顯示日期
+      const lotSitesDays = roomData
+        .filter(item => item.rooms > 4)
+        .map(item => ({
+          key: 'lotSitesDay',
+          dot: 'green',
+          dates: item.date,
+        }));
+
+      return [...emptySiteDays, ...lotSitesDays];
+    },
     formatDate(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從0開始，所以加1
@@ -498,7 +984,15 @@ export default {
         expanded
         :min-date="new Date()"
         :columns="columns"
+        :attributes="calendarAttributes"
+        :disabled-dates="disabledDates"
       />
+      <div class="notes">
+        <div class="green dot"></div>
+        <div class="tinyp">剩餘營位數量 > 5</div>
+        <div class="red dot"></div>
+        <div class="tinyp">剩餘營位數量 = 0</div>
+      </div>
     </div>
 
     <!--營區時間規定-->
@@ -559,7 +1053,10 @@ export default {
         </div>
         <div class="text">
           <p class="describe">{{ site.intro }}</p>
-          <p class="price">${{ formatPrice(site.price) }}/帳</p>
+          <div class="box">
+            <p class="price">${{ formatPrice(site.price) }} /帳</p>
+            <p class="remain red01">營位剩餘數量：{{}}帳</p>
+          </div>
 
           <!--數量增減按鈕-->
           <div class="num-btn">
