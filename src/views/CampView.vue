@@ -39,8 +39,8 @@ export default {
       this.showPopup = true;
     },
     goToDetails() {
-      // 根據需要實現跳轉到完整區域介紹的該區塊資訊的邏輯
-      // 例如，使用路由或者直接切換顯示狀態
+      // 跳轉到完整區域介紹的該區塊資訊
+      // 使用路由或者直接切換顯示狀態???
       this.showDetails = true;
     }
   },
@@ -72,8 +72,7 @@ export default {
       </div>
 
       <div v-if="showDetails">
-      <!-- 完整區域介紹的該區塊資訊區域 -->
-      <!-- 在這裡添加你的完整區域介紹的該區塊資訊 -->
+      <!-- 完整區域介紹的該區塊資訊 -->
       </div>
 
     </div>
@@ -111,20 +110,20 @@ export default {
 
       <!-- 狗區導覽卡片 -->
       <div class="area-card area-dog-card">
-        <img src="/src/assets/image/campGuide/campsite-dog-grass-3.png" alt="狗區導覽圖一" />
-        <img src="/src/assets/image/campGuide/campsite-dog-pallet-4.png" alt="狗區導覽圖二" />
+
+        <div class="dog-card-img">
+          <img src="/src/assets/image/campGuide/campsite-dog-grass-3.png" alt="狗區導覽圖一" />
+          <img src="/src/assets/image/campGuide/campsite-dog-pallet-4.png" alt="狗區導覽圖二" />
+        </div>
+
         <div class="dog-card-dtl card-dtl">
           <h4 class="area-title">狗區</h4>
           <p class="area-dtl text">
-            舒適寬敞的大空間，<br>
-            讓毛孩能自在跑跑跳跳！<br>
-            跟主人一起創造美好又快樂的回憶！
+            舒適寬敞的大空間，讓毛孩自在跑跑跳跳！跟主人一起創造美好又快樂的回憶！
           </p>
 
           <p class="area-dtl text">
-            本區配有安全圍欄，<br>
-            確保寵物在視線範圍內自由玩耍，<br>
-            區內設有專門寵物排泄物處理站，以保持環境衛生。
+            本區設有安全圍欄，確保寵物在視線範圍內能自由玩耍，亦設有專門寵物排泄物處理站，以保持環境衛生。
           </p>
 
           <p class="area-list-title">營地類型：</p>
@@ -133,26 +132,29 @@ export default {
             <li>雨棚區：為愛犬和主人提供額外遮蔽空間。</li>
             <li>棧板區：保持乾燥，適合帶狗露營者。</li>
           </ul>
+
+          <button class="reserve-btn">我要預約</button>
+
         </div>
-        <button class="reserve-btn">我要預約</button>
       </div>
 
       <!-- 貓區導覽卡片 -->
       <img class="cat-icon" src="/src/assets/image/campGuide/cat_card_icon.svg" alt="貓咪icon">
+
       <div class="area-card area-cat-card">
-        <img src="/src/assets/image/campGuide/campsite-cat-pallet-3.png" alt="貓區導覽圖一" />
-        <img src="/src/assets/image/campGuide/campsite-cat-pallet-4.png" alt="貓區導覽圖二" />
+
+        <div class="cat-card-img">
+          <img src="/src/assets/image/campGuide/campsite-cat-pallet-3.png" alt="貓區導覽圖一" />
+          <img src="/src/assets/image/campGuide/campsite-cat-pallet-4.png" alt="貓區導覽圖二" />
+        </div>
+
         <div class="cat-card-dtl card-dtl">
           <h4 class="area-title">貓區</h4>
           <p class="area-dtl text">
-            安靜又舒適的環境，<br>
-            讓貓咪和貓奴們可以享受寧靜的露營體驗。
+            安靜又舒適的環境，讓貓咪和貓奴們可以享受寧靜又愜意的露營體驗。
           </p>
           <p class="area-dtl text">
-            專為喜歡安靜的露營者及貓咪同伴而設，<br>
-            提供良好遮蔽及貓爬架和多個休憩處，<br>
-            讓貓咪能在自然環境中探索，<br>
-            不會遠離主人的視線。
+            專為喜歡安靜的露營者及貓咪同伴而設，提供良好遮蔽及貓爬架和多個休憩處，讓貓咪能自在的在自然環境中探索，不會遠離主人的視線。
           </p>
           <p class="area-list-title">營地類型：</p>
           <ul class="area-list list">
@@ -160,8 +162,9 @@ export default {
             <li>雨棚區：提供給需要額外遮蔽的露營者。</li>
             <li>棧板區：適合全天候使用。</li>
           </ul>
+
+          <button class="reserve-btn">我要預約</button>
         </div>
-        <button class="reserve-btn">我要預約</button>
       </div>
 
       <!-- 草跟貓咪的圖區塊 -->
@@ -175,7 +178,8 @@ export default {
     <div class="shelter-office-bg">
       <!-- 野良之家區塊 -->
       <div class="guide-shelter">
-        <img src="/src/assets/image/campGuide/shelter_big_img.jpg" alt="野良之家區塊大圖" />
+        <img src="/src/assets/image/campGuide/shelter_big_img_pc_cut.jpg" alt="野良之家區塊大圖" />
+
         <div class="guide-shelter-info">
           <h4 class="guide-shelter-title">野良之家</h4>
           <p class="guide-shelter-dtl text">
@@ -187,14 +191,17 @@ export default {
           </p>
           <button class="guide-shelter-btn">更多野良之家介紹</button>
         </div>
+
       </div>
 
     <!-- 辦公區區塊 -->
       <div class="guide-office">
-        <img src="/src/assets/image/campGuide/office_m.jpg" alt="辦公區域圖片" />
+
+        <img src="/src/assets/image/campGuide/office_cut.jpeg" alt="辦公區域圖片" />
+
         <div class="area-office">
           <h4 class="office-title">辦公區</h4>
-          <p class="office-text text">位於營地入口處，包含</p>
+          <p class="office-text text">位於營地入口處，包含：</p>
           <ul class="office-list list">
             <li>裝備租借區</li>
             <li>小型倉庫可存放裝備</li>
@@ -203,6 +210,7 @@ export default {
             <li>販賣機一部、冰箱一台</li>
           </ul>
         </div>
+
       </div>
     </div>
 
@@ -233,9 +241,8 @@ export default {
           <li>電話：0988-123-456</li>
           <li>Email：info@noracamp.com</li>
         </ul>
-      </div>
 
-      <div class="camp-info-social">
+        <div class="camp-info-social">
         <div class="fb">
           <img src="/src/assets/image/campGuide/fb_icon.svg" alt="Facebook icon">
           <p>@NORACampOfficial</p>
@@ -248,6 +255,8 @@ export default {
           <img src="/src/assets/image/campGuide/line_icon.svg" alt="Line icon">
           <p>@NORACamp</p>
         </div>
+      </div>
+
       </div>
 
       <div class="camp-info-map">
@@ -300,7 +309,7 @@ export default {
           <ul class="female-wc-list p">
             <li>衛浴設施：</li>
             <li>廁所：多間分隔單位，有環保節水馬桶</li>
-            <li>淋浴間：獨立淋浴空間，提供熱水和隱私空間</li>
+            <li>獨立淋浴間：提供熱水和隱私空間</li>
             <li>洗手台：配備肥皂、烘手機及鏡子</li>
           </ul>
         </div>
@@ -356,8 +365,10 @@ export default {
       </div>
 
       <div class="rule-trees">
+        <img src="/src/assets/image/campGuide/tree_icon_2.svg" alt="樹圖片">
         <img src="/src/assets/image/campGuide/tree_icon_1.svg" alt="樹圖片">
         <img src="/src/assets/image/campGuide/tree_icon_2.svg" alt="樹圖片">
+        <img src="/src/assets/image/campGuide/tree_icon_1.svg" alt="樹圖片">
       </div>
 
     </div>
