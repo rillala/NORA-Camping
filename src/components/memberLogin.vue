@@ -56,7 +56,7 @@
               id="agreeTerms"
             />
             <label for="agreeTerms">
-              <p  class="msg">我同意服務條款及<button @click="showPrivacyPolicy = true" class="privacy-policy">隱私權政策</button></p>
+              <p  class="msg">我同意本網站服務條款及<button @click="showPrivacyPolicy = true" class="privacy-policy">隱私權政策</button></p>
             </label>
           </div>
             <button type="submit" class="main-btn" @click="alert()">立即加入</button>
