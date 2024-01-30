@@ -19,57 +19,68 @@ function toSheleter(){
 </div>
 
 <div class="origin-linear">
+    <!--營區環境照-->
     <div class="origin-pic">
         <img src="../assets/image/aboutView/oringin-pic.jpg" alt="營區照片" class="environment">
     </div>
+    <!--緣起標題+內文-->
     <div class="origin">
         <h4>「野良露營 (NORA Camp)」</h4>
         <div class="text-wrap">
             <p class="tinyp">始於一群對自然和動物充滿熱愛的朋友的共同夢想。</p>
             <p class="tinyp">我們相遇在一次露營旅程中，感受到了大自然的寧靜和治癒力，同時也遇到了幾隻無家可歸的流浪動物。此次相遇讓我們深刻意識到，除了享受自然以外，還有機會做些更有意義的事情——</p>
             <p class="tinyp">幫助那些無助的流浪動物。<br><br></p>
-            <p class="tinyp">那麼該如何將對自然的熱愛與對流浪動物的關心結合起來呢？我們想到了一個獨特的想法：創建一個露營區域，不僅提供給人們一個接近自然的地方，並且能夠參與照顧流浪動物的行動並在活動的同時宣導一般民眾所能為流浪動物提供的較佳照顧措施（如ＴＮＲ或ＴＮＳＡ等）。<br></p>
+            <p class="tinyp">那麼該如何將對自然的熱愛與對流浪動物的關心結合起來呢？我們想到了一個獨特的想法：創建一個露營區域，不僅提供給人們一個接近自然的地方，並且能夠參與照顧流浪動物的行動並在活動的同時宣導一般民眾所能為流浪動物提供的較佳照顧措施（如ＴＮＲ或ＴＮＳＡ等）。<br><br/></p>
             <p class="tinyp">這就是「野良露營」的誕生。</p>
         </div>
     </div>
-    <div class="opinion-wrap">
+    <!--三大理念-->
+    <div class="opinion-wrap"> 
         <div class="opinion animal">
             <img src="../assets/image/aboutView/animalFriendly.jpg" alt="動物友善">
-            <h4>動物友善</h4>
-            <p class="tinyp">歡迎毛絨伙伴一同加入露營冒險！營區提供了寬敞而安全的空間，讓牠們與您一同享受大自然的美好。</p>
-            <p class="tinyp">
-            我們打造了友善的環境，讓毛孩子能夠在安心的氛圍中探索、遊玩並結識新朋友。
-            </p>
+            <div class="wrap">
+                <h4>動物友善</h4>
+                <p class="tinyp">歡迎毛絨伙伴一同加入露營冒險！營區提供了寬敞而安全的空間，讓牠們與您一同享受大自然的美好。</p>
+                <p class="tinyp">
+                我們打造了友善的環境，讓毛孩子能夠在安心的氛圍中探索、遊玩並結識新朋友。
+                </p>
+            </div>
         </div>
         <div class="opinion environment">
             <img src="../assets/image/aboutView/environment.jpg" alt="環境友善">
-            <h4>環境保護</h4>
-            <p class="tinyp">
-                我們打造了一個環境友善的營地，讓您在大自然中享受的同時，也能共同保護這片美麗的土地。</p>
-            <p class="tinyp">
-                我們深知地球的寶貴，因此竭盡所能提供一個綠色、可持續的露營體驗，期待您與我們攜手共創一個更美好的環境。
-            </p>
+            <div class="wrap">
+                <h4>環境保護</h4>
+                <p class="tinyp">
+                    我們打造了一個環境友善的營地，讓您在大自然中享受的同時，也能共同保護這片美麗的土地。</p>
+                <p class="tinyp">
+                    我們深知地球的寶貴，因此竭盡所能提供一個綠色、可持續的露營體驗，期待您與我們攜手共創一個更美好的環境。
+                </p>
+            </div>
         </div>
         <div class="opinion eco">
             <img src="../assets/image/aboutView/ecology.jpg" alt="生態復育">
-            <h4>生態復育</h4>
-            <p class="tinyp">融合自然之美和生態復育的理念，將這裡打造成一個讓您與大自然深度互動的場所，更是您參與保育努力的一步。透過生態導覽以及環保教育活動，讓來此的每位露營者成為生態復育的推動者。</p>
+            <div class="wrap">
+                <h4>生態復育</h4>
+                <p class="tinyp">融合自然之美和生態復育的理念，將這裡打造成一個讓您與大自然深度互動的場所，更是您參與保育努力的一步。透過生態導覽以及環保教育活動，讓來此的每位露營者成為生態復育的推動者。</p>
+            </div>
         </div>
     </div>
 </div>
-
+<!--野良之家-->
 <div class="shelter-wrap">
     <div class="shelter-pic"></div>
-    <div class="shelter-title-wrap">
-        <h4 class="shelter-title">野良之家</h4>
-        <p class="shelter-subtitle">野良 x 中途</p>
+    <div class="textPart">
+        <div class="shelter-title-wrap">
+            <h4 class="shelter-title">野良之家</h4>
+            <p class="shelter-subtitle">野良 x 中途</p>
+        </div>
+        <p class="tinyp">
+            我們致力於照顧、庇護和尋找新的家園給需要幫助的流浪動物，並提供免費的志工活動，一同為這些可愛的生命奉獻愛心。
+        </p>
+        <p class="tinyp">
+        志工活動包括洗狗、打掃籠舍、餵食等，讓你有機會親身參與流浪動物的照顧，同時建立起與這些可愛生物的深厚連結。
+        </p>
     </div>
-    <p class="tinyp">
-        我們致力於照顧、庇護和尋找新的家園給需要幫助的流浪動物，並提供免費的志工活動，一同為這些可愛的生命奉獻愛心。
-    </p>
-    <p class="tinyp">
-    志工活動包括洗狗、打掃籠舍、餵食等，讓你有機會親身參與流浪動物的照顧，同時建立起與這些可愛生物的深厚連結。
-    </p>
     <!-- <router-link to="/shelter"> -->
         <actionBtn class="more-info" :content="'更多詳細資訊'" @clickEvent="toSheleter" />
     <!-- </router-link> -->
@@ -79,7 +90,7 @@ function toSheleter(){
     <hr>
     <hr>
 </div>
-
+<!--營業時間-->
 <div class="business-hours-wrap accordion">
     <businessHours title="管理中心">
         <p>營業時間：06:30~21:00</p>
@@ -141,16 +152,12 @@ function toSheleter(){
     }
     h2{
         @include desktop{
-            // width: 20dvw;
-            // background-color: #ff0;
-            font-size: 64px;
+            font-size: 48px;
         }
     }
     h4{
         @include desktop{
-            // width: 20dvw;
-// background-color: #0ff;
-        font-size: 40px;
+            font-size: 32px;
         }
     }
 }
@@ -166,58 +173,69 @@ function toSheleter(){
 .origin-linear { //頂部漸層
     background: linear-gradient(to bottom, $blue-1 10%, $white01);
     @include desktop{
+        background: linear-gradient(to bottom, $blue-1 , $white01 30%);
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
 }
 /*-----------------緣起--------------------*/
-.origin{
-
+/*緣起文字*/
+.origin{ 
+    margin: auto;
     h4{ //緣起標題
         width: 90vw;
         border-radius: 10px;
         margin: 10px auto;
     @include desktop{
-        width: 60%;
+        width: 50vw;
+        font-size: 28px;
     }
     }
+    .text-wrap { //內文p的wrap
+        width: 90vw;
+        border-radius: 10px;
+        padding: 10px 20px;
+        margin: auto;
+        background-color: rgba($yellow-2, 50%);
+        @include desktop{
+            width: 50vw;
+            background-color: rgba($yellow-2, 0);
+            margin-bottom: 5%;
+        }
+        p{
+            @include desktop{
+                font-size:18px;
+            }
+        }
+    }
+
     @include desktop{
-        width: 50%;
+        width: 55%;
         order: 1;
-        // background-color: #f0f;
+
     }
 }
+/*緣起照片*/
 .origin-pic{ 
     img{ //緣起環境照，script秒數切換
     width: 100%;
     aspect-ratio: 1/1;
-    max-height: 580px;
     object-fit: cover;
     object-position: bottom;
-    @include desktop{
-        border-radius: 30px;
+        @include desktop{
+            border-radius: 30px;
+            // aspect-ratio: 8/10;
+            max-width: 520px;
+            max-height:580px;
+        }
     }
-    }
     @include desktop{
-        width: 50%;
+        width: 40vw;
         order:2;    
     }
-
-
 }
-.text-wrap { //緣起內文
-    width: 90vw;
-    border-radius: 10px;
-    padding: 10px 20px;
-    margin: auto;
-    background-color: rgba($yellow-2, 50%);
-    @include desktop{
-        width: 50%;
-        background-color: rgba($yellow-2, 0);
-        background-color: #f0f;
-    }
-}
+
 /*-----------------三大理念--------------------*/
 .opinion-wrap{//理念容器
     width: 100%;      
@@ -226,6 +244,8 @@ function toSheleter(){
     overflow-x: auto;
     @include desktop{
         order: 3;
+        overflow: visible;
+        flex-wrap: wrap;
     }
 }
 .opinion{ 
@@ -234,12 +254,31 @@ function toSheleter(){
     flex-shrink: 0;
     height: auto;
     @include desktop{
-        width: 30vw;
+        height: 420px;
+        margin: 0;
+        display: flex;
+        align-items:center;
+        padding: 0 10vw ;
+        margin-top: -1%
     }
 }
-.opinion p,.opinion h4{
+.wrap{ //title&text
     width: 80%;
     margin: 5px auto;
+    @include desktop{
+        width: 30vw;
+    }
+    h4{
+        @include desktop{
+            font-size: 28px;
+        }
+    }
+    p{
+        @include desktop{
+            margin-top: 10px;
+            font-size: 20px;
+        }
+    }
 }
 .opinion img{
     display: block;
@@ -249,6 +288,16 @@ function toSheleter(){
     width: 80%;
     aspect-ratio: 25/21;
     border-radius: 15px;
+    @include desktop{
+        margin: 0;
+        aspect-ratio: 20/21;
+        max-width: 400px;
+    }
+}
+.opinion:nth-child(2){
+    @include desktop{
+        flex-direction: row-reverse;
+    }
 }
 .animal img{
     object-position: 0 40%;
@@ -258,6 +307,7 @@ function toSheleter(){
 }
 
 /*-----------------野良之家--------------------*/
+/*-----------------整修中--------------------*/
 a{
     text-decoration: none;
 }
@@ -265,7 +315,13 @@ a{
     border-top: 1px solid $dark;
     margin: 10px auto;
     width: 100%;
+    @include desktop{
+        display: flex;
+        flex-wrap: wrap;
+        width: 80%;
+    }
 }
+
 .shelter-pic{
     margin: auto;
     background-image: url(../assets/image/aboutView/shelter.jpg);
@@ -276,29 +332,69 @@ a{
     background-size: cover;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    @include desktop{
+        margin: 0;
+        width: 30%;
+        order: 2;
+        aspect-ratio: 560/550;
+    }
 }
 .shelter-title-wrap{
     display: flex;
     width: 90%;
     margin: 10px auto;
+
+    @include desktop{
+        display: block;
+        margin: 30px auto;
+        width: 65%;
+    }
+    .shelter-subtitle{
+        margin-left: 5%;
+        // margin:  0;
+        // margin-top: 10px;
+        // font-size: 24px;
+    }
+    h4{
+        @include desktop{
+            font-size:32px;
+            width: 50%;
+            // background-color: #ff0;
+        }
+    }
 }
-.shelter-subtitle{
-    margin-left: 5%;
-}
-.shelter-wrap>.tinyp{
+.shelter-wrap .tinyp{
     width: 90%;
     margin: auto;
+}
+.textPart{
+    .tinyp{
+        @include desktop{
+            font-size: 20px;
+            width: 50%;
+            // background-color: #ff0;
+        }
+    }
+    @include desktop{
+        width: 65%;
+        // margin: auto;
+    }
 }
 .more-info{
     display: block;
     margin: 10px auto;
+    @include desktop{
+        order: 3;
+    }
 }
 .action-btn-01{
-    border-radius: 20px;
-    border: none;
     color: $white01;
+    &:hover{
+        background-color: $blue-4;
+    }
+    @include desktop{
+        width: 100%;
+    }
 }
-.action-btn-01:hover{
-    border: none;
-}
+
 </style>
