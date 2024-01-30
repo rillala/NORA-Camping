@@ -319,6 +319,8 @@ export default {
         </div>
 
         <div class="volunteer-info">
+          <img class="lines1" src="/src/assets/image/shelter/lines1.svg" alt="線條一">
+          <img class="lines4" src="/src/assets/image/shelter/lines4.svg" alt="線條四">
           <div class="volunteer-dtls">
             <p class="volunteer-dtl">
               野良之家的日常工作：<br>
@@ -327,7 +329,7 @@ export default {
               若有興趣參與，歡迎聯絡我們！</p>
             <button class="contact-btn">聯絡我們</button>
           </div>
-          <img src="/src/assets/image/shelter/volunteer_shape.svg" alt="志工活動介紹多邊形">
+          <img class="shape" src="/src/assets/image/shelter/volunteer_shape.svg" alt="志工活動介紹多邊形">
         </div>
 
         <div class="circle-img-bottom">
