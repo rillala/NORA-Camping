@@ -11,16 +11,20 @@ function goBack(){
 <template>
 
     <div class="text-wrap">
-        <p class="tinyp">表單通常在1~3個工作日內回覆，</p>
-        <p class="tinyp">請留意您的電子郵件。</p>
-        <p class="tinyp">如遇國定假日則順延，造成不便敬請見諒。</p>
-        <p><br></p>
+        <div class="leftPart">
+            <h3>歡迎聯絡我們！</h3>
+            <p class="tinyp">表單通常在1~3個工作日內回覆，</p>
+            <p class="tinyp">請留意您的電子郵件。</p>
+            <p class="tinyp">如遇國定假日則順延，造成不便敬請見諒。</p>
+            <p><br></p>
+        </div>
 
-        <p class="tinyp">市話：(049) 2222106－81</p>
-        <p class="tinyp">手機：0988-345-678</p>
-        <p><br></p>
-
-        <p class="tinyp">連絡電話服務時段：10:30~19:30</p>
+        <div class="rightPart">
+            <p class="tinyp">市話：(049) 2222106－81</p>
+            <p class="tinyp">手機：0988-345-678</p>
+            <p><br></p>
+            <p class="tinyp">連絡電話服務時段：10:30~19:30</p>
+        </div>
     </div>
     <div class="checkPoints">
         <div class="check A">1</div>
@@ -74,7 +78,16 @@ function goBack(){
     margin: 30px auto 10px;
     display: block;
     @include desktop{
-
+        display: flex;
+        background-color: #ff0;
+    }
+    h3{
+        display: none;
+        @include desktop{
+        display: block;
+        font-weight: bold;
+        margin-bottom: 30px;
+        }
     }
 }
 /*狗頭*/
@@ -84,7 +97,9 @@ function goBack(){
     position: relative;
     margin: 40px auto 50px;
     @include desktop{
-        width: 100%;
+        width: 70%;
+        margin: auto;
+        // background-color: #f0f;
     }
     .check{
         display: flex;
@@ -103,6 +118,9 @@ function goBack(){
         z-index: -1;
         top: calc(50% - 7.5px);
         background-color: $yellow-2;
+        @include desktop{
+            height: 30px;
+        }
     }
     .dog{
         position: absolute;
@@ -142,6 +160,9 @@ function goBack(){
             color: $white01;
         }
     }
+    @include desktop{
+        width: 50%;
+    }
 }
 .contactInfo{
     .info{
@@ -165,6 +186,9 @@ function goBack(){
             &::placeholder{
                 color: $white01;
             }
+        }
+        @include desktop{
+            width: 50%;
         }
     }
 }
