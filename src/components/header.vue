@@ -1,8 +1,8 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router';
 import memberLogin from '@/components/memberLogin.vue';
-import { mapState, mapActions } from 'pinia'
-import userStore from '@/stores/user'
+import { mapState, mapActions } from 'pinia';
+import userStore from '@/stores/user';
 
 export default {
   components: {
@@ -10,7 +10,10 @@ export default {
   },
   data() {
     return {
-      isMenuOpen: false,
+      isMenuOpen: false, // 漢堡選單
+      isLoginOpen: false, // 登入燈箱
+      isLogin: true, // 判斷是否已經登入
+      isMemberSubOpen: false, // 會員中心子選單
       reserveBtn: {
         name: '線上預約',
         path: '/reserve',
@@ -37,7 +40,6 @@ export default {
           path: '/shelter',
         },
       ],
-      // token:'',
     };
   },
   watch: {
@@ -48,10 +50,10 @@ export default {
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
     ...mapActions(userStore, ['updateToken']),
-        logout(){
-            // 調用pinia的updateToken
-            this.updateToken('')
-        },
+    logout() {
+      // 調用pinia的updateToken
+      this.updateToken('');
+    },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
@@ -65,12 +67,21 @@ export default {
       this.isLoginOpen = false; // 這將關閉燈箱
       this.isMenuOpen = false; // 關閉子選單-->手機板需要
       console.log(this.isLoginOpen);
-    }
+    },
+    memberCenter() {
+      if (this.isLogin) {
+        // 如果已經登入了 token = true, 則開啟子選單
+        console.log('isLogin=true');
+        this.isMemberSubOpen = true;
+      } else {
+        this.isOpen = true;
+      }
+    },
   },
   computed: {
-  //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
-    ...mapState(userStore, ['token'])
-  }
+    //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
+    ...mapState(userStore, ['token']),
+  },
 };
 </script>
 
@@ -135,18 +146,20 @@ export default {
           >
 
           <!--會員登入-->
-          <button
-            id="member-login"
-            @click="(isLoginOpen = !isLoginOpen), closeHam"
-          >
-            <!-- <div class="sub-menu-container" v-show="token"> 
+          <button id="member-login" @click="memberCenter, closeHam">
+            <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
+            <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
-                <li><RouterLink :to="membercenter">會員中心</RouterLink></li>
-                <li><RouterLink :to="membercampsiteorders">商品訂單</RouterLink></li>
-                <li><RouterLink :to="memberorderhistory">營地訂單</RouterLink></li>
+                <li><RouterLink to="/membercenter">會員中心</RouterLink></li>
+                <li>
+                  <RouterLink to="/membercampsiteorders">商品訂單</RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="/memberorderhistory">營地訂單</RouterLink>
+                </li>
                 <button @click="logout">登出</button>
               </ul>
-            </div> -->
+            </div>
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
 
