@@ -32,6 +32,7 @@
         <div class="close-button">X</div>
       </div>
       <div class="lightbox-content" v-on:click.stop>
+        <div class="close-lightbox-button" @click="closeLightbox">X</div>
         <!-- 切換表單的按鈕 -->
         <div class="tab-container">
           <button
@@ -113,7 +114,7 @@
             v-model="user_enter.pwd"
           /><br />
           <a class="forget-psw">忘記密碼？</a><br />
-          <button class="main-btn" @click="signin">會員登入</button><br />
+          <button class="main-btn" @click="signin">會員登入</button><br/>
           <button class="sub-btn">以Google登入</button>
         </form>
       </div>
@@ -159,12 +160,12 @@ export default {
     isOpen(newVal) {
       console.log(`isOpen changed to ${newVal}`);
     },
-    'user_add.pwd'(newPassword) {
-      this.passwordMismatch = newPassword !== this.user_add.pwdConfirmation;
-    },
-    'user_add.pwdConfirmation'(newConfirmation) {
-      this.passwordMismatch = newConfirmation !== this.user_add.pwd;
-    },
+    // 'user_add.pwd'(newPassword) {
+    //   this.passwordMismatch = newPassword !== this.user_add.pwdConfirmation;
+    // },
+    // 'user_add.pwdConfirmation'(newConfirmation) {
+    //   this.passwordMismatch = newConfirmation !== this.user_add.pwd;
+    // },
   },
 
   methods: {
@@ -437,4 +438,11 @@ input[type='checkbox'] {
   text-align: left;
 }
 
+.close-lightbox-button{
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
 </style>
