@@ -1179,7 +1179,8 @@ export default {
           }),
         );
 
-        return { id, minCount: minCount === Infinity ? 0 : minCount };
+        // 這邊預設沒有設定的話可以預約十個營位
+        return { id, minCount: minCount === Infinity ? 10 : minCount };
       });
 
       this.minSiteCounts = minCounts;
