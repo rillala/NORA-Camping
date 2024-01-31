@@ -1,6 +1,6 @@
 <script setup>
 // 引入函式庫
-import {ref} from 'vue';
+import {ref,onBeforeUnmount,onMounted} from 'vue';
 const props = defineProps({
     title:{
         type:String,
@@ -11,7 +11,22 @@ const isOpen = ref(false);
 const open = () => {
     isOpen.value = !isOpen.value;
 };
+const DESKTOP = 1024;
+const nowWidth = ref(window.innerWidth);
+function updataWindows(){
+    nowWidth.value = window.innerWidth;
+}
+onMounted(() => {
+    updataWindows();
+    window.addEventListener('resize',updataWindows);
+    if(nowWidth.value>=DESKTOP){
+        isOpen.value = open;
+    }
+})
 
+onBeforeUnmount(() => {
+    window.removeEventListener('resize',updataWindows);
+})
 </script>
 
 <template>
@@ -19,7 +34,7 @@ const open = () => {
         <button class="hours-title-wrap" :class="{ hoursClose:!isOpen }" @click="open()">
             <h4>{{ props.title }}</h4>
         </button>
-        <div class="info accordion-content" v-show="isOpen">
+        <div class="info accordion-content" v-if="nowWidth>= DESKTOP ||isOpen">
             <slot />
         </div>
     </div>

@@ -18,17 +18,20 @@ export default {
   },
   data() {
     return {
-      bannerBg: [
+      //banner動畫
+      bannerMori: [
         'riverBg.png',
         'riverBg.png'
       ],
-      currentIndex: 0,
-      slideWidth: 0,
-      animation: null,
-      //banner動畫
+      bannerYama: [
+        'mountainBg.png',
+        'mountainBg.png'
+      ],
+
+      //天氣和溫度
       weather: '',
       airTemperature: '',
-      //天氣和溫度
+      //天氣圖片
       weatherMark: [
         'hare.png',
         'hare_kumori.png',
@@ -37,28 +40,53 @@ export default {
         'umbrella.png',
         'kaminari.png',
       ],
-      //天氣圖片
+
+      //最新消息搜尋和內容
       search: '',
+      newsContent: [
+        {
+          newsTitle: '2024春季優惠開跑中',
+          newsDate: '2024/1/24',
+          newsText: '探險春季，NORA Camp誠摯邀請您攜帶心愛的寵物一同感受大自然的懷抱！透過我們獨家的「春季寵物露營樂享包」優惠，獲得精心準備的狗狗貓貓歡迎禮 包，內含美味零食、趣味玩具及特別的寵物地圖。優惠僅限春季特定日期，請提前預訂，確保您和寵物共享這春之樂。期待您們一家人一起加入NORA Camp的大家庭，享受春日露營的美好時光！',
+          smalls: [
+            { src: 'Camping_dog_lake.jpg', alt: '消息圖片1' },
+            { src: 'knowingnora-pic.jpg', alt: '消息圖片2' },
+            { src: 'shelter.jpg', alt: '消息圖片3' },
+          ],
+          large: { src: '', alt: '' },
+        },
+        {
+          newsTitle: '營地設備維修公告',
+          newsDate: '2024/1/10',
+          newsText: '為提供更良好的露營體驗，我們即將進行狗狗專屬營區烤肉區設備的定期維修。維修時間為下週二上午9時至下午3時。在此期間，狗狗專屬營區的烤肉區域將無法使用。請見諒造成的不便。我們將盡快完成維修，以確保您和您的毛小孩在安全和愉快的環境中度過美好的露營時光。在維修期間，為確保您的安全，請勿進入烤肉區域。如有任何緊急需要使用烤肉設備的情況，請聯繫我們的服務人員，我們將協助您找到合適的解決辦法。感謝您的理解和支持。期待在維修完成後，為您呈獻一個更舒適、更便利的露營環境。如有任何疑問或需要進一步協助，請隨時與我們聯絡。',
+          smalls: [
+          ],
+          large: { src: '', alt: '' },
+        },
+      ],
     };
   },
   mounted() {
-    this.CatIn();
+    this.Catin();
     this.Dogin();
     this.moriSlide();
+    this.yamaSlide();
+    // window.addEventListener('scroll', this.handleScroll);
     this.getWeather();
   },
   methods: {
+    //banner的動畫
     getBannerImageUrl(paths) {
       return new URL(`../assets/image/homeView/animation/${paths}`, import.meta.url).href;
     },
-    CatIn() {
+    Catin() {
       // 取得 catAnimation 組件的 DOM 元素
       const catElement = this.$refs.cat.$el;
       //$els
       // 使用 GSAP 創建動畫
       gsap.from(catElement, {
         x: '100%', // 從右邊畫面外開始
-        duration: 3, // 動畫時間
+        duration: 3, // 動畫時間(秒)
       });
     },
     Dogin() {
@@ -73,12 +101,40 @@ export default {
         { x: '-100%' },
         {
           x: '0%',
-          duration: 15,
-          ease: 'linear',
-          repeat: -1,
-        });
+          duration: 25,
+          ease: 'linear',//線性
+          repeat: -1,//無限播放
+        }),
+        gsap.fromTo(this.$refs.moriSlider,
+          { opacity: 0, },
+          {
+            opacity: 1,
+            duration: 2
+          });
+    },
+    yamaSlide() {
+      gsap.fromTo(this.$refs.yamaSlider,
+        { x: '-100%' },
+        {
+          x: '0%',
+          duration: 30,
+          ease: 'linear',//線性
+          repeat: -1,//無限播放
+        }),
+        gsap.fromTo(this.$refs.moriSlider,
+          { opacity: 0, },
+          {
+            opacity: 1,
+            duration: 2
+          });
     },
 
+    //捲動偵測，想改用AOS做捲動的特效
+    getScrollHeight() {
+      return window.scrollY;
+    },
+
+    //串接氣象API取得資料
     async getWeather() {
       try {
         let result = await fetch('https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-FA772AA0-8D0C-4FEF-B569-7DE1EEF2453D');
@@ -86,21 +142,21 @@ export default {
 
         this.weather = data.records.Station[9].WeatherElement.Weather;
         this.airTemperature = Math.round(data.records.Station[9].WeatherElement.AirTemperature);
-        //數據取得第9筆
+        //數據取得第9筆的天氣和溫度
       } catch (e) {
         console.log(e);
       }
     },
-    //串接氣象API取得資料
+    //天氣圖片路徑
     getWeatherImageUrl(paths) {
       return new URL(`../assets/image/homeView/weatherMark/${paths}`, import.meta.url).href;
     },
-    //天氣圖片路徑
+    //顯示對應天氣圖片
     getWeatherImage() {
       // 使用 this.weatherMark拿data中的陣列
       const weatherImages = {
         '晴': this.getWeatherImageUrl(this.weatherMark[0]),
-        '多雲': this.getWeatherImageUrl(this.weatherMark[2]),
+        '多雲': this.getWeatherImageUrl(this.weatherMark[1]),
         '陰': this.getWeatherImageUrl(this.weatherMark[2]),
         '雨': this.getWeatherImageUrl(this.weatherMark[3]),
       };
@@ -108,7 +164,6 @@ export default {
       // 如果 this.weather的內容在 weatherImages 中有對應的圖片，返回該路徑，否則返回預設圖片路徑
       return weatherImages[this.weather] || this.getWeatherImageUrl(this.weatherMark[0]);
     },
-    //顯示對應天氣圖片
   },
   watch: {
     search(newSearch, oldSearch) {
@@ -147,14 +202,16 @@ export default {
     <div class="Banner-background bg-blue-1">
 
       <div class="mori-slider">
-        <img v-for="mori in bannerBg" :src="getBannerImageUrl(mori)" alt="Banner背景森林" ref="moriSlider">
+        <img v-for="mori in bannerMori" :src="getBannerImageUrl(mori)" alt="Banner背景森林" ref="moriSlider">
       </div>
-
+      <div class="yama-slider">
+        <img v-for="yama in bannerYama" :src="getBannerImageUrl(yama)" alt="Banner背景山" ref="yamaSlider">
+      </div>
     </div>
     <div class="Banner-ground"></div>
   </section>
 
-  <section class="Knowing-nora">
+  <section class="Knowing-nora" ref="knowingNora">
     <div class="KN-mountain-background">
       <img src="@/assets/image/homeView/mountainBgL.png" class="Mountain-left">
       <img src="@/assets/image/homeView/mountainBgR.png" class="Mountain-right">
@@ -196,32 +253,9 @@ export default {
         </div>
       </div>
       <div class="News-viewport">
-        <ul>
-          <li>
-            <newsArticle />
-          </li>
-          <li>
-            <article class="Article-onlytext">
-
-              <div class="News-text">
-                <div class="title">
-                  <h2>營地設備維修公告</h2>
-                  <p class="tinyp">2024/1/10</p>
-                </div>
-                <p>為提供更良好的露營體驗，我們即將進行狗狗專屬營區烤肉區設備的定期維修。維修時間為下週二上午9時至下午3時。在此期間，狗狗專屬營區的烤肉區域將無法使用。請見諒造成的不便。
-
-                  我們將盡快完成維修，以確保您和您的毛小孩在安全和愉快的環境中度過美好的露營時光。在維修期間，為確保您的安全，請勿進入烤肉區域。如有任何緊急需要使用烤肉設備的情況，請聯繫我們的服務人員，我們將協助您找到合適的解決辦法。
-                  感謝您的理解和支持。期待在維修完成後，為您呈獻一個更舒適、更便利的露營環境。如有任何疑問或需要進一步協助，請隨時與我們聯絡。
-
-                </p>
-              </div>
-
-            </article>
-          </li>
-          <li>
-            <newsArticle />
-          </li>
-        </ul>
+        <newsArticle class="News-article" v-for="(setArticle, index) in newsContent" :key="setArticle.newsTitle"
+          :newsTitle="setArticle.newsTitle" :newsDate="setArticle.newsDate" :newsText="setArticle.newsText"
+          :smalls="setArticle.smalls" v-model:large="setArticle.large" />
       </div>
     </div>
   </section>
@@ -231,7 +265,7 @@ export default {
     <div class="Prod-wapper">
       <div class="New-prod-row">
         <div class="New-prod">
-          <!-- 要改v-for -->
+          <!-- 尚未改寫 -->
           <div class="New-prod-image">
             <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片">
           </div>
