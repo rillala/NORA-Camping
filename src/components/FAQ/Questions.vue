@@ -44,8 +44,14 @@ onBeforeUnmount(() => {
         display: block;
         margin: auto;
         @include desktop{
-            font-size: 28px;
+            font-size: 24px;
+            // border-radius: 30px;
+            margin: -30px auto 0;
+            // background-color: #ff0;
+            // height: 5rem;
+            width: 70%;
         }
+        
     }
     button{
         display:block;
@@ -59,6 +65,7 @@ onBeforeUnmount(() => {
             border-radius: 30px;
             margin: 50px auto;
             height: 5rem;
+            width: 80%;
         }
 
         h4{
@@ -68,12 +75,14 @@ onBeforeUnmount(() => {
             font-weight: 500;
             @include desktop{
                 font-size: 28px;
+                padding-left: 2rem;
             }
         }
     }
 
     @include desktop{
         width: 100%;
+        margin: 0;
     }
 }
 </style>

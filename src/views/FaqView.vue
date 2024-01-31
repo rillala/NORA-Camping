@@ -50,20 +50,19 @@ const DESKTOP = 1024;
   width: 100%;
   padding-top: 10vw;
   padding-left: 10vw;
-  // margin-left: 10px;
   color: $blue-4;
   @include desktop{
-    padding-top: 8vw;
+    padding-top: 5vw;
     width: 100%;
   }
   h2{
     @include desktop{
-      font-size: 64px;
+      font-size: 48px;
     }
   }
   h4{
     @include desktop{
-    font-size: 40px;
+    font-size: 32px;
     }
   }
 }
