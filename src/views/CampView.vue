@@ -7,9 +7,9 @@ export default {
     return {
       images: [
         //設施介紹環境圖輪播
-        './src/assets/image/campGuide/bathroom_m_1.png',
-        './src/assets/image/campGuide/bathroom_m_2.png',
-        './src/assets/image/campGuide/bathroom_m_3.png',
+        '/src/assets/image/campGuide/bathroom_m_1.png',
+        '/src/assets/image/campGuide/bathroom_m_2.png',
+        '/src/assets/image/campGuide/bathroom_m_3.png',
       ],
       currentIndex: 0,
       areas: [
