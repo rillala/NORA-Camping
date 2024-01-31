@@ -1,53 +1,27 @@
 <template>
-	<select class="dropdown-btn" v-model="selectedValue">
-		<option v-for="option in options" :key="option.value" :value="option.value">
-			<p>{{ option.label }}▼</p>
-		</option>
-	</select>
+	<div>
+			<select v-model="selectedOption" @change="handleSelection">
+					<option v-for="option in options" :key="option">{{ option }}</option>
+			</select>
+	</div>
 </template>
 
 <script>
 export default {
 	props: {
-		options: {
-			type: Array,
-			required: true,
-		},
-		value: {
-			type: [String, Number],
-			default: '',
-		},
-		defaultValue: {
-			type: [String, Number],
-			default: '',
-		},
+			options: Array,
+			defaultValue:'',
 	},
 	data() {
-		return {
-			selectedValue: this.defaultValue,
-		};
+			return {
+					selectedOption: this.defaultValue
+			};
 	},
-	watch: {
-		selectedValue(newVal) {
-			this.$emit('update:modelValue', newVal);
-		},
-	},
+	methods: {
+			handleSelection() {
+					// 發出 @change 事件，通知父層有新的選擇
+					this.$emit('change', this.selectedOption);
+			}
+	}
 };
 </script>
-
-<style lang="scss" scoped>
-.dropdown-btn {
-	appearance: none;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	background-color: $yellow-2;
-	padding: 4px;
-	border-radius: 4px;
-	border: none;
-	text-align: center;
-
-	option {
-		width: 100%;
-	}
-}
-</style>
