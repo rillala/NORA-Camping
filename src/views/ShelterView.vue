@@ -7,14 +7,14 @@ export default {
     return {
       currentIndex: 0, //目前圖片
       images: [ //banner輪播圖片
-      'shelter_bg_m_2.png',
-      'shelter_bg_m_1.png',
-      'shelter_bg_m_3.png',
+        'shelter_bg_m_2.png',
+        'shelter_bg_m_1.png',
+        'shelter_bg_m_3.png',
       ],
       rounds: [
-      { paths:'round_dog_1.png' },
-      { paths:'round_dogs_1.png' },
-      { paths:'round_cat_1.png' },
+        { paths: 'round_dog_1.png' },
+        { paths: 'round_dogs_1.png' },
+        { paths: 'round_cat_1.png' },
       ],
     }
   },
@@ -77,12 +77,16 @@ export default {
       <div class="shelter-round-imgs">
 
         <div class="round-imgs">
-          <img v-for="(round, index) in rounds" :key="index" class="round" :src="getImageUrl(round.paths)" :alt="'Round' + (index + 1)">
+          <img v-for="(round, index) in rounds" :key="index" class="round" :src="getImageUrl(round.paths)"
+            :alt="'Round' + (index + 1)">
         </div>
 
         <img class="red-heart" src="/src/assets/image/shelter/red_heart.svg" alt="紅色愛心icon" />
 
         <img class="yellow-heart" src="/src/assets/image/shelter/yellow_heart.svg" alt="黃色愛心icon" />
+
+        <img class="line-1" src="/src/assets/image/shelter/line_1.svg" alt="線條一">
+        <img class="line-2" src="/src/assets/image/shelter/line_2.svg" alt="線條二">
 
       </div>
 
@@ -166,8 +170,8 @@ export default {
           <p class="adopt-cloud-words">謝謝你，選擇了我。</p>
           <img class="white_cloud" src="/src/assets/image/shelter/white_cloud.svg" alt="白色雲朵">
         </div>
-          <img class="hand-dog" src="/src/assets/image/shelter/hand_dog.png" alt="舉手狗狗圖片" />
-          <img class="line3" src="/src/assets/image/shelter/line3.svg" alt="線條三">
+        <img class="hand-dog" src="/src/assets/image/shelter/hand_dog.png" alt="舉手狗狗圖片" />
+        <img class="line3" src="/src/assets/image/shelter/line3.svg" alt="線條三">
       </div>
 
       <!-- 領養步驟一到六 -->
@@ -242,11 +246,6 @@ export default {
             <p>領養後須知</p>
           </div>
           <ol class="p">
-            <!-- <li>適應期觀察：給予寵物適應新環境的時間，注意觀察行為變化。</li>
-            <li>定期醫療照顧：定期帶寵物至獸醫院檢查、預防注射及處理寄生蟲。</li>
-            <li>建立規律生活：規律飲食、遊戲和散步時間，確保穩定的生活節奏。</li>
-            <li>社交化訓練：逐步引導寵物與其他寵物及人類建立良好社交關係。</li>
-            <li>提供愛與關懷：給予寵物足夠關愛、陪伴和注意，建立牠們與家庭成員的情感連結。</li> -->
             <li>給予寵物適應新環境的時間，注意觀察行為變化。</li>
             <li>定期至獸醫院檢查、預防注射及處理寄生蟲。</li>
             <li>建立規律生活，確保穩定的生活節奏。</li>
