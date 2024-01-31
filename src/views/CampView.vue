@@ -7,9 +7,9 @@ export default {
     return {
       images: [
         //設施介紹環境圖輪播
-        '/src/assets/image/campGuide/bathroom_m_1.png',
-        '/src/assets/image/campGuide/bathroom_m_2.png',
-        '/src/assets/image/campGuide/bathroom_m_3.png',
+        'bathroom_m_1.png',
+        'bathroom_m_2.png',
+        'bathroom_m_3.png',
       ],
       currentIndex: 0,
       areas: [
@@ -43,7 +43,10 @@ export default {
       this.showDetails = true;
     },
     getImageUrl(paths) {
-      return new URL(`../assets/image${paths}`, import.meta.url).href;
+      return new URL(
+        `../assets/image/campGuide/bathroom_m_${paths + 1}.png`,
+        import.meta.url,
+      ).href;
     },
   },
 };
@@ -355,7 +358,7 @@ export default {
         <div class="facility-slider-container">
           <transition name="fade" mode="out-in">
             <img
-              :src="images[currentIndex]"
+              :src="getImageUrl(currentIndex)"
               :key="currentIndex"
               class="slider-image"
             />
