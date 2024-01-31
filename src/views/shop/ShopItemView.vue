@@ -1,43 +1,3 @@
-<template>
-  <main class="shop-item-wrap">
-    <div class="shop-item-container">
-      <loading v-if="nodata"></loading>
-      <div v-else class="shop-item-content">
-        <!-- 該如何引進多張圖片，用icon做切換? -->
-        <div class="shop-item-top">
-
-          <div class="shop-item-images">
-            <img class="shop-arrow-icon" @click="prevImage" src="/src/assets/image/universe/left-arrow-btn.svg"
-              alt="icon">
-            <div class="shop-item-imagesSlider">
-              <img :src="responseData.images" alt="responseData.title" />
-            </div>
-            <img class="shop-arrow-icon" @click="nextImage" src="/src/assets/image/universe/right-arrow-btn.svg"
-              alt="icon">
-          </div>
-          <div class="shop-item-words">
-            <h2>{{ responseData.title }}</h2>
-            <h3>NT${{ responseData.price }}</h3>
-            <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
-            <div class="shop-item-actionBtns">
-              <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
-              <router-link to="shopCar"><ActionBtn :content="'直接購買'"></ActionBtn></router-link>
-              
-            </div>
-          </div>
-        </div>
-        <section class="shop-item-intro">
-          <div class="shop-intro-title">
-            <h4>商品詳情</h4>
-          </div>
-          <p>{{ responseData.description }}</p>
-        </section>
-        <div class="shop-item-rec">Nora 推薦加購</div>
-      </div>
-    </div>
-  </main>
-</template>
-
 <script>
 import axios from 'axios';
 import { useProductStore } from '@/stores/productStore'; // 用命名辦法 導入 Pinia Store
@@ -98,10 +58,47 @@ export default {
     },
   },
 }
-
-
-
 </script>
+
+<template>
+  <main class="shop-item-wrap">
+    <div class="shop-item-container">
+      <loading v-if="nodata"></loading>
+      <div v-else class="shop-item-content">
+        <!-- 該如何引進多張圖片，用icon做切換? -->
+        <div class="shop-item-top">
+
+          <div class="shop-item-images">
+            <img class="shop-arrow-icon" @click="prevImage" src="/src/assets/image/universe/left-arrow-btn.svg"
+              alt="icon">
+            <div class="shop-item-imagesSlider">
+              <img :src="responseData.images" alt="responseData.title" />
+            </div>
+            <img class="shop-arrow-icon" @click="nextImage" src="/src/assets/image/universe/right-arrow-btn.svg"
+              alt="icon">
+          </div>
+          <div class="shop-item-words">
+            <h2>{{ responseData.title }}</h2>
+            <h3>NT${{ responseData.price }}</h3>
+            <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
+            <div class="shop-item-actionBtns">
+              <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
+              <router-link to="shopCar"><ActionBtn :content="'直接購買'"></ActionBtn></router-link>
+              
+            </div>
+          </div>
+        </div>
+        <section class="shop-item-intro">
+          <div class="shop-intro-title">
+            <h4>商品詳情</h4>
+          </div>
+          <p>{{ responseData.description }}</p>
+        </section>
+        <div class="shop-item-rec">Nora 推薦加購</div>
+      </div>
+    </div>
+  </main>
+</template>
 
 <style lang="scss" scoped>
 .shop-item-wrap {

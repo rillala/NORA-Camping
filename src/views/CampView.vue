@@ -52,7 +52,7 @@ export default {
     <!-- Banner區塊 -->
     <div class="guide-banner">
       <h1 class="guide-title">營地導覽</h1>
-      <h2 class="guide-subtitle">我們一起看看營區的美！</h2>
+      <h2 class="guide-subtitle">一起看看營區的美！</h2>
     </div>
 
     <!-- 立體地圖區塊 -->
@@ -60,7 +60,7 @@ export default {
       
       <div class="camp-map" @mouseover="showInfo" @click="goToDetails">
         <img
-          src="/src/assets/image/campGuide/map_m_ex.png"
+          src="/src/assets/image/campGuide/map2.png"
           alt="立體地圖示意圖"
         />
       </div>
@@ -243,24 +243,24 @@ export default {
         </ul>
 
         <div class="camp-info-social">
-        <div class="fb">
-          <img src="/src/assets/image/campGuide/fb_icon.svg" alt="Facebook icon">
-          <p>@NORACampOfficial</p>
+          <div class="fb">
+            <img src="/src/assets/image/campGuide/fb_icon.svg" alt="Facebook icon">
+            <p>@NORACampOfficial</p>
+          </div>
+          <div class="ig">
+            <img src="/src/assets/image/campGuide/ig_icon.svg" alt="Instagram icon">
+            <p>@noracamp_adventures</p>
+          </div>
+          <div class="line">
+            <img src="/src/assets/image/campGuide/line_icon.svg" alt="Line icon">
+            <p>@NORACamp</p>
+          </div>
         </div>
-        <div class="ig">
-          <img src="/src/assets/image/campGuide/ig_icon.svg" alt="Instagram icon">
-          <p>@noracamp_adventures</p>
-        </div>
-        <div class="line">
-          <img src="/src/assets/image/campGuide/line_icon.svg" alt="Line icon">
-          <p>@NORACamp</p>
-        </div>
-      </div>
 
-      </div>
+        <div class="camp-info-map">
+          <img src="/src/assets/image/campGuide/roadmap.png" alt="手繪地圖">
+        </div>
 
-      <div class="camp-info-map">
-        <img src="" alt="手繪地圖">
       </div>
       
     </div>

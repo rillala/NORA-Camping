@@ -66,7 +66,7 @@
       <p class="password password-title-1" value="disabled">再確認新密碼 <span>*****************</span> {{ confirmPassword }}</p>
       <div class="box">
         <button class="save-changes" @click="startEditingPassword">修改密碼</button>
-        <button class="logout">登出</button>
+        <button class="logout" @click.stop="logout">登出</button>
       </div>
     </div>
     
@@ -91,16 +91,16 @@ export default {
     return {
       isEditing: false,
       memberInfo: {
-        name: 'John Doe',
-        phone: '1234567890',
+        name: 'Nora Camp',
+        phone: '123456789',
         email:'tibame@gmail.com',
-        address: 'Some Address',
+        address: '桃園中壢',
       },
       editMemberInfo: {
-        name: 'John Doe',
-        phone: '1234567890',
+        name: 'Nora Camp',
+        phone: '123456789',
         email:'tibame@gmail.com',
-        address: 'Some Address',
+        address: '桃園中壢',
       },
 
       isEditingPassword: false,
