@@ -385,7 +385,7 @@
     height: 850px;
     position: absolute;
     z-index: 2;
-    border: 2px solid red;
+    // border: 2px solid red;
 }
 
 .SH-text {
@@ -412,7 +412,7 @@
     }
 
     @include desktop {
-        width: 470px;
+        width: 402px;
         top: 15.5%;
         @include fade-in ($brown-1, 0);
 

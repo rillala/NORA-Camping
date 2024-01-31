@@ -6,6 +6,7 @@ import viewMoreBtn from '@/components/button/viewMoreBtn.vue';
 import dogAnimation from '@/components/home/dogAnimation.vue';
 import catAnimation from '@/components/home/catAnimation.vue';
 import newsArticle from '@/components/home/newsArticle.vue';
+import productCard from '@/components/shop/productCard.vue';
 import { gsap } from 'gsap';
 
 export default {
@@ -15,6 +16,7 @@ export default {
     dogAnimation,
     catAnimation,
     newsArticle,
+    productCard,
   },
   data() {
     return {
@@ -82,7 +84,7 @@ export default {
     Catin() {
       // 取得 catAnimation 組件的 DOM 元素
       const catElement = this.$refs.cat.$el;
-      //$els
+      //$el
       // 使用 GSAP 創建動畫
       gsap.from(catElement, {
         x: '100%', // 從右邊畫面外開始
@@ -265,7 +267,7 @@ export default {
     <div class="Prod-wapper">
       <div class="New-prod-row">
         <div class="New-prod">
-          <!-- 尚未改寫 -->
+          <!-- 尚未改寫-->
           <div class="New-prod-image">
             <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片">
           </div>
@@ -327,17 +329,19 @@ export default {
           同時建立起與這些可愛生物的深厚連結。
         </p>
         <div class="SH-btn">
-          <viewMoreBtn class="SH-btn1" :content="'了解更多'" />
-          <actionBtn :content="'報名志工活動'" />
+          <router-link to="/shelter">
+            <viewMoreBtn class="SH-btn1" :content="'了解更多'" />
+          </router-link>
+          <router-link to="/shelter">
+            <actionBtn :content="'報名志工活動'" />
+          </router-link>
         </div>
       </div>
     </div>
 
     <div class="SH-tent-container">
       <img src="@/assets/image/homeView/Tent_with_ground.png" alt="帳篷框">
-
     </div>
-
 
     <div class="Stray-home-background">
       <img src="@/assets/image/homeView/Stray_home_bg.png" alt="野良之家背景">
