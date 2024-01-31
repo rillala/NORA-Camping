@@ -5,19 +5,17 @@ import axios from 'axios';
 import { useProductStore } from '@/stores/productStore'; // 導入 Pinia Store
 // import productStore from '@/stores/productStore';
 import productCard from '@/components/shop/productCard.vue';
-import dropDownBtn from '@/components/button/dropDownBtn.vue';
 
 export default {
   components: {
     productCard,
-    dropDownBtn,
-  },
+},
   data() {
     return {
       count: 10,
       sourceData: [],
       search: '',
-      // displayData: [],
+  
       groupOptions: [
         { value: '1', label: '選擇類別' },
         { value: '2', label: 'Nora文青生活' },
@@ -27,12 +25,13 @@ export default {
       selectedValue1: '', // 預設選擇的值
       priceOptions: [
         { value: '5', label: '選擇排序' },
-        { value: '6', label: '價格高到低' },
-        { value: '7', label: '價格低到高' },
+        { value: '6', label: '價格高到低', },
+        { value: '7', label: '價格低到高', },
       ],
       selectedValue2: '', // 預設選擇的值
     };
   },
+
   computed: {
     // ...mapState(productStore, ['displayData']),
     displayData() {
@@ -107,8 +106,10 @@ export default {
       <button type="button" @click="priceHighToLow">HighToLow</button>
       <button type="button" @click="priceLowToHigh">LowToHigh</button>
 
+
       <div class="shop-all-list">
         <template v-for="product in displayData" :key="product.id">
+          <productCard :item="product"></productCard>
           <productCard :item="product"></productCard>
         </template>
       </div>

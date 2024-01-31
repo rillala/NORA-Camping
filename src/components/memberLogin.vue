@@ -1,5 +1,5 @@
 <template>
-  <div class="lightbox" @click.stop="isOpen = !isOpen">
+  <div class="lightbox" >
     <div class="lightbox-container" v-if="isOpen">
       <div
         v-if="showPrivacyPolicy"
@@ -162,10 +162,12 @@ export default {
       this.showPrivacyPolicy = false;
     },
     closeLightbox() {
+      console.log('closeLightbox')
+      this.$emit('close')
       // alert()
-      if (this.isOpen) {
-        this.isOpen = false;
-      }
+      // if (this.isOpen) {
+      //   this.isOpen = false;
+      // }
     },
     ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
     signin() {
@@ -183,15 +185,15 @@ export default {
           if (response.data && response.data.token) {
             this.updateToken(response.data.token); // 更新 token
             console.log('login success', response.data.token);
-            this.$emit('close'); // 登入成功後，關閉燈箱
-            this.$router.push('/membercenter'); // 跳轉到會員中心頁面
+            this.closeLightbox(); // 登入成功後，關閉燈箱
+            // this.$router.push('/membercenter'); // 跳轉到會員中心頁面
           }
         })
         .catch(error => {
           console.error(error);
 
           if (error.response && error.response.status === 401) {
-            alert('Invalid username or password.');
+            alert('帳號密碼有誤請再確認.');
           } else {
             alert(
               'An error occurred while logging in. Please try again later.',

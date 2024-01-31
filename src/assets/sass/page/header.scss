@@ -6,6 +6,7 @@ nav {
 }
 
 #nav-wrap {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
 
@@ -70,6 +71,7 @@ nav {
 
 // 會員登入
 #member-login {
+  // position: relative;
   width: 50px;
   height: 50px;
   border: 0;
@@ -359,3 +361,50 @@ input[type='checkbox'] {
 }
 
 // RWD 按鈕差異-----------------------------
+
+
+//會員中心子選單
+.sub-menu-container{
+  display: none;
+  @include tablet{
+  display: block;
+  position:absolute;
+  width:100px;
+  background-color:$blue-4;
+  color:$white01;
+  height:120px;
+  top:80px;
+  padding:10px 8px;
+  border-radius: 20px;
+  }
+
+  @include desktop {
+  display: block;
+  position:absolute;
+  width:100px;
+  background-color:$blue-4;
+  color:$white01;
+  height:120px;
+  top:80px;
+  padding:10px 8px;
+  border-radius: 20px;
+  }
+
+}
+.sub-menu{
+  margin:10px 0;
+  text-decoration: none;
+  color:$white01;
+  border-bottom: 1px solid $white01;
+  padding:4px;
+  line-height: 1.5%;
+  @include font-style(16px, 400, 1%, 160%);
+}
+
+.logout{
+  border-bottom: 1px solid $white01;
+  background-color: transparent;
+  border: none;
+  color:$white01;
+  @include font-style(16px, 400, 1%, 160%);
+}

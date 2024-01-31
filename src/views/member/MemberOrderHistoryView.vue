@@ -46,10 +46,10 @@
         <tr v-for="order in orders" :key="order.id">
           <td class="table-content">{{ truncatedDate(order.orderDate) }}</td>
           <td class="table-content">{{ order.orderNumber }}</td>
-          <td class="table-title responsive-cell-01" v-if="!isSmallScreen">
+          <td class="table-content responsive-cell-01" v-if="!isSmallScreen">
             {{ order.orderAmount }}
           </td>
-          <td class="table-title">{{ order.orderStatus }}</td>
+          <td class="table-content">{{ order.orderStatus }}</td>
           <td class="table-content responsive-cell-02" v-if="!isSmallScreen">
             {{ order.orderStatus }}
           </td>
@@ -191,13 +191,14 @@ nav ul {
   }
 }
 
-.table-title,
-.table-content {
+.table-title,.table-content {
   text-align: center;
   font-size: 14px;
   border: 1px solid #ddd;
   padding: 8px;
   width: calc(100% / 5);
+  @include font-style(16px, 400, 1%, 160%);
+  
   white-space: nowrap;
   @include tablet {
     font-size: 16px;
@@ -213,6 +214,7 @@ nav ul {
     padding: 6px 10px;
     border-radius: 50px;
     margin-left: auto;
+    @include font-style(16px, 400, 1%, 160%);
     @include tablet {
       padding: 6px 15px;
     }

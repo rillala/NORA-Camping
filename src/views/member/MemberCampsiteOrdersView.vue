@@ -20,7 +20,7 @@
           <th class="table-title">訂單日期</th>
           <th class="table-title">訂單編號</th>
           <th class="table-title responsive-cell-01" v-if="!isSmallScreen">訂單金額</th>
-          <th class="table-title" >訂單狀態</th>
+          <th class="table-title">訂單狀態</th>
           <th class="table-title">查看詳情</th>
           <th class="table-title">取消訂單</th>
         </tr>
