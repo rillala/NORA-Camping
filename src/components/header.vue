@@ -12,7 +12,6 @@ export default {
     return {
       isMenuOpen: false, // 漢堡選單
       isLoginOpen: false, // 登入燈箱
-      isLogin: true, // 判斷是否已經登入
       isMemberSubOpen: false, // 會員中心子選單
       reserveBtn: {
         name: '線上預約',
@@ -53,6 +52,8 @@ export default {
     logout() {
       // 調用pinia的updateToken
       this.updateToken('');
+      this.isMemberSubOpen = false;
+      this.$router.push('/');
     },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
@@ -66,21 +67,29 @@ export default {
     handleClose() {
       this.isLoginOpen = false; // 這將關閉燈箱
       this.isMenuOpen = false; // 關閉子選單-->手機板需要
-      console.log(this.isLoginOpen);
+      // console.log(this.isLoginOpen);
     },
     memberCenter() {
       if (this.isLogin) {
         // 如果已經登入了 token = true, 則開啟子選單
-        console.log('isLogin=true');
+        // console.log(`${this.isLogin}`);
         this.isMemberSubOpen = true;
       } else {
-        this.isOpen = true;
+        // console.log('memberCenter')
+        this.isLoginOpen = true;
       }
     },
+    // 點選子選單跳轉到會員中心時，子選單要關起來
+    closeSubmenu(){
+      this.isMemberSubOpen = false;
+    }
   },
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(userStore, ['token']),
+    isLogin() {
+      return !!this.token
+    }
   },
 };
 </script>
@@ -146,18 +155,18 @@ export default {
           >
 
           <!--會員登入-->
-          <button id="member-login" @click="memberCenter, closeHam">
+          <button id="member-login" @click="memberCenter(); closeHam()">
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
-                <li><RouterLink to="/membercenter">會員中心</RouterLink></li>
+                <li><RouterLink class="sub-menu" to="/membercenter" @click.stop="closeSubmenu">會員中心</RouterLink></li>
                 <li>
-                  <RouterLink to="/membercampsiteorders">商品訂單</RouterLink>
+                  <RouterLink class="sub-menu" to="/membercampsiteorders" @click.stop="closeSubmenu">商品訂單</RouterLink>
                 </li>
                 <li>
-                  <RouterLink to="/memberorderhistory">營地訂單</RouterLink>
+                  <RouterLink class="sub-menu" to="/memberorderhistory" @click.stop="closeSubmenu">營地訂單</RouterLink>
                 </li>
-                <button @click="logout">登出</button>
+                <button class="logout" @click.stop="logout">登出</button>
               </ul>
             </div>
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
@@ -221,4 +230,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
+
 </style>

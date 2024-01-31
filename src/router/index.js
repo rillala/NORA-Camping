@@ -50,7 +50,7 @@ const router = createRouter({
     {
       path: '/shop',
       name: 'shop',
-      component: () => import('../views/ShopView.vue'),
+      component: () => import('../views/shop/ShopView.vue'),
       meta: {
         title: '野良選物 NORA Shop',
       },
@@ -58,9 +58,17 @@ const router = createRouter({
     {
       path: '/shopItem/:id',
       name: 'shopItem',
-      component: () => import('../views/ShopItemView.vue'),
+      component: () => import('../views/shop/ShopItemView.vue'),
       meta: {
         title: '野良選物 NORA Shop',
+      },
+    },
+    {
+      path: '/shopOrderSucess',
+      name: 'shopOrderSucess',
+      component: () => import('../views/shop/shopOrderSucess.vue'),
+      meta: {
+        title: '訂單完成 Order Sucess',
       },
     },
     {
@@ -74,7 +82,7 @@ const router = createRouter({
     {
       path: '/shopCar',
       name: 'shopCar',
-      component: () => import('../views/ShopCarView.vue'),
+      component: () => import('../views/shop/ShopCarView.vue'),
       meta: {
         title: '購物車 Shopping Cart',
       },
