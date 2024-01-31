@@ -67,12 +67,14 @@
             placeholder="再次輸入密碼"
             v-model="user_add.pwdConfirmation"
           /><br />
+          <p v-if="passwordMismatch" class="password-ismatch">密碼不一致</p>
 
           <div class="login-news">
             <input
               type="checkbox"
               v-model="user_add.receiveNews"
               id="receiveNews"
+              :checked="true"
             />
             <div class="box">
               <p class="msg">我願意接收野良的最新消息、優惠相關訊息</p>
@@ -84,6 +86,7 @@
               type="checkbox"
               v-model="user_add.agreeTerms"
               id="agreeTerms"
+              :checked="true"
             />
             <div class="box">
               <p class="msg">我同意本網站服務條款及</p>
@@ -92,7 +95,7 @@
               </button>
             </div>
           </div>
-          <button type="submit" class="main-btn" @click="alert()">
+          <button type="submit" class="main-btn" @click="register" :disabled="!user_add.agreeTerms">
             立即加入
           </button>
         </form>
@@ -119,7 +122,7 @@
 </template>
 
 <script>
-import { RouterLink, RouterView } from 'vue-router';
+// import { RouterLink, RouterView } from 'vue-router';
 import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
@@ -128,13 +131,14 @@ export default {
 
   data() {
     return {
+      passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        account: '',
-        pwd: '',
+        account: 'mor_2314',
+        pwd: '83r5^_',
         pwdConfirmation: '',
-        receiveNews: false,
-        agreeTerms: false,
+        receiveNews: true,
+        agreeTerms: true,
       },
       user_enter: {
         account: 'mor_2314',
@@ -154,6 +158,12 @@ export default {
   watch: {
     isOpen(newVal) {
       console.log(`isOpen changed to ${newVal}`);
+    },
+    'user_add.pwd'(newPassword) {
+      this.passwordMismatch = newPassword !== this.user_add.pwdConfirmation;
+    },
+    'user_add.pwdConfirmation'(newConfirmation) {
+      this.passwordMismatch = newConfirmation !== this.user_add.pwd;
     },
   },
 
@@ -204,6 +214,39 @@ export default {
           this.updateToken('');
         });
     },
+
+    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
+      register() {
+        if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
+        alert('密碼不一致');
+        return; // 中止註冊流程
+  }
+        // 問題 檢查用戶是否勾選了同意隱私權政策
+        if (!this.user_add.agreeTerms) {
+        alert('請勾選隱私權政策'); 
+        console('請勾選隱私權政策'); 
+        }
+        // 在此處呼叫註冊 API 端點
+        axios
+          .post('https://fakestoreapi.com/auth/login', {
+            username: this.user_add.account,
+            password: this.user_add.pwd,
+          })
+          .then(response => {
+            if (response.data && response.data.token) {
+              this.updateToken(response.data.token); // 更新 token
+              console.log('register success', response.data.token);
+              this.closeLightbox(); 
+              alert('註冊成功。');// 註冊成功後，關閉燈箱
+              // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            // 處理註冊失敗的回應
+            alert('註冊失敗，請稍後再試。');
+          });
+      }
   },
 };
 </script>
@@ -393,4 +436,5 @@ input[type='checkbox'] {
 .privacy-message {
   text-align: left;
 }
+
 </style>
