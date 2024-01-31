@@ -8,6 +8,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    @include desktop {
+        text-align: left;
+        padding-left: 10%;
+    }
 }
 
 .shelter-slider-container {
@@ -18,16 +23,6 @@
         width: 100%;
         vertical-align: bottom;
     }
-
-    // .fade-enter-active,
-    // .fade-leave-active {
-    //     transition: opacity 0.6s ;
-    // }
-
-    // .fade-enter,
-    // .fade-leave-to { //淡入淡出
-    //     opacity: 0;
-    // }
 }
 
 .shelter-slider-btn {
@@ -38,7 +33,7 @@
     justify-content: space-between;
     z-index: 1;
     position: absolute;
-    top: 6%;
+    top: 5%;
 
     .shelter-btn {
         background: none;
@@ -75,7 +70,8 @@
             animation: movingWord 3s infinite linear;
 
             @include desktop {
-                font-size: 42px;
+                font-size: 60px;
+                left: 10%;
             }
         }
 
@@ -101,16 +97,50 @@
             }
         }
 
+        @include desktop {
+            @keyframes movingWord {
+                0% {
+                    transform: translateX(50px);
+                }
+
+                25% {
+                    transform: translateX(100px);
+                }
+
+                50% {
+                    transform: translateX(150px);
+                }
+
+                75% {
+                    transform: translateX(100px);
+                }
+
+                100% {
+                    transform: translateX(50px);
+                }
+            }
+        }
+
         .paw1 {
             position: absolute;
-            bottom: 5%;
+            bottom: 0;
             left: 10%;
+
+            @include desktop {
+                width: 200px;
+                bottom: 10%;
+            }
         }
 
         .paw2 {
             position: absolute;
             top: 5%;
-            right: 10%;
+            right: 5%;
+
+            @include desktop {
+                width: 200px;
+                right: 10%;
+            }
         }
     }
 
@@ -122,22 +152,54 @@
         justify-content: center;
         padding-bottom: 20px;
 
+        @include desktop {
+            padding-bottom: 50px;
+        }
+
+        .round-imgs {
+            padding-left: 20%;
+
+            @include desktop {
+                padding: 0;
+            }
+        }
+
+        .round {
+            padding-top: 10px;
+            width: 200px;
+            overflow: hidden;
+            animation: rotate 7s linear infinite;
+
+            @include desktop {
+                padding: 0px 10px;
+                width:320px;
+            }
+
+            @keyframes rotate {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+
         .red-heart {
+            width: 100px;
             position: absolute;
             top: 20%;
-            right: 0;
-            animation: floatHeart 3s infinite linear;
+            right: 5%;
+            animation: floatRedHeart 1.5s infinite linear;
+
+            @include desktop {
+                width: 200px;
+                top: 0;
+            }
         }
 
-        .yellow-heart {
-            position: absolute;
-            bottom: 0;
-            left: 5%;
-            transform: rotate(15deg);
-            animation: floatHeart 3s infinite linear;
-        }
-
-        @keyframes floatHeart {
+        @keyframes floatRedHeart {
             0% {
                 transform: translateZ(0) rotate(-15deg);
             }
@@ -151,19 +213,43 @@
             }
         }
 
+        .yellow-heart {
+            position: absolute;
+            bottom: 20%;
+            left: 0;
+            transform: rotate(15deg);
+            animation: floatYellowHeart 1s infinite linear;
+
+            @include desktop {
+                width: 200px;
+                bottom: 30%;
+                left: 3%;
+            }
+        }
+
+        @keyframes floatYellowHeart {
+            0% {
+                transform: translateZ(0) rotate(20deg);
+            }
+
+            50% {
+                transform: translateZ(-50px) rotate(-20deg);
+            }
+
+            100% {
+                transform: translateZ(0) rotate(20deg);
+            }
+        }
+
         .line-1 {
             position: absolute;
             left: 0;
             bottom: 5%;
-            animation: shine 2s infinite alternate;
-        }
 
-        .line-2 {
-            //線條
-            position: absolute;
-            right: 5%;
-            bottom: 5%;
-            animation: shine 2s infinite alternate;
+            @include desktop {
+                left: 15%;
+                bottom: 35%;
+            }
         }
 
         @keyframes shine {
@@ -177,43 +263,37 @@
                 filter: brightness(1.2); // 調整亮度
             }
         }
-
-        .round {
-            padding: 0px 10px;
-            width: 100%;
-            overflow: hidden;
-            animation: rotate 8s linear infinite;
-
-            @keyframes rotate {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            img {
-                object-fit: cover;
-            }
-        }
     }
 
     .home-cloud {
         width: 300px;
         position: relative;
         padding-top: 30px;
-        animation: cloudMove 4s infinite linear;
+        animation: cloudMove 5s infinite linear;
+
+        @include desktop {
+            padding-top: 50px;
+            width: 500px;
+        }
 
         img {
             width: 250px;
+
+            @include desktop {
+                width: 500px;
+            }
         }
 
         .home-cloud-words {
             position: absolute;
-            left: 25%;
-            top: 50%;
+            left: 20%;
+            top: 45%;
             z-index: 0;
+
+            @include desktop {
+                font-size: 24px;
+                left: 30%;
+            }
         }
 
         @keyframes cloudMove {
@@ -237,6 +317,30 @@
                 transform: translateX(20px) translateY(10px);
             }
         }
+
+        @include desktop {
+            @keyframes cloudMove {
+                0% {
+                    transform: translateX(-40px) translateY(10px);
+                }
+    
+                25% {
+                    transform: translateX(80px) translateY(20px);
+                }
+    
+                50% {
+                    transform: translateX(150px) translateY(15px);
+                }
+    
+                75% {
+                    transform: translateX(200px) translateY(20px);
+                }
+    
+                100% {
+                    transform: translateX(250px) translateY(10px);
+                }
+            }
+        }
     }
 
     .dog-cat-home {
@@ -245,8 +349,37 @@
         align-items: last baseline;
         padding-top: 30px;
 
+        @include desktop {
+            justify-content: space-around;
+            padding: 50px 100px;
+        }
+
         img {
             width: 100%;
+        }
+
+        .walk-cat {
+            img {
+                @include desktop {
+                    width: 150px;
+                }
+            }
+        }
+
+        .walk-dog {
+            img {
+                @include desktop {
+                    width: 220px;
+                }
+            }
+        }
+
+        .shelter-home-icon {
+            img {
+                @include desktop {
+                    width: 600px;
+                }
+            }
         }
     }
 
@@ -256,12 +389,11 @@
         justify-content: center;
         align-items: self-start;
         padding-top: 20px;
-    }
-}
 
-.round.active {
-    //圓形圖片動畫
-    transform: rotateY(180deg);
+        @include desktop {
+            padding: 20px 0px ;
+        }
+    }
 }
 
 // 跑馬燈動畫一到三
@@ -273,6 +405,10 @@
     img {
         //跑馬燈圖片設置動畫
         animation: marquee 12s linear infinite;
+
+        @include desktop {
+            width: 100%;
+        }
     }
 
     @keyframes marquee {
@@ -287,7 +423,6 @@
         }
     }
 }
-
 .shelter-marquee-second {
     background-color: $yellow-2;
     white-space: nowrap; //內容保持在同一行
@@ -296,6 +431,10 @@
     img {
         //跑馬燈圖片設置動畫
         animation: marquee 12s linear infinite;
+
+        @include desktop {
+            width: 100%;
+        }
     }
 
     @keyframes marquee {
@@ -310,7 +449,6 @@
         }
     }
 }
-
 .shelter-marquee-third {
     background-color: $brown-2;
     white-space: nowrap; //內容保持在同一行
@@ -319,6 +457,10 @@
     img {
         //跑馬燈圖片設置動畫
         animation: marquee 12s linear infinite;
+
+        @include desktop {
+            width: 100%;
+        }
     }
 
     @keyframes marquee {
@@ -345,12 +487,23 @@
             width: 100%;
             padding: 50px 20px 0px 0px;
             animation: shine 2s infinite alternate;
+            
+            @include desktop {
+                width: 1000px;
+                padding: 100px 0px;
+            }
         }
 
         .shelter-idea-title {
             position: absolute;
             top: 35%;
             left: 45%;
+
+            @include desktop {
+                top: 45%;
+                left: 40%;
+                font-size: 40px;
+            }
         }
     }
 
@@ -367,6 +520,12 @@
             top: 30%;
             left: 3%;
             color: $white01;
+
+            @include desktop {
+                font-size: 24px;
+                top: 50%;
+                left: 10%;
+            }
         }
     }
 
@@ -383,6 +542,12 @@
             top: 30%;
             left: 4%;
             color: $white01;
+
+            @include desktop {
+                font-size: 24px;
+                top: 50%;
+                left: 60%;
+            }
         }
     }
 }
@@ -393,32 +558,63 @@
     .shelter-adopt {
         position: relative;
 
+        @include desktop {
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .black-cat {
             width: 80px;
             position: absolute;
             right: 4%;
             top: 10%;
+
+            @include desktop {
+                width: 150px;
+                right: 6%;
+                top: 17%;
+            }
         }
 
         .sign_board {
             padding: 50px 0px 0px 20px;
             width: 100%;
             animation: shine 2s infinite alternate;
+
+            @include desktop {
+                width: 1000px;
+                padding: 100px 0px 30px 0px;
+            }
         }
 
         .shelter-adopt-title {
             position: absolute;
             top: 55%;
             left: 25%;
+
+            @include desktop {
+                font-size: 40px;
+                left: 50%;
+            }
         }
     }
 
     .adopt-cloud-dog {
         position: relative;
 
+        @include desktop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .hand-dog {
             padding-left: 10px;
             animation: movingDog 1s infinite linear;
+
+            @include desktop {
+                width: 450px;
+            }
 
             @keyframes movingDog {
                 0% {
@@ -439,6 +635,10 @@
             position: absolute;
             left: 3%;
             bottom: -5%;
+
+            @include desktop {
+                left: 30%;
+            }
         }
     }
 
@@ -447,6 +647,11 @@
         position: relative;
         overflow-x: hidden;
         animation: whiteCloudMove 3s infinite linear;
+
+        @include desktop {
+            max-width: 500px;
+            animation: whiteCloudMove 5s infinite linear;
+        }
 
         @keyframes whiteCloudMove {
             0% {
@@ -462,15 +667,40 @@
             }
         }
 
+        @include desktop {
+            @keyframes whiteCloudMove {
+                0% {
+                    transform: translateX(0px) translateY(10px);
+                }
+    
+                50% {
+                    transform: translateX(50px) translateY(15px);
+                }
+    
+                100% {
+                    transform: translateX(100px) translateY(10px);
+                }
+            }
+        }
+
         .adopt-cloud-words {
             position: absolute;
-            top: 50%;
+            top: 45%;
             left: 15%;
+
+            @include desktop {
+                left: 30%;
+                top: 50%;
+            }
         }
 
         .white_cloud {
             width: 200px;
             padding: 10px 0px;
+
+            @include desktop {
+                width: 500px;
+            }
         }
     }
 
@@ -480,21 +710,44 @@
         gap: 20px;
         padding: 50px 15px;
 
+        @include desktop {
+            padding: 100px 0px;
+            gap: 35px;
+        }
+
+        img {
+            @include desktop {
+                width: 200px;
+            }
+        }
+
+        p {
+            @include desktop {
+                font-size: 24px;
+            }
+        }
+
         .adopt-step1 {
             display: flex;
             align-items: center;
             position: relative;
             gap: 10px;
 
+            @include desktop {
+                justify-content: center;
+                gap: 20px;
+            }
+
             .step1 {
                 color: $blue-1;
                 position: absolute;
-                left: 6%;
+                left: 8%;
                 top: 40%;
-            }
 
-            .step1-dtl {
-                padding-left: 10px;
+                @include desktop {
+                    font-size: 32px;
+                    left: 38%;
+                }
             }
         }
 
@@ -504,11 +757,21 @@
             position: relative;
             gap: 10px;
 
+            @include desktop {
+                justify-content: center;
+                gap: 20px;
+            }
+
             .step2 {
                 color: $blue-1;
                 position: absolute;
-                left: 6%;
+                left: 8%;
                 top: 40%;
+
+                @include desktop {
+                    font-size: 32px;
+                    left: 31.5%;
+                }
             }
 
             .step2-dtls {
@@ -520,6 +783,10 @@
                     background-color: $white01;
                     border-radius: $radius;
                     padding: 10px;
+
+                    @include desktop {
+                        padding: 20px;
+                    }
                 }
 
                 .step2-dtl {
@@ -534,11 +801,21 @@
             position: relative;
             gap: 10px;
 
+            @include desktop {
+                justify-content: center;
+                gap: 20px;
+            }
+
             .step3 {
                 color: $blue-1;
                 position: absolute;
-                left: 6%;
+                left: 8%;
                 top: 40%;
+
+                @include desktop {
+                    font-size: 32px;
+                    left: 35.5%;
+                }
             }
 
             .step3-dtls {
@@ -550,6 +827,10 @@
                     background-color: $white01;
                     border-radius: $radius;
                     padding: 10px;
+
+                    @include desktop {
+                        padding: 20px;
+                    }
                 }
 
                 .step3-dtl {
@@ -564,11 +845,21 @@
             position: relative;
             gap: 10px;
 
+            @include desktop {
+                justify-content: center;
+                gap: 20px;
+            }
+
             .step4 {
                 color: $blue-1;
                 position: absolute;
-                left: 6%;
+                left: 8%;
                 top: 40%;
+
+                @include desktop {
+                    font-size: 32px;
+                    left: 36.5%;
+                }
             }
 
             .step4-dtls {
@@ -580,6 +871,10 @@
                     background-color: $white01;
                     border-radius: $radius;
                     padding: 10px;
+
+                    @include desktop {
+                        padding: 20px;
+                    }
                 }
 
                 .step4-dtl {
@@ -594,11 +889,21 @@
             position: relative;
             gap: 10px;
 
+            @include desktop {
+                justify-content: center;
+                gap: 20px;
+            }
+
             .step5 {
                 color: $blue-1;
                 position: absolute;
-                left: 6%;
+                left: 8%;
                 top: 40%;
+
+                @include desktop {
+                    font-size: 32px;
+                    left: 31.5%;
+                }
             }
 
             .step5-dtls {
@@ -610,6 +915,10 @@
                     background-color: $white01;
                     border-radius: $radius;
                     padding: 10px;
+
+                    @include desktop {
+                        padding: 20px;
+                    }
                 }
 
                 .step5-dtl {
@@ -624,21 +933,27 @@
             position: relative;
             gap: 10px;
 
+            @include desktop {
+                justify-content: center;
+                gap: 20px;
+            }
+
             .step6 {
                 color: $blue-1;
                 position: absolute;
-                left: 6%;
+                left: 8%;
                 top: 40%;
+
+                @include desktop {
+                    font-size: 32px;
+                    left: 39.5%;
+                }
             }
 
             .step6-dtls {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
-
-                .step6-dtl {
-                    padding-left: 10px;
-                }
             }
         }
     }
@@ -651,6 +966,10 @@
             width: 100%;
             height: 220px;
             vertical-align: bottom;
+
+            @include desktop {
+                height: auto;
+            }
         }
 
         .attention-dtl {
@@ -662,24 +981,46 @@
             top: 8%;
             left: 7%;
 
+            @include desktop {
+                gap: 20px;
+                top: 35%;
+                left: 12%;
+            }
+
             .attention-title {
                 display: flex;
                 gap: 5px;
 
+                p {
+                    @include desktop {
+                        font-size: 28px;
+                    }
+                }
+
                 img {
                     width: 15px;
+
+                    @include desktop {
+                        width: 30px;
+                    }
                 }
             }
 
             li {
                 list-style: decimal;
                 font-size: 13px;
+
+                @include desktop {
+                    font-size: 20px;
+                    padding-bottom: 10px;
+                }
             }
         }
     }
 }
 
-.shelter-volunteer-bg { //志工活動
+.shelter-volunteer-bg {
+    //志工活動
     background-color: rgba(225, 202, 167, 0.3);
 
     .shelter-volunteer {
@@ -689,6 +1030,11 @@
             width: 100%;
             padding: 50px 20px 0px 0px;
             animation: shine 2s infinite alternate;
+
+            @include desktop {
+                width: 1000px;
+                padding: 100px 0px;
+            }
         }
 
         .black-cat {
@@ -696,12 +1042,24 @@
             position: absolute;
             top: 17%;
             left: 5%;
+
+            @include desktop {
+                width: 120px;
+                top: 20%;
+                left: 5%;
+            }
         }
 
         .shelter-volunteer-title {
             position: absolute;
             top: 55%;
             right: 25%;
+
+            @include desktop {
+                top: 45%;
+                left: 40%;
+                font-size: 40px;
+            }
         }
     }
 
@@ -709,6 +1067,17 @@
         position: relative;
         padding: 20px 0px;
         animation: blueCloudMove 3s infinite linear;
+
+        img {
+            @include desktop {
+                width: 100%;
+            }
+        }
+
+        @include desktop {
+            width: 500px;
+            padding: 20px 0px 50px 0px;
+        }
 
         @keyframes blueCloudMove {
             0% {
@@ -721,6 +1090,22 @@
 
             100% {
                 transform: translateX(0px) translateY(-5px);
+            }
+        }
+
+        @include desktop {
+            @keyframes blueCloudMove {
+                0% {
+                    transform: translateX(100px) translateY(5px);
+                }
+    
+                50% {
+                    transform: translateX(150px) translateY(0px);
+                }
+    
+                100% {
+                    transform: translateX(100px) translateY(5px);
+                }
             }
         }
 
@@ -738,6 +1123,14 @@
         .circle-img-top {
             display: flex;
             justify-content: space-around;
+
+            img {
+                width: 100px;
+
+                @include desktop {
+                    width: 250px;
+                }
+            }
 
             :nth-child(1) {
                 animation: circleLeft 3s Infinite linear;
@@ -779,20 +1172,38 @@
         .volunteer-info {
             position: relative;
 
+            @include desktop {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
             .lines1 {
                 position: absolute;
                 left: 40%;
                 top: -10%;
+
+                @include desktop {
+                    left: 45%;
+                }
             }
 
             .lines4 {
                 position: absolute;
                 right: 3%;
                 bottom: 0;
+
+                @include desktop {
+                    right: 15%;
+                }
             }
 
             .shape {
                 width: 100%;
+
+                @include desktop {
+                    width: 1000px;
+                }
             }
 
             .volunteer-dtl {
@@ -800,6 +1211,12 @@
                 top: 35%;
                 left: 8%;
                 font-size: 14px;
+
+                @include desktop {
+                    font-size: 24px;
+                    top: 45%;
+                    left: 35%;
+                }
             }
 
             .contact-btn {
@@ -812,6 +1229,14 @@
                 background-color: $blue-4;
                 color: $white01;
                 border-radius: $radius;
+
+                @include desktop {
+                    width: 200px;
+                    height: 60px;
+                    top: 65%;
+                    left: 40%;
+                    font-size: 18px;
+                }
             }
         }
 
@@ -819,6 +1244,14 @@
             display: flex;
             justify-content: space-around;
             padding-top: 10px;
+
+            img {
+                width: 100px;
+
+                @include desktop {
+                    width: 250px;
+                }
+            }
 
             :nth-child(1) {
                 animation: circleLeft 3s Infinite linear;

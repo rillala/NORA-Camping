@@ -19,9 +19,20 @@ h4 {
         rgba(139, 252, 239, 0.7),
         rgba(139, 252, 239, 0.5),
         rgba(139, 252, 239, 0));
+
+    .camp-map {
+        @include desktop {
+            display: flex;
+            justify-content: center;
+        }
+    }
     
     img { //立體地圖
         width: 100%;
+
+        @include desktop {
+            width: fit-content;
+        }
     }
 }
 
@@ -245,9 +256,17 @@ h4 {
             height: 50px;
             border-radius: $radius;
             background-color: $blue-2;
+            transition: background-color 0.3s ease;
 
             @include desktop {
-                font-size: 16px;
+                font-size: 18px;
+            }
+
+            &:hover {
+                @include desktop {
+                    background-color: $blue-4;
+                    color: $white01;
+                }
             }
         }
     }
@@ -313,13 +332,21 @@ h4 {
             width: 120px;
             height: 25px;
             border-radius: $radius;
-            background-color: $brown-3;
+            background-color: $blue-3;
             color: $white01;
+            transition: background-color 0.3s ease;
 
             @include desktop {
                 width: 200px;
                 height: 50px;
-                font-size: 16px;
+                font-size: 18px;
+            }
+
+            &:hover {
+                @include desktop {
+                    background-color: $blue-2;
+                    color: $dark;
+                }
             }
         }
     }
@@ -390,6 +417,10 @@ h4 {
 
     img { //跑馬燈圖片設置動畫
         animation: marquee 12s linear infinite;
+
+        @include desktop {
+            width: 100%;
+        }
     }
 
     @keyframes marquee { //跑馬燈動畫
@@ -412,6 +443,19 @@ h4 {
 
     .guide-camp-info-title { //營地資訊
         position: relative;
+        animation: tentWaveLeft 1.5s infinite alternate;
+
+        @keyframes tentWaveLeft {
+            0% {
+                transform: rotateX(0deg);
+            }
+            50% {
+                transform: rotateX(20deg);
+            }
+            100% {
+                transform: rotateX(0deg);
+            }
+        }
 
         img { //營地資訊招牌
             width: 100%;
@@ -423,7 +467,7 @@ h4 {
             right: 16%;
             top: 50%;
             color: $white01 ;
-
+            
             @include desktop {
                 font-size: 40px;
                 right: 25%;
@@ -434,10 +478,25 @@ h4 {
 
     .camp-cloud { //營地資訊雲朵一
         position: relative;
+        animation: CloudMove 2s infinite linear;
 
         @include desktop {
             display: flex;
             justify-content: space-around;    
+        }
+
+        @keyframes CloudMove {
+            0% {
+                transform: translateY(10px);
+            }
+
+            50% {
+                transform: translateY(15px);
+            }
+
+            100% {
+                transform: translateY(10px);
+            }
         }
 
         .camp-cloud :nth-child(2) { //營地資訊雲朵二
@@ -463,38 +522,89 @@ h4 {
         display: flex;
         flex-wrap: wrap;
 
+        @include desktop {
+            justify-content: center;
+        }
+
         .bigtent { //營地資訊帳篷的圖片
             width: 100%;
             padding-bottom: 10px;
+
+            @include desktop {
+                width:fit-content;
+                padding-bottom: 0;
+            }
         }
 
         .camp-info { //營地資訊帳篷文字
             position: absolute;
-            top: 30%;
-            left: 16%;
+            top: 24%;
+            left: 18%;
+            font-size: 15px;
 
             @include desktop {
                 font-size: 24px;
-                top: 60%;
+                top: 17%;
                 left: 38%;
             }
         }
-    }
 
-    .camp-info-social { //營地資訊帳篷社群媒體區塊
-        display: flex;
-        flex-direction: column;
-        color: $dark;
-
-        .fb,
-        .ig,
-        .line { //營地資訊帳篷社群媒體文字
+        .camp-info-social { //營地資訊帳篷社群媒體區塊
             display: flex;
-            align-items: center;
-            padding-top: 5px;
+            flex-direction: column;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: $white01;
+            border-radius: 10px;
+            position: absolute;
+            right:3%;
+            top: 43.5%;
+            padding: 10px;
 
-            p { //營地資訊帳篷社群媒體文字
-                padding-left: 5px;
+            @include desktop {
+                padding: 15px;
+                right:16%;
+            }
+
+            img {
+                width: 15px;
+
+                @include desktop {
+                    width: 30px;
+                }
+            }
+    
+            .fb,
+            .ig,
+            .line { //營地資訊帳篷社群媒體文字
+                display: flex;
+                align-items: center;
+                padding-top: 3px;
+
+                @include desktop {
+                    padding-top: 5px;
+                }
+    
+                p { //營地資訊帳篷社群媒體文字
+                    padding-left: 5px;
+                    font-size: 12px;
+
+                    @include desktop {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    
+        .camp-info-map {
+
+            img {
+                width: 100%;
+                padding: 60px 10px 10px 10px;
+    
+                @include desktop {
+                    width: fit-content;
+                    padding: 0px 10px 10px 10px ;
+                }
             }
         }
     }
@@ -502,6 +612,23 @@ h4 {
 
 .colorful-flags { //彩色三角旗
     width: 100%;
+    animation: shine 2s infinite alternate;
+}
+
+@keyframes shine {
+
+    //閃亮動畫            
+    0% {
+        filter: brightness(0.8);
+    }
+
+    50% {
+        filter: brightness(1.2);
+    }
+
+    100% {
+        filter: brightness(1.6); // 調整亮度
+    }
 }
 
 .guide-facility-intro-bg { //設施介紹背景
@@ -512,6 +639,19 @@ h4 {
 
     .guide-facility-intro-title { //設施介紹標題區塊
         position: relative;
+        animation: tentWaveRight 1.5s infinite alternate;
+
+        @keyframes tentWaveRight {
+            0% {
+                transform: rotateX(0deg);
+            }
+            50% {
+                transform: rotateX(20deg);
+            }
+            100% {
+                transform: rotateX(0deg);
+            }
+        }
 
         img { //設施介紹標題圖片
             width: 100%;
@@ -535,6 +675,7 @@ h4 {
 
     .facility-cloud { //設施介紹雲朵
         position: relative;
+        animation: CloudMove 2s infinite linear;
 
         @include desktop {
             display: flex;
@@ -633,7 +774,7 @@ h4 {
 
         @include desktop {
             top: 60%;
-            left: 38%;
+            left: 37%;
             gap: 20px;
         }
     }
@@ -645,6 +786,19 @@ h4 {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        animation: TreeMove 0.5s infinite linear;
+
+        @keyframes TreeMove {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
 
         @include desktop {
             justify-content: space-around;
@@ -654,7 +808,7 @@ h4 {
             width: 50px; 
 
             @include desktop {
-                width: 300px;
+                width: 220px;
             }
         }
     }
@@ -667,6 +821,19 @@ h4 {
 
     .guide-rules-title { //營區規範標題
         position: relative;
+        animation: tentWaveLeft 1.5s infinite alternate;
+
+        @keyframes tentWaveLeft {
+            0% {
+                transform: rotateX(0deg);
+            }
+            50% {
+                transform: rotateX(20deg);
+            }
+            100% {
+                transform: rotateX(0deg);
+            }
+        }
 
         img { //營區規範標題圖片
             width: 100%;
@@ -689,6 +856,21 @@ h4 {
 
     .rules-cloud { //營區規範雲朵一
         position: relative;
+        animation: CloudMove 2s infinite linear;
+
+        @keyframes CloudMove {
+            0% {
+                transform: translateY(10px);
+            }
+
+            50% {
+                transform: translateY(15px);
+            }
+
+            100% {
+                transform: translateY(10px);
+            }
+        }
 
         @include desktop {
             display: flex;
@@ -723,7 +905,7 @@ h4 {
             vertical-align: bottom;
 
             @include desktop {
-                width: 150px;
+                width: 120px;
             }
         }
     }    
@@ -752,5 +934,18 @@ h4 {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        animation: TreeMove 1s infinite linear;
+
+        @keyframes TreeMove {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
     }
 }
