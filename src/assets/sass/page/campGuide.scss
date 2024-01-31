@@ -88,6 +88,18 @@ h4 {
     );
     position: relative;
 
+    @include desktop {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .cat-icon , .dog-icon {
+        @include desktop {
+            width: 10%;
+        }
+    }
+
     //腳印1-10
     .paw1 {
         position: absolute;
@@ -109,7 +121,7 @@ h4 {
     .paw4 {
         position: absolute;
         left: 0;
-        top: 30%;
+        top: 25%;
     }
 
     .paw5 {
@@ -133,7 +145,7 @@ h4 {
     .paw8 {
         position: absolute;
         left: 0;
-        top: 75%;
+        top: 70%;
     }
 
     .paw9 {
@@ -145,12 +157,18 @@ h4 {
     .paw10 {
         position: absolute;
         left: 0;
-        top: 90%;
+        top: 91%;
     }
 
     .cat-area-grass-img { //草跟貓的圖
         display: flex;
         align-items: last baseline;
+        overflow: hidden;
+
+        @include desktop {
+            justify-content: space-evenly;
+            gap: 100px;
+        }
     }
 
     .area-card { //導覽卡片內層
@@ -163,18 +181,62 @@ h4 {
         background-color: $blue-3;
         color: $white01;
 
+        @include desktop {
+            max-width: 1200px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .card-dtl {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            @include desktop {
+                padding: 30px;
+                gap: 20px;
+            }
+
+            .area-title {
+                width: 100%;
+                padding-bottom: 10px;
+                border-bottom: 1px solid;
+            }
+        }
+
+        .dog-card-img ,
+        .cat-card-img {
+            @include desktop {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
         img { //導覽卡片內層圖片
             padding-bottom: 10px;
             width: 100%;
             border-radius: $radius;
+
+            @include desktop {
+                width: 480px;
+            }
         }
 
         .area-dtl { //狗區貓區的卡片內容p
             padding: 10px 0px;
+
+            @include desktop {
+                width: 75%;
+            }
         }
 
         .list { //狗區貓區的清單
             list-style-type: disc;
+
+            @include desktop {
+                font-size: 20px;
+            }
         }
 
         .reserve-btn { //我要預約按鈕
@@ -183,46 +245,82 @@ h4 {
             height: 50px;
             border-radius: $radius;
             background-color: $blue-2;
+
+            @include desktop {
+                font-size: 16px;
+            }
         }
     }
 }
 
-.shelter-office-bg { //中途之家&辦公區背景
+.shelter-office-bg { //野良之家&辦公區背景
     background: linear-gradient(to bottom,
         rgba(226, 219, 62, 0.3),
         rgba(226, 219, 62, 0));
 
-    .guide-shelter { //中途之家大區塊
+    .guide-shelter { //野良之家大區塊
         position: relative;
 
-        img { //中途之家的圖片
+        img { //野良之家的圖片
             width: 100%;
+            height: 200px;
             vertical-align: bottom;
+
+            @include desktop {
+                height: auto;
+            }
         }
 
-        .guide-shelter-info { //中途之家的資訊
+        .guide-shelter-info { //野良之家的資訊
             position: absolute;
-            top: 10%;
+            top: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.3);
             color: $white01;
-            padding: 20px 0px;
+            padding: 10px 0px;
+
+            @include desktop {
+                gap: 30px;
+                padding: 50px 0px;
+                top: 22%;
+            }
+        }
+
+        .guide-shelter-title {
+            padding-bottom: 5px;
+
+            @include desktop {
+                font-size: 32px;
+                padding-bottom: 0;
+            }
         }
 
         .guide-shelter-dtl { 
-            padding: 20px 0px;
+            padding-bottom: 10px;
+            font-size: 14px;
+
+            @include desktop {
+                font-size: 20px;
+                padding-bottom: 0;
+            }
         }
 
         .guide-shelter-btn {
             border: 0;
-            width: 200px;
-            height: 50px;
+            width: 120px;
+            height: 25px;
             border-radius: $radius;
             background-color: $brown-3;
             color: $white01;
+
+            @include desktop {
+                width: 200px;
+                height: 50px;
+                font-size: 16px;
+            }
         }
     }
     
@@ -231,26 +329,53 @@ h4 {
 
         img { //辦公區圖片
             width: 100%;
+            height: 200px;
             vertical-align: bottom;
+
+            @include desktop {
+                height: auto;
+            }
         }
 
         .area-office { //辦公區區塊
             position: absolute;
-            top: 5%;
+            top: 2%;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.5);
             color: $dark;
-            padding: 20px 0px;
+
+            @include desktop {
+                gap: 30px;
+                padding: 50px 0px;
+                top: 22%;
+            }
+
+            .office-title {
+                padding: 6px 0px;
+
+                @include desktop {
+                    font-size: 32px;
+                    padding: 0;
+                }
+            }
 
             .office-text { //辦公區文字
-                padding-top: 10px;
+                font-size: 14px;
+
+                @include desktop {
+                    font-size: 20px;
+                }
             }
 
             .office-list { //辦公區清單
-                padding: 10px 0px;
+                font-size: 14px;
+
+                @include desktop {
+                    font-size: 20px;
+                }
             }
         }
     }
@@ -295,15 +420,26 @@ h4 {
 
         .camp-info-title { //營地資訊標題
             position: absolute;
-            right: 19%;
-            top: 48%;
+            right: 16%;
+            top: 50%;
             color: $white01 ;
+
+            @include desktop {
+                font-size: 40px;
+                right: 25%;
+                top: 40%;
+            }
         }
     }
 
     .camp-cloud { //營地資訊雲朵一
         position: relative;
-    
+
+        @include desktop {
+            display: flex;
+            justify-content: space-around;    
+        }
+
         .camp-cloud :nth-child(2) { //營地資訊雲朵二
             padding-left: 50%;
         }
@@ -313,6 +449,11 @@ h4 {
             top: 20%;
             left: 25%;
             color: $yellow-3;
+
+            @include desktop {
+                top: 28%;
+                left: 24%;
+            }
         }
     }
 
@@ -320,18 +461,22 @@ h4 {
         position: relative;
         color: $white01;
         display: flex;
+        flex-wrap: wrap;
 
         .bigtent { //營地資訊帳篷的圖片
             width: 100%;
+            padding-bottom: 10px;
         }
 
         .camp-info { //營地資訊帳篷文字
             position: absolute;
-            top: 45%;
-            left: 24%;
+            top: 30%;
+            left: 16%;
 
-            li { //營地資訊清單
-                padding-top: 5px;
+            @include desktop {
+                font-size: 24px;
+                top: 60%;
+                left: 38%;
             }
         }
     }
@@ -376,33 +521,64 @@ h4 {
 
         .facility-intro-title { //設施介紹標題
             position: absolute;
-            left: 20%;
-            top: 48%;
+            left: 18%;
+            top: 50%;
             color: $white01 ;
+
+            @include desktop {
+                left: 25%;
+                top: 43%;
+                font-size: 40px;
+            }
         }
     }
 
-    .facility-cloud { //設施介紹雲朵一
+    .facility-cloud { //設施介紹雲朵
         position: relative;
+
+        @include desktop {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        :first-child { //設施介紹雲朵一
+            width: 100%;
+
+            @include desktop {
+                width: fit-content;
+            }
+        }
 
         .facility-cloud-words { //設施介紹雲朵文字
             position: absolute;
-            top: 25%;
-            left: 40%;
+            top: 20%;
+            left: 30%;
             color: $white01;
-        }
-    }
 
-    .facility-cloud :first-child { //設施介紹雲朵二
-        padding-left: 10%;
+            @include desktop {
+                top: 28%;
+                left: 23%;
+            }
+        }
     }
 
     .facility-intro { //設施介紹區塊
         position: relative;
 
+        @include desktop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .facility_intro_img { //設施介紹底圖
             width: 100%;
             padding: 0px 5px;
+
+            @include desktop {
+                width: fit-content;
+                padding: 0;
+            }
         }
 
         .facility-slider-btn { //設施介紹圖片輪播按鈕
@@ -414,6 +590,10 @@ h4 {
             top: 43%;
             z-index: 1;
             padding: 0px 10px;
+
+            @include desktop {
+                justify-content:space-evenly;
+            }
 
             .facility-btn {
                 background: none;
@@ -446,22 +626,36 @@ h4 {
     .facility-txt { //設施介紹文字
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         position: absolute;
-        top: 60%;
-        left: 13%;
+        top: 58%;
+        left: 5%;
+
+        @include desktop {
+            top: 60%;
+            left: 38%;
+            gap: 20px;
+        }
     }
 
     .facility_trees { //設施介紹樹
         width: 100%;
         position: absolute;
-        bottom: 0;
+        bottom: -3%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        @include desktop {
+            justify-content: space-around;
+        }
     
         img {
-            width: 70px; 
+            width: 50px; 
+
+            @include desktop {
+                width: 300px;
+            }
         }
     }
 }
@@ -481,26 +675,42 @@ h4 {
 
         .rules-title { //營區規範標題
             position: absolute;
-            right: 18%;
-            top: 48%;
+            right: 16%;
+            top: 50%;
             color: $white01 ;
+
+            @include desktop {
+                right: 25%;
+                top: 43%;
+                font-size: 40px;
+            }
         }
     }
 
     .rules-cloud { //營區規範雲朵一
         position: relative;
 
+        @include desktop {
+            display: flex;
+            justify-content: space-around;
+        }
+
         .rules-cloud-words { //營區規範雲朵文字
             position: absolute;
             top: 20%;
             left: 25%;
             color: $dark;
+
+            @include desktop {
+                top: 28%;
+                left: 14%;
+            }
         }
     }
     
     .rules-cloud :nth-child(3) { //營區規範雲朵二
         position: relative;
-        padding-left: 50%;
+        padding-left: 35%;
     }
 
     .rule-icons { //營區規範貓狗icon
@@ -511,6 +721,10 @@ h4 {
 
         img { //營區規範貓狗icon
             vertical-align: bottom;
+
+            @include desktop {
+                width: 150px;
+            }
         }
     }    
 
@@ -526,6 +740,12 @@ h4 {
 
         .guide-rules-list { //營區規範清單
             list-style: disc;
+
+            li {
+                @include desktop {
+                    padding-bottom: 10px;
+                }
+            }
         }
     }    
     .rule-trees { //營區規範樹

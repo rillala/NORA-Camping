@@ -44,7 +44,7 @@ onBeforeUnmount(() => {
         display: block;
         margin: auto;
         @include desktop{
-            font-size: 32px;
+            font-size: 28px;
         }
     }
     button{
@@ -67,7 +67,7 @@ onBeforeUnmount(() => {
             font-size: 20px;
             font-weight: 500;
             @include desktop{
-                font-size: 32px;
+                font-size: 28px;
             }
         }
     }
