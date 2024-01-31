@@ -11,22 +11,17 @@ export default {
   data() {
     return {};
   },
+  created() {
+    const cartStore = useCartStore();
+    cartStore.getCart();
+  },
   methods: {
-    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty']),
+    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart']),
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
   },
   watch: {},
-  created() {},
-  mounted() {
-    // 初始化时，将 localStorage 中的值同步到 cartList
-    // const storedCartList = localStorage.getItem('cartList');
-    // if (storedCartList) {
-    //   const parsedCartList = JSON.parse(storedCartList);
-    //   useCartStore().cartList.carts = parsedCartList;
-    // }
-  },
 };
 </script>
 
