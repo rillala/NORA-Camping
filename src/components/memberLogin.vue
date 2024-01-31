@@ -193,7 +193,7 @@ export default {
           console.error(error);
 
           if (error.response && error.response.status === 401) {
-            alert('Invalid username or password.');
+            alert('帳號密碼有誤請再確認.');
           } else {
             alert(
               'An error occurred while logging in. Please try again later.',

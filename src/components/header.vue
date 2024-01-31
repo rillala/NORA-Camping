@@ -53,6 +53,7 @@ export default {
       // 調用pinia的updateToken
       this.updateToken('');
       this.isMemberSubOpen = false;
+      this.$router.push('/');
     },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
@@ -66,18 +67,22 @@ export default {
     handleClose() {
       this.isLoginOpen = false; // 這將關閉燈箱
       this.isMenuOpen = false; // 關閉子選單-->手機板需要
-      console.log(this.isLoginOpen);
+      // console.log(this.isLoginOpen);
     },
     memberCenter() {
       if (this.isLogin) {
         // 如果已經登入了 token = true, 則開啟子選單
-        console.log(`${this.isLogin}`);
+        // console.log(`${this.isLogin}`);
         this.isMemberSubOpen = true;
       } else {
-        console.log('memberCenter')
+        // console.log('memberCenter')
         this.isLoginOpen = true;
       }
     },
+    // 點選子選單跳轉到會員中心時，子選單要關起來
+    closeSubmenu(){
+      this.isMemberSubOpen = false;
+    }
   },
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
@@ -154,12 +159,12 @@ export default {
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
-                <li><RouterLink class="sub-menu" to="/membercenter">會員中心</RouterLink></li>
+                <li><RouterLink class="sub-menu" to="/membercenter" @click.stop="closeSubmenu">會員中心</RouterLink></li>
                 <li>
-                  <RouterLink class="sub-menu" to="/membercampsiteorders">商品訂單</RouterLink>
+                  <RouterLink class="sub-menu" to="/membercampsiteorders" @click.stop="closeSubmenu">商品訂單</RouterLink>
                 </li>
                 <li>
-                  <RouterLink class="sub-menu" to="/memberorderhistory">營地訂單</RouterLink>
+                  <RouterLink class="sub-menu" to="/memberorderhistory" @click.stop="closeSubmenu">營地訂單</RouterLink>
                 </li>
                 <button class="logout" @click.stop="logout">登出</button>
               </ul>
@@ -225,52 +230,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
-@mixin only-mobile {
 
-}
-.sub-menu-container{
-  display: none;
-  @include tablet{
-  display: block;
-  position:absolute;
-  width:100px;
-  background-color:$blue-4;
-  color:$white01;
-  height:120px;
-  top:80px;
-  padding:10px 8px;
-  border-radius: 20px;
-  }
-
-  @include desktop {
-  display: block;
-  position:absolute;
-  width:100px;
-  background-color:$blue-4;
-  color:$white01;
-  height:120px;
-  top:80px;
-  padding:10px 8px;
-  border-radius: 20px;
-  }
-
-}
-.sub-menu{
-  margin:10px 0;
-  text-decoration: none;
-  color:$white01;
-  border-bottom: 1px solid $white01;
-  padding:4px;
-  line-height: 1.5%;
-  @include font-style(16px, 400, 1%, 160%);
-}
-
-.logout{
-  border-bottom: 1px solid $white01;
-  background-color: transparent;
-  border: none;
-  color:$white01;
-  @include font-style(16px, 400, 1%, 160%);
-  
-}
 </style>
