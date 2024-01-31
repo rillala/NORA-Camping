@@ -11,7 +11,8 @@ function toSheleter(){
 </script>
 
 <template>
-<div class="banner-bgc">
+<div class="banner-bgc" >
+    <div id="nora-story"></div>
     <div class="banner-wrap">
     <h2>野良露營</h2>
     <h4>放鬆身心最優選</h4>
@@ -37,7 +38,8 @@ function toSheleter(){
         </div>
     </div>
     <!--三大理念-->
-    <div class="opinion-wrap"> 
+    <div class="opinion-wrap" > 
+        <div id="nora-concept"></div>
         <div class="opinion animal">
             <img src="../assets/image/aboutView/animalFriendly.jpg" alt="動物友善">
             <div class="wrap">
@@ -95,7 +97,8 @@ function toSheleter(){
     <hr>
 </div>
 <!--營業時間-->
-<div class="business-hours-wrap accordion">
+<div class="business-hours-wrap accordion" >
+    <div id="nora-intro"></div>
     <businessHours title="管理中心">
         <p>營業時間：06:30~21:00</p>
         <p>管理人員巡場時間：08:00~20:00</p>

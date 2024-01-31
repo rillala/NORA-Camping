@@ -32,16 +32,21 @@ export default {
           routerLink: '/about',
           sublist: [
             {
-              linkName: '品牌理念',
-              hash: '',
+              linkName: '創辦故事',
+              hash: '#nora-story',
             },
             {
-              linkName: '營區介紹',
-              hash: '',
+              linkName: '品牌理念',
+              hash: '#nora-concept',
             },
             {
               linkName: '營業資訊',
-              hash: '',
+              hash: '#nora-intro',
+            },
+            {
+              linkName: '最新消息',
+              routerLink: '/',
+              hash: '#nora-news',
             },
           ],
         },
@@ -50,20 +55,20 @@ export default {
           routerLink: '/camp',
           sublist: [
             {
-              linkName: '營區類型',
-              hash: '',
+              linkName: '營區地圖',
+              hash: '#nora-zone',
             },
             {
-              linkName: '營區位置',
-              hash: '',
+              linkName: '營區地點',
+              hash: '#nora-position',
             },
             {
               linkName: '設施介紹',
-              hash: '',
+              hash: '#nora-facility',
             },
             {
               linkName: '營區規範',
-              hash: '',
+              hash: '#nora-rule',
             },
           ],
         },
@@ -73,11 +78,11 @@ export default {
           sublist: [
             {
               linkName: '問題解惑',
-              hash: '',
+              hash: '#nora-faq',
             },
             {
               linkName: '聯絡我們',
-              hash: '',
+              hash: '#nora-contact',
             },
           ],
         },
@@ -87,15 +92,15 @@ export default {
           sublist: [
             {
               linkName: '認識中途',
-              hash: '',
+              hash: '#nora-shelter',
             },
             {
               linkName: '志工活動',
-              hash: '',
+              hash: '#nora-volunteer',
             },
             {
               linkName: '領養流程',
-              hash: '',
+              hash: '#nora-adopt',
             },
           ],
         },
@@ -111,7 +116,7 @@ export default {
     };
   },
   methods: {
-    emailSubmit() { },
+    emailSubmit() {},
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
@@ -127,8 +132,14 @@ export default {
           <p class="dark title">{{ item.title }}</p>
           <ul v-if="item.sublist">
             <li v-for="subItem in item.sublist" :key="subItem.linkName">
-              <router-link :to="`{path: '${item.routerLink}', hash: '${subItem.hash}'}`" class="dark sub-link">{{
-                subItem.linkName }}</router-link>
+              <router-link
+                :to="{
+                  path: subItem.routerLink || item.routerLink,
+                  hash: subItem.hash,
+                }"
+                class="dark sub-link"
+                >{{ subItem.linkName }}</router-link
+              >
             </li>
           </ul>
         </li>
@@ -137,13 +148,19 @@ export default {
       <ul class="btn-area">
         <li>
           <RouterLink :to="reserveBtn.path" id="reserve-btn-footer">
-            <img :src="getImageUrl('headerFooter/reservation-footer.png')" :alt="reserveBtn" />
+            <img
+              :src="getImageUrl('headerFooter/reservation-footer.png')"
+              :alt="reserveBtn"
+            />
             <p class="dark">{{ reserveBtn.name }}</p>
           </RouterLink>
         </li>
         <li>
-          <RouterLink :to="shopBtn.path" id="shop-btn-footer"><img :src="getImageUrl('headerFooter/shop-footer.png')"
-              :alt="shopBtn" />
+          <RouterLink :to="shopBtn.path" id="shop-btn-footer"
+            ><img
+              :src="getImageUrl('headerFooter/shop-footer.png')"
+              :alt="shopBtn"
+            />
             <p class="dark">{{ shopBtn.name }}</p>
           </RouterLink>
         </li>
@@ -154,24 +171,44 @@ export default {
       <div class="subscribe">
         <p class="white01">
           訂閱 NORA Camp
-          <br class="br-mobile" />電子報，<br />與我們一同分享露營<br class="br-mobile" />和貓狗的美好時光！
+          <br class="br-mobile" />電子報，<br />與我們一同分享露營<br
+            class="br-mobile"
+          />和貓狗的美好時光！
         </p>
         <div class="box">
-          <input type="email" name="email" id="email-input" placeholder="請輸入您的電子郵件" v-model="inputEmail" />
-          <jelloBtn :content="'送出'" id="email-submit" class="tinyp" @click="emailSubmit" />
+          <input
+            type="email"
+            name="email"
+            id="email-input"
+            placeholder="請輸入您的電子郵件"
+            v-model="inputEmail"
+          />
+          <jelloBtn
+            :content="'送出'"
+            id="email-submit"
+            class="tinyp"
+            @click="emailSubmit"
+          />
         </div>
       </div>
 
       <div class="information">
         <div class="logo">
-          <img :src="getImageUrl('headerFooter/logo-mobile-light.png')" alt="logo-image" />
+          <img
+            :src="getImageUrl('headerFooter/logo-mobile-light.png')"
+            alt="logo-image"
+          />
         </div>
         <p class="title white01">聯絡我們</p>
         <p class="info white01">地址：南投縣仙山鄉翠湖路1號</p>
         <p class="info white01">電話：0988-123-456</p>
         <p class="info white01">Email：info@noracamp.com</p>
         <div class="social-media">
-          <a v-for="media in mediaLink" :href="media.link" :key="media.mediaType">
+          <a
+            v-for="media in mediaLink"
+            :href="media.link"
+            :key="media.mediaType"
+          >
             <img :src="getImageUrl(media.imgPath)" :alt="media.mediaType" />
           </a>
         </div>
