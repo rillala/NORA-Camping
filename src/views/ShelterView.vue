@@ -5,55 +5,28 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      bannerImages: [ //Banner輪播
-        '/src/assets/image/shelter/shelter_bg_m_2.png',
-        '/src/assets/image/shelter/shelter_bg_m_1.png',
-        '/src/assets/image/shelter/shelter_bg_m_3.png',
+      currentIndex: 0, //目前圖片
+      images: [ //banner輪播圖片
+      'shelter_bg_m_2.png',
+      'shelter_bg_m_1.png',
+      'shelter_bg_m_3.png',
       ],
-      currentIndex: 0, //當前圖片
-      autoPlayInterval: null, // 新增屬性來儲存自動播放定時器
-
-      animalImages: [ //貓狗圓形圖片
-        { src: 'src/assets/image/shelter/round_cat_m1.png' },
-        { src: 'src/assets/image/shelter/round_dogs_m1.png' },
-        { src: 'src/assets/image/shelter/round_dog_m1.png' }
+      rounds: [
+      { paths:'round_dog_1.png' },
+      { paths:'round_dogs_1.png' },
+      { paths:'round_cat_1.png' },
       ],
-      activeIndex: 0,
-
     }
-  },
-  computed: {
-    currentImage() {
-      return this.bannerImages[this.currentIndex];
-    },
-  },
-
-  mounted() {
-    this.startAutoPlay(); //自動播放
-
-    setInterval(() => { //設置時間
-      this.nextImage();
-    }, 3000); // 切換圖片時間間隔3秒
-
   },
   methods: {
     prevSlide() { //按鈕上一張
-      this.currentIndex = (this.currentIndex - 1 + this.bannerImages.length) % this.bannerImages.length;
+      this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
     },
     nextSlide() { //按鈕下一張
-      this.currentIndex = (this.currentIndex + 1) % this.bannerImages.length;
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
     },
-    startAutoPlay() { //開始自動播放，隔一段時間切換到下一張
-      this.autoPlayInterval = setInterval(() => {
-        this.nextSlide();
-      }, 3000); // 設定間隔時間每3秒切換一次
-    },
-    stopAutoPlay() { // 停止自動播放
-      clearInterval(this.autoPlayInterval);
-    },
-
-    nextImage() {
-      this.activeIndex = (this.activeIndex + 1) % this.animalImages.length;
+    getImageUrl(paths) { //取得圖片路徑
+      return new URL(`../assets/image/shelter/${paths}`, import.meta.url).href;
     },
   },
 };
@@ -70,9 +43,7 @@ export default {
 
     <!-- Banner輪播區塊 -->
     <div class="shelter-slider-container">
-      <transition name="fade" mode="out-in">
-        <img :src="currentImage" :key="currentImage" class="slider-image" />
-      </transition>
+      <img :src="getImageUrl(images[currentIndex])" alt="banner輪播圖片" class="slider-image">
     </div>
 
     <!-- Banner輪播按鈕 -->
@@ -105,18 +76,13 @@ export default {
       <!-- 圓形翻轉圖片 -->
       <div class="shelter-round-imgs">
 
+        <div class="round-imgs">
+          <img v-for="(round, index) in rounds" :key="index" class="round" :src="getImageUrl(round.paths)" :alt="'Round' + (index + 1)">
+        </div>
+
         <img class="red-heart" src="/src/assets/image/shelter/red_heart.svg" alt="紅色愛心icon" />
 
         <img class="yellow-heart" src="/src/assets/image/shelter/yellow_heart.svg" alt="黃色愛心icon" />
-
-        <!-- <img class="line-1" src="/src/assets/image/shelter/line_1.svg" alt="線條一"> -->
-
-        <div v-for="(item, index) in animalImages" :key="index" class="round"
-          :class="{ 'active': index === activeIndex }">
-          <img :src="item.src" alt="Round Image">
-        </div>
-
-        <!-- <img class="line-2" src="/src/assets/image/shelter/line_2.svg" alt="線條二" /> -->
 
       </div>
 
@@ -165,8 +131,8 @@ export default {
         <p class="shelter-idea-dog-word">
           流浪的貓狗日趨增多，<br />
           野良希望能為流浪貓狗盡一份心力！<br />
-          所以我們致力於創造一個安全、舒適的環境，<br />
-          為無家可歸的貓狗們提供食物、醫療和愛心。
+          我們致力於創造一個安全、舒適的環境，<br />
+          為無家可歸的貓狗提供食物、醫療和愛心。
         </p>
       </div>
 
@@ -176,7 +142,7 @@ export default {
           讓這裡不僅是暫時的棲身之所，<br />
           更是個能夠啟發貓狗活力和希望的場所，<br />
           並努力宣導以領養代替購買的理念，<br />
-          讓流浪的貓狗們可以找到永久的愛和幸福溫暖的家。
+          讓流浪的貓狗能找到永久的愛和溫暖的家。
         </p>
       </div>
     </div>
