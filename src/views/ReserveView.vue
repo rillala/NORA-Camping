@@ -24,459 +24,821 @@ export default {
       },
       calendarAttributes: '',
       remainRoomList: [
-        { date: '2024-02-01', rooms: 4 },
-        { date: '2024-02-02', rooms: 7 },
-        { date: '2024-02-03', rooms: 5 },
-        { date: '2024-02-04', rooms: 3 },
-        { date: '2024-02-05', rooms: 0 },
-        { date: '2024-02-06', rooms: 2 },
-        { date: '2024-02-07', rooms: 8 },
-        { date: '2024-02-08', rooms: 1 },
-        { date: '2024-02-09', rooms: 5 },
-        { date: '2024-02-10', rooms: 4 },
-        { date: '2024-02-11', rooms: 0 },
-        { date: '2024-02-12', rooms: 6 },
-        { date: '2024-02-13', rooms: 3 },
-        { date: '2024-02-14', rooms: 2 },
-        { date: '2024-02-15', rooms: 0 },
-        { date: '2024-02-16', rooms: 4 },
-        { date: '2024-02-17', rooms: 7 },
-        { date: '2024-02-18', rooms: 6 },
-        { date: '2024-02-19', rooms: 1 },
-        { date: '2024-02-20', rooms: 3 },
-        { date: '2024-02-21', rooms: 0 },
-        { date: '2024-02-22', rooms: 4 },
-        { date: '2024-02-23', rooms: 2 },
-        { date: '2024-02-24', rooms: 7 },
-        { date: '2024-02-25', rooms: 0 },
-        { date: '2024-02-26', rooms: 3 },
-        { date: '2024-02-27', rooms: 0 },
-        { date: '2024-02-28', rooms: 0 },
+        {
+          date: '2024-02-01',
+          rooms: [
+            {
+              id: 1,
+              count: 4,
+            },
+            {
+              id: 2,
+              count: 1,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 3,
+            },
+            {
+              id: 5,
+              count: 1,
+            },
+            {
+              id: 6,
+              count: 5,
+            },
+          ],
+        },
+        {
+          date: '2024-02-02',
+          rooms: [
+            {
+              id: 1,
+              count: 0,
+            },
+            {
+              id: 2,
+              count: 0,
+            },
+            {
+              id: 3,
+              count: 0,
+            },
+            {
+              id: 4,
+              count: 0,
+            },
+            {
+              id: 5,
+              count: 0,
+            },
+            {
+              id: 6,
+              count: 0,
+            },
+          ],
+        },
+        {
+          date: '2024-02-03',
+          rooms: [
+            {
+              id: 1,
+              count: 5,
+            },
+            {
+              id: 2,
+              count: 4,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 3,
+            },
+            {
+              id: 5,
+              count: 2,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-04',
+          rooms: [
+            {
+              id: 1,
+              count: 1,
+            },
+            {
+              id: 2,
+              count: 3,
+            },
+            {
+              id: 3,
+              count: 1,
+            },
+            {
+              id: 4,
+              count: 2,
+            },
+            {
+              id: 5,
+              count: 1,
+            },
+            {
+              id: 6,
+              count: 2,
+            },
+          ],
+        },
+        {
+          date: '2024-02-05',
+          rooms: [
+            {
+              id: 1,
+              count: 4,
+            },
+            {
+              id: 2,
+              count: 4,
+            },
+            {
+              id: 3,
+              count: 3,
+            },
+            {
+              id: 4,
+              count: 2,
+            },
+            {
+              id: 5,
+              count: 3,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-06',
+          rooms: [
+            {
+              id: 1,
+              count: 0,
+            },
+            {
+              id: 2,
+              count: 0,
+            },
+            {
+              id: 3,
+              count: 0,
+            },
+            {
+              id: 4,
+              count: 0,
+            },
+            {
+              id: 5,
+              count: 0,
+            },
+            {
+              id: 6,
+              count: 0,
+            },
+          ],
+        },
+        {
+          date: '2024-02-07',
+          rooms: [
+            {
+              id: 1,
+              count: 1,
+            },
+            {
+              id: 2,
+              count: 3,
+            },
+            {
+              id: 3,
+              count: 4,
+            },
+            {
+              id: 4,
+              count: 1,
+            },
+            {
+              id: 5,
+              count: 1,
+            },
+            {
+              id: 6,
+              count: 5,
+            },
+          ],
+        },
+        {
+          date: '2024-02-08',
+          rooms: [
+            {
+              id: 1,
+              count: 4,
+            },
+            {
+              id: 2,
+              count: 2,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 3,
+            },
+            {
+              id: 5,
+              count: 2,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-09',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 3,
+            },
+            {
+              id: 3,
+              count: 4,
+            },
+            {
+              id: 4,
+              count: 4,
+            },
+            {
+              id: 5,
+              count: 3,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-10',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 2,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 3,
+            },
+            {
+              id: 5,
+              count: 2,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-11',
+          rooms: [
+            {
+              id: 1,
+              count: 4,
+            },
+            {
+              id: 2,
+              count: 3,
+            },
+            {
+              id: 3,
+              count: 4,
+            },
+            {
+              id: 4,
+              count: 1,
+            },
+            {
+              id: 5,
+              count: 3,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-12',
+          rooms: [
+            {
+              id: 1,
+              count: 0,
+            },
+            {
+              id: 2,
+              count: 0,
+            },
+            {
+              id: 3,
+              count: 0,
+            },
+            {
+              id: 4,
+              count: 0,
+            },
+            {
+              id: 5,
+              count: 0,
+            },
+            {
+              id: 6,
+              count: 0,
+            },
+          ],
+        },
+        {
+          date: '2024-02-13',
+          rooms: [
+            {
+              id: 1,
+              count: 5,
+            },
+            {
+              id: 2,
+              count: 3,
+            },
+            {
+              id: 3,
+              count: 4,
+            },
+            {
+              id: 4,
+              count: 1,
+            },
+            {
+              id: 5,
+              count: 4,
+            },
+            {
+              id: 6,
+              count: 3,
+            },
+          ],
+        },
+        {
+          date: '2024-02-14',
+          rooms: [
+            {
+              id: 1,
+              count: 1,
+            },
+            {
+              id: 2,
+              count: 1,
+            },
+            {
+              id: 3,
+              count: 1,
+            },
+            {
+              id: 4,
+              count: 1,
+            },
+            {
+              id: 5,
+              count: 0,
+            },
+            {
+              id: 6,
+              count: 0,
+            },
+          ],
+        },
+        {
+          date: '2024-02-15',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 0,
+            },
+            {
+              id: 3,
+              count: 0,
+            },
+            {
+              id: 4,
+              count: 0,
+            },
+            {
+              id: 5,
+              count: 0,
+            },
+            {
+              id: 6,
+              count: 0,
+            },
+          ],
+        },
+        {
+          date: '2024-02-16',
+          rooms: [
+            {
+              id: 1,
+              count: 4,
+            },
+            {
+              id: 2,
+              count: 5,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 3,
+            },
+            {
+              id: 5,
+              count: 4,
+            },
+            {
+              id: 6,
+              count: 5,
+            },
+          ],
+        },
+        {
+          date: '2024-02-17',
+          rooms: [
+            {
+              id: 1,
+              count: 5,
+            },
+            {
+              id: 2,
+              count: 2,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 5,
+            },
+            {
+              id: 5,
+              count: 4,
+            },
+            {
+              id: 6,
+              count: 4,
+            },
+          ],
+        },
+        {
+          date: '2024-02-18',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 2,
+            },
+            {
+              id: 3,
+              count: 5,
+            },
+            {
+              id: 4,
+              count: 2,
+            },
+            {
+              id: 5,
+              count: 3,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-19',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 5,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 2,
+            },
+            {
+              id: 5,
+              count: 2,
+            },
+            {
+              id: 6,
+              count: 2,
+            },
+          ],
+        },
+        {
+          date: '2024-02-20',
+          rooms: [
+            {
+              id: 1,
+              count: 3,
+            },
+            {
+              id: 2,
+              count: 2,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 1,
+            },
+            {
+              id: 5,
+              count: 5,
+            },
+            {
+              id: 6,
+              count: 4,
+            },
+          ],
+        },
+        {
+          date: '2024-02-21',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 1,
+            },
+            {
+              id: 3,
+              count: 1,
+            },
+            {
+              id: 4,
+              count: 3,
+            },
+            {
+              id: 5,
+              count: 1,
+            },
+            {
+              id: 6,
+              count: 2,
+            },
+          ],
+        },
+        {
+          date: '2024-02-22',
+          rooms: [
+            {
+              id: 1,
+              count: 0,
+            },
+            {
+              id: 2,
+              count: 0,
+            },
+            {
+              id: 3,
+              count: 0,
+            },
+            {
+              id: 4,
+              count: 0,
+            },
+            {
+              id: 5,
+              count: 0,
+            },
+            {
+              id: 6,
+              count: 0,
+            },
+          ],
+        },
+        {
+          date: '2024-02-23',
+          rooms: [
+            {
+              id: 1,
+              count: 3,
+            },
+            {
+              id: 2,
+              count: 4,
+            },
+            {
+              id: 3,
+              count: 3,
+            },
+            {
+              id: 4,
+              count: 2,
+            },
+            {
+              id: 5,
+              count: 1,
+            },
+            {
+              id: 6,
+              count: 5,
+            },
+          ],
+        },
+        {
+          date: '2024-02-24',
+          rooms: [
+            {
+              id: 1,
+              count: 5,
+            },
+            {
+              id: 2,
+              count: 1,
+            },
+            {
+              id: 3,
+              count: 2,
+            },
+            {
+              id: 4,
+              count: 5,
+            },
+            {
+              id: 5,
+              count: 2,
+            },
+            {
+              id: 6,
+              count: 3,
+            },
+          ],
+        },
+        {
+          date: '2024-02-25',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 1,
+            },
+            {
+              id: 3,
+              count: 1,
+            },
+            {
+              id: 4,
+              count: 0,
+            },
+            {
+              id: 5,
+              count: 0,
+            },
+            {
+              id: 6,
+              count: 0,
+            },
+          ],
+        },
+        {
+          date: '2024-02-26',
+          rooms: [
+            {
+              id: 1,
+              count: 1,
+            },
+            {
+              id: 2,
+              count: 1,
+            },
+            {
+              id: 3,
+              count: 1,
+            },
+            {
+              id: 4,
+              count: 1,
+            },
+            {
+              id: 5,
+              count: 1,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-27',
+          rooms: [
+            {
+              id: 1,
+              count: 2,
+            },
+            {
+              id: 2,
+              count: 4,
+            },
+            {
+              id: 3,
+              count: 3,
+            },
+            {
+              id: 4,
+              count: 1,
+            },
+            {
+              id: 5,
+              count: 5,
+            },
+            {
+              id: 6,
+              count: 1,
+            },
+          ],
+        },
+        {
+          date: '2024-02-28',
+          rooms: [
+            {
+              id: 1,
+              count: 1,
+            },
+            {
+              id: 2,
+              count: 2,
+            },
+            {
+              id: 3,
+              count: 5,
+            },
+            {
+              id: 4,
+              count: 2,
+            },
+            {
+              id: 5,
+              count: 5,
+            },
+            {
+              id: 6,
+              count: 2,
+            },
+          ],
+        },
       ],
       disabledDates: [],
-      campsiteAvailabilities: [
-        {
-          campsiteId: '1',
-          date: '2024-02-01',
-          remaining: 9,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-01',
-          remaining: 6,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-01',
-          remaining: 2,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-01',
-          remaining: 6,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-01',
-          remaining: 0,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-01',
-          remaining: 9,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-02',
-          remaining: 6,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-02',
-          remaining: 6,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-02',
-          remaining: 0,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-02',
-          remaining: 0,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-02',
-          remaining: 8,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-02',
-          remaining: 0,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-03',
-          remaining: 7,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-03',
-          remaining: 5,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-03',
-          remaining: 4,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-03',
-          remaining: 5,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-03',
-          remaining: 6,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-03',
-          remaining: 9,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-04',
-          remaining: 9,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-04',
-          remaining: 8,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-04',
-          remaining: 0,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-04',
-          remaining: 5,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-04',
-          remaining: 2,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-04',
-          remaining: 4,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-05',
-          remaining: 0,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-05',
-          remaining: 2,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-05',
-          remaining: 8,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-05',
-          remaining: 6,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-05',
-          remaining: 7,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-05',
-          remaining: 2,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-06',
-          remaining: 1,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-06',
-          remaining: 8,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-06',
-          remaining: 9,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-06',
-          remaining: 2,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-06',
-          remaining: 3,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-06',
-          remaining: 7,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-07',
-          remaining: 3,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-07',
-          remaining: 6,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-07',
-          remaining: 4,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-07',
-          remaining: 2,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-07',
-          remaining: 2,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-07',
-          remaining: 9,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-08',
-          remaining: 4,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-08',
-          remaining: 1,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-08',
-          remaining: 8,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-08',
-          remaining: 3,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-08',
-          remaining: 3,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-08',
-          remaining: 7,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-09',
-          remaining: 3,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-09',
-          remaining: 6,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-09',
-          remaining: 4,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-09',
-          remaining: 2,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-09',
-          remaining: 6,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-09',
-          remaining: 6,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-10',
-          remaining: 1,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-10',
-          remaining: 1,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-10',
-          remaining: 8,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-10',
-          remaining: 7,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-10',
-          remaining: 6,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-10',
-          remaining: 9,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-11',
-          remaining: 4,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-11',
-          remaining: 6,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-11',
-          remaining: 3,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-11',
-          remaining: 0,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-11',
-          remaining: 6,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-11',
-          remaining: 6,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-12',
-          remaining: 4,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-12',
-          remaining: 3,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-12',
-          remaining: 4,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-12',
-          remaining: 7,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-12',
-          remaining: 3,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-12',
-          remaining: 2,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-13',
-          remaining: 1,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-13',
-          remaining: 0,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-13',
-          remaining: 3,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-13',
-          remaining: 2,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-13',
-          remaining: 2,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-13',
-          remaining: 1,
-        },
-        {
-          campsiteId: '1',
-          date: '2024-02-14',
-          remaining: 3,
-        },
-        {
-          campsiteId: '2',
-          date: '2024-02-14',
-          remaining: 1,
-        },
-        {
-          campsiteId: '3',
-          date: '2024-02-14',
-          remaining: 7,
-        },
-        {
-          campsiteId: '4',
-          date: '2024-02-14',
-          remaining: 6,
-        },
-        {
-          campsiteId: '5',
-          date: '2024-02-14',
-          remaining: 8,
-        },
-        {
-          campsiteId: '6',
-          date: '2024-02-14',
-          remaining: 4,
-        },
-      ],
-      selectedAvailabilities: [],
+      minSiteCounts: [],
       // 保留兩個變數用來擷取入住和退房日期
       startDate: '',
       endDate: '',
@@ -686,9 +1048,7 @@ export default {
     this.screen = mapCurrent({ lg: 2 }, 1);
     // 日曆變數
 
-    this.calendarAttributes = this.transformToCalendarAttributes(
-      this.remainRoomList,
-    );
+    this.calendarAttributes = this.changeToCalendarAttr(this.remainRoomList);
   },
   mounted() {
     // 如果有儲存過選擇的日期和夜衝, 則讀取值
@@ -783,6 +1143,7 @@ export default {
     endDate(newVal) {
       sessionStorage.setItem('endDate', newVal);
       this.updateDuration();
+      this.filterRemainSite();
     },
     hasDiscount(newVal) {
       sessionStorage.setItem('hasDiscount', newVal);
@@ -797,14 +1158,59 @@ export default {
     },
   },
   methods: {
-    transformToCalendarAttributes(roomData) {
+    filterRemainSite() {
+      const start = new Date(this.startDate);
+      const end = new Date(this.endDate);
+      end.setDate(end.getDate() - 1); // 将结束日期减去一天
+
+      // 筛选出在指定日期范围内的数据
+      const filteredData = this.remainRoomList.filter(item => {
+        const itemDate = new Date(item.date);
+        return itemDate >= start && itemDate <= end;
+      });
+
+      // 对每个 id 找到最小的 count 值
+      const minCounts = Array.from({ length: 6 }, (_, i) => {
+        const id = i + 1;
+        const minCount = Math.min(
+          ...filteredData.map(item => {
+            const room = item.rooms.find(room => room.id === id);
+            return room ? room.count : Infinity;
+          }),
+        );
+
+        return { id, minCount: minCount === Infinity ? 0 : minCount };
+      });
+
+      this.minSiteCounts = minCounts;
+      this.updateSelectListRemain();
+    },
+    updateSelectListRemain() {
+      // 遍历 selectSiteList 数组
+      this.selectSiteList.forEach(site => {
+        // 在 minSiteCounts 中找到相同 id 的元素
+        const minSite = this.minSiteCounts.find(min => min.id === site.id);
+
+        // 如果找到了，为 selectSiteList 中的元素新增 remain 属性
+        if (minSite) {
+          site.remain = minSite.minCount;
+        }
+      });
+    },
+    changeToCalendarAttr(roomData) {
+      // 計算每個日期的營位總數, 另外 map 出一個 roomCounts array
+      const roomCounts = roomData.map(item => ({
+        date: item.date,
+        rooms: item.rooms.reduce((sum, room) => sum + room.count, 0),
+      }));
+
       // 禁用的日期
-      this.disabledDates = roomData
+      this.disabledDates = roomCounts
         .filter(item => item.rooms === 0)
         .map(item => item.date);
 
       // red dot 的顯示日期
-      const emptySiteDays = roomData
+      const emptySiteDays = roomCounts
         .filter(item => item.rooms === 0)
         .map(item => ({
           key: 'emptySiteDay',
@@ -813,8 +1219,8 @@ export default {
         }));
 
       // green dot 的顯示日期
-      const lotSitesDays = roomData
-        .filter(item => item.rooms > 4)
+      const lotSitesDays = roomCounts
+        .filter(item => item.rooms > 10)
         .map(item => ({
           key: 'lotSitesDay',
           dot: 'green',
@@ -900,7 +1306,11 @@ export default {
     },
     plus(siteName) {
       const siteType = this.selectSiteList.find(p => p.name === siteName);
-      siteType.count++;
+      if (siteType.count < siteType.remain) {
+        siteType.count++;
+      } else {
+        alert('抱歉，剩餘營位數量不足！');
+      }
     },
     choseCatZone() {
       this.selectSiteList = this.catSiteList;
@@ -989,7 +1399,7 @@ export default {
       />
       <div class="notes">
         <div class="green dot"></div>
-        <div class="tinyp">剩餘營位數量 > 5</div>
+        <div class="tinyp">剩餘營位數量 > 10</div>
         <div class="red dot"></div>
         <div class="tinyp">剩餘營位數量 = 0</div>
       </div>
@@ -1055,7 +1465,7 @@ export default {
           <p class="describe">{{ site.intro }}</p>
           <div class="box">
             <p class="price">${{ formatPrice(site.price) }} /帳</p>
-            <p class="remain red01">營位剩餘數量：{{}}帳</p>
+            <p class="remain red01">營位剩餘數量：{{ site.remain }}帳</p>
           </div>
 
           <!--數量增減按鈕-->
