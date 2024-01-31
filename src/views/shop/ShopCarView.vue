@@ -8,6 +8,7 @@ import actionBtn from '@/components/button/actionBtn.vue';
 
 
 export default {
+  components: { bannerStepShop, actionBtn },
   data() {
     return {};
   },
@@ -17,17 +18,19 @@ export default {
   computed: {
     ...mapState(useCartStore, ['cartList'])
   },
-  watch:{
-  // cartList(newVal){
-  //   alert('success');
-  //   localStorage.setItem('cartList',newVal)
-  // },
+  watch: {
+
   },
   created() {
-    // const productStore = useProductStore();
-    // productStore.axiosGetData();
   },
-  components: { bannerStepShop, actionBtn }
+  mounted() {
+    // 初始化时，将 localStorage 中的值同步到 cartList
+    // const storedCartList = localStorage.getItem('cartList');
+    // if (storedCartList) {
+    //   const parsedCartList = JSON.parse(storedCartList);
+    //   useCartStore().cartList.carts = parsedCartList;
+    // }
+  },
 };
 </script>
 
@@ -72,16 +75,19 @@ export default {
                 <p>$ {{ item.subtotal }}</p>
               </td>
               <td>
-                <img class="cart-cancel" src="/src/assets/image/shop/icons/cancel.svg" @click.prevent="removeCartItem(item.id)" alt="cancel">
+                <img class="cart-cancel" src="/src/assets/image/shop/icons/cancel.svg"
+                  @click.prevent="removeCartItem(item.id)" alt="cancel">
               </td>
             </tr>
-            
+
           </tbody>
         </table>
         <p class="cart-total">總金額 NT$ {{ cartList.total }}</p>
         <div class="cart-buttons">
-          <router-link to="shop"><actionBtn class="cart-keepShoping" :content="'繼續購物'"></actionBtn></router-link>
-          
+          <router-link to="shop">
+            <actionBtn class="cart-keepShoping" :content="'繼續購物'"></actionBtn>
+          </router-link>
+
           <actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn>
         </div>
       </div>
@@ -108,9 +114,10 @@ export default {
       .cart-list {
         width: 100%;
         background-color: #fff;
-        border-radius: 15px;  
+        border-radius: 15px;
       }
-      .cart-total{
+
+      .cart-total {
         margin: 20px 0;
         text-align: center;
       }
@@ -123,6 +130,7 @@ export default {
         border-radius: 20px 20px 0 0;
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
       }
+
       tr:last-child {
         border-radius: 0 0 15px 15px;
       }
@@ -137,37 +145,46 @@ export default {
       td {
         text-align: center;
         vertical-align: middle;
-        padding:4px 2px;
+        padding: 4px 2px;
       }
     }
   }
 }
-.cart-buttons{
+
+.cart-buttons {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
-.cart-keepShoping{
+
+.cart-keepShoping {
   background-color: $blue-1;
   border: none;
 }
+
 img {
   width: 30px;
   vertical-align: middle;
 }
-@include desktop{
-img{
-  width: 50px;
+
+@include desktop {
+  img {
+    width: 50px;
+  }
 }
-}
-.cart-cancel{
+
+.cart-cancel {
   width: 15px;
   height: 15px;
 }
-@include desktop{
-  .cart-cancel{width: 20px;
-  height: 20px;}
-    .select {
+
+@include desktop {
+  .cart-cancel {
+    width: 20px;
+    height: 20px;
+  }
+
+  .select {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -184,11 +201,13 @@ img{
 .select-title {
   display: flex;
 }
+
 .select {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .select p {
   background-color: rgb(127, 255, 148);
   border-radius: 5px;
@@ -207,5 +226,4 @@ img{
 
 .cart-selectSize-desktop {
   display: none;
-}
-</style>
+}</style>
