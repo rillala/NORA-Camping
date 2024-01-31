@@ -11,6 +11,11 @@ h4 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    @include desktop {
+        text-align: left;
+        padding-left: 10%;
+    }
 }
 
 .guide-map { //立體地圖區塊
