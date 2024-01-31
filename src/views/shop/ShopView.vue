@@ -5,30 +5,21 @@ import axios from 'axios';
 import { useProductStore } from '@/stores/productStore'; // 導入 Pinia Store
 // import productStore from '@/stores/productStore';
 import productCard from '@/components/shop/productCard.vue';
+import DropDownBtn from '@/components/button/dropDownBtn.vue';
+
 
 export default {
   components: {
     productCard,
+    DropDownBtn
 },
   data() {
     return {
       count: 10,
       sourceData: [],
       search: '',
-  
-      groupOptions: [
-        { value: '1', label: '選擇類別' },
-        { value: '2', label: 'Nora文青生活' },
-        { value: '3', label: 'Nora品牌服飾' },
-        { value: '4', label: 'Nora營地用品' },
-      ],
-      selectedValue1: '', // 預設選擇的值
-      priceOptions: [
-        { value: '5', label: '選擇排序' },
-        { value: '6', label: '價格高到低', },
-        { value: '7', label: '價格低到高', },
-      ],
-      selectedValue2: '', // 預設選擇的值
+      groupOptions: ['選擇類別', 'Nora文青生活','Nora品牌服飾','Nora營地用品'],
+      priceOptions: ['選擇排序','價格高到低','價格低到高'],
     };
   },
 
@@ -72,6 +63,19 @@ export default {
         return item.title.includes(this.search);
       });
     },
+    handleSelection(type) {
+      // 在這裡觸發相應的事件
+      if (type === '選擇類別') {
+        console.log('選擇類別')
+      } else if (type === 'Nora文青生活') {
+        // 處理 color 的事件
+        console.log('Nora文青生活');
+      }else if (type === '價格高到低'){
+        this.priceHighToLow()
+      }else if (type === '價格低到高'){
+        this.priceLowToHigh()
+      }
+    },
   },
   watch: {
     // 每当 search 改变时，这个函数就会执行
@@ -103,8 +107,11 @@ export default {
           class="shop-searchbar"
         />
       </div>
-      <button type="button" @click="priceHighToLow">HighToLow</button>
-      <button type="button" @click="priceLowToHigh">LowToHigh</button>
+      <div class="shop-select-button">
+        <DropDownBtn :options="groupOptions" @change="handleSelection" :default-value="'選擇類別'"></DropDownBtn>
+        <DropDownBtn :options="priceOptions" @change="handleSelection" :default-value="'選擇排序'"></DropDownBtn>
+      </div>
+      
 
 
       <div class="shop-all-list">

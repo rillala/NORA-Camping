@@ -28,7 +28,12 @@
 				width: 200px;
 			}
 		}
-
+		.shop-select-button{
+			display: flex;
+			justify-content: flex-end;
+			gap: 8px;
+			padding-top: 20px;
+		}
 		.drop-down-button {
 			padding-top: 20px;
 			display: flex;

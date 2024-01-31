@@ -1,27 +1,41 @@
 <template>
-	<div>
-			<select v-model="selectedOption" @change="handleSelection">
-					<option v-for="option in options" :key="option">{{ option }}</option>
-			</select>
+	<div class="dropDown-div">
+		<select class="dropDown-select" v-model="selectedOption" @change="handleSelection">
+			<option v-for="option in options" :key="option">{{ option }}</option>
+		</select>
 	</div>
 </template>
 
 <script>
 export default {
 	props: {
-			options: Array,
-			defaultValue:'',
+		options: Array,
+		defaultValue: '',
 	},
 	data() {
-			return {
-					selectedOption: this.defaultValue
-			};
+		return {
+			selectedOption: this.defaultValue
+		};
 	},
 	methods: {
-			handleSelection() {
-					// 發出 @change 事件，通知父層有新的選擇
-					this.$emit('change', this.selectedOption);
-			}
+		handleSelection() {
+			// 發出 @change 事件，通知父層有新的選擇
+			this.$emit('change', this.selectedOption);
+		}
 	}
 };
 </script>
+<style lang="scss" scoped>
+.dropDown-div{
+	cursor: pointer;
+	display: inline;
+}
+.dropDown-select {
+	// width: 100px;
+	height: 30px;
+	font-size: 16px;
+	background-color: $yellow-2;
+	border-radius: 20px;
+	padding: 4px 8px;
+}
+</style>
