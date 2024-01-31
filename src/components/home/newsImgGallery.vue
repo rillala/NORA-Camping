@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'newsImagGallery',
+    name: 'newsImgGallery',
     data() {
         return {
             smalls: [
@@ -45,7 +45,6 @@ export default {
             <img v-for="(small, index) in  smalls " :src=getNewsImgUrl(small.src) :alt="small.alt" @click="showLarge(index)"
                 class="small" :key="index" />
         </div>
-
     </div>
 </template>
 

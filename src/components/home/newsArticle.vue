@@ -1,18 +1,47 @@
 <script>
-import newsImgGallery from '@/components/home/newsImagGallery.vue';
-
 
 export default {
     name: 'newsArticle',
-    components: {
-        newsImgGallery,
+    props: {
+        newsTitle: {
+            type: String,
+            requre: true,
+        },
+        newsDate: {
+            type: String,
+            requre: true,
+        },
+        newsText: {
+            type: String,
+            requre: true,
+        },
+        smalls: {
+            type: Array,
+            required: true,
+            default: () => [],
+        },
+        large: {
+            type: Object,
+            required: true,
+            default: () => ({ src: '', alt: '' }),
+        },
     },
-    data() {
-        return {
-            newsTitle: '2024春季優惠開跑中',
-            newsDate: '2024/1/24',
-            newsText: '探險春季，NORA Camp誠摯邀請您攜帶心愛的寵物一同感受大自然的懷抱！透過我們獨家的「春季寵物露營樂享包」優惠，獲得精心準備的狗狗貓貓歡迎禮 包，內含美味零食、趣味玩具及特別的寵物地圖。優惠僅限春季特定日期，請提前預訂，確保您和寵物共享這春之樂。期待您們一家人一起加入NORA Camp的大家庭，享受春日露營的美好時光！',
-        };
+    methods: {
+        getNewsImgUrl(paths) {
+            return new URL(`../../assets/image/homeView/${paths}`, import.meta.url).href
+        },
+        changeLargeImage(index) {
+            this.$emit('update:large', { ...this.smalls[index] });
+        },//在changeLargeImage被觸發時，建一個新的smalls物件陣列，將指定的索引值內容更新到large物件
+        init() {
+        },
+    },
+    mounted() {
+        if (this.smalls.length > 0) {
+            this.changeLargeImage(0);
+        }
+        this.init();
+        // 將第一張照片設置為初始化
     },
 };
 </script>
@@ -26,23 +55,20 @@ export default {
             </div>
             <p>{{ newsText }}</p>
         </div>
-        <newsImgGallery style="display: inline-block;" />
+        <div class="News-img" v-show="smalls.length > 0">
+            <div class="large-images">
+                <img :src=getNewsImgUrl(large.src) :alt="large.alt" id="large" />
+            </div>
+
+            <div class="images-row">
+                <img v-for="(small, index) in  smalls " :src=getNewsImgUrl(small.src) :alt="small.alt" class="small"
+                    @click="changeLargeImage(index)" :key="index" />
+            </div>
+        </div>
     </article>
 </template>
 
 <style lang="scss" scoped>
-.News-article {
-    display: flex;
-    flex-direction: column;
-    background-color: $white01;
-    border-radius: 30px;
-    padding: 20px;
-
-    @include desktop {
-        flex-direction: row;
-    }
-}
-
 .News-text {
     display: inline-block;
     height: 100%;
@@ -51,6 +77,54 @@ export default {
 
     .title {
         margin: 10px 0;
+    }
+}
+
+.News-img {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.large-images {
+    display: flex;
+    justify-content: center;
+    width: 74vw;
+    height: 74vw;
+    overflow: hidden;
+    margin-bottom: 5px;
+    border-radius: 20px;
+
+    @include tablet {
+        width: 320px;
+        height: 320px;
+    }
+}
+
+#large {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.images-row {
+    display: flex;
+    justify-content: start;
+}
+
+.small {
+    width: 23vw;
+    height: 23vw;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    margin: 1vw;
+    cursor: pointer;
+
+    @include tablet {
+        width: 100px;
+        height: 100px;
+        margin: 3px;
+
     }
 }
 </style>
