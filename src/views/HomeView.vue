@@ -218,20 +218,10 @@ export default {
     <dogAnimation class="Dog" ref="dog" />
     <div class="Banner-background bg-blue-1">
       <div class="mori-slider">
-        <img
-          v-for="mori in bannerMori"
-          :src="getBannerImageUrl(mori)"
-          alt="Banner背景森林"
-          ref="moriSlider"
-        />
+        <img v-for="mori in bannerMori" :src="getBannerImageUrl(mori)" alt="Banner背景森林" ref="moriSlider" />
       </div>
       <div class="yama-slider">
-        <img
-          v-for="yama in bannerYama"
-          :src="getBannerImageUrl(yama)"
-          alt="Banner背景山"
-          ref="yamaSlider"
-        />
+        <img v-for="yama in bannerYama" :src="getBannerImageUrl(yama)" alt="Banner背景山" ref="yamaSlider" />
       </div>
     </div>
     <div class="Banner-ground"></div>
@@ -239,23 +229,13 @@ export default {
 
   <section class="Knowing-nora" ref="knowingNora">
     <div class="KN-mountain-background">
-      <img
-        src="@/assets/image/homeView/mountainBgL.png"
-        class="Mountain-left"
-      />
-      <img
-        src="@/assets/image/homeView/mountainBgR.png"
-        class="Mountain-right"
-      />
+      <img src="@/assets/image/homeView/mountainBgL.png" class="Mountain-left" />
+      <img src="@/assets/image/homeView/mountainBgR.png" class="Mountain-right" />
     </div>
     <div class="KN-content">
       <div class="KN-text">
         <h3>認識野良</h3>
-        <img
-          class="paw1"
-          src="@/assets/image/campGuide/paw.svg"
-          alt="動物腳掌1"
-        />
+        <img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1" />
         <p>
           "野良" 這一詞在日文中指流浪動物，
           我們將這一概念融入露營體驗中，創造出一個充滿活力和溫馨的環境。
@@ -285,26 +265,14 @@ export default {
       <div class="News-Title-search">
         <h3>野良露營 X 最新消息</h3>
         <div class="search-input">
-          <input
-            class="Search-bar"
-            type="text"
-            placeholder="搜尋關鍵字"
-            v-model.trim="search"
-          />
+          <input class="Search-bar" type="text" placeholder="搜尋關鍵字" v-model.trim="search" />
           <span v-if="search !== ''">正在搜尋：</span>{{ search }}
         </div>
       </div>
       <div class="News-viewport">
-        <newsArticle
-          class="News-article"
-          v-for="(setArticle, index) in newsContent"
-          :key="setArticle.newsTitle"
-          :newsTitle="setArticle.newsTitle"
-          :newsDate="setArticle.newsDate"
-          :newsText="setArticle.newsText"
-          :smalls="setArticle.smalls"
-          v-model:large="setArticle.large"
-        />
+        <newsArticle class="News-article" v-for="(setArticle, index) in newsContent" :key="setArticle.newsTitle"
+          :newsTitle="setArticle.newsTitle" :newsDate="setArticle.newsDate" :newsText="setArticle.newsText"
+          :smalls="setArticle.smalls" v-model:large="setArticle.large" />
       </div>
     </div>
   </section>
@@ -316,50 +284,35 @@ export default {
         <div class="New-prod">
           <!-- 尚未改寫-->
           <div class="New-prod-image">
-            <img
-              src="@/assets/image/reserve/equipment/single8.png"
-              alt="最新商品圖片"
-            />
+            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
           </div>
           <h4>野良NORA折疊椅</h4>
           <p>NTD$900</p>
         </div>
         <div class="New-prod">
           <div class="New-prod-image">
-            <img
-              src="@/assets/image/reserve/equipment/single8.png"
-              alt="最新商品圖片"
-            />
+            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
           </div>
           <h4>野良NORA折疊椅</h4>
           <p>NTD$900</p>
         </div>
         <div class="New-prod">
           <div class="New-prod-image">
-            <img
-              src="@/assets/image/reserve/equipment/single8.png"
-              alt="最新商品圖片"
-            />
+            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
           </div>
           <h4>野良NORA折疊椅</h4>
           <p>NTD$900</p>
         </div>
         <div class="New-prod">
           <div class="New-prod-image">
-            <img
-              src="@/assets/image/reserve/equipment/single8.png"
-              alt="最新商品圖片"
-            />
+            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
           </div>
           <h4>野良NORA折疊椅</h4>
           <p>NTD$900</p>
         </div>
         <div class="New-prod">
           <div class="New-prod-image">
-            <img
-              src="@/assets/image/reserve/equipment/single8.png"
-              alt="最新商品圖片"
-            />
+            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
           </div>
           <h4>野良NORA折疊椅</h4>
           <p>NTD$900</p>
@@ -376,11 +329,7 @@ export default {
     <div class="Stray-home-content">
       <div class="SH-text">
         <h2>野良之家</h2>
-        <img
-          class="paw1"
-          src="@/assets/image/campGuide/paw.svg"
-          alt="動物腳掌1"
-        />
+        <img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1" />
         <p>
           野良露營也是流浪動物的中途之家。 我們致力於照顧、
           庇護和尋找新的家園給需要幫助的流浪動物 我們提供免費的志工活動，
@@ -400,11 +349,7 @@ export default {
     </div>
 
     <div class="SH-tent-container">
-<<<<<<< HEAD
-      <img src="@/assets/image/homeView/Tent_with_ground.png" alt="帳篷框" />
-=======
       <img src="@/assets/image/homeView/Tent_with_ground.png" alt="帳篷框">
->>>>>>> 10
     </div>
 
     <div class="Stray-home-background">
