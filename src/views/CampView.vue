@@ -7,9 +7,9 @@ export default {
     return {
       images: [
         //設施介紹環境圖輪播
-        '@/assets/image/campGuide/bathroom_m_1.png',
-        '@/assets/image/campGuide/bathroom_m_2.png',
-        '@/assets/image/campGuide/bathroom_m_3.png',
+        './src/assets/image/campGuide/bathroom_m_1.png',
+        './src/assets/image/campGuide/bathroom_m_2.png',
+        './src/assets/image/campGuide/bathroom_m_3.png',
       ],
       currentIndex: 0,
       areas: [
@@ -24,11 +24,7 @@ export default {
       currentArea: {},
     };
   },
-  computed: {
-    currentImage() {
-      return this.images[this.currentIndex];
-    },
-  },
+
   methods: {
     prevSlide() {
       this.currentIndex =
@@ -45,6 +41,9 @@ export default {
       // 跳轉到完整區域介紹的該區塊資訊
       // 使用路由或者直接切換顯示狀態???
       this.showDetails = true;
+    },
+    getImageUrl(paths) {
+      return new URL(`../assets/image${paths}`, import.meta.url).href;
     },
   },
 };
@@ -355,7 +354,11 @@ export default {
 
         <div class="facility-slider-container">
           <transition name="fade" mode="out-in">
-            <img :src="currentImage" :key="currentImage" class="slider-image" />
+            <img
+              :src="images[currentIndex]"
+              :key="currentIndex"
+              class="slider-image"
+            />
           </transition>
         </div>
 
