@@ -312,7 +312,7 @@ function toSheleter(){
         max-width: 400px;
     }
 }
-.opinion:nth-child(2){
+.opinion:nth-child(3){
     @include desktop{
         flex-direction: row-reverse;
     }
