@@ -39,6 +39,8 @@ export default {
           path: '/shelter',
         },
       ],
+      // 下面用來接收購物車裡的數量
+      cartCount: 0,
     };
   },
   watch: {
@@ -198,11 +200,11 @@ export default {
           </button>
 
           <!--購物車-->
-          <RouterLink
-            to="/shopCar"
-            id="shop-car"
-            @click="closeHam"
-          ></RouterLink>
+          <RouterLink to="/shopCar" id="shop-car" @click="closeHam">
+            <div v-if="cartCount > 0" class="cart-num-box bg-blue-4">
+              <p class="cart-num white01">{{ cartCount }}</p>
+            </div></RouterLink
+          >
 
           <!--平板用子選單開關-->
 
