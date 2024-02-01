@@ -22,7 +22,6 @@ function goBack(){
         <div class="rightPart">
             <p class="tinyp">市話：(049) 2222106－81</p>
             <p class="tinyp">手機：0988-345-678</p>
-            <p><br></p>
             <p class="tinyp">連絡電話服務時段：10:30~19:30</p>
         </div>
     </div>
@@ -61,8 +60,8 @@ function goBack(){
             <!-- ------------ -->
         </div>
         <div class="checkBox">
-            <input type="checkbox">
-            <p class="tinyp">我同意本網站的隱私權政策*</p>
+            <input type="checkbox" id="agree">
+            <label class="agreed" for="agree">我同意本網站的隱私權政策*</label>
         </div>
         <div class="btns">
             <button type="button" class="submit" @click="goBack">返回前頁</button>
@@ -79,14 +78,32 @@ function goBack(){
     display: block;
     @include desktop{
         display: flex;
-        background-color: #ff0;
     }
     h3{
         display: none;
         @include desktop{
         display: block;
         font-weight: bold;
+        font-size: 40px;
         margin-bottom: 30px;
+        }
+    }
+    p{
+        @include desktop{
+            font-size: 24px;
+        }
+    }
+    .leftPart{
+        @include desktop{
+            margin: auto ;
+        }
+    }
+    .rightPart{
+        @include desktop{
+            height: 10%;
+            margin: auto ;
+            padding-left: 1rem;
+            border-left: 1px solid $dark;
         }
     }
 }
@@ -97,9 +114,8 @@ function goBack(){
     position: relative;
     margin: 40px auto 50px;
     @include desktop{
-        width: 70%;
+        width: 50%;
         margin: auto;
-        // background-color: #f0f;
     }
     .check{
         display: flex;
@@ -110,6 +126,9 @@ function goBack(){
         border-radius: 50%;
         background-color: $yellow-2;
         font-size: 24px;
+        @include desktop{
+            font-size: 40px;
+        }
     }
     .dogLink{
         position: absolute;
@@ -127,15 +146,27 @@ function goBack(){
         width: 15%;
         top: -20%;
         left: 76%;
+        @include desktop{
+            min-width: 20px;
+        }
     }
 } 
 /*表單內容*/
-
+form{
+    @include desktop{
+        width: 100%;
+    }
+}
 .step{
     width: 80%;
     max-width: 490px;
     margin: 30px auto;
     border-bottom: 1px solid $dark;
+    @include desktop{
+        margin: 5vw 20%;
+        font-size: 24px;
+        padding-bottom: 1em;
+    }
 }
 .ask{
     width: 100%;
@@ -146,9 +177,12 @@ function goBack(){
         margin-right: 10px;
         text-align: end;
         width: 30%;
+        @include desktop{
+        font-size: 20px;
+        text-align: start;
+    }
     }
     textarea{
-        // flex-shrink: 0;
         width: 50%;
         height: 8rem;
         border: none;
@@ -156,24 +190,46 @@ function goBack(){
         border-radius: 10px;
         padding: 10px;
         resize: none;
+        @include desktop{
+            font-size: 20px;
+            height: 15rem;
+            width: 60%;
+            border-radius: 30px;
+            padding: 1.5rem;
+        }
         &::placeholder{
             color: $white01;
         }
     }
     @include desktop{
-        width: 50%;
+        width: 70%;
+        margin: 0 0 0 20vw;
     }
 }
 .contactInfo{
+    width: 100%;
     .info{
         width: 100%;
         margin: 10px;
         display: flex;
+        @include desktop{
+            margin:  10vw;
+            align-items: center;
+            width: 70%;
+            margin: 5vw 0 0 20vw;
+
+        }
+
         p{
             display: block;
             margin-right: 10px;
             text-align: end;
             width: 30%;
+            @include desktop{
+                font-size: 20px;
+                text-align: start;
+                margin: 0;
+            }
         }
         input{
             flex-shrink: 0;
@@ -186,10 +242,15 @@ function goBack(){
             &::placeholder{
                 color: $white01;
             }
+            @include desktop{
+                font-size: 20px;
+                width: 60%;
+                height: 5rem;
+                border-radius: 30px;
+                padding: 1.5rem;
+            }
         }
-        @include desktop{
-            width: 50%;
-        }
+
     }
 }
 .checkBox{
@@ -197,6 +258,20 @@ function goBack(){
     display: flex;
     justify-content: center;
     width: 100%;
+    @include desktop{
+        margin: 10vw auto;
+        transform: scale(1.5);
+        width: 50%;
+    }
+    .agreed{
+        @include desktop{
+            user-select:none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+
+        }
+    }
 }
 .btns{
     display: flex;
@@ -214,15 +289,25 @@ function goBack(){
             width: 200px;
             height: 3rem;
         }
-        &:hover{
-            background-color: $blue-3;
-            color: $white01;
+        &:nth-child(1){
+            &:hover{
+                background-color: $blue-3;
+                color: $white01;
+            }
+            @include desktop{
+                display: none;
+            }
         }
         &:nth-child(2){
             background-color: $blue-3;
             font-weight: 600;
             &:hover{
-                background-color: $blue-2;
+                background-color: $blue-4;
+            }
+            @include desktop{
+                margin: 5vw auto;
+                width: 20vw;
+                font-size: 24px;
             }
         }
     }

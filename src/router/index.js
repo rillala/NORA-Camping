@@ -121,14 +121,12 @@ const router = createRouter({
       name: 'membercenter',
       component: () => import('../views/member/MemberCenterView.vue'),
       // meta: { requiresAuth: true },
-    }
-    ,
+    },
     {
       path: '/membercampsiteorders',
       name: 'membercampsiteorders',
       component: () => import('../views/member/MemberCampsiteOrdersView.vue'),
-    }
-    ,
+    },
     {
       path: '/memberorderhistory',
       name: 'memberorderhistoryr',
@@ -142,9 +140,15 @@ const router = createRouter({
     },
   ],
   scrollBehavior(to, from, savedPosition) {
-    // return 期望滚到哪个的位置
-    // 始终滚动到顶部
-    return { top: 0 };
+    // 檢查路由是否有 hash
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      };
+    }
+    // 返回頂部或保存的位置
+    return savedPosition || { top: 0 };
   },
 });
 
@@ -153,4 +157,5 @@ router.beforeEach(async (to, from) => {
     document.title = to.meta.title;
   }
 });
+
 export default router;

@@ -80,16 +80,16 @@ export default {
       }
     },
     // 點選子選單跳轉到會員中心時，子選單要關起來
-    closeSubmenu(){
+    closeSubmenu() {
       this.isMemberSubOpen = false;
-    }
+    },
   },
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(userStore, ['token']),
     isLogin() {
-      return !!this.token
-    }
+      return !!this.token;
+    },
   },
 };
 </script>
@@ -155,16 +155,41 @@ export default {
           >
 
           <!--會員登入-->
-          <button id="member-login" @click="memberCenter(); closeHam()">
+          <button
+            id="member-login"
+            @click="
+              memberCenter();
+              closeHam();
+            "
+          >
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
-                <li><RouterLink class="sub-menu" to="/membercenter" @click.stop="closeSubmenu">會員中心</RouterLink></li>
+                <div class="close-sub-menu" @click.stop="closeSubmenu">X</div>
+
                 <li>
-                  <RouterLink class="sub-menu" to="/membercampsiteorders" @click.stop="closeSubmenu">商品訂單</RouterLink>
+                  <RouterLink
+                    class="sub-menu"
+                    to="/membercenter"
+                    @click.stop="closeSubmenu"
+                    >會員中心</RouterLink
+                  >
                 </li>
                 <li>
-                  <RouterLink class="sub-menu" to="/memberorderhistory" @click.stop="closeSubmenu">營地訂單</RouterLink>
+                  <RouterLink
+                    class="sub-menu"
+                    to="/membercampsiteorders"
+                    @click.stop="closeSubmenu"
+                    >商品訂單</RouterLink
+                  >
+                </li>
+                <li>
+                  <RouterLink
+                    class="sub-menu"
+                    to="/memberorderhistory"
+                    @click.stop="closeSubmenu"
+                    >營地訂單</RouterLink
+                  >
                 </li>
                 <button class="logout" @click.stop="logout">登出</button>
               </ul>
@@ -230,5 +255,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
-
 </style>

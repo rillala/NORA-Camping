@@ -11,7 +11,8 @@ function toSheleter(){
 </script>
 
 <template>
-<div class="banner-bgc">
+<div class="banner-bgc" >
+    <div id="nora-story"></div>
     <div class="banner-wrap">
     <h2>野良露營</h2>
     <h4>放鬆身心最優選</h4>
@@ -20,22 +21,25 @@ function toSheleter(){
 
 <div class="origin-linear">
     <!--營區環境照-->
-    <div class="origin-pic">
-        <img src="../assets/image/aboutView/oringin-pic.jpg" alt="營區照片" class="environment">
-    </div>
-    <!--緣起標題+內文-->
-    <div class="origin">
-        <h4>「野良露營 (NORA Camp)」</h4>
-        <div class="text-wrap">
-            <p class="tinyp">始於一群對自然和動物充滿熱愛的朋友的共同夢想。</p>
-            <p class="tinyp">我們相遇在一次露營旅程中，感受到了大自然的寧靜和治癒力，同時也遇到了幾隻無家可歸的流浪動物。此次相遇讓我們深刻意識到，除了享受自然以外，還有機會做些更有意義的事情——</p>
-            <p class="tinyp">幫助那些無助的流浪動物。<br><br></p>
-            <p class="tinyp">那麼該如何將對自然的熱愛與對流浪動物的關心結合起來呢？我們想到了一個獨特的想法：創建一個露營區域，不僅提供給人們一個接近自然的地方，並且能夠參與照顧流浪動物的行動並在活動的同時宣導一般民眾所能為流浪動物提供的較佳照顧措施（如ＴＮＲ或ＴＮＳＡ等）。<br><br/></p>
-            <p class="tinyp">這就是「野良露營」的誕生。</p>
+    <div class="originWrap">
+        <div class="origin-pic">
+            <img src="../assets/image/aboutView/oringin-pic.jpg" alt="營區照片" class="environment">
+        </div>
+        <!--緣起標題+內文-->
+        <div class="origin">
+            <h4>「野良露營 (NORA Camp)」</h4>
+            <div class="text-wrap">
+                <p class="tinyp">始於一群對自然和動物充滿熱愛的朋友的共同夢想。</p>
+                <p class="tinyp">我們相遇在一次露營旅程中，感受到了大自然的寧靜和治癒力，同時也遇到了幾隻無家可歸的流浪動物。此次相遇讓我們深刻意識到，除了享受自然以外，還有機會做些更有意義的事情——</p>
+                <p class="tinyp">幫助那些無助的流浪動物。<br><br></p>
+                <p class="tinyp">那麼該如何將對自然的熱愛與對流浪動物的關心結合起來呢？我們想到了一個獨特的想法：創建一個露營區域，不僅提供給人們一個接近自然的地方，並且能夠參與照顧流浪動物的行動並在活動的同時宣導一般民眾所能為流浪動物提供的較佳照顧措施（如ＴＮＲ或ＴＮＳＡ等）。<br><br/></p>
+                <p class="tinyp">這就是「野良露營」的誕生。</p>
+            </div>
         </div>
     </div>
     <!--三大理念-->
-    <div class="opinion-wrap"> 
+    <div class="opinion-wrap" > 
+        <div id="nora-concept"></div>
         <div class="opinion animal">
             <img src="../assets/image/aboutView/animalFriendly.jpg" alt="動物友善">
             <div class="wrap">
@@ -76,7 +80,9 @@ function toSheleter(){
         </div>
         <p class="tinyp">
             我們致力於照顧、庇護和尋找新的家園給需要幫助的流浪動物，並提供免費的志工活動，一同為這些可愛的生命奉獻愛心。
+            
         </p>
+        <p><br></p>
         <p class="tinyp">
         志工活動包括洗狗、打掃籠舍、餵食等，讓你有機會親身參與流浪動物的照顧，同時建立起與這些可愛生物的深厚連結。
         </p>
@@ -91,7 +97,8 @@ function toSheleter(){
     <hr>
 </div>
 <!--營業時間-->
-<div class="business-hours-wrap accordion">
+<div class="business-hours-wrap accordion" >
+    <div id="nora-intro"></div>
     <businessHours title="管理中心">
         <p>營業時間：06:30~21:00</p>
         <p>管理人員巡場時間：08:00~20:00</p>
@@ -147,8 +154,10 @@ function toSheleter(){
     margin-left: 10vw;
     color: $blue-4;
     @include desktop{
-    padding-top: 8vw;
-    width: 50%;
+        padding-top: 5vw;
+        width: 100%;
+        margin: auto;
+        max-width: 1400px;
     }
     h2{
         @include desktop{
@@ -180,17 +189,30 @@ function toSheleter(){
     }
 }
 /*-----------------緣起--------------------*/
+.originWrap{
+    @include desktop{
+        width: 100%;
+        max-width: 1600px;
+        display: flex;
+        justify-content: space-around;
+    }
+}
 /*緣起文字*/
 .origin{ 
     margin: auto;
+    @include desktop{
+        width: 40%;
+        order: 1;
+        margin: 0 10% 0 0 ;
+    }
     h4{ //緣起標題
         width: 90vw;
         border-radius: 10px;
         margin: 10px auto;
-    @include desktop{
-        width: 50vw;
-        font-size: 28px;
-    }
+        @include desktop{
+            width: 100%;
+            font-size: 28px;
+        }
     }
     .text-wrap { //內文p的wrap
         width: 90vw;
@@ -199,7 +221,7 @@ function toSheleter(){
         margin: auto;
         background-color: rgba($yellow-2, 50%);
         @include desktop{
-            width: 50vw;
+            width: 100%;
             background-color: rgba($yellow-2, 0);
             margin-bottom: 5%;
         }
@@ -210,13 +232,10 @@ function toSheleter(){
         }
     }
 
-    @include desktop{
-        width: 55%;
-        order: 1;
 
-    }
 }
 /*緣起照片*/
+
 .origin-pic{ 
     img{ //緣起環境照，script秒數切換
     width: 100%;
@@ -224,14 +243,13 @@ function toSheleter(){
     object-fit: cover;
     object-position: bottom;
         @include desktop{
+            aspect-ratio: 520/580;
             border-radius: 30px;
-            // aspect-ratio: 8/10;
-            max-width: 520px;
             max-height:580px;
         }
     }
     @include desktop{
-        width: 40vw;
+        margin-top: -2rem;
         order:2;    
     }
 }
@@ -294,7 +312,7 @@ function toSheleter(){
         max-width: 400px;
     }
 }
-.opinion:nth-child(2){
+.opinion:nth-child(3){
     @include desktop{
         flex-direction: row-reverse;
     }
@@ -307,7 +325,6 @@ function toSheleter(){
 }
 
 /*-----------------野良之家--------------------*/
-/*-----------------整修中--------------------*/
 a{
     text-decoration: none;
 }
@@ -316,9 +333,11 @@ a{
     margin: 10px auto;
     width: 100%;
     @include desktop{
+        margin-top: 5%;
         display: flex;
         flex-wrap: wrap;
         width: 80%;
+        max-width: 1200px;
     }
 }
 
@@ -334,9 +353,10 @@ a{
     border-bottom-right-radius: 15px;
     @include desktop{
         margin: 0;
-        width: 30%;
+        width: 50%;
         order: 2;
         aspect-ratio: 560/550;
+        max-height: 550px;
     }
 }
 .shelter-title-wrap{
@@ -346,14 +366,17 @@ a{
 
     @include desktop{
         display: block;
-        margin: 30px auto;
-        width: 65%;
+        margin: 5vw 0 0;
+        width: 60%;
+        // background-color: #ff0;
     }
     .shelter-subtitle{
         margin-left: 5%;
-        // margin:  0;
-        // margin-top: 10px;
-        // font-size: 24px;
+        @include desktop{
+            margin: 1vw 0;
+            margin-top: 10px;
+            font-size: 20px;
+        }
     }
     h4{
         @include desktop{
@@ -363,20 +386,20 @@ a{
         }
     }
 }
-.shelter-wrap .tinyp{
-    width: 90%;
-    margin: auto;
-}
 .textPart{
     .tinyp{
+        width: 90%;
+        margin: auto;
         @include desktop{
             font-size: 20px;
-            width: 50%;
+            width: 70%;
+            margin: 0 ;
+            // background-color: #ff0;
             // background-color: #ff0;
         }
     }
     @include desktop{
-        width: 65%;
+        width: 50%;
         // margin: auto;
     }
 }
@@ -385,12 +408,15 @@ a{
     margin: 10px auto;
     @include desktop{
         order: 3;
+        margin: 5vw auto;
     }
 }
 .action-btn-01{
+    background-color: $brown-2;
     color: $white01;
+    border: none;
     &:hover{
-        background-color: $blue-4;
+        background-color: $brown-3;
     }
     @include desktop{
         width: 100%;

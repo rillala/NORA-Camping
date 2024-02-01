@@ -5,19 +5,23 @@ import { useCartStore } from '@/stores/cartStore';
 import addMinusBtn from '@/components/button/addMinusBtn-shop.vue';
 import ActionBtn from '@/components/button/actionBtn.vue';
 import loading from '@/components/loading.vue';
+import DropDownBtn from '@/components/button/dropDownBtn.vue';
 
 export default {
   components: {
     addMinusBtn,
     ActionBtn,
     loading,
-  },
+    DropDownBtn
+},
 
 
   data() {
     return {
       selectedQuantity: 0,
       currentIndex: 0,//還沒用到，如果多張圖片可能用到
+      selectColor:['顏色','黑色', '白色', '綠色','藍色'],
+      selectSize:['尺寸','XS', 'S', 'M', 'L', 'XL'],
     };
   },
   created() {
@@ -56,6 +60,28 @@ export default {
       // 切換到下一張圖片
       this.currentIndex = (this.currentIndex + 1) % this.responseData.images.length;
     },
+    handleSelection(type) {
+      // 在這裡觸發相應的事件
+      if (type === '黑色') {
+        console.log('黑色')
+      }else if(type === '白色'){
+        console.log('白色');
+      }else if (type === '綠色'){
+        console.log('綠色');
+      }else if(type === '藍色'){
+        console.log('藍色');
+      }else if(type === 'XS'){
+        console.log('XS');
+      }else if(type === 'S'){
+        console.log('S');
+      }else if(type === 'M'){
+        console.log('M');
+      }else if(type === 'L'){
+        console.log('L');
+      }else if(type === 'XL'){
+        console.log('XL');
+      }
+    },
   },
 }
 </script>
@@ -81,6 +107,10 @@ export default {
             <h2>{{ responseData.title }}</h2>
             <h3>NT${{ responseData.price }}</h3>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
+            <div class="shop-item-select">
+              <DropDownBtn :options="selectColor" @change="handleSelection" :default-value="'顏色'"></DropDownBtn>
+              <DropDownBtn :options="selectSize" @change="handleSelection" :default-value="'尺寸'"></DropDownBtn>
+            </div>
             <div class="shop-item-actionBtns">
               <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
               <router-link to="shopCar"><ActionBtn :content="'直接購買'"></ActionBtn></router-link>
@@ -132,6 +162,10 @@ export default {
           flex-flow: column;
           gap: 20px;
           align-items: center;
+          .shop-item-select{
+            display: flex;
+            gap: 8px;
+          }
         }
         @include desktop{
           text-align: left;
@@ -191,6 +225,7 @@ export default {
       }
 
       .shop-item-intro {
+        width: 100%;
         background-color: $yellow-1;
         margin-top: 20px;
         border-radius: 20px;

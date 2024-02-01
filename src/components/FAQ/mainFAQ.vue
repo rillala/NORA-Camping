@@ -196,7 +196,6 @@ function changeData(qa,t){
 .typeWrap{
     @include desktop{
         display: flex;
-        justify-content: center;
         align-items: baseline;
         
     }
@@ -222,8 +221,8 @@ function changeData(qa,t){
         }
     }
     @include desktop{
-        width:10%;
-        // background-color: #0ff;
+        width:30%;
+        margin: 0 5vw;
     }
 }
 /*------------------*/

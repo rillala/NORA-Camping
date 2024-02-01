@@ -2,40 +2,35 @@
 // 引入函式庫
 import axios from 'axios';
 import { useCartStore } from '@/stores/cartStore';
+import { useProductStore } from '@/stores/productStore';
 import { mapState, mapActions } from 'pinia';
 import bannerStepShop from '@/components/shop/bannerStep-shop.vue';
 import actionBtn from '@/components/button/actionBtn.vue';
-
 
 export default {
   components: { bannerStepShop, actionBtn },
   data() {
     return {};
   },
+  created() {
+    const cartStore = useCartStore();
+    cartStore.getCart();
+
+    const productStore = useProductStore();
+    productStore.axiosGetData();
+  },
   methods: {
-    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty'])
+    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart']),
   },
   computed: {
-    ...mapState(useCartStore, ['cartList'])
+    ...mapState(useCartStore, ['cartList']),
   },
-  watch: {
-
-  },
-  created() {
-  },
-  mounted() {
-    // 初始化时，将 localStorage 中的值同步到 cartList
-    // const storedCartList = localStorage.getItem('cartList');
-    // if (storedCartList) {
-    //   const parsedCartList = JSON.parse(storedCartList);
-    //   useCartStore().cartList.carts = parsedCartList;
-    // }
-  },
+  watch: {},
 };
 </script>
 
 <template>
-  <bannerStepShop></bannerStepShop>
+  <bannerStepShop :activeDiv="1" />
   <div class="cart-wrap">
     <div class="cart-container">
       <div class="cart-background">
@@ -54,7 +49,7 @@ export default {
             </tr>
             <tr v-for="item in cartList.carts" :key="item.id">
               <td>
-                <img :src="item.product.images" alt="">
+                <img :src="item.product.images" alt="" />
               </td>
               <td class="select-content">
                 <p class="footerp">{{ item.product.title }}</p>
@@ -67,7 +62,12 @@ export default {
                 <p>{{ item.product.price }}</p>
               </td>
               <td>
-                <select name="" id="" :value="item.qty" @change="(event) => setCartQty(item.id, event)">
+                <select
+                  name=""
+                  id=""
+                  :value="item.qty"
+                  @change="event => setCartQty(item.id, event)"
+                >
                   <option :value="i" v-for="i in 20" :key="i">{{ i }}</option>
                 </select>
               </td>
@@ -75,17 +75,23 @@ export default {
                 <p>$ {{ item.subtotal }}</p>
               </td>
               <td>
-                <img class="cart-cancel" src="/src/assets/image/shop/icons/cancel.svg"
-                  @click.prevent="removeCartItem(item.id)" alt="cancel">
+                <img
+                  class="cart-cancel"
+                  src="/src/assets/image/shop/icons/cancel.svg"
+                  @click.prevent="removeCartItem(item.id)"
+                  alt="cancel"
+                />
               </td>
             </tr>
-
           </tbody>
         </table>
         <p class="cart-total">總金額 NT$ {{ cartList.total }}</p>
         <div class="cart-buttons">
           <router-link to="shop">
-            <actionBtn class="cart-keepShoping" :content="'繼續購物'"></actionBtn>
+            <actionBtn
+              class="cart-keepShoping"
+              :content="'繼續購物'"
+            ></actionBtn>
           </router-link>
 
           <actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn>
@@ -139,7 +145,6 @@ export default {
         width: 25vw;
         line-height: 200%;
         background-color: $light-gray;
-
       }
 
       td {
@@ -194,7 +199,6 @@ img {
     display: flex;
     margin-top: 6px;
   }
-
 }
 
 /* select color size */
@@ -226,4 +230,5 @@ img {
 
 .cart-selectSize-desktop {
   display: none;
-}</style>
+}
+</style>
