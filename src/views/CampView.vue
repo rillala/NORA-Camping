@@ -36,11 +36,13 @@ export default {
     showInfo(area) {
       this.currentArea = area;
       this.showPopup = true;
+      this.$emit('show-info');
     },
     goToDetails() {
       // 跳轉到完整區域介紹的該區塊資訊
       // 使用路由或者直接切換顯示狀態???
       this.showDetails = true;
+      this.$emit('go-to-details');
     },
     getImageUrl(paths) {
       return new URL(
