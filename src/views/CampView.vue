@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 export default {
-  data () {
+  data() {
     return {
       images: [ //設施介紹環境圖輪播
         '/src/assets/image/campGuide/bathroom_m_1.png',
@@ -35,13 +35,12 @@ export default {
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
     },
     showInfo(area) {
-      this.currentArea = area;
-      this.showPopup = true;
+      this.$emit('show-info');
     },
     goToDetails() {
       // 跳轉到完整區域介紹的該區塊資訊
       // 使用路由或者直接切換顯示狀態???
-      this.showDetails = true;
+      this.$emit('go-to-details');
     }
   },
 };
@@ -57,12 +56,9 @@ export default {
 
     <!-- 立體地圖區塊 -->
     <div class="guide-map">
-      
+
       <div class="camp-map" @mouseover="showInfo" @click="goToDetails">
-        <img
-          src="/src/assets/image/campGuide/map2.png"
-          alt="立體地圖示意圖"
-        />
+        <img src="/src/assets/image/campGuide/map2.png" alt="立體地圖示意圖" />
       </div>
 
       <div class="map-info-popup" v-if="showPopup">
@@ -72,7 +68,7 @@ export default {
       </div>
 
       <div v-if="showDetails">
-      <!-- 完整區域介紹的該區塊資訊 -->
+        <!-- 完整區域介紹的該區塊資訊 -->
       </div>
 
     </div>
@@ -80,16 +76,10 @@ export default {
     <!-- 立體地圖下方旗子區塊 -->
     <div class="guide-flags">
       <div class="guide-flag-left">
-        <img
-          src="/src/assets/image/campGuide/left-flag-m.svg"
-          alt="立體地圖區塊左側旗子"
-        />
+        <img src="/src/assets/image/campGuide/left-flag-m.svg" alt="立體地圖區塊左側旗子" />
       </div>
       <div class="guide-flag-right">
-        <img
-          src="/src/assets/image/campGuide/right-flag-m.svg"
-          alt="立體地圖區塊右側旗子"
-        />
+        <img src="/src/assets/image/campGuide/right-flag-m.svg" alt="立體地圖區塊右側旗子" />
       </div>
     </div>
 
@@ -194,7 +184,7 @@ export default {
 
       </div>
 
-    <!-- 辦公區區塊 -->
+      <!-- 辦公區區塊 -->
       <div class="guide-office">
 
         <img src="/src/assets/image/campGuide/office_cut.jpeg" alt="辦公區域圖片" />
@@ -234,8 +224,7 @@ export default {
       </div>
 
       <div class="guide-camp-info">
-        <img class="bigtent" src="/src/assets/image/campGuide/guide_info_bigtent.svg" 
-        alt="營地資訊帳篷圖形" />
+        <img class="bigtent" src="/src/assets/image/campGuide/guide_info_bigtent.svg" alt="營地資訊帳篷圖形" />
         <ul class="camp-info p">
           <li>地址：南投縣仙山鄉翠湖路1號</li>
           <li>電話：0988-123-456</li>
@@ -262,14 +251,13 @@ export default {
         </div>
 
       </div>
-      
+
     </div>
 
     <!-- 設施介紹區塊 -->
     <div class="guide-facility-intro-bg">
 
-      <img class="colorful-flags" src="/src/assets/image/campGuide/colorfulflags3.svg" 
-      alt="設施介紹區塊三角旗" />
+      <img class="colorful-flags" src="/src/assets/image/campGuide/colorfulflags3.svg" alt="設施介紹區塊三角旗" />
 
       <div class="guide-facility-intro-title">
         <img src="/src/assets/image/campGuide/signboard_m.svg" alt="設施介紹標題掛旗" />
@@ -283,8 +271,7 @@ export default {
       </div>
 
       <div class="facility-intro">
-        <img class="facility_intro_img" src="/src/assets/image/campGuide/facility_intro_img_3.png" 
-        alt="設施介紹底圖" />
+        <img class="facility_intro_img" src="/src/assets/image/campGuide/facility_intro_img_3.png" alt="設施介紹底圖" />
 
         <div class="facility-slider-btn">
           <button class="facility-btn" @click="prevSlide">
@@ -315,18 +302,15 @@ export default {
         </div>
 
         <div class="facility_trees">
-          <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" 
-            alt="棕梠樹圖一" />
-          <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" 
-            alt="棕梠樹圖二" />
+          <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖一" />
+          <img class="facility_tree_icon" src="/src/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖二" />
         </div>
       </div>
     </div>
 
     <!-- 營區規範區塊 -->
     <div class="guide-rules-bg">
-      <img class="colorful-flags" src="/src/assets/image/campGuide/colorfulflags3.svg" 
-      alt="營區規範區塊三角旗" />
+      <img class="colorful-flags" src="/src/assets/image/campGuide/colorfulflags3.svg" alt="營區規範區塊三角旗" />
 
       <div class="guide-rules-title">
         <img src="/src/assets/image/campGuide/signboard_m.svg" alt="營區規範標題掛旗" />
@@ -340,8 +324,8 @@ export default {
       </div>
 
       <div class="rule-icons">
-          <img src="/src/assets/image/campGuide/rule_dog_icon.svg" alt="營區規範狗icon" />
-          <img src="/src/assets/image/campGuide/rule_cat_icon.svg" alt="營區規範貓icon" />
+        <img src="/src/assets/image/campGuide/rule_dog_icon.svg" alt="營區規範狗icon" />
+        <img src="/src/assets/image/campGuide/rule_cat_icon.svg" alt="營區規範貓icon" />
       </div>
 
       <div class="guide-rules">
@@ -377,7 +361,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
 @import url(/src/assets/sass/page/campGuide.scss);
-
 </style>
