@@ -412,11 +412,11 @@ a{
     }
 }
 .action-btn-01{
-    background-color: $brown-2;
+    background-color: $blue-3;
     color: $white01;
     border: none;
     &:hover{
-        background-color: $brown-3;
+        background-color: $blue-4;
     }
     @include desktop{
         width: 100%;

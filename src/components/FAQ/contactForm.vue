@@ -301,6 +301,7 @@ form{
         &:nth-child(2){
             background-color: $blue-3;
             font-weight: 600;
+            color: $white01;
             &:hover{
                 background-color: $blue-4;
             }
