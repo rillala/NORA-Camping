@@ -7,9 +7,10 @@ import { mapState, mapActions } from 'pinia';
 import bannerStepShop from '@/components/shop/bannerStep-shop.vue';
 import actionBtn from '@/components/button/actionBtn.vue';
 import DropDownBtn from '@/components/button/dropDownBtn.vue';
+import { RouterLink } from 'vue-router';
 
 export default {
-  components: { bannerStepShop, actionBtn, DropDownBtn },
+  components: { bannerStepShop, actionBtn, DropDownBtn, RouterLink },
   data() {
     return {
       selectColor:['顏色','黑色', '白色', '綠色','藍色'],
@@ -119,8 +120,8 @@ export default {
               :content="'繼續購物'"
             ></actionBtn>
           </router-link>
-
-          <actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn>
+          <RouterLink to="shopPayment"><actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn></RouterLink>
+          
         </div>
       </div>
     </div>
