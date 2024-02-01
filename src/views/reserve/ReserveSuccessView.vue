@@ -37,6 +37,9 @@ export default {
     this.payTime = time2.toLocaleString();
 
     this.totalPrice = parseInt(sessionStorage.getItem('totalPrice'));
+
+    // 確認訂單完成之後, 刪除 sessionStorage 裡所存資料
+    sessionStorage.clear();
   },
   methods: {
     formatPrice(price) {
