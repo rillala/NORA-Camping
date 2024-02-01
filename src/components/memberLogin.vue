@@ -1,5 +1,5 @@
 <template>
-  <div class="lightbox" >
+  <div class="lightbox">
     <div class="lightbox-container" v-if="isOpen">
       <div
         v-if="showPrivacyPolicy"
@@ -96,7 +96,12 @@
               </button>
             </div>
           </div>
-          <button type="submit" class="main-btn" @click="register" :disabled="!user_add.agreeTerms">
+          <button
+            type="submit"
+            class="main-btn"
+            @click="register"
+            :disabled="!user_add.agreeTerms"
+          >
             立即加入
           </button>
         </form>
@@ -114,7 +119,7 @@
             v-model="user_enter.pwd"
           /><br />
           <a class="forget-psw">忘記密碼？</a><br />
-          <button class="main-btn" @click="signin">會員登入</button><br/>
+          <button class="main-btn" @click="signin">會員登入</button><br />
           <button class="sub-btn">以Google登入</button>
         </form>
       </div>
@@ -150,11 +155,12 @@ export default {
   },
   created() {
     // 判斷有沒有登入過，如果沒有token等同於沒有登入
-    const user = this.checkLogin();
-    if (user) {
-      //有登入資訊轉到首頁
-      this.$router.push('/');
-    }
+    const user = userStore();
+    user.checkLogin();
+    // if (user) {
+    //   //有登入資訊轉到首頁
+    //   this.$router.push('/');
+    // }
   },
   watch: {
     isOpen(newVal) {
@@ -173,8 +179,8 @@ export default {
       this.showPrivacyPolicy = false;
     },
     closeLightbox() {
-      console.log('closeLightbox')
-      this.$emit('close')
+      console.log('closeLightbox');
+      this.$emit('close');
       // alert()
       // if (this.isOpen) {
       //   this.isOpen = false;
@@ -217,37 +223,37 @@ export default {
     },
 
     ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
-      register() {
-        if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
+    register() {
+      if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
         alert('密碼不一致');
         return; // 中止註冊流程
-  }
-        // 問題 檢查用戶是否勾選了同意隱私權政策
-        if (!this.user_add.agreeTerms) {
-        alert('請勾選隱私權政策'); 
-        console('請勾選隱私權政策'); 
-        }
-        // 在此處呼叫註冊 API 端點
-        axios
-          .post('https://fakestoreapi.com/auth/login', {
-            username: this.user_add.account,
-            password: this.user_add.pwd,
-          })
-          .then(response => {
-            if (response.data && response.data.token) {
-              this.updateToken(response.data.token); // 更新 token
-              console.log('register success', response.data.token);
-              this.closeLightbox(); 
-              alert('註冊成功。');// 註冊成功後，關閉燈箱
-              // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
-            }
-          })
-          .catch(error => {
-            console.error(error);
-            // 處理註冊失敗的回應
-            alert('註冊失敗，請稍後再試。');
-          });
       }
+      // 問題 檢查用戶是否勾選了同意隱私權政策
+      if (!this.user_add.agreeTerms) {
+        alert('請勾選隱私權政策');
+        console('請勾選隱私權政策');
+      }
+      // 在此處呼叫註冊 API 端點
+      axios
+        .post('https://fakestoreapi.com/auth/login', {
+          username: this.user_add.account,
+          password: this.user_add.pwd,
+        })
+        .then(response => {
+          if (response.data && response.data.token) {
+            this.updateToken(response.data.token); // 更新 token
+            console.log('register success', response.data.token);
+            this.closeLightbox();
+            alert('註冊成功。'); // 註冊成功後，關閉燈箱
+            // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          // 處理註冊失敗的回應
+          alert('註冊失敗，請稍後再試。');
+        });
+    },
   },
 };
 </script>
@@ -438,7 +444,7 @@ input[type='checkbox'] {
   text-align: left;
 }
 
-.close-lightbox-button{
+.close-lightbox-button {
   position: absolute;
   top: 15px;
   right: 20px;
