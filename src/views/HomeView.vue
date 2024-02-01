@@ -8,6 +8,8 @@ import catAnimation from '@/components/home/catAnimation.vue';
 import newsArticle from '@/components/home/newsArticle.vue';
 import productCard from '@/components/shop/productCard.vue';
 import { gsap } from 'gsap';
+import { ref } from 'vue';
+
 
 export default {
   components: {
@@ -123,8 +125,8 @@ export default {
         {
           x: '0%',
           duration: 30,
-          ease: 'linear', //線性
-          repeat: -1, //無限播放
+          ease: 'linear',
+          repeat: -1,
         },
       ),
         gsap.fromTo(
@@ -279,46 +281,63 @@ export default {
 
   <section class="New-products bg-blue-2">
     <h2>野良選物X最新商品</h2>
-    <div class="Prod-wapper">
-      <div class="New-prod-row">
-        <div class="New-prod">
-          <!-- 尚未改寫-->
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
+
+    <!-- 桌機板左右按鈕 -->
+    <div class="New-prod-btn">
+      <div id="left" @click="moveLeft">
+        <img src="@/assets/image/universe/left-arrow-btn.svg" alt="左按鈕">
+      </div>
+      <div id="right" @click="moveRight">
+        <img src="@/assets/image/universe/right-arrow-btn.svg" alt="右按鈕">
       </div>
     </div>
+
+    <div class="Prod-wapper">
+      <div class="New-prod">
+        <!-- 這裡先切樣子出來，後面會改成components取資料庫資料-->
+        <div class="New-prod-image">
+          <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
+        </div>
+        <h4>野良NORA折疊椅</h4>
+        <p>NTD$900</p>
+      </div>
+      <div class="New-prod">
+        <div class="New-prod-image">
+          <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
+        </div>
+        <h4>野良NORA折疊椅</h4>
+        <p>NTD$900</p>
+      </div>
+      <div class="New-prod">
+        <div class="New-prod-image">
+          <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
+        </div>
+        <h4>野良NORA折疊椅</h4>
+        <p>NTD$900</p>
+      </div>
+      <div class="New-prod">
+        <div class="New-prod-image">
+          <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
+        </div>
+        <h4>野良NORA折疊椅</h4>
+        <p>NTD$900</p>
+      </div>
+      <div class="New-prod">
+        <div class="New-prod-image">
+          <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
+        </div>
+        <h4>野良NORA折疊椅</h4>
+        <p>NTD$900</p>
+      </div>
+      <div class="New-prod">
+        <div class="New-prod-image">
+          <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
+        </div>
+        <h4>野良NORA折疊椅</h4>
+        <p>NTD$900</p>
+      </div>
+    </div>
+
 
     <router-link to="/shop">
       <viewMoreBtn class="See-more-prod" :content="'逛逛其他好物'" />
@@ -342,7 +361,7 @@ export default {
             <viewMoreBtn class="SH-btn1" :content="'了解更多'" />
           </router-link>
           <router-link to="/shelter">
-            <actionBtn :content="'報名志工活動'" />
+            <actionBtn class="SH-btn1" :content="'報名志工活動'" />
           </router-link>
         </div>
       </div>
