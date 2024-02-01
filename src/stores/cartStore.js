@@ -9,6 +9,7 @@ export const useCartStore = defineStore('cartStore', {
   state: () => {
     return {
       cart: [],
+      totalQty: '',
     };
   },
   actions: {
@@ -40,6 +41,7 @@ export const useCartStore = defineStore('cartStore', {
           productId,
           qty,
         });
+        this.totalQty += qty
       }
       console.log(this.cart);
       // console.log(productId, qty);

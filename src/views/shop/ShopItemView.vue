@@ -42,6 +42,7 @@ export default {
   },
   watch: {},
   methods: {
+    turntopage(){this.$router.replace({name: 'shop'})},
     handleQuantityUpdate(quantity) {
       // 接收數量更新事件
       this.selectedQuantity = quantity;
@@ -50,6 +51,12 @@ export default {
     async addIntoCart() {
       const cartStore = useCartStore();
       await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
+      alert('商品已加入購物車')
+    },
+    async addAndBuy() {
+      const cartStore = useCartStore();
+      await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
+      this.$router.replace({ name: 'shopCar' });
     },
     prevImage() {
       // 切換到前一張圖片
@@ -113,7 +120,7 @@ export default {
             </div>
             <div class="shop-item-actionBtns">
               <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
-              <router-link to="shopCar"><ActionBtn :content="'直接購買'"></ActionBtn></router-link>
+              <ActionBtn @click.prevent="addAndBuy" :content="'直接購買'"></ActionBtn>
               
             </div>
           </div>

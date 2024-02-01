@@ -32,10 +32,15 @@ export default {
 }
 .dropDown-select {
 	// width: 100px;
-	height: 30px;
-	font-size: 16px;
+	height: 100%;
+	font-size: 12px;
 	background-color: $yellow-2;
 	border-radius: 20px;
-	padding: 4px 8px;
+	
+	padding: 2px 4px;
+	@include desktop {
+		font-size: 16px;
+		padding: 4px 8px;
+	}
 }
 </style>

@@ -8,8 +8,10 @@ export default {
   },
   methods: {
     add() {
-      this.quantity++;
-      this.$emit('update:quantity', this.quantity);
+      if (this.quantity < 20) {
+        this.quantity++;
+        this.$emit('update:quantity', this.quantity);
+      }
     },
     minus() {
       if (this.quantity > 0) {
@@ -60,11 +62,13 @@ button {
   height: 35px;
   border-radius: 50%;
   border: none;
+
   .minus-icon {
     width: 10px;
     height: 2px;
     border-radius: 2px;
   }
+
   .add-icon {
     position: absolute;
     translate: 90deg;
@@ -73,6 +77,7 @@ button {
     border-radius: 2px;
   }
 }
+
 .box {
   width: 40px;
   text-align: center;
