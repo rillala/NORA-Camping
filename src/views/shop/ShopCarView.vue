@@ -2,6 +2,7 @@
 // 引入函式庫
 import axios from 'axios';
 import { useCartStore } from '@/stores/cartStore';
+import { useProductStore } from '@/stores/productStore';
 import { mapState, mapActions } from 'pinia';
 import bannerStepShop from '@/components/shop/bannerStep-shop.vue';
 import actionBtn from '@/components/button/actionBtn.vue';
@@ -14,6 +15,9 @@ export default {
   created() {
     const cartStore = useCartStore();
     cartStore.getCart();
+
+    const productStore = useProductStore();
+    productStore.axiosGetData();
   },
   methods: {
     ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart']),

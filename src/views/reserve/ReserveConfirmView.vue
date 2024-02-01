@@ -72,7 +72,7 @@ export default {
     // 讀取 equipmentList
 
     let storedEquipmentStr = sessionStorage.getItem('equipmentList');
-    if (storedEquipmentStr.length > 2) {
+    if (storedEquipmentStr.length > 1) {
       let siteDataArray = storedEquipmentStr
         .split(',')
         .filter(item => item) // 移除空字串
