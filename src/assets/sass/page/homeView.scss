@@ -284,7 +284,7 @@
     // display: flex;
     // flex-direction: row;
     // align-items: center;
-    // overflow-x: auto;
+    overflow-x: auto;
 
     @include desktop {
         // flex-direction: column;
@@ -314,6 +314,7 @@
 .New-products {
     text-align: center;
     position: relative;
+    overflow: hidden;
 
     h2 {
         padding-top: 40px;
@@ -322,11 +323,12 @@
 
 .New-prod-btn {
     display: none;
-    width: 100%;
     position: relative;
     top: 220px;
     left: 0;
     padding: 0 10px;
+    z-index: 1;
+    transition: 100ms;
 
     @include desktop {
         display: flex;
@@ -337,29 +339,34 @@
 
 #left {
     cursor: pointer;
+    border: none;
+    background-color: transparent;
 }
 
 #right {
     cursor: pointer;
+    border: none;
+    background-color: transparent;
 }
 
 .Prod-wapper {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0 29.5%;
-    // border: 2px solid red;
+    padding: 0 10%;
     overflow-x: auto;
     scroll-snap-type: x proximity;
     scroll-behavior: smooth;
+    transition: 200ms;
 
     @include tablet {
         padding: 0 20px;
     }
 
     @include desktop {
-        overflow-x: hidden;
-
+        padding: 0 5%;
+        overflow-x: visible;
+        position: relative;
     }
 }
 
@@ -372,9 +379,11 @@
     justify-content: space-evenly;
     height: 380px;
     width: 300px;
-    margin: 5px;
+    margin: 10px;
     background-color: #fff;
     border-radius: 30px;
+
+    @include desktop {}
 }
 
 .New-prod-image {
@@ -394,6 +403,7 @@
 .See-more-prod {
     color: $white01;
     background-color: $blue-3;
+    border: none;
     margin: 50px 0;
 }
 
