@@ -40,8 +40,7 @@ export default {
           path: '/shelter',
         },
       ],
-      // 下面用來接收購物車裡的數量
-      // cartCount: 0,
+      
     };
   },
   watch: {
