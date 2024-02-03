@@ -4,12 +4,9 @@
 	background-color: $blue-1;
 
 	.shop-all-container {
-		display: flex;
-		flex-flow: column;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
+		max-width: 1200px;
 		margin: auto;
+		height: 100%;
 		padding: 20px;
 
 		.shop-all-banner {
@@ -45,7 +42,8 @@
 			display: grid;
 			gap: 20px;
 			grid-template-columns: 1fr 1fr;
-			max-width: 100%;
+			width: 100%;
+			height: 100%;
 			justify-content: center;
 			margin-top: 20px;
 
@@ -54,16 +52,15 @@
 			}
 
 			.shop-all-card {
-				display: flex;
-				flex-flow: column;
-				gap: 20px;
-				max-width: 285px;
 				height: 100%;
 				padding: 20px;
-				aspect-ratio: 285 / 340;
+				// aspect-ratio: 285 / 340;
 				border: 2px solid $dark-gray;
-				border-radius: 50px;
+				border-radius: 20px;
 				background-color: #fff;
+				@include desktop {
+					border-radius: 50px;
+				}
 
 				&:hover {
 					border: 2px solid $yellow-3;
@@ -74,14 +71,14 @@
 					color: $dark;
 				}
 
-				.shop-card-img {
-					border-radius: 40px;
-				}
-
 				img {
 					width: 100%;
 					aspect-ratio: 1/1;
-					border-radius: 40px;
+					border-radius: 20px;
+
+					@include desktop {
+						border-radius: 40px;
+					}
 				}
 
 				.shop-card-title {

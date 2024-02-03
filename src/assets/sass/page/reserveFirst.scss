@@ -463,7 +463,7 @@
     height: 45px;
     margin: 0 10px;
     border-radius: $radius;
-    border: none;
+    border: 3px solid $dark;
     text-align: center;
     @include font-style(32px, 700, 10%, 125%);
   }

@@ -47,7 +47,7 @@
     // border: 2px solid red;
     position: relative;
     height: 700px;
-    width: 100%;
+    width: 101%;
     overflow: hidden;
     z-index: -3;
 }
@@ -280,16 +280,24 @@
 }
 
 .News-viewport {
+    // width: 100%;
+    // display: flex;
+    // flex-direction: row;
+    // align-items: center;
+    overflow-x: auto;
+
     @include desktop {
+        // flex-direction: column;
         width: 100%;
         margin: auto;
         max-width: 1000px;
         height: 700px;
-        overflow: auto;
+
     }
 }
 
 .News-article {
+    width: 100%;
     display: flex;
     flex-direction: column;
     background-color: $white01;
@@ -305,46 +313,83 @@
 //最新商品
 .New-products {
     text-align: center;
+    position: relative;
+    overflow: hidden;
 
     h2 {
-        padding: 20px 0;
+        padding-top: 40px;
     }
+}
+
+.New-prod-btn {
+    display: none;
+    position: relative;
+    top: 220px;
+    left: 0;
+    padding: 0 10px;
+    z-index: 1;
+    transition: 100ms;
+
+    @include desktop {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+#left {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+#right {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
 }
 
 .Prod-wapper {
     display: flex;
     align-items: center;
     width: 100%;
-    margin: auto;
-    position: relative;
-    height: 430px;
-    // border: 2px solid red;
+    padding: 0 10%;
     overflow-x: auto;
-}
-
-.New-prod-row {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    gap: 20px;
     scroll-snap-type: x proximity;
     scroll-behavior: smooth;
+    transition: 200ms;
+
+    @include tablet {
+        padding: 0 20px;
+    }
+
+    @include desktop {
+        padding: 0 5%;
+        overflow-x: visible;
+        position: relative;
+    }
 }
 
+
 .New-prod {
+    scroll-snap-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     height: 380px;
     width: 300px;
+    margin: 10px;
     background-color: #fff;
     border-radius: 30px;
+
+    @include desktop {}
 }
 
 .New-prod-image {
     width: 250px;
     height: 250px;
+    margin: 10px;
     overflow: hidden;
     border-radius: 15px;
 
@@ -358,6 +403,7 @@
 .See-more-prod {
     color: $white01;
     background-color: $blue-3;
+    border: none;
     margin: 50px 0;
 }
 
@@ -432,6 +478,7 @@
 
 .SH-btn1 {
     margin: 10px;
+    color: #fff;
 }
 
 .SH-tent-container {

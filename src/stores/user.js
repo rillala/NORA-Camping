@@ -1,35 +1,35 @@
 // https://pinia.vuejs.org/core-concepts/state.html
 //vuex
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 export default defineStore('userStore', {
   // 對應 data
   state: () => ({
     token: '',
-    userData:{},//補php
+    userData: {}, //補php
   }),
 
   actions: {
-    checkLogin(){
-      const storageToken = localStorage.getItem('token')
-      if(this.token){
-        return this.token
-      }else if(storageToken){
-        return storageToken
-      }else{
-        return ''
+    checkLogin() {
+      const storageToken = localStorage.getItem('token');
+      if (this.token) {
+        return this.token;
+      } else if (storageToken) {
+        return (this.token = storageToken);
+      } else {
+        return '';
       }
     },
-    updateToken (payload) {
-      if(payload){
-        this.token = payload
-        localStorage.setItem('token', payload)
-      }else{
-        this.token = ''
-        localStorage.removeItem('token')
+    updateToken(payload) {
+      if (payload) {
+        this.token = payload;
+        localStorage.setItem('token', payload);
+      } else {
+        this.token = '';
+        localStorage.removeItem('token');
       }
     },
-    updateName (payload) {
-      this.name = payload
-    }
-  }
-})
+    updateName(payload) {
+      this.name = payload;
+    },
+  },
+});

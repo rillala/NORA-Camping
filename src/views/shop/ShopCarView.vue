@@ -6,11 +6,16 @@ import { useProductStore } from '@/stores/productStore';
 import { mapState, mapActions } from 'pinia';
 import bannerStepShop from '@/components/shop/bannerStep-shop.vue';
 import actionBtn from '@/components/button/actionBtn.vue';
+import DropDownBtn from '@/components/button/dropDownBtn.vue';
+import { RouterLink } from 'vue-router';
 
 export default {
-  components: { bannerStepShop, actionBtn },
+  components: { bannerStepShop, actionBtn, DropDownBtn, RouterLink },
   data() {
-    return {};
+    return {
+      selectColor:['顏色','黑色', '白色', '綠色','藍色'],
+      selectSize:['尺寸','XS', 'S', 'M', 'L', 'XL'],
+    };
   },
   created() {
     const cartStore = useCartStore();
@@ -21,6 +26,28 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart']),
+    handleSelection(type) {
+      // 在這裡觸發相應的事件
+      if (type === '黑色') {
+        console.log('黑色')
+      }else if(type === '白色'){
+        console.log('白色');
+      }else if (type === '綠色'){
+        console.log('綠色');
+      }else if(type === '藍色'){
+        console.log('藍色');
+      }else if(type === 'XS'){
+        console.log('XS');
+      }else if(type === 'S'){
+        console.log('S');
+      }else if(type === 'M'){
+        console.log('M');
+      }else if(type === 'L'){
+        console.log('L');
+      }else if(type === 'XL'){
+        console.log('XL');
+      }
+    },
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
@@ -54,8 +81,8 @@ export default {
               <td class="select-content">
                 <p class="footerp">{{ item.product.title }}</p>
                 <div class="select">
-                  <p class="select-item">顏色</p>
-                  <p class="select-item">尺寸</p>
+                  <DropDownBtn :options="selectColor" @change="handleSelection" :default-value="'顏色'"></DropDownBtn>
+                  <DropDownBtn :options="selectSize" @change="handleSelection" :default-value="'尺寸'"></DropDownBtn>
                 </div>
               </td>
               <td>
@@ -93,8 +120,8 @@ export default {
               :content="'繼續購物'"
             ></actionBtn>
           </router-link>
-
-          <actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn>
+          <RouterLink to="shopPayment"><actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn></RouterLink>
+          
         </div>
       </div>
     </div>
@@ -150,7 +177,7 @@ export default {
       td {
         text-align: center;
         vertical-align: middle;
-        padding: 4px 2px;
+        padding: 8px 2px;
       }
     }
   }
@@ -210,18 +237,7 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.select p {
-  background-color: rgb(127, 255, 148);
-  border-radius: 5px;
-  padding: 3px 5px;
-  font-size: 14px;
-  width: 50px;
-}
-
-.select p:nth-child(1) {
-  margin-right: 5px;
+  gap: 8px;
 }
 
 .cart-selectColor-desktop {

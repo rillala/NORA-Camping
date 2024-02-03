@@ -100,7 +100,6 @@
             type="submit"
             class="main-btn"
             @click="register"
-            :disabled="!user_add.agreeTerms"
           >
             立即加入
           </button>

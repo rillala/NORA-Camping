@@ -85,6 +85,8 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router';
 import axios from 'axios';
+import { mapState, mapActions } from 'pinia';
+import userStore from '@/stores/user';
 
 export default {
   data() {
@@ -111,6 +113,15 @@ export default {
     };
   },
   methods: {
+    // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
+    ...mapActions(userStore, ['updateToken']),
+    logout() {
+      // 調用pinia的updateToken
+      this.updateToken('');
+      this.isMemberSubOpen = false;
+      this.$router.push('/');
+    },
+    
     startEditing() {
       this.isEditing = true;
     },

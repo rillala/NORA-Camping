@@ -4,6 +4,8 @@ import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
+import { mapState, mapActions } from 'pinia';
+import userStore from '@/stores/user';
 
 export default {
   components: {
@@ -21,6 +23,7 @@ export default {
       selectedSites: [],
       chosenZone: '',
       equipmentList: [],
+      nextPagePath: '',
     };
   },
   created() {
@@ -72,7 +75,7 @@ export default {
     // 讀取 equipmentList
 
     let storedEquipmentStr = sessionStorage.getItem('equipmentList');
-    if (storedEquipmentStr.length > 1) {
+    if (storedEquipmentStr && storedEquipmentStr.length > 2) {
       let siteDataArray = storedEquipmentStr
         .split(',')
         .filter(item => item) // 移除空字串
@@ -129,8 +132,23 @@ export default {
         return this.siteTotalPrice;
       }
     },
+
+    ...mapState(userStore, ['token']),
+    isLogin() {
+      return !!this.token;
+    },
   },
+
   methods: {
+    checkLogin() {
+      if (this.isLogin) {
+        this.nextPagePath = '/reservepayment';
+        this.goToNextStep(`/reservepayment`);
+        this.$router.push('/reservepayment');
+      } else {
+        alert('請先登入會員');
+      }
+    },
     goToNextStep(nextPath) {
       if (sessionStorage.getItem('isStep3Clicked')) {
         this.generateReserveInfo();
@@ -245,9 +263,9 @@ export default {
 
     <!--下個步驟的按鈕-->
     <nextPageBtn
-      @click="goToNextStep(`/reservepayment`)"
+      @click="checkLogin()"
       :text="`前往付款`"
-      :path="`/reservepayment`"
+      :path="nextPagePath"
     />
   </section>
 </template>
