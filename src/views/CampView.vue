@@ -50,6 +50,12 @@ export default {
         import.meta.url,
       ).href;
     },
+    toReserve(){
+      this.$router.push('/reserve');
+    },
+    toShelter(){
+      this.$router.push('/shelter');
+    },
   },
 };
 </script>
@@ -144,7 +150,7 @@ export default {
             <li>棧板區：保持乾燥，適合帶狗露營者。</li>
           </ul>
 
-          <button class="reserve-btn">我要預約</button>
+          <button class="reserve-btn" @click="toReserve">我要預約</button>
         </div>
       </div>
 
@@ -182,19 +188,19 @@ export default {
             <li>棧板區：適合全天候使用。</li>
           </ul>
 
-          <button class="reserve-btn">我要預約</button>
+          <button class="reserve-btn" @click="toReserve">我要預約</button>
         </div>
       </div>
 
       <!-- 草跟貓咪的圖區塊 -->
-      <div class="cat-area-grass-img">
+      <!-- <div class="cat-area-grass-img">
         <img src="@/assets/image/campGuide/grass_icon.svg" alt="草的圖片" />
         <img
           src="@/assets/image/campGuide/gray_cat_icon.svg"
           alt="灰色貓咪圖片"
         />
         <img src="@/assets/image/campGuide/grass_icon.svg" alt="草的圖片" />
-      </div>
+      </div> -->
     </div>
 
     <div class="shelter-office-bg">
@@ -214,7 +220,7 @@ export default {
             歡迎在旅途中來看看牠們！<br />
             給彼此一個互相認識的機會！
           </p>
-          <button class="guide-shelter-btn">更多野良之家介紹</button>
+          <button class="guide-shelter-btn" @click="toShelter">更多野良之家介紹</button>
         </div>
       </div>
 
@@ -260,7 +266,7 @@ export default {
           src="@/assets/image/campGuide/cloud_m_large.svg"
           alt="營地資訊裝飾大雲朵"
         />
-        <img
+        <img class="cloud-m-small"
           src="@/assets/image/campGuide/cloud_m_small.svg"
           alt="營地資訊裝飾小雲朵"
         />

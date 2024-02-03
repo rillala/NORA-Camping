@@ -173,7 +173,7 @@ h4 {
     .paw10 {
         position: absolute;
         left: 0;
-        top: 91%;
+        top: 87%;
     }
 
     .cat-area-grass-img { //草跟貓的圖
@@ -194,8 +194,8 @@ h4 {
         align-items: center;
         gap: 20px;
         border-radius: $radius;
-        background-color: $blue-3;
-        color: $white01;
+        background-color: $blue-2;
+        color: $dark;
 
         @include desktop {
             max-width: 1200px;
@@ -260,19 +260,20 @@ h4 {
             width: 200px;
             height: 50px;
             border-radius: $radius;
-            background-color: $blue-2;
+            background-color: $blue-3;
             transition: background-color 0.3s ease;
+            color: $white01;
 
             @include desktop {
                 font-size: 18px;
             }
 
-            &:hover {
-                @include desktop {
-                    background-color: $blue-4;
-                    color: $white01;
-                }
-            }
+            // &:hover {
+            //     @include desktop {
+            //         background-color: $blue-4;
+            //         color: $white01;
+            //     }
+            // }
         }
     }
 }
@@ -337,9 +338,11 @@ h4 {
             width: 120px;
             height: 25px;
             border-radius: $radius;
-            background-color: $blue-3;
-            color: $white01;
+            background-color: $brown-3;
+            color: $dark;
             transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: block;
 
             @include desktop {
                 width: 200px;
@@ -347,12 +350,12 @@ h4 {
                 font-size: 18px;
             }
 
-            &:hover {
-                @include desktop {
-                    background-color: $blue-2;
-                    color: $dark;
-                }
-            }
+            // &:hover {
+            //     @include desktop {
+            //         background-color: $blue-2;
+            //         color: $dark;
+            //     }
+            // }
         }
     }
     
@@ -448,19 +451,19 @@ h4 {
 
     .guide-camp-info-title { //營地資訊
         position: relative;
-        animation: tentWaveLeft 1.5s infinite alternate;
+        // animation: tentWaveLeft 1.5s infinite alternate;
 
-        @keyframes tentWaveLeft {
-            0% {
-                transform: rotateX(0deg);
-            }
-            50% {
-                transform: rotateX(20deg);
-            }
-            100% {
-                transform: rotateX(0deg);
-            }
-        }
+        // @keyframes tentWaveLeft {
+        //     0% {
+        //         transform: rotateX(0deg);
+        //     }
+        //     50% {
+        //         transform: rotateX(20deg);
+        //     }
+        //     100% {
+        //         transform: rotateX(0deg);
+        //     }
+        // }
 
         img { //營地資訊招牌
             width: 100%;
@@ -504,14 +507,18 @@ h4 {
             }
         }
 
-        .camp-cloud :nth-child(2) { //營地資訊雲朵二
-            padding-left: 50%;
+        .cloud-m-small { //營地資訊雲朵二
+            display: none;
+
+            @include desktop {
+                display: block;
+            }
         }
         
         .camp-cloud-words { //營地資訊雲朵文字
             position: absolute;
-            top: 20%;
-            left: 25%;
+            top: 35%;
+            left: 30%;
             color: $yellow-3;
 
             @include desktop {
@@ -534,6 +541,7 @@ h4 {
         .bigtent { //營地資訊帳篷的圖片
             width: 100%;
             padding-bottom: 10px;
+            display: none;
 
             @include desktop {
                 width:fit-content;
@@ -542,10 +550,11 @@ h4 {
         }
 
         .camp-info { //營地資訊帳篷文字
-            position: absolute;
-            top: 24%;
-            left: 18%;
+            // position: absolute;
+            // top: 24%;
+            // left: 18%;
             font-size: 15px;
+            color: $dark;
 
             @include desktop {
                 font-size: 24px;
@@ -644,19 +653,19 @@ h4 {
 
     .guide-facility-intro-title { //設施介紹標題區塊
         position: relative;
-        animation: tentWaveRight 1.5s infinite alternate;
+        // animation: tentWaveRight 1.5s infinite alternate;
 
-        @keyframes tentWaveRight {
-            0% {
-                transform: rotateX(0deg);
-            }
-            50% {
-                transform: rotateX(20deg);
-            }
-            100% {
-                transform: rotateX(0deg);
-            }
-        }
+        // @keyframes tentWaveRight {
+        //     0% {
+        //         transform: rotateX(0deg);
+        //     }
+        //     50% {
+        //         transform: rotateX(20deg);
+        //     }
+        //     100% {
+        //         transform: rotateX(0deg);
+        //     }
+        // }
 
         img { //設施介紹標題圖片
             width: 100%;
@@ -826,19 +835,19 @@ h4 {
 
     .guide-rules-title { //營區規範標題
         position: relative;
-        animation: tentWaveLeft 1.5s infinite alternate;
+        // animation: tentWaveLeft 1.5s infinite alternate;
 
-        @keyframes tentWaveLeft {
-            0% {
-                transform: rotateX(0deg);
-            }
-            50% {
-                transform: rotateX(20deg);
-            }
-            100% {
-                transform: rotateX(0deg);
-            }
-        }
+        // @keyframes tentWaveLeft {
+        //     0% {
+        //         transform: rotateX(0deg);
+        //     }
+        //     50% {
+        //         transform: rotateX(20deg);
+        //     }
+        //     100% {
+        //         transform: rotateX(0deg);
+        //     }
+        // }
 
         img { //營區規範標題圖片
             width: 100%;
