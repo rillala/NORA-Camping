@@ -35,6 +35,10 @@
     position: absolute;
     top: 5%;
 
+    @include tablet {
+        top: 4%;
+    }
+
     .shelter-btn {
         background: none;
         border: none;
@@ -175,6 +179,10 @@
                 width:320px;
             }
 
+            @include tablet {
+                width:300px;
+            }
+
             @keyframes rotate {
                 0% {
                     transform: rotate(0deg);
@@ -196,6 +204,10 @@
             @include desktop {
                 width: 200px;
                 top: 0;
+            }
+
+            @include tablet {
+                width: 150px;
             }
         }
 
@@ -224,6 +236,10 @@
                 width: 200px;
                 bottom: 30%;
                 left: 3%;
+            }
+
+            @include tablet {
+                width: 150px;
             }
         }
 
@@ -504,6 +520,11 @@
                 left: 40%;
                 font-size: 40px;
             }
+
+            @include tablet {
+                top: 38%;
+                left: 55%;
+            }
         }
     }
 
@@ -547,6 +568,10 @@
                 font-size: 24px;
                 top: 50%;
                 left: 60%;
+            }
+
+            @include tablet {
+                left: 50%;
             }
         }
     }
@@ -595,6 +620,11 @@
             @include desktop {
                 font-size: 40px;
                 left: 50%;
+            }
+
+            @include tablet {
+                top: 52%;
+                left: 30%;
             }
         }
     }
@@ -748,6 +778,10 @@
                     font-size: 32px;
                     left: 38%;
                 }
+
+                @include tablet {
+                    left: 34%;
+                }
             }
         }
 
@@ -771,6 +805,10 @@
                 @include desktop {
                     font-size: 32px;
                     left: 31.5%;
+                }
+
+                @include tablet {
+                    left: 25%;
                 }
             }
 
@@ -816,6 +854,10 @@
                     font-size: 32px;
                     left: 35.5%;
                 }
+
+                @include tablet {
+                    left: 31%;
+                }
             }
 
             .step3-dtls {
@@ -859,6 +901,10 @@
                 @include desktop {
                     font-size: 32px;
                     left: 36.5%;
+                }
+
+                @include tablet {
+                    left: 31.5%;
                 }
             }
 
@@ -904,6 +950,10 @@
                     font-size: 32px;
                     left: 31.5%;
                 }
+
+                @include tablet {
+                    left: 25%;
+                }
             }
 
             .step5-dtls {
@@ -948,6 +998,10 @@
                     font-size: 32px;
                     left: 39.5%;
                 }
+
+                @include tablet {
+                    left: 36%;
+                }
             }
 
             .step6-dtls {
@@ -985,6 +1039,11 @@
                 gap: 20px;
                 top: 35%;
                 left: 12%;
+            }
+
+            @include tablet {
+                top: 31%;
+                left: 28%;
             }
 
             .attention-title {
@@ -1059,6 +1118,11 @@
                 top: 45%;
                 left: 40%;
                 font-size: 40px;
+            }
+
+            @include tablet {
+                top: 45%;
+                left: 57%;
             }
         }
     }

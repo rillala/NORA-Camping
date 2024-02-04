@@ -50,10 +50,10 @@ export default {
         import.meta.url,
       ).href;
     },
-    toReserve(){
+    toReserve() {
       this.$router.push('/reserve');
     },
-    toShelter(){
+    toShelter() {
       this.$router.push('/shelter');
     },
   },
@@ -89,16 +89,10 @@ export default {
     <!-- 立體地圖下方旗子區塊 -->
     <div class="guide-flags">
       <div class="guide-flag-left">
-        <img
-          src="@/assets/image/campGuide/left-flag-m.svg"
-          alt="立體地圖區塊左側旗子"
-        />
+        <img src="@/assets/image/campGuide/left-flag-m.svg" alt="立體地圖區塊左側旗子" />
       </div>
       <div class="guide-flag-right">
-        <img
-          src="@/assets/image/campGuide/right-flag-m.svg"
-          alt="立體地圖區塊右側旗子"
-        />
+        <img src="@/assets/image/campGuide/right-flag-m.svg" alt="立體地圖區塊右側旗子" />
       </div>
     </div>
 
@@ -114,23 +108,13 @@ export default {
       <img class="paw8" src="@/assets/image/campGuide/paw.svg" alt="腳印" />
       <img class="paw9" src="@/assets/image/campGuide/paw.svg" alt="腳印" />
       <img class="paw10" src="@/assets/image/campGuide/paw2.svg" alt="腳印" />
-      <img
-        class="dog-icon"
-        src="@/assets/image/campGuide/dog_card_icon.svg"
-        alt="狗狗icon"
-      />
+      <img class="dog-icon" src="@/assets/image/campGuide/dog_card_icon.svg" alt="狗狗icon" />
 
       <!-- 狗區導覽卡片 -->
       <div class="area-card area-dog-card">
         <div class="dog-card-img">
-          <img
-            src="@/assets/image/campGuide/campsite-dog-grass-3.png"
-            alt="狗區導覽圖一"
-          />
-          <img
-            src="@/assets/image/campGuide/campsite-dog-pallet-4.png"
-            alt="狗區導覽圖二"
-          />
+          <img src="@/assets/image/campGuide/campsite-dog-grass-3.png" alt="狗區導覽圖一" />
+          <img src="@/assets/image/campGuide/campsite-dog-pallet-4.png" alt="狗區導覽圖二" />
         </div>
 
         <div class="dog-card-dtl card-dtl">
@@ -155,22 +139,12 @@ export default {
       </div>
 
       <!-- 貓區導覽卡片 -->
-      <img
-        class="cat-icon"
-        src="@/assets/image/campGuide/cat_card_icon.svg"
-        alt="貓咪icon"
-      />
+      <img class="cat-icon" src="@/assets/image/campGuide/cat_card_icon.svg" alt="貓咪icon" />
 
       <div class="area-card area-cat-card">
         <div class="cat-card-img">
-          <img
-            src="@/assets/image/campGuide/campsite-cat-pallet-3.png"
-            alt="貓區導覽圖一"
-          />
-          <img
-            src="@/assets/image/campGuide/campsite-cat-pallet-4.png"
-            alt="貓區導覽圖二"
-          />
+          <img src="@/assets/image/campGuide/campsite-cat-pallet-3.png" alt="貓區導覽圖一" />
+          <img src="@/assets/image/campGuide/campsite-cat-pallet-4.png" alt="貓區導覽圖二" />
         </div>
 
         <div class="cat-card-dtl card-dtl">
@@ -206,18 +180,13 @@ export default {
     <div class="shelter-office-bg">
       <!-- 野良之家區塊 -->
       <div class="guide-shelter">
-        <img
-          src="@/assets/image/campGuide/shelter_big_img_pc_cut.jpg"
-          alt="野良之家區塊大圖"
-        />
 
         <div class="guide-shelter-info">
           <h4 class="guide-shelter-title">野良之家</h4>
           <p class="guide-shelter-dtl text">
             小小安置流浪貓狗的臨時住所，<br />
-            若喜歡貓貓狗狗的你，<br />
             這裡的小動物都在等待他們的家，<br />
-            歡迎在旅途中來看看牠們！<br />
+            歡迎喜歡貓狗的你來看看牠們！<br />
             給彼此一個互相認識的機會！
           </p>
           <button class="guide-shelter-btn" @click="toShelter">更多野良之家介紹</button>
@@ -226,10 +195,6 @@ export default {
 
       <!-- 辦公區區塊 -->
       <div class="guide-office">
-        <img
-          src="@/assets/image/campGuide/office_cut.jpeg"
-          alt="辦公區域圖片"
-        />
 
         <div class="area-office">
           <h4 class="office-title">辦公區</h4>
@@ -253,61 +218,40 @@ export default {
     <!-- 營地資訊區塊 -->
     <div id="nora-position"></div>
     <div class="guide-camp-info-bg">
-      <div class="guide-camp-info-title">
-        <img
-          src="@/assets/image/campGuide/signboard_m.svg"
-          alt="營地資訊標題掛旗"
-        />
-        <h4 class="camp-info-title">營地資訊</h4>
-      </div>
 
       <div class="camp-cloud">
-        <img
-          src="@/assets/image/campGuide/cloud_m_large.svg"
-          alt="營地資訊裝飾大雲朵"
-        />
-        <img class="cloud-m-small"
-          src="@/assets/image/campGuide/cloud_m_small.svg"
-          alt="營地資訊裝飾小雲朵"
-        />
+        <img src="@/assets/image/campGuide/cloud_m_large.svg" alt="營地資訊裝飾大雲朵" />
+        <img class="cloud-m-small" src="@/assets/image/campGuide/cloud_m_small.svg" alt="營地資訊裝飾小雲朵" />
         <p class="camp-cloud-words">遠離塵囂！<br />放鬆身心靈！</p>
       </div>
 
+      <div class="guide-camp-info-title">
+      </div>
+
       <div class="guide-camp-info">
-        <img
-          class="bigtent"
-          src="@/assets/image/campGuide/guide_info_bigtent.svg"
-          alt="營地資訊帳篷圖形"
-        />
+        <h4 class="camp-info-title">營地資訊</h4>
         <ul class="camp-info p">
           <li>地址：南投縣仙山鄉翠湖路1號</li>
           <li>電話：0988-123-456</li>
           <li>Email：info@noracamp.com</li>
         </ul>
 
-        <div class="camp-info-social">
-          <div class="fb">
-            <img
-              src="@/assets/image/campGuide/fb_icon.svg"
-              alt="Facebook icon"
-            />
-            <p>@NORACampOfficial</p>
-          </div>
-          <div class="ig">
-            <img
-              src="@/assets/image/campGuide/ig_icon.svg"
-              alt="Instagram icon"
-            />
-            <p>@noracamp_adventures</p>
-          </div>
-          <div class="line">
-            <img src="@/assets/image/campGuide/line_icon.svg" alt="Line icon" />
-            <p>@NORACamp</p>
-          </div>
-        </div>
-
         <div class="camp-info-map">
-          <img src="@/assets/image/campGuide/roadmap.png" alt="手繪地圖" />
+          <div class="camp-info-social">
+            <div class="fb">
+              <img src="@/assets/image/campGuide/fb_icon.svg" alt="Facebook icon" />
+              <p>@NORACampOfficial</p>
+            </div>
+            <div class="ig">
+              <img src="@/assets/image/campGuide/ig_icon.svg" alt="Instagram icon" />
+              <p>@noracamp_adventures</p>
+            </div>
+            <div class="line">
+              <img src="@/assets/image/campGuide/line_icon.svg" alt="Line icon" />
+              <p>@NORACamp</p>
+            </div>
+          </div>
+          <!-- <img class="roadmap" src="@/assets/image/campGuide/roadmap.png" alt="手繪地圖" /> -->
         </div>
       </div>
     </div>
@@ -315,64 +259,30 @@ export default {
     <!-- 設施介紹區塊 -->
 
     <div class="guide-facility-intro-bg">
-      <img
-        class="colorful-flags"
-        src="@/assets/image/campGuide/colorfulflags3.svg"
-        alt="設施介紹區塊三角旗"
-      />
+      <img class="colorful-flags" src="@/assets/image/campGuide/colorfulflags3.svg" alt="設施介紹區塊三角旗" />
       <div id="nora-facility"></div>
-      <div class="guide-facility-intro-title">
-        <img
-          src="@/assets/image/campGuide/signboard_m.svg"
-          alt="設施介紹標題掛旗"
-        />
-        <h4 class="facility-intro-title">設施介紹</h4>
-      </div>
-
       <div class="facility-cloud">
-        <img
-          src="@/assets/image/campGuide/cloud_m_blue_large.svg"
-          alt="設施介紹裝飾大雲朵"
-        />
-        <img
-          src="@/assets/image/campGuide/cloud_m_blue_small.svg"
-          alt="設施介紹裝飾小雲朵"
-        />
+        <img src="@/assets/image/campGuide/cloud_m_blue_large.svg" alt="設施介紹裝飾大雲朵" />
         <p class="facility-cloud-words">完善的設施！<br />露營起來更舒適！</p>
       </div>
 
       <div class="facility-intro">
-        <img
-          class="facility_intro_img"
-          src="@/assets/image/campGuide/facility_intro_img_3.png"
-          alt="設施介紹底圖"
-        />
+          <h4 class="facility-intro-title">設施介紹</h4>
+          <div class="facility-slider-btn">
+            <button class="facility-btn" @click="prevSlide">
+              <img src="@/assets/image/campGuide/left_button_m.svg" alt="左邊箭頭按鈕" />
+            </button>
 
-        <div class="facility-slider-btn">
-          <button class="facility-btn" @click="prevSlide">
-            <img
-              src="@/assets/image/campGuide/left_button_m.svg"
-              alt="左邊箭頭按鈕"
-            />
-          </button>
-          <button class="facility-btn" @click="nextSlide">
-            <img
-              src="@/assets/image/campGuide/right_button_m.svg"
-              alt="右邊箭頭按鈕"
-            />
-          </button>
+            <div class="facility-slider-container">
+              <transition name="fade" mode="out-in">
+                <img :src="getImageUrl(currentIndex)" :key="currentIndex" class="slider-image" />
+              </transition>
+            </div>
+
+            <button class="facility-btn" @click="nextSlide">
+              <img src="@/assets/image/campGuide/right_button_m.svg" alt="右邊箭頭按鈕" />
+            </button>
         </div>
-
-        <div class="facility-slider-container">
-          <transition name="fade" mode="out-in">
-            <img
-              :src="getImageUrl(currentIndex)"
-              :key="currentIndex"
-              class="slider-image"
-            />
-          </transition>
-        </div>
-
         <div class="facility-txt">
           <p class="facility-top">
             各營位有一個插頭、一組水槽、一盞路燈<br />
@@ -387,16 +297,8 @@ export default {
         </div>
 
         <div class="facility_trees">
-          <img
-            class="facility_tree_icon"
-            src="@/assets/image/campGuide/facility_tree_icon.svg"
-            alt="棕梠樹圖一"
-          />
-          <img
-            class="facility_tree_icon"
-            src="@/assets/image/campGuide/facility_tree_icon.svg"
-            alt="棕梠樹圖二"
-          />
+          <img class="facility_tree_icon" src="@/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖一" />
+          <img class="facility_tree_icon" src="@/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖二" />
         </div>
       </div>
     </div>
@@ -404,44 +306,20 @@ export default {
     <!-- 營區規範區塊 -->
     <div id="nora-rule"></div>
     <div class="guide-rules-bg">
-      <img
-        class="colorful-flags"
-        src="@/assets/image/campGuide/colorfulflags3.svg"
-        alt="營區規範區塊三角旗"
-      />
-
-      <div class="guide-rules-title">
-        <img
-          src="@/assets/image/campGuide/signboard_m.svg"
-          alt="營區規範標題掛旗"
-        />
-        <h4 class="rules-title">營區規範</h4>
-      </div>
+      <img class="colorful-flags" src="@/assets/image/campGuide/colorfulflags3.svg" alt="營區規範區塊三角旗" />
 
       <div class="rules-cloud">
-        <img
-          src="@/assets/image/campGuide/cloud_m_large.svg"
-          alt="營區規範裝飾大雲朵"
-        />
+        <img src="@/assets/image/campGuide/cloud_m_large.svg" alt="營區規範裝飾大雲朵" />
         <p class="rules-cloud-words">一起愛護環境！<br />開開心心露營！</p>
-        <img
-          src="@/assets/image/campGuide/cloud_m_small.svg"
-          alt="營區規範裝飾小雲朵"
-        />
       </div>
 
       <div class="rule-icons">
-        <img
-          src="@/assets/image/campGuide/rule_dog_icon.svg"
-          alt="營區規範狗icon"
-        />
-        <img
-          src="@/assets/image/campGuide/rule_cat_icon.svg"
-          alt="營區規範貓icon"
-        />
+        <img src="@/assets/image/campGuide/rule_dog_icon.svg" alt="營區規範狗icon" />
+        <img src="@/assets/image/campGuide/rule_cat_icon.svg" alt="營區規範貓icon" />
       </div>
 
       <div class="guide-rules">
+        <h4 class="rules-title">營區規範</h4>
         <img src="@/assets/image/campGuide/attention.svg" alt="!圖片" />
         <ol class="guide-rules-list p">
           <li>落實垃圾分類並放於指定區，保持營區清潔。</li>
