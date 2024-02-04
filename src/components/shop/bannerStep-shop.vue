@@ -10,9 +10,9 @@ export default {
   data() {
     return {
       stepList: [
-        { step: '購物車', path: '/reserve' },
-        { step: '訂購資訊及付款', path: '/equipment' },
-        { step: '訂單完成', path: '/reserveconfirm' },
+        { step: '購物車', path: '/shopCar' },
+        { step: '訂購資訊及付款', path: '/shopPayment' },
+        { step: '訂單完成', path: '/shopOrderSucess' },
       ],
     };
   },

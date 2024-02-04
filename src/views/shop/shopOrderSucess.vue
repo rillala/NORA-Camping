@@ -1,4 +1,52 @@
+<script>
+import BannerStepShop from '@/components/shop/bannerStep-shop.vue';
+import { useCartStore } from '@/stores/cartStore';
+import { mapState, mapActions } from 'pinia';
+import ActionBtn from '@/components/button/actionBtn.vue';
+
+export default {
+  components: { BannerStepShop, ActionBtn },
+  data() {
+    return {
+      orderInfo: {
+
+      }
+    }
+  },
+  methods: {
+    clearStorage() {
+      // 清除 localStorage 的 cartList
+      localStorage.removeItem('cartList');
+      // 清除 sessionStorage 的 orderInfo
+      sessionStorage.removeItem('orderInfo');
+    }
+  },
+  computed: {
+    ...mapState(useCartStore, ['cartList'])
+  },
+  created() {
+    const cartStore = useCartStore();
+    cartStore.getCart();
+
+    const storedOrderInfo = sessionStorage.getItem('orderInfo');
+
+    if (storedOrderInfo) {
+      // 將 session storage 中的資料轉換為對應的數據格式
+      const parsedOrderInfo = JSON.parse(storedOrderInfo);
+
+      // 更新組件數據
+      this.orderInfo = {
+        ...this.orderInfo,
+        ...parsedOrderInfo,
+      };
+    }
+  }
+}
+</script>
+
 <template>
+  {{ cartList.title }}
+  <BannerStepShop></BannerStepShop>
   <section class=" shop-orderSucess-wrap">
     <div class="step3">
       <div class="title">
@@ -11,37 +59,58 @@
         </div>
         <div class="between number">
           <h4>訂單編號</h4>
-          <span>12345678</span>
+          <p>12345678</p>
         </div>
         <div class="buy-information">
-          <div class="between buy-list">
-            <h4>肉狗 x6</h4>
-            <span>NT$2,000</span>
+          <div v-for="item in cartList.carts" :key="item.id" class="between buy-list">
+            <h4>{{ item.product.title }} X {{ item.qty }}</h4>
+            <p>NT$ {{ item.subtotal }}</p>
           </div>
           <div class="between buy-total">
             <h4>合計</h4>
-            <span>NT$3,000</span>
+            <p>NT$ {{ cartList.total }}</p>
           </div>
           <div class="between buy-migrate">
             <h4>付費方式</h4>
-            <span>信用卡</span>
+            <p>{{ orderInfo.payMethod }}</p>
           </div>
           <div class="between buy-way">
             <h4>運送方式</h4>
-            <span>超商取貨:NT$100</span>
+            <p>{{ orderInfo.carry }} NT$ {{ orderInfo.payWay }}</p>
           </div>
           <div class="between buy-result">
-            <h4>總計:</h4>
-            <span>NT$3,1000</span>
+            <h3>總計:</h3>
+            <h3>NT$ {{ orderInfo.totalWithPayWay }}</h3>
+          </div>
+          <div class="content-title">
+            <h3>訂購人資料</h3>
+          </div>
+          <div class="between buyer">
+            <h4>姓名</h4>
+            <p> {{ orderInfo.name }} </p>
+          </div>
+          <div class="between buyer">
+            <h4>電話</h4>
+            <p> {{ orderInfo.phone }} </p>
+          </div>
+          <div class="between buyer">
+            <h4>郵件</h4>
+            <p> {{ orderInfo.email }} </p>
           </div>
           <div class="locate-title">
             <h4>帳單地址</h4>
-            <input type="text" value="123">
-            <h4>運送地址</h4>
-            <input type="text" value="456">
+            <p>{{ orderInfo.address }}</p>
+            <h4>備註</h4>
+            <p>{{ orderInfo.note }}</p>
           </div>
         </div>
       </div>
+    </div>
+    <div class="backButton">
+      <router-link to="HomeView"><ActionBtn @click="clearStorage" :content="'返回首頁'"></ActionBtn>
+      </router-link>
+      <router-link to="memberorderhistory"><ActionBtn @click="clearStorage" :content="'查看訂單'"></ActionBtn>
+      </router-link>
     </div>
   </section>
 </template>
@@ -52,59 +121,68 @@
   height: 100%;
   background-color: #fff;
 }
-  .between {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #000;
-    margin-bottom: 20px;
+
+.between {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #000;
+  margin-bottom: 20px;
 }
+
 .step3 {
   max-width: 1200px;
-    background-color: $blue-1;
-    width: 100%;
-    margin: auto;
-    padding: 24px 35px;
+  background-color: $blue-1;
+  margin: 40px auto;
+  padding: 24px 35px;
+  border-radius: 50px;
 }
 
 .step3 .title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 25px;
 }
 
 .step3 .title h2 {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .buy-content {
-    padding: 20px 50px;
-    background-color: $blue-1;
-    border-radius: 18px;
+  padding: 20px 50px;
+  background-color: $blue-1;
+  border-radius: 18px;
 }
 
 .content-title {
+  font-weight: bold;
+  margin-bottom: 20px;
+
+  h3 {
     font-weight: bold;
-    margin-bottom: 20px;
-    h3{
-      font-weight: bold;
-    }
+  }
 }
 
 .buy-result {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .locate-title h4 {
-    font-weight: bold;
-    margin-block: 16px;
+  font-weight: bold;
+  margin-block: 16px;
 }
 
 .locate-title input {
-    color: $light-gray;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #000;
-    width: 100%;
+  color: $light-gray;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #000;
+  width: 100%;
 }
-</style>
+
+.backButton {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+}</style>
