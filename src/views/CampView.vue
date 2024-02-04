@@ -165,16 +165,6 @@ export default {
           <button class="reserve-btn" @click="toReserve">我要預約</button>
         </div>
       </div>
-
-      <!-- 草跟貓咪的圖區塊 -->
-      <!-- <div class="cat-area-grass-img">
-        <img src="@/assets/image/campGuide/grass_icon.svg" alt="草的圖片" />
-        <img
-          src="@/assets/image/campGuide/gray_cat_icon.svg"
-          alt="灰色貓咪圖片"
-        />
-        <img src="@/assets/image/campGuide/grass_icon.svg" alt="草的圖片" />
-      </div> -->
     </div>
 
     <div class="shelter-office-bg">
@@ -251,7 +241,7 @@ export default {
               <p>@NORACamp</p>
             </div>
           </div>
-          <!-- <img class="roadmap" src="@/assets/image/campGuide/roadmap.png" alt="手繪地圖" /> -->
+          <img class="roadmap" src="@/assets/image/campGuide/roadmap.png" alt="手繪地圖" />
         </div>
       </div>
     </div>

@@ -477,17 +477,16 @@ h4 {
     }
 
     .guide-camp-info { //營地資訊帳篷區塊
-        background-image: url(/src/assets/image/campGuide/tentntree.svg) ;
-        background-size: contain ;
-        background-repeat: no-repeat ;
-        background-position: top;  
+        background-color: $blue-3;
+        border-radius: 30px;
+        padding: 30px 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 20px;
 
         .camp-info-title { //營地資訊標題
-            color: $dark;
+            color: $white01;
 
             @include desktop {
                 font-size: 40px;
@@ -510,7 +509,6 @@ h4 {
 
             .roadmap {
                 width: 100%;
-                padding: 10px;
     
                 @include desktop {
                     width: fit-content;
@@ -521,10 +519,8 @@ h4 {
             .camp-info-social { //營地資訊帳篷社群媒體區塊
                 display: flex;
                 flex-direction: column;
-                background-color: rgba(0, 0, 0, 0.2);
                 color: $white01;
                 border-radius: 10px;
-                padding: 20px;
     
                 img {
                     width: 20px;
@@ -553,6 +549,10 @@ h4 {
                             font-size: 20px;
                         }
                     }
+                }
+
+                .roadmap {
+                    width: 100%;
                 }
             }
         }
