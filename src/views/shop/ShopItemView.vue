@@ -56,7 +56,7 @@ export default {
     async addAndBuy() {
       const cartStore = useCartStore();
       await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
-      this.$router.replace({ name: 'shopCar' });
+      this.$router.replace('/shopCar');
     },
     prevImage() {
       // 切換到前一張圖片
