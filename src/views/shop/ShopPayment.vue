@@ -27,19 +27,18 @@ export default {
   methods: {
     ...mapActions(useCartStore, ['getCart']),
     confirmPayment() {
-    this.$nextTick(() => {
-      // 確保在更新之後獲取正確的 orderInfo.payWay 值
-      this.orderInfo.totalWithPayWay = this.totalWithPayWay;
-      // 將總計值存儲到 sessionStorage
-      sessionStorage.setItem('orderInfo', JSON.stringify(this.orderInfo));
-      // 跳轉到下一頁，你可以使用 this.$router.push
-      this.$router.replace('/ShopOrderSucess')
-    });
-  },
+      this.$nextTick(() => {
+        // 確保在更新之後獲取正確的 orderInfo.payWay 值
+        this.orderInfo.totalWithPayWay = this.totalWithPayWay;
+        // 將總計值存儲到 sessionStorage
+        sessionStorage.setItem('orderInfo', JSON.stringify(this.orderInfo));
+        // 跳轉到下一頁，你可以使用 this.$router.push
+        this.$router.replace('/ShopOrderSucess')
+      });
+    },
     confirmCarry(way) {
       this.orderInfo.carry = way
-    }
-
+    }, 
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
