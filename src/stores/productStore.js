@@ -7,7 +7,8 @@ export const useProductStore = defineStore('productStore', {
   state: () => {
     return {
       responseData: [],
-      displayData: [],
+    displayData: [],
+    filteredData: [],
     };
   },
   actions: {
@@ -16,6 +17,7 @@ export const useProductStore = defineStore('productStore', {
         if (res && res.data) {
           this.responseData = res.data;
           this.displayData = res.data;
+          this.filteredData = res.data; 
         }
       });
     },
@@ -39,6 +41,19 @@ export const useProductStore = defineStore('productStore', {
     },
     sortByPriceLowToHigh() {
       this.displayData.sort((a, b) => a.price - b.price);
+    },
+    filterProducts(searchTerm) {
+      if (!searchTerm.trim()) {
+        this.filteredData = this.responseData;
+        return;
+      }
+
+      this.filteredData = this.responseData.filter(item => {
+        return item.title.toLowerCase().includes(searchTerm.trim().toLowerCase());
+      });
+
+      // 在這裡更新 displayData
+      this.displayData = this.filteredData;
     },
   },
 });
