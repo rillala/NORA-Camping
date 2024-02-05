@@ -29,6 +29,10 @@ export default {
       const productStore = useProductStore();
       return productStore.displayData;
     },
+    responseData() {
+      const productStore = useProductStore();
+      return productStore.responseData;
+    },
 
     productCount() {
       return Array.isArray(this.displayData) ? this.displayData.length : 0;
@@ -56,12 +60,9 @@ export default {
       const productStore = useProductStore();
       await productStore.sortByPriceLowToHigh();
     },
-
-    filterHandle() {
-      this.displayData = this.responseData.filter(item => {
-        // console.log(item);
-        return item.title.includes(this.search);
-      });
+    async filterHandle() {
+      const productStore = useProductStore();
+      productStore.filterProducts(this.search);
     },
     handleSelection(type) {
       // 在這裡觸發相應的事件
@@ -103,8 +104,9 @@ export default {
         <input
           type="text"
           v-model.trim="search"
-          @input="handleInput"
+          @input="filterHandle"
           class="shop-searchbar"
+          placeholder="輸入商品關鍵字"
         />
       </div>
       <div class="shop-select-button">
