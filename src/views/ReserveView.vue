@@ -1475,7 +1475,7 @@ export default {
               <div class="minus-icon bg-dark"></div>
             </button>
             <input
-              class="white01 bg-blue-3"
+              class="dark "
               type="number"
               min="0"
               readonly

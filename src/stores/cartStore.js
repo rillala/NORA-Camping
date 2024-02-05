@@ -9,6 +9,7 @@ export const useCartStore = defineStore('cartStore', {
   state: () => {
     return {
       cart: [],
+      totalQty: '',
     };
   },
   actions: {
@@ -40,8 +41,9 @@ export const useCartStore = defineStore('cartStore', {
           productId,
           qty,
         });
+        // this.totalQty += qty
       }
-      console.log(this.cart);
+      // console.log(this.cart);
       // console.log(productId, qty);
       this.saveCartListToLocalStorage();
     },
@@ -69,7 +71,7 @@ export const useCartStore = defineStore('cartStore', {
         };
       });
 
-      console.log(cartList);
+      // console.log(cartList);
 
       // 存储完整的 cartList 到 localStorage
       localStorage.setItem('cartList', JSON.stringify(cartList));
@@ -117,11 +119,13 @@ export const useCartStore = defineStore('cartStore', {
         .filter(item => item != null);
 
       const total = carts.reduce((a, b) => a + b.subtotal, 0);
+      const totalQty = carts.reduce((a, b) => a + b.qty, 0);
       // console.log(product);
       // console.log(carts);
       return {
         carts, //列表
         total,
+        totalQty
       };
     },
   },

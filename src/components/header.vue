@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import memberLogin from '@/components/memberLogin.vue';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
+import { useCartStore } from '@/stores/cartStore';
 
 export default {
   components: {
@@ -39,6 +40,7 @@ export default {
           path: '/shelter',
         },
       ],
+      
     };
   },
   watch: {
@@ -49,6 +51,7 @@ export default {
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
     ...mapActions(userStore, ['updateToken']),
+    ...mapActions(useCartStore, ['getCart']),
     logout() {
       // 調用pinia的updateToken
       this.updateToken('');
@@ -87,9 +90,14 @@ export default {
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(userStore, ['token']),
+    ...mapState(useCartStore, ['cartList']),
     isLogin() {
       return !!this.token;
     },
+  },
+  created() {
+    const cartStore = useCartStore();
+    cartStore.getCart();
   },
 };
 </script>
@@ -198,11 +206,11 @@ export default {
           </button>
 
           <!--購物車-->
-          <RouterLink
-            to="/shopCar"
-            id="shop-car"
-            @click="closeHam"
-          ></RouterLink>
+          <RouterLink to="/shopCar" id="shop-car" @click="closeHam">
+            <div v-if="cartList.totalQty > 0" class="cart-num-box bg-blue-4">
+              <p class="cart-num white01">{{ cartList.totalQty }}</p>
+            </div></RouterLink
+          >
 
           <!--平板用子選單開關-->
 

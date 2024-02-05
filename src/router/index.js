@@ -64,9 +64,17 @@ const router = createRouter({
       },
     },
     {
+      path: '/shopPayment',
+      name: 'shopPayment',
+      component: () => import('../views/shop/ShopPayment.vue'),
+      meta: {
+        title: '建立訂單 Place your Order',
+      },
+    },
+    {
       path: '/shopOrderSucess',
       name: 'shopOrderSucess',
-      component: () => import('../views/shop/shopOrderSucess.vue'),
+      component: () => import('../views/shop/ShopOrderSucess.vue'),
       meta: {
         title: '訂單完成 Order Sucess',
       },

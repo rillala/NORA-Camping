@@ -9,6 +9,7 @@ import newsArticle from '@/components/home/newsArticle.vue';
 import productCard from '@/components/shop/productCard.vue';
 import { gsap } from 'gsap';
 
+
 export default {
   components: {
     actionBtn,
@@ -61,6 +62,46 @@ export default {
           large: { src: '', alt: '' },
         },
       ],
+      newProds: [
+        {
+          prodPicSrc: 'single8.png',
+          prodPicAlt: '商品圖片',
+          prodTitle: '野良NORA折疊椅',
+          prodPrice: 'NTD$900',
+        },
+        {
+          prodPicSrc: 'single8.png',
+          prodPicAlt: '商品圖片',
+          prodTitle: '野良NORA折疊椅',
+          prodPrice: 'NTD$900',
+        },
+        {
+          prodPicSrc: 'single8.png',
+          prodPicAlt: '商品圖片',
+          prodTitle: '野良NORA折疊椅',
+          prodPrice: 'NTD$900',
+        },
+        {
+          prodPicSrc: 'single8.png',
+          prodPicAlt: '商品圖片',
+          prodTitle: '野良NORA折疊椅',
+          prodPrice: 'NTD$900',
+        },
+        {
+          prodPicSrc: 'single8.png',
+          prodPicAlt: '商品圖片',
+          prodTitle: '野良NORA折疊椅',
+          prodPrice: 'NTD$900',
+        },
+        {
+          prodPicSrc: 'single8.png',
+          prodPicAlt: '商品圖片',
+          prodTitle: '野良NORA折疊椅',
+          prodPrice: 'NTD$900',
+        }
+      ],
+      curIndex: 0,
+      slideWidth: 200,
     };
   },
   mounted() {
@@ -70,6 +111,11 @@ export default {
     this.yamaSlide();
     // window.addEventListener('scroll', this.handleScroll);
     this.getWeather();
+  },
+  computed: {
+    wrapLeft() {
+      return `-${this.curIndex * this.slideWidth}px`;
+    },
   },
   methods: {
     //banner的動畫
@@ -123,8 +169,8 @@ export default {
         {
           x: '0%',
           duration: 30,
-          ease: 'linear', //線性
-          repeat: -1, //無限播放
+          ease: 'linear',
+          repeat: -1,
         },
       ),
         gsap.fromTo(
@@ -182,6 +228,22 @@ export default {
         this.getWeatherImageUrl(this.weatherMark[0])
       );
     },
+    //暫時借用的圖片路徑
+    getNewProdImageUrl(paths) {
+      return new URL(
+        `../assets/image/reserve/equipment/${paths}`,
+        import.meta.url,
+      ).href;
+    },
+    //最新商品往左往右
+    moveLeft() {
+      this.curIndex--;
+      console.log(this.curIndex);
+    },
+    moveRight() {
+      this.curIndex++;
+      console.log(this.curIndex);
+    }
   },
   watch: {
     search(newSearch, oldSearch) {
@@ -279,46 +341,27 @@ export default {
 
   <section class="New-products bg-blue-2">
     <h2>野良選物X最新商品</h2>
-    <div class="Prod-wapper">
-      <div class="New-prod-row">
-        <div class="New-prod">
-          <!-- 尚未改寫-->
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
+
+    <!-- 桌機板左右按鈕 -->
+    <div class="New-prod-btn">
+      <button id="left" @click="moveLeft" :disabled="curIndex <= 0">
+        <img src="@/assets/image/universe/left-arrow-btn.svg" alt="左按鈕">
+      </button>
+      <button id="right" @click="moveRight" :disabled="curIndex >= 5">
+        <img src="@/assets/image/universe/right-arrow-btn.svg" alt="右按鈕">
+      </button>
+    </div>
+    <!-- 抓axios後的商品資料陣列 -->
+    <div class="Prod-wapper" :style="{ left: wrapLeft }">
+      <div class=" New-prod" v-for=" prods  in  newProds ">
+        <div class="New-prod-image">
+          <img :src="getNewProdImageUrl(prods.prodPicSrc)" :alt="prods.prodPicSrc" />
         </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
-        <div class="New-prod">
-          <div class="New-prod-image">
-            <img src="@/assets/image/reserve/equipment/single8.png" alt="最新商品圖片" />
-          </div>
-          <h4>野良NORA折疊椅</h4>
-          <p>NTD$900</p>
-        </div>
+        <h4>{{ prods.prodTitle }}</h4>
+        <p>{{ prods.prodPrice }}</p>
       </div>
     </div>
+
 
     <router-link to="/shop">
       <viewMoreBtn class="See-more-prod" :content="'逛逛其他好物'" />
@@ -342,7 +385,7 @@ export default {
             <viewMoreBtn class="SH-btn1" :content="'了解更多'" />
           </router-link>
           <router-link to="/shelter">
-            <actionBtn :content="'報名志工活動'" />
+            <actionBtn class="SH-btn1" :content="'報名志工活動'" />
           </router-link>
         </div>
       </div>
