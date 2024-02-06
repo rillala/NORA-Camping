@@ -3,18 +3,24 @@ h4 {
 }
 
 .guide-banner { // Banner區塊
-    height: 200px;
-    width: 100%;
-    background-color: $blue-1;
+    padding-top: 10vw;
+    margin-left: 10vw;
     color: $blue-4;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    @include desktop {
-        text-align: left;
-        padding-left: 10%;
+    @include desktop{
+        padding-top: 5vw;
+        width: 100%;
+        margin: auto;
+        max-width: 1400px;
+    }
+    h2{
+        @include desktop{
+            font-size: 48px;
+        }
+    }
+    h4{
+        @include desktop{
+            font-size: 32px;
+        }
     }
 }
 
@@ -284,23 +290,27 @@ h4 {
         rgba(226, 219, 62, 0));
 
     .guide-shelter { //野良之家大區塊
-        background-image: url(/src/assets/image/campGuide/shelter_big_img_pc_cut.jpg);
-        background-size: cover ;
-        background-repeat: no-repeat ;
-        background-position: center;
+        // background-image: url(/src/assets/image/campGuide/shelter_big_img_pc_cut.jpg);
+        // background-size: cover ;
+        // background-repeat: no-repeat ;
+        // background-position: center;
 
         .guide-shelter-info { //野良之家的資訊
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            background-color: rgba(0, 0, 0, 0.2);
+            gap: 20px;
             color: $white01;
+            background-color: $yellow-2;
             padding: 10px 0px;
 
             @include desktop {
                 gap: 30px;
                 padding: 50px 0px;
+            }
+
+            img {
+                width: 100%;
             }
         }
 
@@ -341,10 +351,10 @@ h4 {
     }
     
     .guide-office {
-        background-image: url(/src/assets/image/campGuide/office.jpeg);
-        background-size: cover ;
-        background-repeat: no-repeat ;
-        background-position: center;
+        // background-image: url(/src/assets/image/campGuide/office.jpeg);
+        // background-size: cover ;
+        // background-repeat: no-repeat ;
+        // background-position: center;
 
         .area-office { //辦公區區塊
             display: flex;
@@ -358,6 +368,10 @@ h4 {
             @include desktop {
                 gap: 30px;
                 padding: 50px 0px;
+            }
+
+            img {
+                width: 100%;
             }
 
             .office-title {

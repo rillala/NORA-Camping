@@ -170,8 +170,8 @@ export default {
     <div class="shelter-office-bg">
       <!-- 野良之家區塊 -->
       <div class="guide-shelter">
-
         <div class="guide-shelter-info">
+          <img src="@/assets/image/campGuide/shelter_big_img_pc_cut.jpg" alt="">
           <h4 class="guide-shelter-title">野良之家</h4>
           <p class="guide-shelter-dtl text">
             小小安置流浪貓狗的臨時住所，<br />
@@ -187,6 +187,7 @@ export default {
       <div class="guide-office">
 
         <div class="area-office">
+          <img src="@/assets/image/campGuide/map2.png" alt="立體地圖示意圖">
           <h4 class="office-title">辦公區</h4>
           <p class="office-text text">位於營地入口處，包含：</p>
           <ul class="office-list list">
