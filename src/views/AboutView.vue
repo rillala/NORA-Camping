@@ -2,6 +2,7 @@
 // 引入函式庫
 import actionBtn from '../components/button/actionBtn.vue';
 import businessHours from '../components/about/businessHours.vue';
+import solidusLine from '../components/about/animation.vue'
 import { useRouter } from 'vue-router';
 const router = useRouter();
 function toSheleter(){
@@ -37,6 +38,7 @@ function toSheleter(){
             </div>
         </div>
     </div>
+    <solidusLine/>
     <!--三大理念-->
     <div class="opinion-wrap" > 
         <div id="nora-concept"></div>
