@@ -7,21 +7,11 @@ export default {
     return {
       images: [
         //設施介紹環境圖輪播
-        'bathroom_m_1.png',
-        'bathroom_m_2.png',
-        'bathroom_m_3.png',
+        'wc1.jpg',
+        'wc2.jpg',
+        'wc3.jpg',
       ],
       currentIndex: 0,
-      areas: [
-        //立體地圖顯示區域資訊
-        { name: '貓區', description: '貓咪與主人能愜意發懶的舒服環境。' },
-        { name: '狗區', description: '狗狗與主人能安心玩耍的舒適空間。' },
-        { name: '野良之家', description: '這裡有一群等待家的可愛毛孩們。' },
-        { name: '辦公區域', description: '裝備租借、基本設施樣樣有。' },
-      ],
-      showPopup: false,
-      showDetails: false,
-      currentArea: {},
     };
   },
 
@@ -33,20 +23,9 @@ export default {
     nextSlide() {
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
     },
-    showInfo(area) {
-      this.currentArea = area;
-      this.showPopup = true;
-      this.$emit('show-info');
-    },
-    goToDetails() {
-      // 跳轉到完整區域介紹的該區塊資訊
-      // 使用路由或者直接切換顯示狀態???
-      this.showDetails = true;
-      this.$emit('go-to-details');
-    },
     getImageUrl(paths) {
       return new URL(
-        `../assets/image/campGuide/bathroom_m_${paths + 1}.png`,
+        `../assets/image/campGuide/wc${paths + 1}.jpg`,
         import.meta.url,
       ).href;
     },
@@ -64,8 +43,8 @@ export default {
   <div class="guide-wrap">
     <!-- Banner區塊 -->
     <div class="guide-banner">
-      <h1 class="guide-title">營地導覽</h1>
-      <h2 class="guide-subtitle">一起看看營區的美！</h2>
+      <h2 class="guide-title">營地導覽</h2>
+      <h4 class="guide-subtitle">一起看看營區的美！</h4>
     </div>
 
     <!-- 立體地圖區塊 -->
@@ -73,16 +52,6 @@ export default {
     <div class="guide-map">
       <div class="camp-map" @mouseover="showInfo" @click="goToDetails">
         <img src="@/assets/image/campGuide/map2.png" alt="立體地圖示意圖" />
-      </div>
-
-      <div class="map-info-popup" v-if="showPopup">
-        <!-- 區域資訊浮現時顯示的內容 -->
-        <h3>{{ currentArea.name }}</h3>
-        <p>{{ currentArea.dtl }}</p>
-      </div>
-
-      <div v-if="showDetails">
-        <!-- 完整區域介紹的該區塊資訊 -->
       </div>
     </div>
 
@@ -153,7 +122,7 @@ export default {
             安靜又舒適的環境，讓貓咪和貓奴們可以享受寧靜又愜意的露營體驗。
           </p>
           <p class="area-dtl text">
-            專為喜歡安靜的露營者及貓咪同伴而設，提供良好遮蔽及貓爬架和多個休憩處，讓貓咪能自在的在自然環境中探索，不會遠離主人的視線。
+            本區提供良好的遮蔽及貓爬架和多個休憩處，讓貓咪能自在的在自然環境中探索，不會遠離主人的視線。
           </p>
           <p class="area-list-title">營地類型：</p>
           <ul class="area-list list">
@@ -171,15 +140,17 @@ export default {
       <!-- 野良之家區塊 -->
       <div class="guide-shelter">
         <div class="guide-shelter-info">
-          <img src="@/assets/image/campGuide/shelter_big_img_pc_cut.jpg" alt="">
-          <h4 class="guide-shelter-title">野良之家</h4>
-          <p class="guide-shelter-dtl text">
-            小小安置流浪貓狗的臨時住所，<br />
-            這裡的小動物都在等待他們的家，<br />
-            歡迎喜歡貓狗的你來看看牠們！<br />
-            給彼此一個互相認識的機會！
-          </p>
-          <button class="guide-shelter-btn" @click="toShelter">更多野良之家介紹</button>
+          <img src="@/assets/image/campGuide/shelter_big_img_pc_cut.jpg" alt="野良之家圖片">
+          <div class="shelter-dtl">
+            <h4 class="guide-shelter-title">野良之家</h4>
+            <p class="guide-shelter-dtl text">
+              小小安置流浪貓狗的臨時住所，<br />
+              這裡的小動物都在等待他們的家，<br />
+              歡迎喜歡貓狗的你來看看牠們！<br />
+              給彼此一個互相認識的機會！
+            </p>
+            <button class="guide-shelter-btn" @click="toShelter">更多野良之家介紹</button>
+          </div>
         </div>
       </div>
 
@@ -188,15 +159,16 @@ export default {
 
         <div class="area-office">
           <img src="@/assets/image/campGuide/map2.png" alt="立體地圖示意圖">
-          <h4 class="office-title">辦公區</h4>
-          <p class="office-text text">位於營地入口處，包含：</p>
-          <ul class="office-list list">
-            <li>裝備租借區</li>
-            <li>小型倉庫可存放裝備</li>
-            <li>男、女廁及無障礙廁所各一間</li>
-            <li>緊急醫療站</li>
-            <li>販賣機一部、冰箱一台</li>
-          </ul>
+          <div class="office-text-pc">
+            <h4 class="office-title">辦公區</h4>
+            <p class="office-text text">位於營地入口處，包含：</p>
+            <ul class="office-list list">
+              <li>裝備租借區，小型倉庫可存放裝備</li>
+              <li>男、女廁及無障礙廁所各一間</li>
+              <li>緊急醫療站</li>
+              <li>販賣機一部、冰箱一台</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -219,30 +191,30 @@ export default {
       <div class="guide-camp-info-title">
       </div>
 
-      <div class="guide-camp-info">
-        <h4 class="camp-info-title">營地資訊</h4>
-        <ul class="camp-info p">
-          <li>地址：南投縣仙山鄉翠湖路1號</li>
-          <li>電話：0988-123-456</li>
-          <li>Email：info@noracamp.com</li>
-        </ul>
-
-        <div class="camp-info-map">
-          <div class="camp-info-social">
-            <div class="fb">
-              <img src="@/assets/image/campGuide/fb_icon.svg" alt="Facebook icon" />
-              <p>@NORACampOfficial</p>
-            </div>
-            <div class="ig">
-              <img src="@/assets/image/campGuide/ig_icon.svg" alt="Instagram icon" />
-              <p>@noracamp_adventures</p>
-            </div>
-            <div class="line">
-              <img src="@/assets/image/campGuide/line_icon.svg" alt="Line icon" />
-              <p>@NORACamp</p>
-            </div>
+      <div class="gc-wrap">
+        <div class="guide-camp-info">
+          <div class="camp-info-pc">
+            <h4 class="camp-info-title">營地資訊</h4>
+            <ul class="camp-info p">
+              <li>地址：南投縣仙山鄉翠湖路1號</li>
+              <li>電話：0988-123-456</li>
+              <li>Email：info@noracamp.com</li>
+            </ul>
           </div>
-          <img class="roadmap" src="@/assets/image/campGuide/roadmap.png" alt="手繪地圖" />
+          <div class="camp-info-map">
+            <div class="camp-info-social">
+              <div class="fb">
+                <img src="@/assets/image/campGuide/fb.svg" alt="Facebook icon">
+              </div>
+              <div class="ig">
+                <img src="@/assets/image/campGuide/ig.svg" alt="Instagram icon">
+              </div>
+              <div class="line">
+                <img src="@/assets/image/campGuide/line.svg" alt="Line icon">
+              </div>
+            </div>          
+            <img class="roadmap" src="@/assets/image/campGuide/roadmap.png" alt="手繪地圖" />
+          </div>
         </div>
       </div>
     </div>
@@ -257,39 +229,43 @@ export default {
         <p class="facility-cloud-words">完善的設施！<br />露營起來更舒適！</p>
       </div>
 
-      <div class="facility-intro">
-          <h4 class="facility-intro-title">設施介紹</h4>
+      <div class="facility-pc">
+        <div class="facility-intro">
           <div class="facility-slider-btn">
-            <button class="facility-btn" @click="prevSlide">
-              <img src="@/assets/image/campGuide/left_button_m.svg" alt="左邊箭頭按鈕" />
-            </button>
+              <button class="facility-btn" @click="prevSlide">
+                <img src="@/assets/image/campGuide/left_button_m.svg" alt="左邊箭頭按鈕" />
+              </button>
 
-            <div class="facility-slider-container">
-              <transition name="fade" mode="out-in">
-                <img :src="getImageUrl(currentIndex)" :key="currentIndex" class="slider-image" />
-              </transition>
+              <div class="facility-slider-container">
+                <transition name="fade" mode="out-in">
+                  <img :src="getImageUrl(currentIndex)" :key="currentIndex" class="slider-image" />
+                </transition>
+              </div>
+
+              <button class="facility-btn" @click="nextSlide">
+                <img src="@/assets/image/campGuide/right_button_m.svg" alt="右邊箭頭按鈕" />
+              </button>
+          </div>
+          <div class="txt-tree">
+            <div class="facility-txt">
+              <h4 class="facility-intro-title">設施介紹</h4>
+              <p class="facility-top">
+                各營位有一個插頭、一組水槽、一盞路燈<br />
+                各區域有冷凍庫、冷藏冰箱及衛浴設施
+              </p>
+              <ul class="female-wc-list p">
+                <li>衛浴設施：</li>
+                <li>廁所：多間分隔單位，有環保節水馬桶</li>
+                <li>獨立淋浴間：提供熱水和隱私空間</li>
+                <li>洗手台：配備肥皂、烘手機及鏡子</li>
+              </ul>
             </div>
 
-            <button class="facility-btn" @click="nextSlide">
-              <img src="@/assets/image/campGuide/right_button_m.svg" alt="右邊箭頭按鈕" />
-            </button>
-        </div>
-        <div class="facility-txt">
-          <p class="facility-top">
-            各營位有一個插頭、一組水槽、一盞路燈<br />
-            各區域有冷凍庫、冷藏冰箱及衛浴設施
-          </p>
-          <ul class="female-wc-list p">
-            <li>衛浴設施：</li>
-            <li>廁所：多間分隔單位，有環保節水馬桶</li>
-            <li>獨立淋浴間：提供熱水和隱私空間</li>
-            <li>洗手台：配備肥皂、烘手機及鏡子</li>
-          </ul>
-        </div>
-
-        <div class="facility_trees">
-          <img class="facility_tree_icon" src="@/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖一" />
-          <img class="facility_tree_icon" src="@/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖二" />
+            <div class="facility_trees">
+              <img class="facility_tree_icon" src="@/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖一" />
+              <img class="facility_tree_icon" src="@/assets/image/campGuide/facility_tree_icon.svg" alt="棕梠樹圖二" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -309,25 +285,27 @@ export default {
         <img src="@/assets/image/campGuide/rule_cat_icon.svg" alt="營區規範貓icon" />
       </div>
 
-      <div class="guide-rules">
-        <h4 class="rules-title">營區規範</h4>
-        <img src="@/assets/image/campGuide/attention.svg" alt="!圖片" />
-        <ol class="guide-rules-list p">
-          <li>落實垃圾分類並放於指定區，保持營區清潔。</li>
-          <li>夜間十點後降低音量，尊重其他露營者休息。</li>
-          <li>使用水源請節約用水，保持營區水資源充足。</li>
-          <li>嚴禁在非指定區域焚火，以確保安全。</li>
-          <li>若攜帶寵物，請確認是否需牽繩及糞便清理。</li>
-          <li>禁止破壞營區植被，保護自然環境。</li>
-          <li>使用共用設施請保持清潔，以便他人使用。</li>
-          <li>請遵從營區人員指引及規定，維護營區秩序。</li>
-          <li>禁止打擾營區附近的野生動植物。</li>
-          <li>請知悉營區緊急應變程序，以確保安全。</li>
-        </ol>
+      <div class="rules-pc">
+        <div class="guide-rules">
+          <h4 class="rules-title">營區規範</h4>
+          <img src="@/assets/image/campGuide/attention.svg" alt="!圖片" />
+          <ol class="guide-rules-list p">
+            <li>落實垃圾分類並放於指定區，保持營區清潔。</li>
+            <li>夜間十點後降低音量，尊重其他露營者休息。</li>
+            <li>使用水源請節約用水，保持營區水資源充足。</li>
+            <li>嚴禁在非指定區域焚火，以確保安全。</li>
+            <li>若攜帶寵物，請確認是否需牽繩及糞便清理。</li>
+            <li>禁止破壞營區植被，保護自然環境。</li>
+            <li>使用共用設施請保持清潔，以便他人使用。</li>
+            <li>請遵從營區人員指引及規定，維護營區秩序。</li>
+            <li>禁止打擾營區附近的野生動植物。</li>
+            <li>請知悉營區緊急應變程序，以確保安全。</li>
+          </ol>
 
-        <p class="guide-rules-end">
-          以上規範旨在維護營區秩序和保護自然環境，希望所有露營者都能共同遵守。
-        </p>
+          <p class="guide-rules-end">
+            以上規範旨在維護營區秩序和保護自然環境，希望所有露營者都能共同遵守。
+          </p>
+        </div>
       </div>
 
       <div class="rule-trees">
