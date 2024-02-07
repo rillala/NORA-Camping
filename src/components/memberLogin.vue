@@ -118,7 +118,7 @@
             v-model="user_enter.pwd"
           /><br />
           <a class="forget-psw">忘記密碼？</a><br />
-          <button class="main-btn" @click="signin">會員登入</button><br />
+          <button class="main-btn" @click="login">會員登入</button><br />
           <button class="sub-btn">以Google登入</button>
         </form>
       </div>
@@ -131,6 +131,7 @@
 import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
+import apiInstance from '@/plugins/auth'
 export default {
   props: { isOpen: Boolean },
 
@@ -146,20 +147,19 @@ export default {
         agreeTerms: true,
       },
       user_enter: {
-        account: 'mor_2314',
-        pwd: '83r5^_',
+        account: 'charmy101@gmail.com',
+        pwd: 'charmy101',
       },
       showPrivacyPolicy: false,
     };
   },
-  created() {
+  created(){
     // 判斷有沒有登入過，如果沒有token等同於沒有登入
-    const user = userStore();
-    user.checkLogin();
-    // if (user) {
-    //   //有登入資訊轉到首頁
-    //   this.$router.push('/');
-    // }
+    const user = this.checkLogin()
+    if(user){
+      //有登入資訊轉到首頁
+      this.$router.push('/')
+    }
   },
   watch: {
     isOpen(newVal) {
@@ -180,32 +180,49 @@ export default {
     closeLightbox() {
       console.log('closeLightbox');
       this.$emit('close');
-      // alert()
-      // if (this.isOpen) {
-      //   this.isOpen = false;
-      // }
     },
     ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
-    signin() {
-      this.updateToken(123);
-      console.log('login');
-      //關閉燈箱
-      // this.isOpen = false;
+    // login() {
+    //   this.updateToken(123);
+    //   console.log('login');
 
-      axios
-        .post('https://fakestoreapi.com/auth/login', {
-          username: this.user_enter.account,
-          password: this.user_enter.pwd,
-        })
-        .then(response => {
-          if (response.data && response.data.token) {
-            this.updateToken(response.data.token); // 更新 token
-            console.log('login success', response.data.token);
-            this.closeLightbox(); // 登入成功後，關閉燈箱
-            // this.$router.push('/membercenter'); // 跳轉到會員中心頁面
-          }
-        })
-        .catch(error => {
+    //   axios
+    //     .post('https://fakestoreapi.com/auth/login', {
+    //       username: this.user_enter.account,
+    //       password: this.user_enter.pwd,
+    //     })
+    //     .then(response => {
+    //       if (response.data && response.data.token) {
+    //         this.updateToken(response.data.token); // 更新 token
+    //         console.log('login success', response.data.token);
+    //         this.closeLightbox(); // 登入成功後，關閉燈箱
+    //         // this.$router.push('/membercenter'); // 跳轉到會員中心頁面
+    //       }
+    //     })
+      login(){
+        const bodyFormData = new FormData();
+        bodyFormData.append('mem_account', this.user_enter.account);
+        bodyFormData.append('mem_psw', this.user_enter.pwd);
+
+        // 請記得將php埋入跨域
+        apiInstance({
+            method: 'post',
+            url: '/getConfirmMember.php',
+            headers: { "Content-Type": "multipart/form-data" },
+            data: bodyFormData
+        }).then(res=>{
+            // console.log(res);
+            if(res && res.data){
+                if(res.data.code == 1){
+                    this.updateToken(res.data.session_id)
+                    this.updateUserData(res.data.memInfo)
+                    this.$router.push('/')
+                }else{
+                    alert('註冊失敗')
+                }
+            }
+        })  
+          .catch(error => {
           console.error(error);
 
           if (error.response && error.response.status === 401) {
