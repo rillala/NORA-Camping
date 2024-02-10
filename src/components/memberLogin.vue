@@ -147,8 +147,8 @@ export default {
         agreeTerms: true,
       },
       user_enter: {
-        account: 'charmy101@gmail.com',
-        pwd: 'charmy101',
+        account: 'tibame111@gmail.com',
+        pwd: 'tibame321',
       },
       showPrivacyPolicy: false,
     };
@@ -199,45 +199,83 @@ export default {
     //         // this.$router.push('/membercenter'); // 跳轉到會員中心頁面
     //       }
     //     })
-      login(){
-        const bodyFormData = new FormData();
-        bodyFormData.append('mem_account', this.user_enter.account);
-        bodyFormData.append('mem_psw', this.user_enter.pwd);
+    //   login(){
+    //     const bodyFormData = new FormData();
+    //     bodyFormData.append('email', this.user_enter.account);
+    //     bodyFormData.append('psw', this.user_enter.pwd);
 
+    //     // 請記得將php埋入跨域
+    //     apiInstance({
+    //         method: 'post',
+    //         url: '/member.php',
+    //         headers: { "Content-Type": "multipart/form-data" },
+    //         data: bodyFormData
+    //     }).then(res=>{
+    //         // console.log(res);
+    //         if(res && res.data){
+    //             if(res.data.code == 1){
+    //                 this.updateToken(res.data.session_id)
+    //                 this.updateUserData(res.data.memInfo)
+    //                 this.$router.push('/')
+    //             }else{
+    //                 alert('登入失敗')
+    //             }
+    //         }
+    //     })  
+    //       .catch(error => {
+    //       console.error(error);
+
+    //       if (error.response && error.response.status === 401) {
+    //         alert('帳號密碼有誤請再確認.');
+    //       } else {
+    //         alert(
+    //           'An error occurred while logging in. Please try again later.',
+    //         );
+    //       }
+    //       // 調用pinia的updateToken
+    //       // 將/src/stores/user裡的token清除
+    //       this.updateToken('');
+    //     });
+    // },
+    login(){
+        const bodyFormData = new FormData();
+        bodyFormData.append('email', this.user_enter.account);
+        bodyFormData.append('psw', this.user_enter.pwd);
+        // fetch("member_login.php",{
+        //   method: 'post',
+        //   "content-type" : "multipart/form-data",
+        //   body: bodyFormData,
+        // })
+        // .then(response=>response.json())
+        // .then(result=>{
+        //   console.log(result)
+        // })
+        // .catch(error=>console.log(error));
         // 請記得將php埋入跨域
         apiInstance({
             method: 'post',
-            url: '/getConfirmMember.php',
+            url: '/member_login.php',
             headers: { "Content-Type": "multipart/form-data" },
             data: bodyFormData
         }).then(res=>{
-            // console.log(res);
+            console.log(res);
             if(res && res.data){
-                if(res.data.code == 1){
-                    this.updateToken(res.data.session_id)
-                    this.updateUserData(res.data.memInfo)
-                    this.$router.push('/')
+                if(!res.data.error){
+                  alert("success")
+                  this.updateToken(response.data.token); // 更新 token
+                  this.closeLightbox(); // 登入成功後，關閉燈箱
+                    // this.updateToken(res.data.member_id)
+                    // this.updateUserData(res.data.memInfo)
+                    // this.$router.push('/')
+
                 }else{
-                    alert('註冊失敗')
+                    alert('登入失敗')
                 }
             }
-        })  
-          .catch(error => {
-          console.error(error);
-
-          if (error.response && error.response.status === 401) {
-            alert('帳號密碼有誤請再確認.');
-          } else {
-            alert(
-              'An error occurred while logging in. Please try again later.',
-            );
-          }
-          // 調用pinia的updateToken
-          // 將/src/stores/user裡的token清除
-          this.updateToken('');
-        });
+        }).catch(error=>{
+            console.log(error);
+        })
     },
-
     ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
     register() {
       if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
@@ -271,7 +309,8 @@ export default {
         });
     },
   },
-};
+}
+
 </script>
 
 <style lang="scss" scoped>
