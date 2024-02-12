@@ -11,6 +11,7 @@ export default {
   },
   data() {
     return {
+      userProfileImage: '', // 用戶的頭像 URL
       isMenuOpen: false, // 漢堡選單
       isLoginOpen: false, // 登入燈箱
       isMemberSubOpen: false, // 會員中心子選單
@@ -50,7 +51,7 @@ export default {
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
-    ...mapActions(userStore, ['updateToken']),
+    ...mapActions(userStore, ['checkUserData', 'checkLogin','updateToken', 'updateUserProfileImage']),
     ...mapActions(useCartStore, ['getCart']),
     logout() {
       // 調用pinia的updateToken
@@ -94,10 +95,18 @@ export default {
     isLogin() {
       return !!this.token;
     },
+    userProfileImageStyle() {
+    return this.userProfileImage
+      ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
+      : ''; // 如果沒有使用者頭像，返回空字符串或預設樣式
+    },
   },
   created() {
     const cartStore = useCartStore();
     cartStore.getCart();
+  },
+  mounted() {
+    this.userProfileImage = userStore.userProfileImage;
   },
 };
 </script>
@@ -165,10 +174,8 @@ export default {
           <!--會員登入-->
           <button
             id="member-login"
-            @click="
-              memberCenter();
-              closeHam();
-            "
+            @click="memberCenter(); closeHam()"
+            :style="userProfileImageStyle"
           >
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
@@ -202,6 +209,7 @@ export default {
                 <button class="logout" @click.stop="logout">登出</button>
               </ul>
             </div>
+            <!-- <img v-if="userProfileImage" :src="userProfileImage" alt="User Avatar" /> -->
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
 
@@ -263,4 +271,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
+
 </style>

@@ -4,8 +4,7 @@
       <div
         v-if="showPrivacyPolicy"
         class="privacy-policy-lightbox"
-        @click="closePrivacy()"
-        v-on:click.stop
+        @click="closePrivacy"
       >
         <div class="privacy-policy-content">
           <p class="privacy-message">
@@ -57,16 +56,19 @@
             type="text"
             placeholder="請輸入信箱"
             v-model="user_add.account"
+            autocomplete="new-password"
           /><br />
           <input
             type="password"
             placeholder="請輸入密碼"
             v-model="user_add.pwd"
+            autocomplete="new-password"
           /><br />
           <input
             type="password"
             placeholder="再次輸入密碼"
             v-model="user_add.pwdConfirmation"
+            autocomplete="new-password"
           /><br />
           <p v-if="passwordMismatch" class="password-ismatch">密碼不一致</p>
 
@@ -111,15 +113,18 @@
             type="text"
             placeholder="請輸入信箱"
             v-model="user_enter.account"
+            autocomplete="new-password"
           /><br />
           <input
             type="password"
             placeholder="請輸入密碼"
             v-model="user_enter.pwd"
+            autocomplete="new-password"
           /><br />
           <a class="forget-psw">忘記密碼？</a><br />
           <button class="main-btn" @click="login">會員登入</button><br />
-          <button class="sub-btn">以Google登入</button>
+          <button class="sub-btn" @click.prevent="signInWithGoogle">以Google登入</button>
+          <button class="sub-btn" @click.prevent="signInWithLine">以Line登入</button>
         </form>
       </div>
     </div>
@@ -127,11 +132,14 @@
 </template>
 
 <script>
-// import { RouterLink, RouterView } from 'vue-router';
+import qs from 'qs';
 import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
-import apiInstance from '@/plugins/auth'
+import apiInstance from '@/plugins/auth';
+import { useFirebaseAuth } from 'vuefire';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 export default {
   props: { isOpen: Boolean },
 
@@ -151,15 +159,10 @@ export default {
         pwd: 'tibame321',
       },
       showPrivacyPolicy: false,
+      client_id: '2003443299',
+      redirect_uri: 'http://localhost:5173',
+      client_secret: '6944f7d50fb550267d1488e66d7f4d90',
     };
-  },
-  created(){
-    // 判斷有沒有登入過，如果沒有token等同於沒有登入
-    const user = this.checkLogin()
-    if(user){
-      //有登入資訊轉到首頁
-      this.$router.push('/')
-    }
   },
   watch: {
     isOpen(newVal) {
@@ -172,7 +175,25 @@ export default {
     //   this.passwordMismatch = newConfirmation !== this.user_add.pwd;
     // },
   },
-
+  async mounted(){
+    // 使用 window.location.search 和 urlParams 獲取當前網頁 URL 中的查詢參數
+    const queryString = window.location.search;
+    if(queryString){
+        const urlParams = new URLSearchParams(queryString);
+        // 使用 get 方法從 urlParams 實例中獲取名為 code 的參數的值。(授權碼，通常由用戶在身份驗證流程中獲得)
+        // 如果查詢字串中存在名為 code 的參數，code 變數將被賦值為該參數的值；否則，code 變數將為 null。
+        const code = urlParams.get('code');
+        await this.lineLoginRedirect(code)
+    }else{
+        // 判斷有沒有登入過，如果沒有token等同於沒有登入
+      const user = this.checkLogin()
+      console.log(user);
+      if(user){
+        //有登入資訊轉到首頁
+        this.$router.push('/')
+      }
+    }
+  },
   methods: {
     closePrivacy() {
       this.showPrivacyPolicy = false;
@@ -181,7 +202,7 @@ export default {
       console.log('closeLightbox');
       this.$emit('close');
     },
-    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
+    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin', 'updateUserProfileImage']),
     // login() {
     //   this.updateToken(123);
     //   console.log('login');
@@ -241,75 +262,148 @@ export default {
         const bodyFormData = new FormData();
         bodyFormData.append('email', this.user_enter.account);
         bodyFormData.append('psw', this.user_enter.pwd);
-        // fetch("member_login.php",{
-        //   method: 'post',
-        //   "content-type" : "multipart/form-data",
-        //   body: bodyFormData,
-        // })
-        // .then(response=>response.json())
-        // .then(result=>{
-        //   console.log(result)
-        // })
-        // .catch(error=>console.log(error));
-        // 請記得將php埋入跨域
         apiInstance({
             method: 'post',
             url: '/member_login.php',
             headers: { "Content-Type": "multipart/form-data" },
             data: bodyFormData
         }).then(res=>{
-            console.log(res);
-            if(res && res.data){
-                if(!res.data.error){
-                  alert("success")
-                  this.updateToken(response.data.token); // 更新 token
-                  this.closeLightbox(); // 登入成功後，關閉燈箱
-                    // this.updateToken(res.data.member_id)
-                    // this.updateUserData(res.data.memInfo)
-                    // this.$router.push('/')
+          console.log(res);
+          if(res && res.data){
+            if(!res.data.error){
+              alert("success")
+              // 儲存 token 到 Local Storage
+              localStorage.setItem('token', res.data.token);
+              this.updateToken(res.data.token); // 更新 token
+              this.closeLightbox(); // 登入成功後，關閉燈箱
+                // this.updateToken(res.data.member_id)
+                // this.updateUserData(res.data.memInfo)
+                // this.$router.push('/')
 
-                }else{
-                    alert('登入失敗')
-                }
+              }else{
+                  alert('登入失敗')
+              }
             }
         }).catch(error=>{
             console.log(error);
         })
     },
-    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
-    register() {
-      if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
-        alert('密碼不一致');
-        return; // 中止註冊流程
-      }
-      // 問題 檢查用戶是否勾選了同意隱私權政策
-      if (!this.user_add.agreeTerms) {
-        alert('請勾選隱私權政策');
-        console('請勾選隱私權政策');
-      }
-      // 在此處呼叫註冊 API 端點
-      axios
-        .post('https://fakestoreapi.com/auth/login', {
-          username: this.user_add.account,
-          password: this.user_add.pwd,
-        })
-        .then(response => {
-          if (response.data && response.data.token) {
-            this.updateToken(response.data.token); // 更新 token
-            console.log('register success', response.data.token);
-            this.closeLightbox();
-            alert('註冊成功。'); // 註冊成功後，關閉燈箱
-            // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
-          }
-        })
-        .catch(error => {
-          console.error(error);
-          // 處理註冊失敗的回應
-          alert('註冊失敗，請稍後再試。');
+    // ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
+    // register() {
+    //   if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
+    //     alert('密碼不一致');
+    //     return; // 中止註冊流程
+    //   }
+    //   // 問題 檢查用戶是否勾選了同意隱私權政策
+    //   if (!this.user_add.agreeTerms) {
+    //     alert('請勾選隱私權政策');
+    //     console('請勾選隱私權政策');
+    //   }
+    //   // 在此處呼叫註冊 API 端點
+    //   axios
+    //     .post('https://fakestoreapi.com/auth/login', {
+    //       username: this.user_add.account,
+    //       password: this.user_add.pwd,
+    //     })
+    //     .then(response => {
+    //       if (response.data && response.data.token) {
+    //         this.updateToken(response.data.token); // 更新 token
+    //         console.log('register success', response.data.token);
+    //         this.closeLightbox();
+    //         alert('註冊成功。'); // 註冊成功後，關閉燈箱
+    //         // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //       // 處理註冊失敗的回應
+    //       alert('註冊失敗，請稍後再試。');
+    //     });
+    // },
+
+    signInWithGoogle() {
+      const auth = getAuth(); // 確保已經正確初始化 Firebase Auth
+      const googleProvider = new GoogleAuthProvider();
+      signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        // 此處獲取用戶令牌
+        result.user.getIdToken().then((token) => {
+          console.log('Token:', token); // 顯示令牌
+          alert('Google登入成功');
+          this.updateToken(token); // 更新 token
+          this.closeLightbox(); // 登入成功後，關閉燈箱
         });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     },
+    signInWithLine(){
+      let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${this.client_id}&redirect_uri=${this.redirect_uri}&state=login&scope=openid%20profile`;
+      window.location.href = link;
+    },
+    
+    async lineLoginRedirect(code) {
+      try {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const code = urlParams.get('code');
+
+        if (code) {
+          const tokenResponse = await axios.post('https://api.line.me/oauth2/v2.1/token', qs.stringify({
+            grant_type: 'authorization_code',
+            code: code,
+            redirect_uri: this.redirect_uri,
+            client_id: this.client_id,
+            client_secret: this.client_secret
+          }), {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          });
+
+          const accessToken = tokenResponse.data.access_token;
+          const idToken = tokenResponse.data.id_token;
+
+          //這個端點用於驗證存取令牌的有效性，並且可以用來獲取與該令牌相關的用戶資訊，如用戶ID。
+          const userInfoResponse = await axios.post('https://api.line.me/oauth2/v2.1/verify', qs.stringify({
+            id_token: idToken,
+            client_id: this.client_id
+          }), {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer ' + accessToken
+              //使用存取令牌進行身份驗證，將存取令牌放在 'Bearer ' 字符串之後
+            }
+          });
+
+          const lineUserId = userInfoResponse.data.sub;
+          const lineNickname = userInfoResponse.data.name;
+          const lineAccountTypeID = 1; 
+          // 獲取用戶頭像 URL
+          const userProfileImage = userInfoResponse.data.picture;
+          
+          //這邊寫回資料庫
+          // const response = await axios.post(`${API_URL}lineLogin.php`, {
+          //   userId: lineUserId,
+          //   nickname: lineNickname,
+          //   accountTypeID: lineAccountTypeID
+          // });
+          
+          // 沒有API先使用寫死資料
+          // this.updateUserData({
+          //   mem_name: lineNickname,
+          //   mem_validation: 1,
+          //   mem_state: 1
+          // })
+            this.$router.push('/')
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
-}
+}  
 
 </script>
 

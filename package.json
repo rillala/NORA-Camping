@@ -12,11 +12,14 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "axios": "^1.6.5",
+    "firebase": "^10.8.0",
     "gsap": "^3.12.5",
     "pinia": "^2.1.7",
+    "qs": "^6.11.2",
     "v-calendar": "^3.1.2",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuefire": "^3.1.22"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
