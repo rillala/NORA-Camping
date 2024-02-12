@@ -6,9 +6,22 @@ export default defineStore('userStore', {
   state: () => ({
     token: '',
     userData: {}, //補php
+    userProfileImage: null,
   }),
 
   actions: {
+    initializeUserState() {
+      const userProfileImage = localStorage.getItem('userProfileImage');
+      if (userProfileImage) {
+        this.updateUserProfileImage(userProfileImage);
+      }
+    },
+    updateUserProfileImage(imageUrl) {
+      this.userProfileImage = imageUrl;
+      // 如果需要，也可以在這裡將用户頭像 URL 保存到 localStorage
+      localStorage.setItem('userProfileImage', imageUrl);
+      console.log('Profile image updated:', imageUrl);
+    },
     checkLogin() {
       const storageToken = localStorage.getItem('token');
       if (this.token) {
@@ -57,6 +70,13 @@ export default defineStore('userStore', {
       }else{
           return ''
       }
+    },
+    logout() {
+      this.token = '';
+      localStorage.removeItem('token');
+      this.userProfileImage = null;
+      localStorage.removeItem('userProfileImage');
+      // 清除其他可能的状态...
     },
   },
 });

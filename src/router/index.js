@@ -161,9 +161,31 @@ const router = createRouter({
   },
 });
 
+const isAuthenticated = (roles) => {
+  const userToken = localStorage.getItem("userToken")
+  const userData = localStorage.getItem("userData")
+  if(userToken){
+    const userStorageData = JSON.parse(userData)
+    // 依據後端規則來撰寫
+    // localstorage有東西，已驗證＋帳號啟用＋符合頁面權限
+    // if(userStorageData &&userStorageData.validation == 1 && roles.includes(userStorageData.role)){
+    if(userStorageData && userStorageData.validation == 1){
+      return true
+    }else{
+      return false
+    }
+  }else{
+    return false
+  }
+}
+
 router.beforeEach(async (to, from) => {
   if (to.meta && to.meta.title) {
     document.title = to.meta.title;
+  }else if ( !isAuthenticated(to.meta.role) && to.name !== 'login') {
+    // 檢查用户是否已登陸 && 避免進入登入頁面造成無限重定向
+    // 將用户重定向到登陸頁面
+    return { name: 'login' }
   }
 });
 

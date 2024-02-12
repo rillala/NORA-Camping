@@ -124,7 +124,7 @@
           <a class="forget-psw">忘記密碼？</a><br />
           <button class="main-btn" @click="login">會員登入</button><br />
           <button class="sub-btn" @click.prevent="signInWithGoogle">以Google登入</button>
-          <button class="sub-btn" @click.prevent="signInWithLine">以Line登入</button>
+          <button class="sub-btn" @click.prevent="signInWithLine()">以Line登入</button>
         </form>
       </div>
     </div>
@@ -199,7 +199,6 @@ export default {
       this.showPrivacyPolicy = false;
     },
     closeLightbox() {
-      console.log('closeLightbox');
       this.$emit('close');
     },
     ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin', 'updateUserProfileImage']),
@@ -288,38 +287,38 @@ export default {
             console.log(error);
         })
     },
-    // ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
-    // register() {
-    //   if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
-    //     alert('密碼不一致');
-    //     return; // 中止註冊流程
-    //   }
-    //   // 問題 檢查用戶是否勾選了同意隱私權政策
-    //   if (!this.user_add.agreeTerms) {
-    //     alert('請勾選隱私權政策');
-    //     console('請勾選隱私權政策');
-    //   }
-    //   // 在此處呼叫註冊 API 端點
-    //   axios
-    //     .post('https://fakestoreapi.com/auth/login', {
-    //       username: this.user_add.account,
-    //       password: this.user_add.pwd,
-    //     })
-    //     .then(response => {
-    //       if (response.data && response.data.token) {
-    //         this.updateToken(response.data.token); // 更新 token
-    //         console.log('register success', response.data.token);
-    //         this.closeLightbox();
-    //         alert('註冊成功。'); // 註冊成功後，關閉燈箱
-    //         // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
-    //       }
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //       // 處理註冊失敗的回應
-    //       alert('註冊失敗，請稍後再試。');
-    //     });
-    // },
+    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
+    register() {
+      if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
+        alert('密碼不一致');
+        return; // 中止註冊流程
+      }
+      // 問題 檢查用戶是否勾選了同意隱私權政策
+      if (!this.user_add.agreeTerms) {
+        alert('請勾選隱私權政策');
+        console('請勾選隱私權政策');
+      }
+      // 在此處呼叫註冊 API 端點
+      axios
+        .post('https://fakestoreapi.com/auth/login', {
+          username: this.user_add.account,
+          password: this.user_add.pwd,
+        })
+        .then(response => {
+          if (response.data && response.data.token) {
+            this.updateToken(response.data.token); // 更新 token
+            console.log('register success', response.data.token);
+            this.closeLightbox();
+            alert('註冊成功。'); // 註冊成功後，關閉燈箱
+            // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          // 處理註冊失敗的回應
+          alert('註冊失敗，請稍後再試。');
+        });
+    },
 
     signInWithGoogle() {
       const auth = getAuth(); // 確保已經正確初始化 Firebase Auth
@@ -382,7 +381,12 @@ export default {
           const lineAccountTypeID = 1; 
           // 獲取用戶頭像 URL
           const userProfileImage = userInfoResponse.data.picture;
-          
+          this.updateUserProfileImage(userProfileImage);
+
+          //更新token，並保存到localstorage
+          localStorage.setItem('token', accessToken);
+          this.updateToken(accessToken); 
+
           //這邊寫回資料庫
           // const response = await axios.post(`${API_URL}lineLogin.php`, {
           //   userId: lineUserId,
@@ -396,7 +400,7 @@ export default {
           //   mem_validation: 1,
           //   mem_state: 1
           // })
-            this.$router.push('/')
+          this.$router.push('/')
         }
       } catch (error) {
         console.error(error);

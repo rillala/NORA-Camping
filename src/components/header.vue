@@ -11,7 +11,6 @@ export default {
   },
   data() {
     return {
-      userProfileImage: '', // 用戶的頭像 URL
       isMenuOpen: false, // 漢堡選單
       isLoginOpen: false, // 登入燈箱
       isMemberSubOpen: false, // 會員中心子選單
@@ -49,16 +48,40 @@ export default {
       document.body.style.overflow = newVal ? 'hidden' : 'auto';
     },
   },
+  created() {
+    const cartStore = useCartStore();
+    cartStore.getCart();
+  },
+  computed: {
+    //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
+    ...mapState(useCartStore, ['cartList']),
+    ...mapState(userStore, ['token','userData','userProfileImage']),
+      userProfileImageStyle() {
+      return this.userProfileImage
+      ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
+      : ''; // 如果沒有使用者頭像，返回空字符串或預設樣式
+    },
+    
+    isLogin() {
+      return !!this.token;
+    },
+  },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
-    ...mapActions(userStore, ['checkUserData', 'checkLogin','updateToken', 'updateUserProfileImage']),
+    ...mapActions(userStore, ['checkUserData', 'checkLogin','updateToken', 'updateUserData','updateUserProfileImage', 'logout']),
     ...mapActions(useCartStore, ['getCart']),
-    logout() {
-      // 調用pinia的updateToken
-      this.updateToken('');
-      this.isMemberSubOpen = false;
-      this.$router.push('/');
+    handleLogout() {
+    this.logout(); // 这将调用 Pinia store 中的 logout 方法
+    this.isMemberSubOpen = false;
+    this.$router.push('/');
     },
+    // logout() {
+    //   // 調用pinia的updateToken
+    //   this.updateToken('');
+    //   this.isMemberSubOpen = false;
+    //   this.userProfileImage = null;
+    //   this.$router.push('/');
+    // },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
@@ -87,26 +110,6 @@ export default {
     closeSubmenu() {
       this.isMemberSubOpen = false;
     },
-  },
-  computed: {
-    //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
-    ...mapState(userStore, ['token']),
-    ...mapState(useCartStore, ['cartList']),
-    isLogin() {
-      return !!this.token;
-    },
-    userProfileImageStyle() {
-    return this.userProfileImage
-      ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
-      : ''; // 如果沒有使用者頭像，返回空字符串或預設樣式
-    },
-  },
-  created() {
-    const cartStore = useCartStore();
-    cartStore.getCart();
-  },
-  mounted() {
-    this.userProfileImage = userStore.userProfileImage;
   },
 };
 </script>
@@ -206,10 +209,9 @@ export default {
                     >營地訂單</RouterLink
                   >
                 </li>
-                <button class="logout" @click.stop="logout">登出</button>
+                <button class="logout" @click.stop="handleLogout">登出</button>
               </ul>
             </div>
-            <!-- <img v-if="userProfileImage" :src="userProfileImage" alt="User Avatar" /> -->
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
 
