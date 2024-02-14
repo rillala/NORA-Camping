@@ -18,7 +18,7 @@ export default defineStore('userStore', {
     },
     updateUserProfileImage(imageUrl) {
       this.userProfileImage = imageUrl;
-      // 如果需要，也可以在這裡將用户頭像 URL 保存到 localStorage
+      // 在這裡將用户頭像 URL 保存到 localStorage
       localStorage.setItem('userProfileImage', imageUrl);
       console.log('Profile image updated:', imageUrl);
     },
@@ -73,10 +73,8 @@ export default defineStore('userStore', {
     },
     logout() {
       this.token = '';
-      localStorage.removeItem('token');
-      this.userProfileImage = null;
-      localStorage.removeItem('userProfileImage');
-      // 清除其他可能的状态...
+      localStorage.removeItem('token', 'userProfileImage');
+      // this.userProfileImage = null;
     },
   },
 });

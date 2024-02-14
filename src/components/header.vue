@@ -70,18 +70,13 @@ export default {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
     ...mapActions(userStore, ['checkUserData', 'checkLogin','updateToken', 'updateUserData','updateUserProfileImage', 'logout']),
     ...mapActions(useCartStore, ['getCart']),
+    
     handleLogout() {
-    this.logout(); // 这将调用 Pinia store 中的 logout 方法
-    this.isMemberSubOpen = false;
-    this.$router.push('/');
+      this.logout(); // 這將調用 Pinia store 中的 logout 方法
+      this.isMemberSubOpen = false;
+      // this.userProfileImage = null;
+      this.$router.push('/');
     },
-    // logout() {
-    //   // 調用pinia的updateToken
-    //   this.updateToken('');
-    //   this.isMemberSubOpen = false;
-    //   this.userProfileImage = null;
-    //   this.$router.push('/');
-    // },
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
@@ -96,16 +91,17 @@ export default {
       this.isMenuOpen = false; // 關閉子選單-->手機板需要
       // console.log(this.isLoginOpen);
     },
+
     memberCenter() {
-      if (this.isLogin) {
+      if (this.isLogin) { 
         // 如果已經登入了 token = true, 則開啟子選單
         // console.log(`${this.isLogin}`);
-        this.isMemberSubOpen = true;
+      this.isMemberSubOpen = true;
       } else {
-        // console.log('memberCenter')
-        this.isLoginOpen = true;
-      }
-    },
+      // 如果用戶未登入，顯示登入介面
+      this.isLoginOpen = true;
+        }
+      },
     // 點選子選單跳轉到會員中心時，子選單要關起來
     closeSubmenu() {
       this.isMemberSubOpen = false;
@@ -177,14 +173,16 @@ export default {
           <!--會員登入-->
           <button
             id="member-login"
-            @click="memberCenter(); closeHam()"
+            @click="
+              memberCenter();
+              closeHam();
+            "
             :style="userProfileImageStyle"
           >
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
                 <div class="close-sub-menu" @click.stop="closeSubmenu">X</div>
-
                 <li>
                   <RouterLink
                     class="sub-menu"
@@ -209,7 +207,7 @@ export default {
                     >營地訂單</RouterLink
                   >
                 </li>
-                <button class="logout" @click.stop="handleLogout">登出</button>
+                <button class="logout" @click="handleLogout">登出</button>
               </ul>
             </div>
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />

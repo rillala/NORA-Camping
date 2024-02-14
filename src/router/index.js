@@ -31,6 +31,7 @@ const router = createRouter({
       meta: {
         title: '常見問題 FAQ',
       },
+      
     },
     {
       path: '/reserve',
@@ -129,17 +130,19 @@ const router = createRouter({
       path: '/membercenter',
       name: 'membercenter',
       component: () => import('../views/member/MemberCenterView.vue'),
-      // meta: { requiresAuth: true },
+      meta: { requiresAuth: true },
     },
     {
       path: '/membercampsiteorders',
       name: 'membercampsiteorders',
       component: () => import('../views/member/MemberCampsiteOrdersView.vue'),
+      meta: { requiresAuth: true },
     },
     {
       path: '/memberorderhistory',
       name: 'memberorderhistoryr',
       component: () => import('../views/member/MemberOrderHistoryView.vue'),
+      meta: { requiresAuth: true },
     },
     // 404頁面：沒有被配置的路由都會去NotFound
     {
@@ -179,14 +182,24 @@ const isAuthenticated = (roles) => {
   }
 }
 
-router.beforeEach(async (to, from) => {
-  if (to.meta && to.meta.title) {
-    document.title = to.meta.title;
-  }else if ( !isAuthenticated(to.meta.role) && to.name !== 'login') {
-    // 檢查用户是否已登陸 && 避免進入登入頁面造成無限重定向
-    // 將用户重定向到登陸頁面
-    return { name: 'login' }
+//全局前置守衛來處理基於 Token 的身份驗證檢查，可以讓您避免在每個需要進行權限檢查的頁面組件中重複寫相同的檢查邏輯。
+router.beforeEach((to, from, next) => {
+  // 檢查該路由是否需要授權訪問
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // 檢查 localStorage 中是否存在 Token
+    if (localStorage.getItem('token')) {
+      // Token 存在，表示用戶已登錄，允許訪問
+      next();
+    } else {
+      // Token 不存在，彈出提示並停留在當前頁面
+      alert('請先登錄！');
+      next(false); // 使用 next(false) 可以取消當前的導航。用戶將停留在當前頁面，而不是跳轉或重定向。
+    }
+  } else {
+    // 如果不需要授權，直接放行
+    next();
   }
 });
+
 
 export default router;
