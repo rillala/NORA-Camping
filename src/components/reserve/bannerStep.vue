@@ -13,7 +13,7 @@ export default {
         { step: '營位預約', path: '/reserve' },
         { step: '裝備租借', path: '/equipment' },
         { step: '確認預定', path: '/reserveconfirm' },
-        { step: '前往付款', path: '/reservepayment' },
+        { step: '結帳付款', path: '/reservepayment' },
       ],
     };
   },
