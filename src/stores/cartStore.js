@@ -43,7 +43,7 @@ export const useCartStore = defineStore('cartStore', {
         });
         // this.totalQty += qty
       }
-      console.log(this.cart);
+      // console.log(this.cart);
       // console.log(productId, qty);
       this.saveCartListToLocalStorage();
     },
@@ -71,7 +71,7 @@ export const useCartStore = defineStore('cartStore', {
         };
       });
 
-      console.log(cartList);
+      // console.log(cartList);
 
       // 存储完整的 cartList 到 localStorage
       localStorage.setItem('cartList', JSON.stringify(cartList));
