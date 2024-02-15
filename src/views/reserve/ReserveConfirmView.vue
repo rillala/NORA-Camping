@@ -27,79 +27,9 @@ export default {
     };
   },
   created() {
-    // 營地日期及種類數量:存取 sessionStorage 的值
-    this.startDate = sessionStorage.getItem('startDate') || 'error noStartDate';
-    this.endDate = sessionStorage.getItem('endDate') || 'error noEndDate';
-    this.stayDuration =
-      sessionStorage.getItem('stayDuration') || 'error noStayDuration';
-
-    // 這邊要注意 sessionSotrage 裡的直接為"字串類型", 因此 Boolean 需要經過轉換
-    let hasDiscountStored = sessionStorage.getItem('hasDiscount');
-    this.hasDiscount = hasDiscountStored === 'true';
-    this.chosenZone =
-      sessionStorage.getItem('chosenZone') == 'cat' ? '貓區' : '狗區';
-
-    // 轉換 siteDataArray->對應的營區名稱和數量
-    let storedDataString = sessionStorage.getItem('selectedSites');
-    let siteDataArray = [];
-
-    if (storedDataString) {
-      siteDataArray = storedDataString.split(',').map(item => {
-        let [id, count] = item.split(':').map(Number);
-
-        let area = ''; // 用於儲存轉換後的區域名稱
-        let price = 0; // 每種營區種類的價錢
-        switch (id) {
-          case 1:
-          case 4:
-            area = '草地區';
-            price = 1000;
-            break;
-          case 2:
-          case 5:
-            area = '棧板區';
-            price = 1200;
-            break;
-          case 3:
-          case 6:
-            area = '雨棚區';
-            price = 1500;
-            break;
-        }
-
-        return { id, count, area, price }; // 返回包含轉換後區域名稱的物件
-      });
-    }
-    this.selectedSites = siteDataArray;
-
-    // 讀取 equipmentList
-
-    let storedEquipmentStr = sessionStorage.getItem('equipmentList');
-    if (storedEquipmentStr && storedEquipmentStr.length > 2) {
-      let siteDataArray = storedEquipmentStr
-        .split(',')
-        .filter(item => item) // 移除空字串
-        .map(item => {
-          let parts = item.split(':');
-          // 確保 parts 長度是 4，避免解構賦值時出錯
-          if (parts.length === 4) {
-            let [id, title, price, rentNum] = parts;
-            return {
-              id: Number(id),
-              title,
-              price: Number(price),
-              rentNum: Number(rentNum),
-            };
-          }
-          return null;
-        })
-        .filter(item => item != null); // 移除無效的項目
-
-      this.equipmentList = siteDataArray;
-    } else {
-      this.equipmentList = false;
-    }
+    this.getData();
   },
+
   computed: {
     siteCountSum() {
       return this.selectedSites.reduce((acc, cur) => acc + cur.count, 0);
@@ -140,6 +70,79 @@ export default {
   },
 
   methods: {
+    getData() {
+      // 營地日期及種類數量:存取 sessionStorage 的值
+      this.startDate =
+        sessionStorage.getItem('startDate') || 'error noStartDate';
+      this.endDate = sessionStorage.getItem('endDate') || 'error noEndDate';
+      this.stayDuration =
+        sessionStorage.getItem('stayDuration') || 'error noStayDuration';
+
+      // 這邊要注意 sessionSotrage 裡的直接為"字串類型", 因此 Boolean 需要經過轉換
+      let hasDiscountStored = sessionStorage.getItem('hasDiscount');
+      this.hasDiscount = hasDiscountStored === 'true';
+      this.chosenZone =
+        sessionStorage.getItem('chosenZone') == 'cat' ? '貓區' : '狗區';
+
+      // 轉換 siteDataArray->對應的營區名稱和數量
+      let storedDataString = sessionStorage.getItem('selectedSites');
+      let siteDataArray = [];
+
+      if (storedDataString) {
+        siteDataArray = storedDataString.split(',').map(item => {
+          let [id, count] = item.split(':').map(Number);
+
+          let area = ''; // 用於儲存轉換後的區域名稱
+          let price = 0; // 每種營區種類的價錢
+          switch (id) {
+            case 1:
+            case 4:
+              area = '草地區';
+              price = 1000;
+              break;
+            case 2:
+            case 5:
+              area = '棧板區';
+              price = 1200;
+              break;
+            case 3:
+            case 6:
+              area = '雨棚區';
+              price = 1500;
+              break;
+          }
+
+          return { id, count, area, price }; // 返回包含轉換後區域名稱的物件
+        });
+      }
+      this.selectedSites = siteDataArray;
+
+      // 讀取 equipmentList
+
+      let storedEquipmentStr = sessionStorage.getItem('equipmentList');
+      if (storedEquipmentStr && storedEquipmentStr.length > 1) {
+        let siteDataArray = storedEquipmentStr
+          .split(',')
+          .filter(item => item) // 移除空字串
+          .map(item => {
+            let parts = item.split(':');
+            // 確保 parts 長度是 4，避免解構賦值時出錯
+            if (parts.length === 4) {
+              let [id, title, price, rentNum] = parts;
+              return {
+                id: Number(id),
+                title,
+                price: Number(price),
+                rentNum: Number(rentNum),
+              };
+            }
+            return null;
+          });
+        // .filter(item => item != null); // 移除無效的項目
+
+        this.equipmentList = siteDataArray;
+      }
+    },
     checkLogin() {
       if (this.isLogin) {
         this.nextPagePath = '/reservepayment';
@@ -174,6 +177,8 @@ export default {
       let reserveId = currentDate.getTime();
       sessionStorage.setItem('reserveId', reserveId);
       sessionStorage.setItem('totalPrice', this.totalPrice);
+      sessionStorage.setItem('equipmentPrice', this.equipmentTotalPrice);
+      sessionStorage.setItem('campPrice', this.siteTotalPrice);
     },
   },
 };

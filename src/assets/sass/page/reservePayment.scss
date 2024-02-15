@@ -9,7 +9,7 @@
     padding: 0;
   }
   @include desktop {
-    max-width: 1000px;
+    max-width: 800px;
   }
 }
 
@@ -49,27 +49,41 @@ h2 {
     .box {
       padding: 5px 0;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       flex-wrap: nowrap;
 
       @include tablet {
-        justify-content: start;
         margin: 0 20px;
         padding: 10px 0;
-
-        .item {
-          width: 130px;
-        }
       }
       @include desktop {
         padding: 30px 20px 10px;
       }
+
+      .item {
+        width: 100px;
+
+        @include tablet {
+          width: 130px;
+        }
+        @include desktop {
+          width: 150px;
+        }
+      }
     }
 
     input {
+      width: 100px;
       padding: 0 5px;
       border: 2px solid $dark-gray;
       border-radius: 5px;
+
+      @include tablet {
+        width: 150px;
+      }
+      @include desktop {
+        width: 200px;
+      }
     }
 
     .card-box {
@@ -81,7 +95,7 @@ h2 {
         text-align: center;
 
         @include tablet {
-          width: 60px;
+          width: 80px;
         }
       }
 
@@ -97,7 +111,11 @@ h2 {
     .deadline {
       display: flex;
       input {
+        text-align: center;
         width: 60px;
+        @include tablet {
+          width: 80px;
+        }
       }
       .first,
       .second {
