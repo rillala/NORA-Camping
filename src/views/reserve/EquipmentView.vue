@@ -5,6 +5,8 @@ import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import setRentalCard from '@/components/reserve/setRentalCard.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
+import { getDBImage } from '@/assets/js/common';
+import { transformWithEsbuild } from 'vite';
 
 export default {
   components: {
@@ -15,7 +17,7 @@ export default {
   data() {
     return {
       isNextStepClick: false,
-
+      equipData: [],
       setList: [
         {
           id: 1,
@@ -144,6 +146,8 @@ export default {
     };
   },
   mounted() {
+    this.getEquipData();
+
     let storedEquipmentStr = sessionStorage.getItem('equipmentList');
     if (storedEquipmentStr) {
       let equipmentDataArray = storedEquipmentStr
@@ -188,6 +192,9 @@ export default {
         `../../assets/image/reserve/equipment/${paths}`,
         import.meta.url,
       ).href;
+    },
+    getDBImage(paths) {
+      return getDBImage(paths);
     },
 
     // 前往下一步驟:
@@ -258,6 +265,25 @@ export default {
       if (this[listName][index].rentNum > 0) {
         this[listName][index].rentNum--;
       }
+    },
+
+    // 連結資料庫相關
+    getEquipData() {
+      apiInstance
+        .get('getEquipment.php')
+        .then(response => {
+          // console.log(response.data);
+          // 給予套組陣列初始值
+          let setData = response.data.sets;
+          console.log(setData);
+
+          // 給予單項陣列初始值
+          let singleData = response.data.singles;
+          console.log(singleData);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     },
   },
 };
