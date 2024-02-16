@@ -173,10 +173,18 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         gap: 20px;
         border-radius: $radius;
         background-color: $blue-2;
         color: $dark;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 700px;
+
+        @include desktop {
+            max-width: 1160px;
+        }
 
         .card-dtl {
             display: flex;
@@ -203,8 +211,13 @@
 
         .dog-card-img ,
         .cat-card-img {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
             @include desktop {
                 display: flex;
+                flex-direction: row;
                 gap: 20px;
             }
         }
@@ -460,11 +473,13 @@
     padding-bottom: 10px;
 
     .camp-cloud { //營地資訊雲朵一
-        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
         animation: CloudMove 2s infinite linear;
 
         @include desktop {
-            display: flex;
             justify-content: space-around;    
         }
 
@@ -487,18 +502,6 @@
 
             @include desktop {
                 display: block;
-            }
-        }
-        
-        .camp-cloud-words { //營地資訊雲朵文字
-            position: absolute;
-            top: 35%;
-            left: 30%;
-            color: $yellow-3;
-
-            @include desktop {
-                top: 28%;
-                left: 24%;
             }
         }
     }
@@ -555,10 +558,6 @@
 
         .camp-info-title { //營地資訊標題
             color: $white01;
-
-            @include desktop {
-                font-size: 40px;
-            }
         }
 
         .camp-info { //營地資訊帳篷文字
@@ -566,7 +565,7 @@
             color: $dark;
 
             @include desktop {
-                font-size: 24px;
+                font-size: 20px;
             }
         }
 
@@ -646,36 +645,6 @@
     .facility-pc {
         display: flex;
         justify-content: center;
-    }
-
-    .facility-cloud { //設施介紹雲朵
-        position: relative;
-        animation: CloudMove 2s infinite linear;
-
-        @include desktop {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        :first-child { //設施介紹雲朵一
-            width: 100%;
-
-            @include desktop {
-                width: fit-content;
-            }
-        }
-
-        .facility-cloud-words { //設施介紹雲朵文字
-            position: absolute;
-            top: 30%;
-            left: 30%;
-            color: $white01;
-
-            @include desktop {
-                top: 28%;
-                left: 45%;
-            }
-        }
     }
 
     .facility-intro { //設施介紹區塊
@@ -821,43 +790,6 @@
 
         @include desktop {
             font-size: 40px;
-        }
-    }
-    
-
-    .rules-cloud { //營區規範雲朵一
-        position: relative;
-        animation: CloudMove 2s infinite linear;
-
-        @keyframes CloudMove {
-            0% {
-                transform: translateY(10px);
-            }
-
-            50% {
-                transform: translateY(15px);
-            }
-
-            100% {
-                transform: translateY(10px);
-            }
-        }
-
-        @include desktop {
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .rules-cloud-words { //營區規範雲朵文字
-            position: absolute;
-            top: 30%;
-            left: 30%;
-            color: $dark;
-
-            @include desktop {
-                top: 28%;
-                left: 5%;
-            }
         }
     }
 

@@ -181,11 +181,10 @@ export default {
     <!-- 營地資訊區塊 -->
     <div id="nora-position"></div>
     <div class="guide-camp-info-bg">
-
+  
       <div class="camp-cloud">
         <img src="@/assets/image/campGuide/cloud_m_large.svg" alt="營地資訊裝飾大雲朵" />
         <img class="cloud-m-small" src="@/assets/image/campGuide/cloud_m_small.svg" alt="營地資訊裝飾小雲朵" />
-        <p class="camp-cloud-words">遠離塵囂！<br />放鬆身心靈！</p>
       </div>
 
       <div class="guide-camp-info-title">
@@ -224,10 +223,6 @@ export default {
     <div class="guide-facility-intro-bg">
       <img class="colorful-flags" src="@/assets/image/campGuide/colorfulflags3.svg" alt="設施介紹區塊三角旗" />
       <div id="nora-facility"></div>
-      <div class="facility-cloud">
-        <img src="@/assets/image/campGuide/cloud_m_blue_large.svg" alt="設施介紹裝飾大雲朵" />
-        <p class="facility-cloud-words">完善的設施！<br />露營起來更舒適！</p>
-      </div>
 
       <div class="facility-pc">
         <div class="facility-intro">
@@ -274,11 +269,6 @@ export default {
     <div id="nora-rule"></div>
     <div class="guide-rules-bg">
       <img class="colorful-flags" src="@/assets/image/campGuide/colorfulflags3.svg" alt="營區規範區塊三角旗" />
-
-      <div class="rules-cloud">
-        <img src="@/assets/image/campGuide/cloud_m_large.svg" alt="營區規範裝飾大雲朵" />
-        <p class="rules-cloud-words">一起愛護環境！<br />開開心心露營！</p>
-      </div>
 
       <div class="rule-icons">
         <img src="@/assets/image/campGuide/rule_dog_icon.svg" alt="營區規範狗icon" />
