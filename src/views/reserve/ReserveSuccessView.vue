@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
+import apiInstance from '@/plugins/auth';
 
 export default {
   components: {
@@ -15,7 +16,66 @@ export default {
       totalPrice: 0,
       payTime: '',
       isPay: true,
+
+      equipmentData: {},
+      campsiteData: {},
     };
+  },
+  mounted() {
+    let reserveId = sessionStorage.getItem('reserveId');
+    let startDate = sessionStorage.getItem('startDate');
+    let endDate = sessionStorage.getItem('endDate');
+
+    this.reserveId = reserveId;
+
+    let time = new Date(parseInt(this.reserveId));
+    this.reserveTime = time.toLocaleString();
+
+    let time2 = new Date();
+    this.payTime = time2.toLocaleString();
+
+    this.totalPrice = parseInt(sessionStorage.getItem('totalPrice'));
+
+    // campsite detail
+    let storedSiteStr = sessionStorage.getItem('selectedSites');
+
+    this.campsiteData = storedSiteStr.split(',').map(item => {
+      let [id, rentNum] = item.split(':');
+      return {
+        reservation_id: reserveId,
+        checkin_date: startDate,
+        checkout_date: endDate,
+        type_id: id,
+        reserve_count: Number(rentNum),
+      };
+    });
+
+    // equipment rental
+    let storedEquipmentStr = sessionStorage.getItem('equipmentList');
+
+    if (storedEquipmentStr) {
+      this.equipmentData = storedEquipmentStr
+        .split(',')
+        .filter(item => item) // 移除空字串
+        .map(item => {
+          let [id, title, price, rentNum] = item.split(':');
+          return {
+            reservation_id: reserveId,
+            equipment_id: Number(id),
+            // title: title,
+            rental_price: Number(price),
+            quantity: Number(rentNum),
+            startDate,
+            endDate,
+          };
+        });
+    }
+    // 儲存進db
+    this.addSiteDetailToDb();
+    this.addEquipmentToDb();
+
+    // 確認訂單完成並且儲存進資料庫之後, 刪除 sessionStorage 裡所存資料
+    sessionStorage.clear();
   },
   computed: {
     dateToCamp() {
@@ -28,25 +88,45 @@ export default {
       return Math.round((startDate - currentDate) / (1000 * 60 * 60 * 24));
     },
   },
-  mounted() {
-    this.reserveId = sessionStorage.getItem('reserveId');
-    let time = new Date(parseInt(this.reserveId));
-    this.reserveTime = time.toLocaleString();
 
-    let time2 = new Date();
-    this.payTime = time2.toLocaleString();
-
-    this.totalPrice = parseInt(sessionStorage.getItem('totalPrice'));
-
-    // 確認訂單完成之後, 刪除 sessionStorage 裡所存資料
-    sessionStorage.clear();
-  },
   methods: {
     formatPrice(price) {
       return '$' + price.toLocaleString('en-US');
     },
     payFailed() {
       this.$router.push('/reservefail');
+    },
+
+    // php 傳送資料
+    addEquipmentToDb() {
+      console.log(this.equipmentData);
+      apiInstance
+        .post('addEquipmentRental.php', this.equipmentData)
+        .then(response => {
+          if (!response.data.error && response.data.msg) {
+            alert(response.data.msg);
+          } else {
+            console.error('No message received', response.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    },
+    addSiteDetailToDb() {
+      console.log(this.campsiteData);
+      apiInstance
+        .post('addSiteReserveDetail.php', this.campsiteData)
+        .then(response => {
+          if (!response.data.error && response.data.msg) {
+            alert(response.data.msg);
+          } else {
+            console.error('No message received', response.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     },
   },
 };
