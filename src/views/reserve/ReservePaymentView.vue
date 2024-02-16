@@ -49,8 +49,8 @@ export default {
     } else {
       // 非第一次填寫, 直接取出物件資料
       this.reserveData = JSON.parse(sessionStorage.getItem('reserveData'));
-      this.equipmentData = JSON.parse(sessionStorage.getItem('equipmentData'));
-      this.equipmentData = JSON.parse(sessionStorage.getItem('campsiteData'));
+      // this.equipmentData = JSON.parse(sessionStorage.getItem('equipmentData'));
+      // this.equipmentData = JSON.parse(sessionStorage.getItem('campsiteData'));
     }
   },
   watch: {
@@ -103,39 +103,6 @@ export default {
       this.reserveData.totalPrice = parseInt(
         sessionStorage.getItem('totalPrice'),
       );
-
-      // campsiteData 裡的資料
-      let storedSiteStr = sessionStorage.getItem('selectedSites');
-
-      this.campsiteData = storedSiteStr.split(',').map(item => {
-        let [id, rentNum] = item.split(':');
-        return {
-          reservation_id: reserveId,
-          checkin_date: startDate,
-          checkout_date: endDate,
-          type_id: id,
-          reserve_count: Number(rentNum),
-        };
-      });
-
-      // equipmentData 裡的資料
-      let storedEquipmentStr = sessionStorage.getItem('equipmentList');
-
-      if (storedEquipmentStr) {
-        this.equipmentData = storedEquipmentStr
-          .split(',')
-          .filter(item => item) // 移除空字串
-          .map(item => {
-            let [id, title, price, rentNum] = item.split(':');
-            return {
-              reservation_id: reserveId,
-              equipment_id: Number(id),
-              // title: title,
-              rental_price: Number(price),
-              quantity: Number(rentNum),
-            };
-          });
-      }
     },
     formatPrice(price) {
       return '$' + price.toLocaleString('en-US');
@@ -189,7 +156,6 @@ export default {
     // 儲存目前輸入資訊
     storeToSession() {
       sessionStorage.setItem('reserveData', this.reserveData);
-      sessionStorage.setItem('equipmentData', this.equipmentData);
     },
 
     // 驗證輸入信用卡是否正確
@@ -199,28 +165,15 @@ export default {
     // 有效期限:12/34
     // 安全碼:123
 
-    async checkCreditCard() {
+    checkCreditCard() {
       let cardNumber = this.creditCardParts.join('');
       if (
         cardNumber === '1111222233334444' &&
         this.expInput === '12/34' &&
         this.secureCode === '123'
       ) {
-        try {
-          // 依序執行異步操作
-          await this.addReserveToDb();
-          await this.addSiteDetailToDb();
-          if (this.equipmentData.length > 0) {
-            await this.addEquipmentToDb();
-          }
-          // 如果所有操作都成功，則導航到成功頁面
-          this.$router.push('/reservesuccess');
-        } catch (error) {
-          // 如果發生異常，保存當前信息到 sessionStorage 並導航到失敗頁面
-          console.error('Error:', error);
-          this.storeToSession();
-          this.$router.push('/reservefail');
-        }
+        this.addReserveToDb();
+        this.$router.push('/reservesuccess');
       } else {
         // 信用卡驗證失敗的處理
         this.storeToSession();
@@ -233,36 +186,6 @@ export default {
       console.log(this.reserveData);
       apiInstance
         .post('addReservation.php', this.reserveData)
-        .then(response => {
-          if (!response.data.error && response.data.msg) {
-            alert(response.data.msg);
-          } else {
-            console.error('No message received', response.data);
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    },
-    addEquipmentToDb() {
-      console.log(this.equipmentData);
-      apiInstance
-        .post('addEquipmentRental.php', this.equipmentData)
-        .then(response => {
-          if (!response.data.error && response.data.msg) {
-            alert(response.data.msg);
-          } else {
-            console.error('No message received', response.data);
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    },
-    addSiteDetailToDb() {
-      console.log(this.campsiteData);
-      apiInstance
-        .post('addSiteReserveDetail.php', this.campsiteData)
         .then(response => {
           if (!response.data.error && response.data.msg) {
             alert(response.data.msg);
