@@ -64,6 +64,9 @@ export default {
       const productStore = useProductStore();
       productStore.filterProducts(this.search);
     },
+    async handleFilterClick() {
+      await this.filterHandle(this.search); // 將 input 欄位中的資料作為參數傳遞給 filterHandle 函數
+    },
     handleSelection(type) {
       // 在這裡觸發相應的事件
       if (type === '選擇類別') {
@@ -79,12 +82,6 @@ export default {
     },
   },
   watch: {
-    // 每当 search 改变时，这个函数就会执行
-    search(newSearch, oldsearch) {
-      console.log('new:' + newSearch);
-      console.log('old:' + oldsearch);
-      this.filterHandle();
-    },
     category: {
       handler(newcCategory) {
         console.log(newcCategory);
@@ -101,13 +98,15 @@ export default {
     <div class="shop-all-container">
       <div class="shop-all-banner">
         <h2>歡慶Nora商城開幕🎪</h2>
-        <input
-          type="text"
-          v-model.trim="search"
-          @input="filterHandle"
-          class="shop-searchbar"
-          placeholder="輸入商品關鍵字"
-        />
+        <div class="input-group">
+          <input
+            type="text"
+            v-model.trim="search"
+            class="shop-searchbar"
+            placeholder="輸入商品關鍵字"
+          />
+          <button @click="handleFilterClick" type="button">確認</button>
+        </div>
       </div>
       <div class="shop-select-button">
         <DropDownBtn :options="groupOptions" @change="handleSelection" :default-value="'選擇類別'"></DropDownBtn>
