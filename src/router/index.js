@@ -72,6 +72,7 @@ const router = createRouter({
       meta: {
         title: '建立訂單 Place your Order',
       },
+      meta: { requiresAuth: true },
     },
     {
       path: '/shopOrderSucess',

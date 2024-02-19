@@ -74,7 +74,8 @@ export default {
     handleLogout() {
       this.logout(); // 這將調用 Pinia store 中的 logout 方法
       this.isMemberSubOpen = false;
-      // this.userProfileImage = null;
+      this.userProfileImage = null;
+      this.isLoginOpen = false;
       this.$router.push('/');
     },
     getImageUrl(paths) {
@@ -207,7 +208,7 @@ export default {
                     >營地訂單</RouterLink
                   >
                 </li>
-                <button class="logout" @click="handleLogout">登出</button>
+                <button class="logout" @click.stop="handleLogout">登出</button>
               </ul>
             </div>
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />

@@ -24,7 +24,7 @@
       <div v-if="!isEditing" >
         <h4>個人資訊</h4>
         <div class="inner">
-          <p class="member-title-1 member-no">會員編號</p><span>0000001</span>
+          <p class="member-title-1 member-no">會員編號 {{ memberInfo.no }}</p>
         </div>
         <p class="member-title-1">會員姓名  {{ memberInfo.name }}</p>
         <p class="member-title-1">會員信箱  {{ memberInfo.email }}</p>
@@ -36,7 +36,7 @@
       <div v-else >
         <h4>個人資訊</h4>
         <div class="inner">
-          <p class="member-title-2 member-no">會員編號:</p><span>0000001</span>
+          <p class="member-title-2 member-no">會員編號:</p>
         </div>
         <div class="inner">
           <p class="member-title-2 info-title">會員姓名:</p><input v-model="editMemberInfo.name" placeholder="姓名" class="info-input"/>
@@ -87,22 +87,24 @@ import { RouterLink, RouterView } from 'vue-router';
 import axios from 'axios';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
+import apiInstance from '@/plugins/auth';
 
 export default {
   data() {
     return {
       isEditing: false,
       memberInfo: {
-        name: 'Nora Camp',
-        phone: '123456789',
-        email:'tibame@gmail.com',
-        address: '桃園中壢',
+        no:'',
+        name: ' ',
+        phone: '',
+        email:'',
+        address: '',
       },
       editMemberInfo: {
-        name: 'Nora Camp',
-        phone: '123456789',
-        email:'tibame@gmail.com',
-        address: '桃園中壢',
+        name: '',
+        phone: '',
+        email:'',
+        address: '',
       },
 
       isEditingPassword: false,
@@ -112,9 +114,35 @@ export default {
       imageSrc: '',
     };
   },
+  mounted() {
+    this.getMemberInfo();
+  },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
-    ...mapActions(userStore, ['updateToken']),
+    ...mapActions(userStore, ['updateToken', 'updateUserData']),
+    async getMemberInfo() {
+    try {
+    // 發送請求到後端，獲取用戶資料
+    const response = await apiInstance.get('/memberCenter.php', {
+      headers: { 'Authorization': `Bearer ${this.updateToken}` }
+    });
+    // 更新 Pinia store 裡的使用者資料
+    this.updateUserData(response.data);
+
+    // 更新元件內的使用者資料
+    // this.memberInfo = { 
+    //   no:response.data.member_id,
+    //   name: response.data.name, 
+    //   phone: response.data.phone,
+    //   email: response.data.email,
+    //   address: response.data.address, };
+    }
+    
+    catch (error) {
+    console.error("Error fetching member info:", error);
+    // 處理錯誤，可能需要在界面上顯示錯誤資訊
+    }
+  },
     logout() {
       // 調用pinia的updateToken
       this.updateToken('');
@@ -168,245 +196,5 @@ export default {
 
 
 <style lang="scss" scoped>
-*{
-  font-family: 'Inter', sans-serif;
-}
-
-.member-page {
-  font-weight: bold; 
-  color: $blue-4;
-}
-
-div ul{
-  margin: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.memberlink {
-  display: block;
-  text-decoration: none;
-  color:$blue-3;
-  font-size: 26px;
-  padding:0 10px;
-  white-space: nowrap;
-
-  &:hover{
-  color:$blue-4;
-  border-bottom:1px solid $blue-4;
-  }
-}
-
-.title-wrap {
-  padding-top: 70px;
-  margin-left: 80px;
-  color: $blue-4;
-}
-.banner-bgc {
-  background-color: $blue-1;
-  height: 200px;
-  width: 100%;
-}
-
-
-h4{
-  width:350px;
-  background-color: $blue-3;
-  border-radius:50px;
-  padding-left: 20px;
-  margin-bottom: 10px;
-  padding-top:10px;
-  padding-bottom:10px;
-
-}
-
-.info-container{
-    @include tablet {
-    display:flex;
-    justify-content: center;
-    max-width: 700px;
-    margin: 0 auto;
-    margin-right:50px;
-  }
-    @include desktop {
-    display:flex;
-    justify-content: center;
-    max-width: 700px;
-    margin: auto;
-  }
-}
-.info-box{
-  width:350px;
-  margin: 0 auto;
-  font-size: 16px;
-  height:250px;
-  @include tablet {
-    height:400px;
-
-  }
-  
-  @include desktop {
-  height:400px ;
-  }
-
-}
-.info-input{
-  border:none;
-  outline: none;
-  border-bottom: 1px solid #000;
-  width:200px;
-  @include font-style(16px, 400, 1%, 160%);
-}
-
-.psw-input{
-  border:none;
-  outline: none;
-  border-bottom: 1px solid #000;
-  width:180px;
-  @include font-style(16px, 400, 1%, 160%);
-}
-.startEditing, .save-changes, .savePasswordChanges {
-  background-color: $blue-3;
-  border: none;
-  padding: 6px 15px;
-  border-radius: 50px;
-  margin-left: auto;
-}
-.logout, .cancelEditing{
-  background-color:$blue-2;
-  border:none;
-  padding: 6px 15px;
-  border-radius: 50px;
-  margin:5px;
-  margin-left:auto;
-  margin-top:5px;
-}
-
-p{
-  padding-left:5px;
-}
-
-.password-box{
-  width:350px;
-  height:350px;
-  margin: 10px auto;
-  font-size: 16px;
-  @include tablet {
-    display:flex;
-    justify-content: center;
-    height:400px;
-    margin: 0;
-  }
-    @include desktop {
-    display:flex;
-    justify-content: center;
-    height:400px;
-    margin: 0;
-  }
-}
-
-.box{
-  margin-top:20px;
-  display: flex;
-  justify-content: end;
-
-  *{
-    margin: 0;
-  }
-
-  * +*{
-    margin-left: 10px;
-  }
-}
-
-.info-title{
-  padding-left:5px;
-}
-
-.inner{
-  display: flex;
-  align-items: center; 
-}
-
-label{
-  @include font-style(16px, 400, 1%, 160%);
-}
-
-.password-title-1, 
-.password-title-2
-{
-  padding-left:20px;
-  white-space:no-wrap;
-  @include font-style(16px, 400, 1%, 160%);
-
-// 平板 + 桌機板
-  @include tablet {
-    @include font-style(20px, 400, 1%, 160%);
-  }
-}
-
-.member-title-1, 
-.member-title-2{
-  padding-left:20px;
-  margin-right:4px;
-}
-
-.password-title-1:hover {
-    cursor: not-allowed;  
-}
-
-span{
-  @include font-style(16px, 400, 1%, 160%);
-
-// 平板 + 桌機板
-  @include tablet {
-  @include font-style(20px, 400, 1%, 160%);
-  }
-}
-
-.drop-area {
-  width: 150px;
-  height: 150px;
-  border: 2px dashed #ccc;
-  border-radius: 50%; /* 將邊框設置為圓形 */
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  background-color: #f0f0f0; /* 設置背景顏色 */
-  margin:auto;
-  margin-bottom: 10px;
-}
-
-#dropzone {
-  border: 2px dashed #ccc;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.password-title-1 span {
-  color:white;
-  border-bottom: 1px solid $dark;
-}
-
-.drop-box{
-  margin-bottom:20px;
-}
-
-.added-photo {
-  text-align: center;
-}
-
-.drop-area {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.added-photo {
-  margin-top: 2px; /* 調整上下間距 */
-  margin-right:2px;
-}
+@import '@/assets/sass/page/memberCenterView.scss';
 </style>

@@ -44,20 +44,24 @@ export default defineStore('userStore', {
     updateName(payload) {
       this.name = payload;
     },
-    updateUserData(val) {
-      this.userData = val
-      console.log(val);
-      // 不把全部資訊紀錄
-      this.userData = {
-          name: val.mem_name,
-          // email驗證狀況1|0ㄋ
-          validation: val.mem_validation,
+    updateUserData(data) {
+      // 將 API 返回的數據賦值給 memberInfo
+        this.memberInfo = {
+          no: data.member_id,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address
+          // name: val.mem_name,
+          // email驗證狀況1|0
+          // validation: val.mem_validation,
           // 封鎖狀況1|0
-          state: val.mem_state,
+          // state: val.mem_state,
           // 如果有權限可以把權限角色記載資料庫
-          role: 'editor'
-      }
+          // role: 'editor'
+      };
       localStorage.setItem('userData', JSON.stringify(this.userData))
+      console.log('Updated userData:', this.userData);
     },
     checkUserData(){
       const storageUserData = localStorage.getItem('userData')
@@ -73,8 +77,9 @@ export default defineStore('userStore', {
     },
     logout() {
       this.token = '';
-      localStorage.removeItem('token', 'userProfileImage');
-      // this.userProfileImage = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('userProfileImage');
+      this.userProfileImage = null;
     },
   },
 });

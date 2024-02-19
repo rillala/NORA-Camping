@@ -130,7 +130,7 @@
           <a class="forget-psw">忘記密碼？</a><br/>
           <button class="main-btn" @click="login">會員登入</button><br />
           <button class="sub-btn" @click.prevent="signInWithGoogle">以Google登入</button>
-          <!-- <button class="sub-btn" @click.prevent="signInWithLine">以Line登入</button> -->
+          <button class="sub-btn" @click.prevent="signInWithLine">以Line登入</button>
         </form>
       </div>
     </div>
@@ -154,27 +154,31 @@ export default {
       passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        name:'陳穎穎',
-        email: 'sandra401120422@gmail.com',
+        name:'王小亮',
+        email: 'ubud301@gmail.com',
         // chd.noracamping@gmail.com
-        psw: '83r5^_',
-        pswConfirmation: '83r5^_',
+        // psw: '83r5^_',
+        // pswConfirmation: '83r5^_',
+        psw: '123456',
+        pswConfirmation: '123456',
         receiveNews: true,
         agreeTerms: true,
       },
       user_enter: {
-        email: 'sandra401120422@gmail.com',
-        psw: 'tibame654',
+        email: 'ubud301@gmail.com',
+        psw: '123456',
+        // email: 'sandra401120422@gmail.com',
+        // psw: 'tibame654',
       },
       showPrivacyPolicy: false,
-      client_id: '2003443299',
+      channel_id: '2003443299',
       redirect_uri: 'http://localhost:5173',
       client_secret: '6944f7d50fb550267d1488e66d7f4d90',
     };
   },
   watch: {
     isOpen(newVal) {
-      console.log(`isOpen changed to ${newVal}`);
+      // console.log(`isOpen changed to ${newVal}`);
     },
     // 'user_add.pwd'(newPassword) {
     //   this.passwordMismatch = newPassword !== this.user_add.pwdConfirmation;
@@ -195,7 +199,7 @@ export default {
     }else{
         // 判斷有沒有登入過，如果沒有token等同於沒有登入
       const user = this.checkLogin()
-      console.log(user);
+      // console.log(user);
       if(user){
         //有登入資訊轉到首頁
         this.$router.push('/')
@@ -233,11 +237,11 @@ export default {
       bodyFormData.append('psw', this.user_enter.psw);
       apiInstance({
           method: 'post',
-          url: '/member_login.php',
+          url: '/login.php',
           headers: { "Content-Type": "multipart/form-data" },
           data: bodyFormData
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res && res.data && res.data.error === false) {
         // 如果後端沒有返回錯誤，則處理登入成功的情況
           alert(res.data.message);
@@ -249,8 +253,8 @@ export default {
         // 如果後端返回了錯誤，則處理登入失敗的情況
         alert(res.data.message);
       } else {
-        // 如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
-        alert('登入失敗：無法解析伺服器響應。');
+      //   如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
+      alert('登入失敗：無法解析伺服器響應。');
       }
     }).catch(error => {
         console.error('註冊過程中出錯', error);
@@ -310,7 +314,7 @@ export default {
     // 發送請求到後端註冊 API
     apiInstance({
         method: 'post',
-        url: '/member_register.php', // 註冊 API 端點
+        url: '/register.php', // 註冊 API 端點
         headers: { "Content-Type": "multipart/form-data" },
         data: bodyFormData
     }).then(res => {
@@ -319,7 +323,7 @@ export default {
         alert(`註冊失敗: ${res.data.message}`);
       } else {
         // 註冊成功的處理邏輯
-        alert("註冊成功");
+        alert(`${res.data.message}`);
       // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
     }
     }).catch(error => {
@@ -345,76 +349,68 @@ export default {
       });
     },
     signInWithLine(){
-      let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${this.client_id}&redirect_uri=${this.redirect_uri}&state=login&scope=openid%20profile`;
-      window.location.href = link;
+        // 根據指定的 client_id、redirect_uri、scope 等參數組合出一個 LINE 登入的連結
+        const link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${this.channel_id}&redirect_uri=${this.redirect_uri}&state=login&scope=openid%20profile`;
+        // 將頁面重新導向到該連結
+        window.location.href = link;
     },
-    
     async lineLoginRedirect(code) {
-      try {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const code = urlParams.get('code');
-
-        if (code) {
-          const tokenResponse = await axios.post('https://api.line.me/oauth2/v2.1/token', qs.stringify({
-            grant_type: 'authorization_code',
-            code: code,
-            redirect_uri: this.redirect_uri,
-            client_id: this.client_id,
-            client_secret: this.client_secret
-          }), {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          });
-
-          const accessToken = tokenResponse.data.access_token;
-          const idToken = tokenResponse.data.id_token;
-
-          //這個端點用於驗證存取令牌的有效性，並且可以用來獲取與該令牌相關的用戶資訊，如用戶ID。
-          const userInfoResponse = await axios.post('https://api.line.me/oauth2/v2.1/verify', qs.stringify({
-            id_token: idToken,
-            client_id: this.client_id
-          }), {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Authorization': 'Bearer ' + accessToken
-              //使用存取令牌進行身份驗證，將存取令牌放在 'Bearer ' 字符串之後
-            }
-          });
-
-          const lineUserId = userInfoResponse.data.sub;
-          const lineNickname = userInfoResponse.data.name;
-          const lineAccountTypeID = 1; 
-          // 獲取用戶頭像 URL
-          const userProfileImage = userInfoResponse.data.picture;
-          this.updateUserProfileImage(userProfileImage);
-
-          //更新token，並保存到localstorage
-          localStorage.setItem('token', accessToken);
-          this.updateToken(accessToken); 
-
-          //這邊寫回資料庫
-          // const response = await axios.post(`${API_URL}lineLogin.php`, {
-          //   userId: lineUserId,
-          //   nickname: lineNickname,
-          //   accountTypeID: lineAccountTypeID
-          // });
-          
-          // 沒有API先使用寫死資料
-          // this.updateUserData({
-          //   mem_name: lineNickname,
-          //   mem_validation: 1,
-          //   mem_state: 1
-          // })
-          this.$router.push('/')
+    try {
+      const tokenResponse = await axios.post('https://api.line.me/oauth2/v2.1/token', qs.stringify({
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: this.redirect_uri,
+        client_id: this.channel_id,
+        client_secret: this.client_secret
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
-      } catch (error) {
+      });
+      const accessToken = tokenResponse.data.access_token;
+      const idToken = tokenResponse.data.id_token;
+      
+      const userInfoResponse = await axios.post('https://api.line.me/oauth2/v2.1/verify', qs.stringify({
+        id_token: idToken,
+        client_id: this.channel_id
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + accessToken
+        }
+      });
+      console.log(userInfoResponse.data);
+        const lineUserId = userInfoResponse.data.sub;
+        const lineNickname = userInfoResponse.data.name;
+        const lineUSerImgURL = userInfoResponse.data.picture;
+        const lineAccountTypeID = 1;
+
+        //更新token;
+        localStorage.setItem('token', accessToken);
+        this.updateToken(accessToken);
+        
+        // 這邊寫回資料庫
+        const response = await axios.post(`http://localhost/NoraApi/phps/lineLogin.php`, {
+            user_id: lineUserId,
+            name: lineNickname,
+            photo: lineUSerImgURL,
+            //accountTypeID: lineAccountTypeID
+        });
+        // this.updateToken(lineUserId)
+
+        // 沒有API先使用寫死資料
+        // this.updateUserData({
+        //     mem_name: lineNickname,
+        //     mem_validation: 1,
+        //     mem_state: 1
+        // })
+        this.$router.push('/')
+    } catch (error) {
         console.error(error);
       }
     }
-  },
-}  
+  }
+}
 
 </script>
 
