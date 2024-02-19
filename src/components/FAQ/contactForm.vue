@@ -1,4 +1,41 @@
 <script setup>
+import { ref } from 'vue';
+const flag = ref(false);
+const isReadonly = ref(false);
+
+const defaultText = '填寫完畢';
+const buttonText = ref(defaultText); //位置1
+const flagCheck = (e)=>{
+    e.preventDefault();
+    if(flag.value){
+        //value=T means SecondtimeSubmmit goto step3 
+        buttonText.value = buttonText.value;
+
+        //點擊確認送出後並顯示彈窗"送出成功"
+        alert("送出成功");
+        //並將flag.value change to F，同時清空表單回到位置1
+        flag.value = false;
+        console.log("step3");
+        //將狗頭改變位置到76%
+    }else{
+        //value=F means firsttimeSubmmit goto step2 
+        //點擊填寫完畢後進入鎖定，進入位置2，提供使用者確認資料正確性
+        isReadonly.value = true;
+        console.log(isReadonly.value);
+        //鎖定階段修改按鈕文字
+        buttonText.value = '確認送出';
+        //並將flag.value change to T
+        flag.value = true;
+        console.log("step2");
+        //將狗頭改變位置到42.5%
+    }
+}
+const nowLocation = ref(null);
+function dogLocation(){
+    if(!flag.value){
+        
+    }
+}
 const emits = defineEmits([
     'changeToMain'
 ]);
@@ -6,6 +43,7 @@ const emits = defineEmits([
 function goBack(){
     emits('changeToMain');
 }
+
 </script>
 
 <template>
@@ -38,7 +76,7 @@ function goBack(){
         </div>
         <div class="ask">
             <p class="tinyp">問題內容*</p>
-            <textarea name="ques" id="ques"  placeholder="請輸入您的問題"></textarea>
+            <textarea name="ques" id="ques"  placeholder="請輸入您的問題"  :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}"></textarea>
         </div>
         <!-- contact info -->
         <div class="step">
@@ -47,15 +85,15 @@ function goBack(){
         <div class="contactInfo">
             <div class="info">
                 <p class="tinyp">稱呼*</p>
-                <input type="text" placeholder="請輸入姓名或暱稱">
+                <input type="text" placeholder="請輸入姓名或暱稱" :readonly="isReadonly">
             </div>
             <div class="info">
                 <p class="tinyp">電子郵件*</p>
-                <input type="email" placeholder="請輸入您的電子郵件">
+                <input type="email" placeholder="請輸入您的電子郵件" :readonly="isReadonly">
             </div>
             <div class="info">
                 <p class="tinyp">連絡電話</p>
-                <input type="tel" placeholder="請輸入您的連絡電話">
+                <input type="tel" placeholder="請輸入您的連絡電話" :readonly="isReadonly">
             </div>
             <!-- ------------ -->
         </div>
@@ -65,7 +103,8 @@ function goBack(){
         </div>
         <div class="btns">
             <button type="button" class="submit" @click="goBack">返回前頁</button>
-            <button type="submit" class="submit">填寫完成</button>
+            <button type="submit" class="submit" @click="flagCheck">{{buttonText}}</button>
+
         </div>
     </form>
 </template>
@@ -312,5 +351,11 @@ form{
             }
         }
     }
+}
+input[readonly], textarea[readonly] {
+    cursor: default;
+}
+textarea.readonlyBGC{
+    background-color: #EEE;
 }
 </style>
