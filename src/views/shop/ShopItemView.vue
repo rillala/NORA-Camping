@@ -6,6 +6,8 @@ import addMinusBtn from '@/components/button/addMinusBtn-shop.vue';
 import ActionBtn from '@/components/button/actionBtn.vue';
 import loading from '@/components/loading.vue';
 import DropDownBtn from '@/components/button/dropDownBtn.vue';
+import { getDBImage } from '@/assets/js/common';
+
 
 export default {
   components: {
@@ -27,7 +29,7 @@ export default {
   created() {
     // this.axiosGetDataId();
     const productStore = useProductStore();
-    const pageId = this.$route.params.id; // 需要使用到 route 的部分, 要回到 .vue這裡定義
+    const pageId = this.$route.params.product_id; // 需要使用到 route 的部分, 要回到 .vue這裡定義
     productStore.axiosGetDataId(pageId); // 作為參數丟進去 pinia
   },
   computed: {
@@ -50,12 +52,12 @@ export default {
     },
     async addIntoCart() {
       const cartStore = useCartStore();
-      await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
+      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity);
       alert('商品已加入購物車')
     },
     async addAndBuy() {
       const cartStore = useCartStore();
-      await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
+      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity);
       this.$router.replace('/shopCar');
     },
     prevImage() {
@@ -89,11 +91,15 @@ export default {
         console.log('XL');
       }
     },
+    getDBImage(images){
+			return getDBImage(images)
+		}
   },
 }
 </script>
 
 <template>
+  {{ this.responseData }}
   <main class="shop-item-wrap">
     <div class="shop-item-container">
       <loading v-if="nodata"></loading>
