@@ -1,6 +1,8 @@
 // productStore.js
 import axios from 'axios';
 import { defineStore } from 'pinia';
+import apiInstance from '@/plugins/auth';
+
 
 export const useProductStore = defineStore('productStore', {
   // 上用用命名的辦法輸出 "useProductStore"
@@ -13,13 +15,22 @@ export const useProductStore = defineStore('productStore', {
   },
   actions: {
     axiosGetData() {
-      axios.get('https://api.escuelajs.co/api/v1/products').then(res => {
-        if (res && res.data) {
-          this.responseData = res.data;
-          this.displayData = res.data;
-          this.filteredData = res.data; 
-        }
-      });
+      apiInstance
+        .get("./getProduct.php")
+        .then(res => {
+          if (res && res.data) {
+            this.responseData = res.data;
+            this.displayData = res.data;
+            this.filteredData = res.data; 
+          }
+        });
+      // axios.get('http://localhost/NORAapi/phps/getProduct.php').then(res => {
+      //   if (res && res.data) {
+      //     this.responseData = res.data;
+      //     this.displayData = res.data;
+      //     this.filteredData = res.data; 
+      //   }
+      // });
     },
     axiosGetDataId(pageId) {
       // 在 Pinia Store 中，this 不會自動獲取 Vue 組件的上下文，因此這種方式無法正常工作。您需要以不同的方式獲取路由參數。
@@ -27,12 +38,20 @@ export const useProductStore = defineStore('productStore', {
       // const pageId = this.$route.params.id;
       // console.log(pageId);
 
-      axios
-        .get(`https://api.escuelajs.co/api/v1/products/${pageId}`)
+      // axios
+      //   .get(`https://api.escuelajs.co/api/v1/products/${pageId}`)
+        
+      //   .then(res => {
+      //     if (res && res.data) {
+      //       this.responseData = res.data;
+      //     }
+      //   });
+      apiInstance
+        .get(`./getProduct.php/?id=${pageId}`)//還需調整02/21
         .then(res => {
-          if (res && res.data) {
-            this.responseData = res.data;
-          }
+              if (res && res.data) {
+                this.responseData = res.data;
+              }
         });
     },
     

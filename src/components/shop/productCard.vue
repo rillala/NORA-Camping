@@ -2,10 +2,10 @@
 	<div class="shop-all-card">
 		<router-link style="text-decoration: none;" :to="{
 			name: 'shopItem',
-			params: { id: item.id }
+			params: { id: item.product_id }
 		}">
 			<div class="shop-card-img">
-				<img :src="item.images" :alt="item.title" />
+				<img :src="getDBImage(item.images[0])" :alt="item.title" />
 			</div>
 			<article class="shop-card-content">
 				<p class="shop-card-title">{{ item.title }}</p>
@@ -17,12 +17,19 @@
 </template>
 
 <script>
+import { getDBImage } from '@/assets/js/common';
+
 export default {
 	data() {
 		return {
 			num: ''
 		}
 	},
+	methods: {
+    getDBImage(images){
+			return getDBImage(images)
+		}
+  },
 	props: ['item']
 }
 </script>
