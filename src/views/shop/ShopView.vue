@@ -12,14 +12,14 @@ export default {
   components: {
     productCard,
     DropDownBtn
-},
+  },
   data() {
     return {
       count: 10,
       sourceData: [],
       search: '',
-      groupOptions: ['選擇類別', 'Nora文青生活','Nora品牌服飾','Nora營地用品'],
-      priceOptions: ['選擇排序','價格高到低','價格低到高'],
+      groupOptions: ['選擇類別', 'NORA文青生活', 'NORA品牌服飾', 'NORA營地用品'],
+      priceOptions: ['選擇排序', '價格高到低', '價格低到高'],
     };
   },
 
@@ -52,11 +52,11 @@ export default {
   },
 
   methods: {
-    async priceHighToLow(){
+    async priceHighToLow() {
       const productStore = useProductStore();
       await productStore.sortByPriceHighToLow();
     },
-    async priceLowToHigh(){
+    async priceLowToHigh() {
       const productStore = useProductStore();
       await productStore.sortByPriceLowToHigh();
     },
@@ -68,18 +68,18 @@ export default {
       await this.filterHandle(this.search); // 將 input 欄位中的資料作為參數傳遞給 filterHandle 函數
     },
     handleSelection(type) {
-      // 在這裡觸發相應的事件
+      const productStore = useProductStore();
       if (type === '選擇類別') {
-        console.log('選擇類別')
-      } else if (type === 'Nora文青生活') {
-        // 處理 color 的事件
-        console.log('Nora文青生活');
-      }else if (type === '價格高到低'){
-        this.priceHighToLow()
-      }else if (type === '價格低到高'){
-        this.priceLowToHigh()
+        productStore.filterByCategory(type);
+      } else if (type === 'NORA文青生活' || type === 'NORA品牌服飾' || type === 'NORA營地用品') {
+        productStore.filterByCategory(type);
+      } else if (type === '價格高到低') {
+        this.priceHighToLow();
+      } else if (type === '價格低到高') {
+        this.priceLowToHigh();
       }
     },
+
   },
   watch: {
     category: {
@@ -99,12 +99,7 @@ export default {
       <div class="shop-all-banner">
         <h2>歡慶Nora商城開幕🎪</h2>
         <div class="input-group">
-          <input
-            type="text"
-            v-model.trim="search"
-            class="shop-searchbar"
-            placeholder="輸入商品關鍵字"
-          />
+          <input type="text" v-model.trim="search" class="shop-searchbar" placeholder="輸入商品關鍵字" />
           <button @click="handleFilterClick" type="button">確認</button>
         </div>
       </div>
@@ -112,12 +107,11 @@ export default {
         <DropDownBtn :options="groupOptions" @change="handleSelection" :default-value="'選擇類別'"></DropDownBtn>
         <DropDownBtn :options="priceOptions" @change="handleSelection" :default-value="'選擇排序'"></DropDownBtn>
       </div>
-      
+
 
 
       <div class="shop-all-list">
         <template v-for="product in displayData" :key="product.id">
-          <productCard :item="product"></productCard>
           <productCard :item="product"></productCard>
         </template>
       </div>

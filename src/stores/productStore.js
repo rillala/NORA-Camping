@@ -47,12 +47,13 @@ export const useProductStore = defineStore('productStore', {
       //     }
       //   });
       apiInstance
-        .get(`./getProduct.php/?id=${pageId}`)//還需調整02/21
-        .then(res => {
-              if (res && res.data) {
-                this.responseData = res.data;
-              }
-        });
+      apiInstance
+      .get(`./getSingleProduct.php/?id=${pageId}`)
+      .then(res => {
+            if (res && res.data) {
+              this.responseData = res.data;
+            }
+      });
     },
     
     sortByPriceHighToLow() {
@@ -60,6 +61,13 @@ export const useProductStore = defineStore('productStore', {
     },
     sortByPriceLowToHigh() {
       this.displayData.sort((a, b) => a.price - b.price);
+    },
+    filterByCategory(category) {
+      if(category === '選擇類別') {
+        this.displayData = this.responseData;
+      } else {
+        this.displayData = this.responseData.filter(product => product.category === category);
+      }
     },
     filterProducts(searchTerm) {
       if (!searchTerm.trim()) {
