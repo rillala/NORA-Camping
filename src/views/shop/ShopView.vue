@@ -20,6 +20,8 @@ export default {
       search: '',
       groupOptions: ['選擇類別', 'NORA文青生活', 'NORA品牌服飾', 'NORA營地用品'],
       priceOptions: ['選擇排序', '價格高到低', '價格低到高'],
+      currentPage: 1, // 當前頁碼
+      itemsPerPage: 4, // 每頁顯示的商品數量
     };
   },
 
@@ -42,6 +44,24 @@ export default {
     },
     nodata() {
       return this.productCount === 0;
+    },
+    // 計算總頁數
+    totalPages() {
+      return Math.ceil(this.displayData.length / this.itemsPerPage);
+    },
+    // 根據當前頁碼計算當前頁面顯示的商品
+    paginatedData() {
+      let start = (this.currentPage - 1) * this.itemsPerPage;
+      let end = start + this.itemsPerPage;
+      return this.displayData.slice(start, end);
+    },
+    // 生成分頁按鈕的頁碼
+    pages() {
+      let pages = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+      return pages;
     },
   },
   created() {
@@ -79,7 +99,15 @@ export default {
         this.priceLowToHigh();
       }
     },
-
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    goToPage(pageNumber) {
+    this.currentPage = pageNumber;
+  },
   },
   watch: {
     category: {
@@ -111,9 +139,17 @@ export default {
 
 
       <div class="shop-all-list">
-        <template v-for="product in displayData" :key="product.id">
+        <template v-for="product in paginatedData" :key="product.id">
           <productCard :item="product"></productCard>
         </template>
+      </div>
+      <div class="pagination-controls">
+        <button @click="prevPage" :disabled="currentPage <= 1">上一頁</button>
+        <!-- 數字分頁按鈕 -->
+        <button v-for="page in pages" :key="page" @click="goToPage(page)" :class="{ 'active': currentPage === page }">
+          {{ page }}
+        </button>
+        <button @click="nextPage" :disabled="currentPage >= totalPages">下一頁</button>
       </div>
     </div>
   </div>
@@ -121,4 +157,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/shopView.scss';
+.pagination-controls button.active {
+  color: white;
+  background-color: blue;
+}
 </style>
