@@ -188,7 +188,7 @@ export default {
         .post('addReservation.php', this.reserveData)
         .then(response => {
           if (!response.data.error && response.data.msg) {
-            alert(response.data.msg);
+            console.log(response.data.msg);
           } else {
             console.error('No message received', response.data);
           }

@@ -49,24 +49,21 @@ export default {
     },
 
     // 前往下一步驟:
-    goToNextStep(nextPath) {
+    goToNextStep() {
+      this.updateEquipmentRent();
       if (sessionStorage.getItem('isStep2Clicked')) {
         // 更新選擇的裝備及數量
-        this.updateEquipmentRent();
-        return;
       } else {
         // 更新選擇的裝備及數量
         sessionStorage.setItem('isStep2Clicked', 'true');
-        this.updateEquipmentRent();
         let currentStep = parseInt(
           sessionStorage.getItem('currentStep') || '1',
         );
         currentStep++;
         sessionStorage.setItem('currentStep', currentStep.toString());
-        if (nextPath) {
-          this.$router.push(nextPath);
-        }
       }
+
+      this.$router.push(`/reserveconfirm`);
     },
     updateEquipmentRent() {
       // 更新或建立 equipmentList
@@ -252,11 +249,7 @@ export default {
     </div>
 
     <!--下個步驟的按鈕-->
-    <nextPageBtn
-      @click="goToNextStep(`/reserveconfirm`)"
-      :text="`前往結帳`"
-      :path="`/reserveconfirm`"
-    />
+    <nextPageBtn @click="goToNextStep()" :text="`前往結帳`" />
   </section>
 </template>
 
