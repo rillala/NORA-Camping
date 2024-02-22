@@ -8,13 +8,14 @@ import bannerStepShop from '@/components/shop/bannerStep-shop.vue';
 import actionBtn from '@/components/button/actionBtn.vue';
 import DropDownBtn from '@/components/button/dropDownBtn.vue';
 import { RouterLink } from 'vue-router';
+import { getDBImage } from '@/assets/js/common';
+
 
 export default {
   components: { bannerStepShop, actionBtn, DropDownBtn, RouterLink },
   data() {
     return {
-      selectColor:['顏色','黑色', '白色', '綠色','藍色'],
-      selectSize:['尺寸','XS', 'S', 'M', 'L', 'XL'],
+
     };
   },
   created() {
@@ -24,33 +25,31 @@ export default {
     const productStore = useProductStore();
     productStore.axiosGetData();
   },
+
   methods: {
     ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart']),
-    handleSelection(type) {
-      // 在這裡觸發相應的事件
-      if (type === '黑色') {
-        console.log('黑色')
-      }else if(type === '白色'){
-        console.log('白色');
-      }else if (type === '綠色'){
-        console.log('綠色');
-      }else if(type === '藍色'){
-        console.log('藍色');
-      }else if(type === 'XS'){
-        console.log('XS');
-      }else if(type === 'S'){
-        console.log('S');
-      }else if(type === 'M'){
-        console.log('M');
-      }else if(type === 'L'){
-        console.log('L');
-      }else if(type === 'XL'){
-        console.log('XL');
-      }
+    getDBImage(images) {
+      return getDBImage(images)
+    },
+    handleColorChange(selectedColor, productId) {
+      const cartStore = useCartStore();
+      cartStore.updateProductOption(productId, selectedColor, 'color');
+    },
+    handleSizeChange(selectedSize, productId) {
+      const cartStore = useCartStore();
+      cartStore.updateProductOption(productId, selectedSize, 'size');
     },
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
+    colorOptions() {
+      // 檢查是否有colors，並將其從字符串轉換為數組，如果沒有則返回一個只包含預設選項的數組
+      return this.cartList.colors ? ['顏色', ...this.cartList.colors.split(',')] : ['顏色'];
+    },
+    sizeOptions() {
+      // 同上，對sizes進行處理
+      return this.cartList.sizes ? ['尺寸', ...this.cartList.sizes.split(',')] : ['尺寸'];
+    },
   },
   watch: {},
 };
@@ -74,27 +73,26 @@ export default {
               <th>小計</th>
               <th style="border-radius: 0 15px 0 0"></th>
             </tr>
-            <tr v-for="item in cartList.carts" :key="item.id">
+            <tr v-for="item in cartList.carts" :key="item.product_id">
               <td>
-                <img :src="item.product.images" alt="" />
+                <img :src="getDBImage(item.product.images[0])" alt="Product Image" />
               </td>
               <td class="select-content">
-                <p class="footerp">{{ item.product.title }}</p>
+                <p>{{ item.product.title }}</p>
                 <div class="select">
-                  <DropDownBtn :options="selectColor" @change="handleSelection" :default-value="'顏色'"></DropDownBtn>
-                  <DropDownBtn :options="selectSize" @change="handleSelection" :default-value="'尺寸'"></DropDownBtn>
+                  <DropDownBtn v-if="item.product.colors && item.product.colors.length > 0" :options="item.product.colors ? [...item.product.colors.split(',')] : ['顏色']"
+                    @change="event => handleColorChange(event, item.product_id)" :default-value="item.selectedColor">
+                  </DropDownBtn>
+                  <DropDownBtn v-if="item.product.sizes && item.product.sizes.length > 0" :options="item.product.sizes ? [...item.product.sizes.split(',')] : ['尺寸']"
+                    @change="event => handleSizeChange(event, item.product_id)" :default-value="item.selectedSize">
+                  </DropDownBtn>
                 </div>
               </td>
               <td>
                 <p>{{ item.product.price }}</p>
               </td>
               <td>
-                <select
-                  name=""
-                  id=""
-                  :value="item.qty"
-                  @change="event => setCartQty(item.id, event)"
-                >
+                <select name="" id="" :value="item.qty" @change="event => setCartQty(item.productId, event)">
                   <option :value="i" v-for="i in 20" :key="i">{{ i }}</option>
                 </select>
               </td>
@@ -102,12 +100,8 @@ export default {
                 <p>$ {{ item.subtotal }}</p>
               </td>
               <td>
-                <img
-                  class="cart-cancel"
-                  src="/src/assets/image/shop/icons/cancel.svg"
-                  @click.prevent="removeCartItem(item.id)"
-                  alt="cancel"
-                />
+                <img class="cart-cancel" src="/src/assets/image/shop/icons/cancel.svg"
+                  @click.prevent="removeCartItem(item.product_id)" alt="cancel" />
               </td>
             </tr>
           </tbody>
@@ -115,13 +109,12 @@ export default {
         <p class="cart-total">總金額 NT$ {{ cartList.total }}</p>
         <div class="cart-buttons">
           <router-link to="shop">
-            <actionBtn
-              class="cart-keepShoping"
-              :content="'繼續購物'"
-            ></actionBtn>
+            <actionBtn class="cart-keepShoping" :content="'繼續購物'"></actionBtn>
           </router-link>
-          <RouterLink to="shopPayment"><actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn></RouterLink>
-          
+          <RouterLink to="shopPayment">
+            <actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn>
+          </RouterLink>
+
         </div>
       </div>
     </div>
