@@ -4,6 +4,7 @@ import { useProductStore } from '@/stores/productStore';
 import { useCartStore } from '@/stores/cartStore';
 import { mapState, mapActions } from 'pinia';
 import ActionBtn from '@/components/button/actionBtn.vue';
+import apiInstance from '@/plugins/auth';
 
 
 export default {
@@ -11,8 +12,9 @@ export default {
   data() {
     return {
       orderInfo: {
+        memberId: 2,//暫時
         payWay: 0,
-        payMethod: '信用卡付款',
+        payment: '',
         carry: '',
         name: '',
         phone: '',
@@ -22,6 +24,9 @@ export default {
         totalWithPayWay: 0,
         orderId: [],
       },
+      creditCardParts: ['', '', '', ''], // 信用卡號碼
+      expInput: '',
+      secureCode: '',
     }
   },
   methods: {
@@ -33,12 +38,35 @@ export default {
         // 將總計值存儲到 sessionStorage
         sessionStorage.setItem('orderInfo', JSON.stringify(this.orderInfo));
         // 跳轉到下一頁，你可以使用 this.$router.push
-        this.$router.replace('/ShopOrderSucess')
       });
+      
+      const orderData = {
+        member_id: this.orderInfo.memberId,//待修正
+        name: this.orderInfo.name,
+        phone: this.orderInfo.phone,
+        email: this.orderInfo.email,
+        address: this.orderInfo.address,
+        delivery_method: this.orderInfo.carry,
+        payment: this.orderInfo.payment,
+        total_amount: this.totalWithPayWay,
+        order_status: '待出貨', // 預設值
+        comment: this.orderInfo.note,
+        cartList: this.cartList // 包含購物車商品的列表
+    };
+
+    // 發送到後端
+    apiInstance.post('/addOrder.php', orderData)
+        .then(response => {
+            console.log(response.data); // 處理響應
+        })
+        this.$router.replace('/ShopOrderSucess')
+        .catch(error => {
+          console.error(error); // 處理錯誤
+        });
     },
     confirmCarry(way) {
       this.orderInfo.carry = way
-    }, 
+    },
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
@@ -71,6 +99,10 @@ export default {
 </script>
 <template>
   <BannerStepShop></BannerStepShop>
+  {{ this.orderInfo }}
+  <br>
+  <br>
+  {{ this.cartList }}
   <section class="shop-payment-wrap">
     <div class="shop-payment-container">
       <form class="shop-payment-forms">
@@ -105,7 +137,7 @@ export default {
               <h4>支付方式</h4>
               <div class="carry-option">
                 <label for="creditCard"><input name="creditCard" type="radio" id="creditCard" value="信用卡付款"
-                    v-model="payMethod" required>信用卡付款</label>
+                    v-model="orderInfo.payment" required>信用卡付款</label>
               </div>
             </div>
             <h4 class="shop-payment-total">總計: NT$ {{ totalWithPayWay }}</h4>
@@ -119,35 +151,71 @@ export default {
           <table class="shop-payment-inputs">
             <tr>
               <td>
-                <p>姓名</p>
+                <p class="item">姓名</p>
               </td>
               <td><input type="name" name="name" placeholder="請輸入姓名" v-model="orderInfo.name" required></td>
             </tr>
             <tr>
               <td>
-                <p>手機</p>
+                <p class="item">手機</p>
               </td>
               <td><input type="text" maxlength="11" placeholder="請輸入手機號碼" v-model="orderInfo.phone" /></td>
             </tr>
             <tr>
               <td>
-                <p>信箱</p>
+                <p class="item">信箱</p>
               </td>
               <td><input type="text" name="email" placeholder="例:123@gmail.com" v-model="orderInfo.email" required></td>
             </tr>
             <tr>
               <td>
-                <p>地址</p>
+                <p class="item">地址</p>
               </td>
               <td><input type="text" v-model="orderInfo.address" required></td>
             </tr>
             <tr>
               <td>
-                <p>備註</p>
+                <p class="item">備註</p>
               </td>
               <td><textarea name="" id="" cols="25" rows="4" v-model="orderInfo.note"></textarea></td>
             </tr>
           </table>
+        </div>
+        <h2>付款資訊</h2>
+        <div class="reserve-list">
+          <div class="payment">
+            <div class="card">
+              <img src="@/assets/image/reserve/visa.png" alt="visa" />
+              <img src="@/assets/image/reserve/master.png" alt="master" />
+              <img src="@/assets/image/reserve/ae.png" alt="AE" />
+              <img src="@/assets/image/reserve/apply.png" alt="Apply Pay" />
+            </div>
+          </div>
+
+          <div class="info">
+            <div class="box p">
+              <div class="item">持卡人姓名</div>
+              <input type="text" class="input" />
+            </div>
+            <div class="box p">
+              <div class="item">信用卡號</div>
+              <div class="card-box">
+                <input class="card-input" v-for="(item, index) in creditCardParts" :key="index" type="text"
+                  v-model="creditCardParts[index]" maxlength="4" @input="moveFocus(index)" :ref="`part${index}`"
+                  placeholder="####" />
+              </div>
+            </div>
+            <div class="box p deadline">
+              <div class="first">
+                <div class="item">有效期限</div>
+                <input type="text" class="input" placeholder="MM/YY" v-model="expInput" @input="formatExpirationDate" />
+              </div>
+              <div class="second">
+                <div class="item">安全碼</div>
+                <input type="text" class="input" maxlength="3" v-model="secureCode" />
+              </div>
+            </div>
+          </div>
         </div>
         <ActionBtn @click="confirmPayment" :content="'確認付款'"></ActionBtn>
 
@@ -157,6 +225,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/sass/page/reservePayment.scss';
+
 .shop-payment-wrap {
   width: 100%;
   height: 100%;
@@ -185,7 +255,7 @@ export default {
 
       .shop-payment-box {
         width: 100%;
-        border: 1px solid $dark-gray;
+        border: 3px solid $blue-3;
         border-radius: 40px;
         background-color: #fff;
 
@@ -241,7 +311,7 @@ export default {
   width: 100%;
   height: 40px;
   background-color: $blue-3;
-  border-radius: 50px 50px 0 0;
+  border-radius: 35px 35px 0 0;
 }
 
 .shop-payment-inputs {
@@ -257,4 +327,21 @@ export default {
     vertical-align: middle;
   }
 }
-</style>
+
+.reserve-list {
+  width: 100%;
+  background-color: $blue-3;
+
+  .payment {
+    height: 40px;
+    background-color: $blue-3;
+    margin: 4px;
+  }
+}
+
+input,
+textarea {
+  padding: 4px;
+  border: 2px solid $dark-gray;
+  border-radius: 5px;
+}</style>
