@@ -27,17 +27,19 @@ export default {
   },
 
   methods: {
-    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart']),
+    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart', 'saveCartListToLocalStorage']),
     getDBImage(images) {
       return getDBImage(images)
     },
-    handleColorChange(selectedColor, productId) {
+    handleColorChange(value, productId) {
       const cartStore = useCartStore();
-      cartStore.updateProductOption(productId, selectedColor, 'color');
+      // 确保传递给方法的是选中的颜色值而不是事件对象
+      cartStore.updateProductOption(productId, value, 'color');
     },
-    handleSizeChange(selectedSize, productId) {
+    handleSizeChange(value, productId) {
       const cartStore = useCartStore();
-      cartStore.updateProductOption(productId, selectedSize, 'size');
+      // 确保传递给方法的是选中的尺寸值而不是事件对象
+      cartStore.updateProductOption(productId, value, 'size');
     },
   },
   computed: {
@@ -73,18 +75,20 @@ export default {
               <th>小計</th>
               <th style="border-radius: 0 15px 0 0"></th>
             </tr>
-            <tr v-for="item in cartList.carts" :key="item.product_id">
+            <tr v-for="item in cartList.carts" :key="item.productId">
               <td>
                 <img :src="getDBImage(item.product.images[0])" alt="Product Image" />
               </td>
               <td class="select-content">
-                <p>{{ item.product.title }}</p>
+                <p class="select-product-title">{{ item.product.title }}</p>
                 <div class="select">
-                  <DropDownBtn v-if="item.product.colors && item.product.colors.length > 0" :options="item.product.colors ? [...item.product.colors.split(',')] : ['顏色']"
-                    @change="event => handleColorChange(event, item.product_id)" :default-value="item.selectedColor">
+                  <DropDownBtn v-if="item.product.colors && item.product.colors.length > 0"
+                    :options="item.product.colors ? [...item.product.colors.split(',')] : ['顏色']"
+                    @change="event => handleColorChange(event.target.value, item.productId)" :default-value="item.selectedColor">
                   </DropDownBtn>
-                  <DropDownBtn v-if="item.product.sizes && item.product.sizes.length > 0" :options="item.product.sizes ? [...item.product.sizes.split(',')] : ['尺寸']"
-                    @change="event => handleSizeChange(event, item.product_id)" :default-value="item.selectedSize">
+                  <DropDownBtn v-if="item.product.sizes && item.product.sizes.length > 0"
+                    :options="item.product.sizes ? [...item.product.sizes.split(',')] : ['尺寸']"
+                    @change="event => handleSizeChange(event.target.value, item.productId)" :default-value="item.selectedSize">
                   </DropDownBtn>
                 </div>
               </td>
@@ -101,7 +105,7 @@ export default {
               </td>
               <td>
                 <img class="cart-cancel" src="/src/assets/image/shop/icons/cancel.svg"
-                  @click.prevent="removeCartItem(item.product_id)" alt="cancel" />
+                  @click.prevent="removeCartItem(item.productId)" alt="cancel" />
               </td>
             </tr>
           </tbody>
@@ -211,13 +215,18 @@ img {
 
   .select {
     display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .select-content {
     display: flex;
+    min-width: 300px;
+    justify-content: space-between;
+    gap: 20px;
     margin-top: 6px;
+
+    .select-product-title {
+      text-align: left;
+    }
   }
 }
 
