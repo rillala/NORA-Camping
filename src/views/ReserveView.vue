@@ -223,7 +223,7 @@ export default {
         start: '',
         end: '',
       },
-      calendarAttributes: '',
+      calendarAttributes: [],
       disabledDates: [],
 
       // 資料庫資料
@@ -508,7 +508,7 @@ export default {
           if (this.startDate) {
             this.getSelectedSitesRemain();
           }
-          this.calendarAttributes = this.changeToCalendarAttr(this.remainList);
+          this.changeToCalendarAttr(this.remainList);
         })
         .catch(error => {
           console.error('Error:', error);
@@ -550,7 +550,7 @@ export default {
           }
           const keyAsNumber = parseInt(key, 10); // 将键转换为数字
           // 根据 chosenZone 添加条件判断
-          if (this.chosenZone === 'cat') {
+          if (this.chosenZone == 'cat') {
             return keyAsNumber < 4 ? sum + item[key] : sum;
           } else {
             return keyAsNumber > 3 ? sum + item[key] : sum;
@@ -562,19 +562,21 @@ export default {
 
       // 禁用的日期
       this.disabledDates = roomCounts
-        .filter(item => item.rooms === 0)
+        .filter(item => item.rooms == 0)
         .map(item => item.date);
 
-      // red dot 的顯示日期
+      // red dot 的顯示日期-->剩餘數量為 0-------------這裡邏輯怪怪的, 應該是顯示<3的之類
       const emptySiteDays = roomCounts
-        .filter(item => item.rooms === 0)
+        .filter(item => item.rooms == 0)
         .map(item => ({
           key: 'emptySiteDay',
           dot: 'red',
           dates: item.date,
         }));
+      console.log('這是沒房間的');
+      console.log(emptySiteDays);
 
-      // green dot 的顯示日期
+      // green dot 的顯示日期-->剩餘數量> 10
       const lotSitesDays = roomCounts
         .filter(item => item.rooms > 10)
         .map(item => ({
@@ -582,8 +584,10 @@ export default {
           dot: 'green',
           dates: item.date,
         }));
+      console.log('這是很多房間的');
+      console.log(lotSitesDays);
 
-      return [...emptySiteDays, ...lotSitesDays];
+      this.calendarAttributes = [...emptySiteDays, ...lotSitesDays];
     },
 
     // 剩餘數量 --------------------
