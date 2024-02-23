@@ -19,6 +19,7 @@ export default {
       localStorage.removeItem('cartList');
       // 清除 sessionStorage 的 orderInfo
       sessionStorage.removeItem('orderInfo');
+      window.location.reload();
     }
   },
   computed: {
@@ -63,7 +64,7 @@ export default {
         </div>
         <div class="buy-information">
           <div v-for="item in cartList.carts" :key="item.id" class="between buy-list">
-            <h4>{{ item.product.title }} X {{ item.qty }}</h4>
+            <h4>{{ item.product.title }} {{ `-${item.selectedColor}` }}{{ `-${item.selectedSize}` }} X {{ item.qty }}</h4>
             <p>NT$ {{ item.subtotal }}</p>
           </div>
           <div class="between buy-total">
