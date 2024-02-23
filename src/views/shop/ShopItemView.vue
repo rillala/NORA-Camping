@@ -8,7 +8,6 @@ import loading from '@/components/loading.vue';
 import DropDownBtn from '@/components/button/dropDownBtn.vue';
 import { getDBImage } from '@/assets/js/common';
 
-
 export default {
   components: {
     addMinusBtn,
@@ -17,13 +16,12 @@ export default {
     DropDownBtn
   },
 
-
   data() {
     return {
       selectedQuantity: 0,
-      currentIndex: 0,//還沒用到，如果多張圖片可能用到
-      selectColor: ['顏色', '黑色', '白色', '綠色', '藍色'],
-      selectSize: ['尺寸', 'XS', 'S', 'M', 'L', 'XL'],
+      currentIndex: 0,
+      selectedColor: '', 
+      selectedSize: '',
     };
   },
   created() {
@@ -60,8 +58,8 @@ export default {
     },
     async addIntoCart() {
       const cartStore = useCartStore();
-      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity);
-      alert('商品已加入購物車')
+      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
+      
     },
     async addAndBuy() {
       const cartStore = useCartStore();
@@ -76,38 +74,25 @@ export default {
       // 切換到下一張圖片
       this.currentIndex = (this.currentIndex + 1) % this.responseData.images.length;
     },
-    handleSelection(type) {
 
-      // 未完成，需要將所選擇的size和color放到購物車結帳，在存入資料庫
-      if (type === '黑色') {
-        console.log('黑色')
-      } else if (type === '白色') {
-        console.log('白色');
-      } else if (type === '綠色') {
-        console.log('綠色');
-      } else if (type === '藍色') {
-        console.log('藍色');
-      } else if (type === 'XS') {
-        console.log('XS');
-      } else if (type === 'S') {
-        console.log('S');
-      } else if (type === 'M') {
-        console.log('M');
-      } else if (type === 'L') {
-        console.log('L');
-      } else if (type === 'XL') {
-        console.log('XL');
-      }
-    },
     getDBImage(images) {
       return getDBImage(images)
-    }
+    },
+    updateSelectedColor(e) {
+      if (e && e.target) {
+        this.selectedColor = e.target.value;
+      }
+    },
+    updateSelectedSize(e) {
+      if (e && e.target) {
+        this.selectedSize = e.target.value;
+      }
+    },
   },
 }
 </script>
 
 <template>
-  {{ this.responseData }}
   <main class="shop-item-wrap">
     <div class="shop-item-container">
       <loading v-if="nodata"></loading>
@@ -116,13 +101,16 @@ export default {
         <div class="shop-item-top">
 
           <div class="shop-item-images">
-            <img v-if="responseData.images.length > 1" class="shop-arrow-icon" @click="prevImage"
+            <img v-if="responseData.images && responseData.images.length > 1" class="shop-arrow-icon" @click="prevImage"
               src="/src/assets/image/universe/left-arrow-btn.svg" alt="Previous Image">
             <div class="shop-item-imagesSlider">
-              <img :src="getDBImage(responseData.images[currentIndex])" alt="Product Image" />
+              <img
+                :src="getDBImage(responseData.images && responseData.images.length > 0 ? responseData.images[currentIndex] : '')"
+                alt="Product Image" />
             </div>
-            <img v-if="responseData.images.length > 1" class="shop-arrow-icon" @click="nextImage"
+            <img v-if="responseData.images && responseData.images.length > 1" class="shop-arrow-icon" @click="nextImage"
               src="/src/assets/image/universe/right-arrow-btn.svg" alt="Next Image">
+
           </div>
 
           <div class="shop-item-words">
@@ -130,12 +118,17 @@ export default {
             <h3>NT${{ responseData.price }}</h3>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-select">
-              <DropDownBtn v-if="colorOptions.length > 1" :options="colorOptions" @change="handleSelection" :default-value="'顏色'"></DropDownBtn>
-              <DropDownBtn v-if="sizeOptions.length > 1" :options="sizeOptions" @change="handleSelection" :default-value="'尺寸'"></DropDownBtn>
+              <DropDownBtn v-if="colorOptions.length > 1" :options="colorOptions" @change="updateSelectedColor"
+                :default-value="'顏色'"></DropDownBtn>
+
+              <DropDownBtn v-if="sizeOptions.length > 1" :options="sizeOptions" @change="updateSelectedSize"
+                :default-value="'尺寸'"></DropDownBtn>
+
 
             </div>
             <div class="shop-item-actionBtns">
-              <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
+              <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.product_id)" :content="'加購物車'">
+              </ActionBtn>
               <ActionBtn @click.prevent="addAndBuy" :content="'直接購買'"></ActionBtn>
 
             </div>
@@ -281,5 +274,4 @@ export default {
       padding: 40px;
     }
   }
-}
-</style>
+}</style>

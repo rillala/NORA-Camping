@@ -82,8 +82,8 @@ export default {
               <th>商品</th>
               <th>小計</th>
             </tr>
-            <tr v-for="item in cartList.carts" :key="item.id">
-              <td>{{ item.product.title }}-藍色-XL</td>
+            <tr v-for="item in cartList.carts" :key="item.productId">
+              <td>{{ item.product.title }}-{{ item.selectedColor }}-{{ item.selectedSize }}-×{{ item.qty }}</td>
               <td>NT${{ item.subtotal }}</td>
             </tr>
             <tr class="shop-payment-aggregately">
