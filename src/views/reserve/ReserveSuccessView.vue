@@ -104,7 +104,7 @@ export default {
         .post('addEquipmentRental.php', this.equipmentData)
         .then(response => {
           if (!response.data.error && response.data.msg) {
-            alert(response.data.msg);
+            console.log(response.data.msg);
           } else {
             console.error('No message received', response.data);
           }
@@ -119,7 +119,7 @@ export default {
         .post('addSiteReserveDetail.php', this.campsiteData)
         .then(response => {
           if (!response.data.error && response.data.msg) {
-            alert(response.data.msg);
+            console.log(response.data.msg);
           } else {
             console.error('No message received', response.data);
           }

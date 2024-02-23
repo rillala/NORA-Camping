@@ -1,6 +1,8 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
+import apiInstance from '@/plugins/auth';
+
 import { RouterLink, RouterView } from 'vue-router';
 import progressBar from '@/components/reserve/bannerStep.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
@@ -17,831 +19,7 @@ export default {
   },
   data() {
     return {
-      screen: null,
-      range: {
-        start: '',
-        end: '',
-      },
-      calendarAttributes: '',
-      remainRoomList: [
-        {
-          date: '2024-02-01',
-          rooms: [
-            {
-              id: 1,
-              count: 4,
-            },
-            {
-              id: 2,
-              count: 1,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 3,
-            },
-            {
-              id: 5,
-              count: 1,
-            },
-            {
-              id: 6,
-              count: 5,
-            },
-          ],
-        },
-        {
-          date: '2024-02-02',
-          rooms: [
-            {
-              id: 1,
-              count: 0,
-            },
-            {
-              id: 2,
-              count: 0,
-            },
-            {
-              id: 3,
-              count: 0,
-            },
-            {
-              id: 4,
-              count: 0,
-            },
-            {
-              id: 5,
-              count: 0,
-            },
-            {
-              id: 6,
-              count: 0,
-            },
-          ],
-        },
-        {
-          date: '2024-02-03',
-          rooms: [
-            {
-              id: 1,
-              count: 5,
-            },
-            {
-              id: 2,
-              count: 4,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 3,
-            },
-            {
-              id: 5,
-              count: 2,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-04',
-          rooms: [
-            {
-              id: 1,
-              count: 1,
-            },
-            {
-              id: 2,
-              count: 3,
-            },
-            {
-              id: 3,
-              count: 1,
-            },
-            {
-              id: 4,
-              count: 2,
-            },
-            {
-              id: 5,
-              count: 1,
-            },
-            {
-              id: 6,
-              count: 2,
-            },
-          ],
-        },
-        {
-          date: '2024-02-05',
-          rooms: [
-            {
-              id: 1,
-              count: 4,
-            },
-            {
-              id: 2,
-              count: 4,
-            },
-            {
-              id: 3,
-              count: 3,
-            },
-            {
-              id: 4,
-              count: 2,
-            },
-            {
-              id: 5,
-              count: 3,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-06',
-          rooms: [
-            {
-              id: 1,
-              count: 0,
-            },
-            {
-              id: 2,
-              count: 0,
-            },
-            {
-              id: 3,
-              count: 0,
-            },
-            {
-              id: 4,
-              count: 0,
-            },
-            {
-              id: 5,
-              count: 0,
-            },
-            {
-              id: 6,
-              count: 0,
-            },
-          ],
-        },
-        {
-          date: '2024-02-07',
-          rooms: [
-            {
-              id: 1,
-              count: 1,
-            },
-            {
-              id: 2,
-              count: 3,
-            },
-            {
-              id: 3,
-              count: 4,
-            },
-            {
-              id: 4,
-              count: 1,
-            },
-            {
-              id: 5,
-              count: 1,
-            },
-            {
-              id: 6,
-              count: 5,
-            },
-          ],
-        },
-        {
-          date: '2024-02-08',
-          rooms: [
-            {
-              id: 1,
-              count: 4,
-            },
-            {
-              id: 2,
-              count: 2,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 3,
-            },
-            {
-              id: 5,
-              count: 2,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-09',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 3,
-            },
-            {
-              id: 3,
-              count: 4,
-            },
-            {
-              id: 4,
-              count: 4,
-            },
-            {
-              id: 5,
-              count: 3,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-10',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 2,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 3,
-            },
-            {
-              id: 5,
-              count: 2,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-11',
-          rooms: [
-            {
-              id: 1,
-              count: 4,
-            },
-            {
-              id: 2,
-              count: 3,
-            },
-            {
-              id: 3,
-              count: 4,
-            },
-            {
-              id: 4,
-              count: 1,
-            },
-            {
-              id: 5,
-              count: 3,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-12',
-          rooms: [
-            {
-              id: 1,
-              count: 0,
-            },
-            {
-              id: 2,
-              count: 0,
-            },
-            {
-              id: 3,
-              count: 0,
-            },
-            {
-              id: 4,
-              count: 0,
-            },
-            {
-              id: 5,
-              count: 0,
-            },
-            {
-              id: 6,
-              count: 0,
-            },
-          ],
-        },
-        {
-          date: '2024-02-13',
-          rooms: [
-            {
-              id: 1,
-              count: 5,
-            },
-            {
-              id: 2,
-              count: 3,
-            },
-            {
-              id: 3,
-              count: 4,
-            },
-            {
-              id: 4,
-              count: 1,
-            },
-            {
-              id: 5,
-              count: 4,
-            },
-            {
-              id: 6,
-              count: 3,
-            },
-          ],
-        },
-        {
-          date: '2024-02-14',
-          rooms: [
-            {
-              id: 1,
-              count: 1,
-            },
-            {
-              id: 2,
-              count: 1,
-            },
-            {
-              id: 3,
-              count: 1,
-            },
-            {
-              id: 4,
-              count: 1,
-            },
-            {
-              id: 5,
-              count: 0,
-            },
-            {
-              id: 6,
-              count: 0,
-            },
-          ],
-        },
-        {
-          date: '2024-02-15',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 0,
-            },
-            {
-              id: 3,
-              count: 0,
-            },
-            {
-              id: 4,
-              count: 0,
-            },
-            {
-              id: 5,
-              count: 0,
-            },
-            {
-              id: 6,
-              count: 0,
-            },
-          ],
-        },
-        {
-          date: '2024-02-16',
-          rooms: [
-            {
-              id: 1,
-              count: 4,
-            },
-            {
-              id: 2,
-              count: 5,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 3,
-            },
-            {
-              id: 5,
-              count: 4,
-            },
-            {
-              id: 6,
-              count: 5,
-            },
-          ],
-        },
-        {
-          date: '2024-02-17',
-          rooms: [
-            {
-              id: 1,
-              count: 5,
-            },
-            {
-              id: 2,
-              count: 2,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 5,
-            },
-            {
-              id: 5,
-              count: 4,
-            },
-            {
-              id: 6,
-              count: 4,
-            },
-          ],
-        },
-        {
-          date: '2024-02-18',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 2,
-            },
-            {
-              id: 3,
-              count: 5,
-            },
-            {
-              id: 4,
-              count: 2,
-            },
-            {
-              id: 5,
-              count: 3,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-19',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 5,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 2,
-            },
-            {
-              id: 5,
-              count: 2,
-            },
-            {
-              id: 6,
-              count: 2,
-            },
-          ],
-        },
-        {
-          date: '2024-02-20',
-          rooms: [
-            {
-              id: 1,
-              count: 3,
-            },
-            {
-              id: 2,
-              count: 2,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 1,
-            },
-            {
-              id: 5,
-              count: 5,
-            },
-            {
-              id: 6,
-              count: 4,
-            },
-          ],
-        },
-        {
-          date: '2024-02-21',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 1,
-            },
-            {
-              id: 3,
-              count: 1,
-            },
-            {
-              id: 4,
-              count: 3,
-            },
-            {
-              id: 5,
-              count: 1,
-            },
-            {
-              id: 6,
-              count: 2,
-            },
-          ],
-        },
-        {
-          date: '2024-02-22',
-          rooms: [
-            {
-              id: 1,
-              count: 0,
-            },
-            {
-              id: 2,
-              count: 0,
-            },
-            {
-              id: 3,
-              count: 0,
-            },
-            {
-              id: 4,
-              count: 0,
-            },
-            {
-              id: 5,
-              count: 0,
-            },
-            {
-              id: 6,
-              count: 0,
-            },
-          ],
-        },
-        {
-          date: '2024-02-23',
-          rooms: [
-            {
-              id: 1,
-              count: 3,
-            },
-            {
-              id: 2,
-              count: 4,
-            },
-            {
-              id: 3,
-              count: 3,
-            },
-            {
-              id: 4,
-              count: 2,
-            },
-            {
-              id: 5,
-              count: 1,
-            },
-            {
-              id: 6,
-              count: 5,
-            },
-          ],
-        },
-        {
-          date: '2024-02-24',
-          rooms: [
-            {
-              id: 1,
-              count: 5,
-            },
-            {
-              id: 2,
-              count: 1,
-            },
-            {
-              id: 3,
-              count: 2,
-            },
-            {
-              id: 4,
-              count: 5,
-            },
-            {
-              id: 5,
-              count: 2,
-            },
-            {
-              id: 6,
-              count: 3,
-            },
-          ],
-        },
-        {
-          date: '2024-02-25',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 1,
-            },
-            {
-              id: 3,
-              count: 1,
-            },
-            {
-              id: 4,
-              count: 0,
-            },
-            {
-              id: 5,
-              count: 0,
-            },
-            {
-              id: 6,
-              count: 0,
-            },
-          ],
-        },
-        {
-          date: '2024-02-26',
-          rooms: [
-            {
-              id: 1,
-              count: 1,
-            },
-            {
-              id: 2,
-              count: 1,
-            },
-            {
-              id: 3,
-              count: 1,
-            },
-            {
-              id: 4,
-              count: 1,
-            },
-            {
-              id: 5,
-              count: 1,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-27',
-          rooms: [
-            {
-              id: 1,
-              count: 2,
-            },
-            {
-              id: 2,
-              count: 4,
-            },
-            {
-              id: 3,
-              count: 3,
-            },
-            {
-              id: 4,
-              count: 1,
-            },
-            {
-              id: 5,
-              count: 5,
-            },
-            {
-              id: 6,
-              count: 1,
-            },
-          ],
-        },
-        {
-          date: '2024-02-28',
-          rooms: [
-            {
-              id: 1,
-              count: 1,
-            },
-            {
-              id: 2,
-              count: 2,
-            },
-            {
-              id: 3,
-              count: 5,
-            },
-            {
-              id: 4,
-              count: 2,
-            },
-            {
-              id: 5,
-              count: 5,
-            },
-            {
-              id: 6,
-              count: 2,
-            },
-          ],
-        },
-      ],
-      disabledDates: [],
-      minSiteCounts: [],
-      // 保留兩個變數用來擷取入住和退房日期
-      startDate: '',
-      endDate: '',
+      // 頁面基本資訊
       timeRules: [
         {
           title: '一般平日、假日',
@@ -864,11 +42,16 @@ export default {
           line2: '16:00-20:00',
         },
       ],
+      leftPosition: 0, // 追蹤.time-container的left值
+      selectedSpan: 1, // 追蹤哪個span被選中
       selectSiteList: [],
+      chosenZone: 'cat',
+      hasDiscount: false,
       catSiteList: [
         {
           id: 1,
           name: '草地區',
+          price: 0,
           icon: 'grass.svg',
           picList: [
             'campsite-cat-grass-1.png',
@@ -878,7 +61,6 @@ export default {
           picShow: 0,
           intro:
             '貓區的草地區提供了一片親近自然的環境，讓貓咪能在柔軟的草地上悠閒地曬太陽或玩耍。這個開放區域適合帶來野餐墊和帳篷，享受戶外的寧靜時光。',
-          price: 1000,
           warning: [
             '保持草地清潔：請勿亂丟垃圾，使用專門的垃圾回收設施。',
             '寵物監控：確保您的貓咪在草地區不會遠離您的視線範圍，並避免打擾其他露營者。',
@@ -896,6 +78,7 @@ export default {
         {
           id: 2,
           name: '棧板區',
+          price: 0,
           icon: 'pallet.svg',
           picList: [
             'campsite-cat-pallet-1.png',
@@ -905,7 +88,6 @@ export default {
           picShow: 0,
           intro:
             '棧板區為愛貓的露營者提供了一個堅固的基座，適合設置帳篷和露營家具。這個地面硬化的區域適合在天氣多變的季節使用，確保露營裝備乾燥和舒適。',
-          price: 1200,
           warning: [
             '帳篷安裝：請按照指示正確地在棧板上安裝帳篷，避免損壞棧板結構。',
             '清潔維護：保持棧板區域乾淨，使用後清理任何垃圾或雜物。',
@@ -923,6 +105,7 @@ export default {
         {
           id: 3,
           name: '雨棚區',
+          price: 0,
           icon: 'shed.svg',
           picList: [
             'campsite-cat-shed-1.png',
@@ -932,7 +115,6 @@ export default {
           picShow: 0,
           intro:
             '設有半遮蔽的雨棚，為貓咪和主人提供了一個避雨的安樂窩。這裡的環境更加安靜，適合閱讀或進行靜態活動，同時也保護了貓咪免受強烈日照和雨水的直接影響。',
-          price: 1500,
           warning: [
             '噪音控制：由於雨棚區較為密閉，請控制音量，以免影響他人休息。',
             '設備安置：請確保所有露營裝備、包括帳篷，都安置在指定的區域內。',
@@ -951,6 +133,7 @@ export default {
         {
           id: 4,
           name: '草地區',
+          price: 0,
           icon: 'grass.svg',
           picList: [
             'campsite-dog-grass-1.png',
@@ -960,7 +143,6 @@ export default {
           picShow: 0,
           intro:
             '狗區的草地區是為活潑的狗狗量身打造的，提供了充裕的跑跳空間。這裡的草地適合玩耍和運動，並且足夠的開放空間讓狗狗能自由奔跑，是遊戲和社交的理想場所。',
-          price: 1000,
           warning: [
             '維持清潔： 請確保草地區域保持清潔，及時清理您的狗狗排泄物，並使用指定的垃圾回收設施。',
             '寵物看管： 確保您的狗狗在草地區不會遠離您的視線範圍，並防止其進入禁止區域或打擾其他露營者。',
@@ -977,6 +159,7 @@ export default {
         },
         {
           id: 5,
+          price: 0,
           name: '棧板區',
           icon: 'pallet.svg',
           picList: [
@@ -987,7 +170,6 @@ export default {
           picShow: 0,
           intro:
             '棧板區給予露營者一個結實的地面，防止雨後泥濘的不便。該區域不僅保證了帳篷和裝備的穩定性，也為帶著狗狗的露營者提供了清潔和容易維護的環境。',
-          price: 1200,
           warning: [
             '帳篷安裝： 在棧板上安裝帳篷時，請遵循正確的指引，以保持棧板的完整性和安全性。',
             '整潔責任： 使用後，請清理您的區域，包括任何寵物排泄物或垃圾，以保持營地的清潔。',
@@ -1004,6 +186,7 @@ export default {
         },
         {
           id: 6,
+          price: 0,
           name: '雨棚區',
           icon: 'shed.svg',
           picList: [
@@ -1014,7 +197,6 @@ export default {
           picShow: 0,
           intro:
             '雨棚區提供額外的遮蔽，適合狗狗和露營者在陰涼處休息。這裡的環境適合狗狗在熱日或小雨中保持涼爽，也為主人提供了一個舒適的社交和烹飪空間。',
-          price: 1500,
           warning: [
             '噪音管理： 雨棚區可能會集中較多人和狗狗，請控制噪音，特別是在夜間，以免影響他人休息。',
             '狗狗安全： 在雨棚下，確保您的狗狗受到妥善的看護，避免它們走失或製造混亂。',
@@ -1030,11 +212,26 @@ export default {
           count: 0,
         },
       ],
-      chosenZone: 'cat',
-      leftPosition: 0, // 追蹤.time-container的left值
-      selectedSpan: 1, // 追蹤哪個span被選中
-      hasDiscount: false,
-      selectSiteSum: 0,
+
+      // 保留兩個變數用來擷取入住和退房日期
+      startDate: '',
+      endDate: '',
+
+      // VCalender 變數
+      screen: null,
+      range: {
+        start: '',
+        end: '',
+      },
+      calendarAttributes: '',
+      disabledDates: [],
+
+      // 資料庫資料
+      remainList: [],
+      siteTypeList: [],
+
+      // 房間剩餘數量
+      minRemains: {},
     };
   },
   created() {
@@ -1046,9 +243,11 @@ export default {
       lg: '1024px',
     });
     this.screen = mapCurrent({ lg: 2 }, 1);
-    // 日曆變數
 
-    this.calendarAttributes = this.changeToCalendarAttr(this.remainRoomList);
+    // 資料庫:生成及抓取剩餘數量
+    this.generateRemainDb();
+    // 抓原始資料
+    this.getSiteType();
   },
   mounted() {
     // 如果有儲存過選擇的日期和夜衝, 則讀取值
@@ -1143,7 +342,7 @@ export default {
     endDate(newVal) {
       sessionStorage.setItem('endDate', newVal);
       this.updateDuration();
-      this.filterRemainSite();
+      this.getSelectedSitesRemain();
     },
     hasDiscount(newVal) {
       sessionStorage.setItem('hasDiscount', newVal);
@@ -1158,78 +357,7 @@ export default {
     },
   },
   methods: {
-    filterRemainSite() {
-      const start = new Date(this.startDate);
-      const end = new Date(this.endDate);
-      end.setDate(end.getDate() - 1); // 将结束日期减去一天
-
-      // 筛选出在指定日期范围内的数据
-      const filteredData = this.remainRoomList.filter(item => {
-        const itemDate = new Date(item.date);
-        return itemDate >= start && itemDate <= end;
-      });
-
-      // 对每个 id 找到最小的 count 值
-      const minCounts = Array.from({ length: 6 }, (_, i) => {
-        const id = i + 1;
-        const minCount = Math.min(
-          ...filteredData.map(item => {
-            const room = item.rooms.find(room => room.id === id);
-            return room ? room.count : Infinity;
-          }),
-        );
-
-        // 這邊預設沒有設定的話可以預約十個營位
-        return { id, minCount: minCount === Infinity ? 10 : minCount };
-      });
-
-      this.minSiteCounts = minCounts;
-      this.updateSelectListRemain();
-    },
-    updateSelectListRemain() {
-      // 遍历 selectSiteList 数组
-      this.selectSiteList.forEach(site => {
-        // 在 minSiteCounts 中找到相同 id 的元素
-        const minSite = this.minSiteCounts.find(min => min.id === site.id);
-
-        // 如果找到了，为 selectSiteList 中的元素新增 remain 属性
-        if (minSite) {
-          site.remain = minSite.minCount;
-        }
-      });
-    },
-    changeToCalendarAttr(roomData) {
-      // 計算每個日期的營位總數, 另外 map 出一個 roomCounts array
-      const roomCounts = roomData.map(item => ({
-        date: item.date,
-        rooms: item.rooms.reduce((sum, room) => sum + room.count, 0),
-      }));
-
-      // 禁用的日期
-      this.disabledDates = roomCounts
-        .filter(item => item.rooms === 0)
-        .map(item => item.date);
-
-      // red dot 的顯示日期
-      const emptySiteDays = roomCounts
-        .filter(item => item.rooms === 0)
-        .map(item => ({
-          key: 'emptySiteDay',
-          dot: 'red',
-          dates: item.date,
-        }));
-
-      // green dot 的顯示日期
-      const lotSitesDays = roomCounts
-        .filter(item => item.rooms > 10)
-        .map(item => ({
-          key: 'lotSitesDay',
-          dot: 'green',
-          dates: item.date,
-        }));
-
-      return [...emptySiteDays, ...lotSitesDays];
-    },
+    // 頁面基本 func--------------------
     formatDate(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從0開始，所以加1
@@ -1240,6 +368,16 @@ export default {
       if (this.stayDuration > 0) {
         sessionStorage.setItem('stayDuration', this.stayDuration.toString());
       }
+    },
+    formatPrice(price) {
+      return price.toLocaleString('en-US');
+    },
+    getImageUrl(paths) {
+      return new URL(`../assets/image/reserve/camp/${paths}`, import.meta.url)
+        .href;
+    },
+    getIcon(paths) {
+      return new URL(`../assets/image/universe/${paths}`, import.meta.url).href;
     },
     goToNextStep(nextPath) {
       if (this.siteSum == 0 || this.stayDuration == 0) {
@@ -1268,61 +406,7 @@ export default {
       }
     },
 
-    updateSiteChose() {
-      // 更新或建立 siteChoseList 和 chosenZone
-      let updatedSiteChoseString = this.selectSiteList
-        .filter(item => item.count !== 0)
-        .map(item => item.id + ':' + item.count)
-        .join(',');
-      sessionStorage.setItem('selectedSites', updatedSiteChoseString);
-
-      sessionStorage.setItem('chosenZone', this.chosenZone);
-    },
-    formatPrice(price) {
-      return price.toLocaleString('en-US');
-    },
-    getImageUrl(paths) {
-      return new URL(`../assets/image/reserve/camp/${paths}`, import.meta.url)
-        .href;
-    },
-    getIcon(paths) {
-      return new URL(`../assets/image/universe/${paths}`, import.meta.url).href;
-    },
-    updateChosenzone(zone) {
-      const catButton = document.getElementById('cat-zone-btn');
-      const dogButton = document.getElementById('dog-zone-btn');
-      if (zone == 'cat') {
-        dogButton.classList.remove('chosen-zone');
-        catButton.classList.add('chosen-zone');
-      } else {
-        catButton.classList.remove('chosen-zone');
-        dogButton.classList.add('chosen-zone');
-      }
-    },
-    minus(siteName) {
-      const siteType = this.selectSiteList.find(p => p.name === siteName);
-      if (siteType.count > 0) {
-        siteType.count--;
-      }
-    },
-    plus(siteName) {
-      const siteType = this.selectSiteList.find(p => p.name === siteName);
-      if (siteType.count < siteType.remain) {
-        siteType.count++;
-      } else {
-        alert('抱歉，剩餘營位數量不足！');
-      }
-    },
-    choseCatZone() {
-      this.selectSiteList = this.catSiteList;
-      this.updateChosenzone('cat');
-      this.chosenZone = 'cat';
-    },
-    choseDogZone() {
-      this.selectSiteList = this.dogSiteList;
-      this.updateChosenzone('dog');
-      this.chosenZone = 'dog';
-    },
+    // 時間規則的動畫和點擊--------------------
     updatePosition(index) {
       // 根據點擊的span調整left值
       this.leftPosition = index * -300;
@@ -1360,6 +444,191 @@ export default {
       } else {
         this.selectSiteList[index].picShow++;
       }
+    },
+
+    // 營區選擇相關--------------------
+    updateSiteChose() {
+      // 更新或建立 siteChoseList 和 chosenZone
+      let updatedSiteChoseString = this.selectSiteList
+        .filter(item => item.count !== 0)
+        .map(item => item.id + ':' + item.count)
+        .join(',');
+      sessionStorage.setItem('selectedSites', updatedSiteChoseString);
+
+      sessionStorage.setItem('chosenZone', this.chosenZone);
+    },
+    updateChosenzone(zone) {
+      const catButton = document.getElementById('cat-zone-btn');
+      const dogButton = document.getElementById('dog-zone-btn');
+      if (zone == 'cat') {
+        dogButton.classList.remove('chosen-zone');
+        catButton.classList.add('chosen-zone');
+      } else {
+        catButton.classList.remove('chosen-zone');
+        dogButton.classList.add('chosen-zone');
+      }
+    },
+    choseCatZone() {
+      this.selectSiteList = this.catSiteList;
+      this.updateChosenzone('cat');
+      this.chosenZone = 'cat';
+      this.changeToCalendarAttr(this.remainList);
+    },
+    choseDogZone() {
+      this.selectSiteList = this.dogSiteList;
+      this.updateChosenzone('dog');
+      this.chosenZone = 'dog';
+      this.changeToCalendarAttr(this.remainList);
+    },
+
+    // 營位數量增減按鈕相關--------------------
+    minus(siteName) {
+      const siteType = this.selectSiteList.find(p => p.name === siteName);
+      if (siteType.count > 0) {
+        siteType.count--;
+      }
+    },
+    plus(siteName) {
+      const siteType = this.selectSiteList.find(p => p.name === siteName);
+      if (siteType.count < siteType.remain) {
+        siteType.count++;
+      } else {
+        alert('抱歉，剩餘營位數量不足！');
+      }
+    },
+
+    // 串 PHP --------------------
+    generateRemainDb() {
+      //去資料庫更新1.剩餘數量表 2.營位種類表,並抓取 剩餘數量表資訊
+      apiInstance
+        .get('generateRemainSite.php')
+        .then(response => {
+          // console.log(response.data.all);
+          this.remainList = response.data.all;
+          if (this.startDate) {
+            this.getSelectedSitesRemain();
+          }
+          this.calendarAttributes = this.changeToCalendarAttr(this.remainList);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    },
+    getSiteType() {
+      apiInstance
+        .get('getSiteType.php')
+        .then(response => {
+          this.siteTypeList = response.data.all;
+          this.getTypePrice(this.catSiteList);
+          this.getTypePrice(this.dogSiteList);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    },
+    getTypePrice(list) {
+      list.forEach(catSiteItem => {
+        const matchingSiteTypeItem = this.siteTypeList.find(
+          siteTypeItem => siteTypeItem.type_id == catSiteItem.id,
+        );
+
+        if (matchingSiteTypeItem) {
+          catSiteItem.price = matchingSiteTypeItem.price;
+        }
+      });
+    },
+
+    // VCalender 相關 --------------------
+    changeToCalendarAttr(remainData) {
+      // 計算每個日期的房間總數
+      const roomCounts = remainData.map(item => {
+        const date = item.date;
+        // 根据 chosenZone 计算当日所有房型的剩余总数
+        const rooms = Object.keys(item).reduce((sum, key) => {
+          if (key === 'date') {
+            return sum; // 如果是日期键，跳过
+          }
+          const keyAsNumber = parseInt(key, 10); // 将键转换为数字
+          // 根据 chosenZone 添加条件判断
+          if (this.chosenZone === 'cat') {
+            return keyAsNumber < 4 ? sum + item[key] : sum;
+          } else {
+            return keyAsNumber > 3 ? sum + item[key] : sum;
+          }
+        }, 0);
+        return { date, rooms };
+      });
+      // console.log(roomCounts);
+
+      // 禁用的日期
+      this.disabledDates = roomCounts
+        .filter(item => item.rooms === 0)
+        .map(item => item.date);
+
+      // red dot 的顯示日期
+      const emptySiteDays = roomCounts
+        .filter(item => item.rooms === 0)
+        .map(item => ({
+          key: 'emptySiteDay',
+          dot: 'red',
+          dates: item.date,
+        }));
+
+      // green dot 的顯示日期
+      const lotSitesDays = roomCounts
+        .filter(item => item.rooms > 10)
+        .map(item => ({
+          key: 'lotSitesDay',
+          dot: 'green',
+          dates: item.date,
+        }));
+
+      return [...emptySiteDays, ...lotSitesDays];
+    },
+
+    // 剩餘數量 --------------------
+    getSelectedSitesRemain() {
+      const start = new Date(this.startDate);
+      const end = new Date(this.endDate);
+      end.setDate(end.getDate() - 1);
+
+      const filteredRemains = this.remainList.filter(item => {
+        const itemDate = new Date(item.date);
+        return itemDate >= start && itemDate <= end;
+      });
+
+      // console.log(filteredRemains);
+
+      this.minRemains = this.getmin(filteredRemains);
+      // console.log(this.minRemains);
+
+      this.updateSiteListRemains();
+    },
+
+    getmin(array) {
+      return array.reduce((minValues, currentItem) => {
+        Object.keys(currentItem).forEach(key => {
+          // 忽略 'date' 鍵，只處理數字鍵
+          if (key !== 'date') {
+            const value = currentItem[key];
+            // 如果當前鍵在 minValues 中尚未設置，或當前項目的值小於 minValues 中的值，則更新
+            if (!minValues[key] || value < minValues[key]) {
+              minValues[key] = value;
+            }
+          }
+        });
+        return minValues;
+      }, {}); // 初始化 minValues 為空物件
+    },
+
+    updateSiteListRemains() {
+      this.selectSiteList.forEach(item => {
+        const itemId = item.id.toString(); // 確保id是字符串格式，以匹配minRemains的鍵
+        if (this.minRemains.hasOwnProperty(itemId)) {
+          // 如果minRemains中有匹配的鍵，則新增remain鍵到item物件中
+          item.remain = this.minRemains[itemId];
+        }
+      });
     },
   },
 };
@@ -1475,7 +744,7 @@ export default {
               <div class="minus-icon bg-dark"></div>
             </button>
             <input
-              class="dark "
+              class="dark"
               type="number"
               min="0"
               readonly
