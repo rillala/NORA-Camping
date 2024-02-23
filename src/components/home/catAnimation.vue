@@ -6,12 +6,12 @@ export default {
 
 <template>
     <div class="Cat-animation">
-        <img class="catBody" src="@/assets/image/homeView/animation/CAT/catBody.png">
-        <img class="catLeg1" src="@/assets/image/homeView/animation/CAT/catLeg1.png">
-        <img class="catLeg2" src="@/assets/image/homeView/animation/CAT/catLeg2.png">
-        <img class="catLeg3" src="@/assets/image/homeView/animation/CAT/catLeg3.png">
-        <img class="catLeg4" src="@/assets/image/homeView/animation/CAT/catLeg4.png">
-        <img class="catTail" src="@/assets/image/homeView/animation/CAT/catTail.png">
+        <img class="catBody" src="@/assets/image/homeView/animation/CAT/catBody.png" draggable="false">
+        <img class="catLeg1" src="@/assets/image/homeView/animation/CAT/catLeg1.png" draggable="false">
+        <img class="catLeg2" src="@/assets/image/homeView/animation/CAT/catLeg2.png" draggable="false">
+        <img class="catLeg3" src="@/assets/image/homeView/animation/CAT/catLeg3.png" draggable="false">
+        <img class="catLeg4" src="@/assets/image/homeView/animation/CAT/catLeg4.png" draggable="false">
+        <img class="catTail" src="@/assets/image/homeView/animation/CAT/catTail.png" draggable="false">
 
     </div>
 </template>

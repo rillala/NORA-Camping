@@ -3,6 +3,7 @@
 import axios from 'axios';
 import actionBtn from '@/components/button/actionBtn.vue';
 import viewMoreBtn from '@/components/button/viewMoreBtn.vue';
+import bannerAnimation from '@/components/home/bannerAnimation.vue';
 import dogAnimation from '@/components/home/dogAnimation.vue';
 import catAnimation from '@/components/home/catAnimation.vue';
 import newsArticle from '@/components/home/newsArticle.vue';
@@ -14,6 +15,7 @@ export default {
   components: {
     actionBtn,
     viewMoreBtn,
+    bannerAnimation,
     dogAnimation,
     catAnimation,
     newsArticle,
@@ -21,10 +23,6 @@ export default {
   },
   data() {
     return {
-      //banner動畫
-      bannerMori: ['riverBg.png', 'riverBg.png'],
-      bannerYama: ['mountainBg.png', 'mountainBg.png'],
-
       //天氣和溫度
       weather: '',
       airTemperature: '',
@@ -105,10 +103,8 @@ export default {
     };
   },
   mounted() {
-    this.Catin();
-    this.Dogin();
-    this.moriSlide();
-    this.yamaSlide();
+    // this.Catin();
+    // this.Dogin();
     // window.addEventListener('scroll', this.handleScroll);
     this.getWeather();
   },
@@ -118,13 +114,7 @@ export default {
     },
   },
   methods: {
-    //banner的動畫
-    getBannerImageUrl(paths) {
-      return new URL(
-        `../assets/image/homeView/animation/${paths}`,
-        import.meta.url,
-      ).href;
-    },
+    //貓狗的動畫
     Catin() {
       // 取得 catAnimation 組件的 DOM 元素
       const catElement = this.$refs.cat.$el;
@@ -141,51 +131,6 @@ export default {
         x: '100%',
         duration: 1.8,
       });
-    },
-    moriSlide() {
-      gsap.fromTo(
-        this.$refs.moriSlider,
-        { x: '-100%' },
-        {
-          x: '0%',
-          duration: 25,
-          ease: 'linear', //線性
-          repeat: -1, //無限播放
-        },
-      ),
-        gsap.fromTo(
-          this.$refs.moriSlider,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 2,
-          },
-        );
-    },
-    yamaSlide() {
-      gsap.fromTo(
-        this.$refs.yamaSlider,
-        { x: '-100%' },
-        {
-          x: '0%',
-          duration: 30,
-          ease: 'linear',
-          repeat: -1,
-        },
-      ),
-        gsap.fromTo(
-          this.$refs.moriSlider,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 2,
-          },
-        );
-    },
-
-    //捲動偵測，想改用AOS做捲動的特效
-    getScrollHeight() {
-      return window.scrollY;
     },
 
     //串接氣象API取得資料
@@ -276,17 +221,11 @@ export default {
         <actionBtn class="Reserve-Now" :content="'立即預約'" />
       </router-link>
     </div>
-    <catAnimation class="Cat" ref="cat" />
-    <dogAnimation class="Dog" ref="dog" />
+    <!-- <catAnimation class="Cat" ref="cat" />
+    <dogAnimation class="Dog" ref="dog" /> -->
     <div class="Banner-background bg-blue-1">
-      <div class="mori-slider">
-        <img v-for="mori in bannerMori" :src="getBannerImageUrl(mori)" alt="Banner背景森林" ref="moriSlider" />
-      </div>
-      <div class="yama-slider">
-        <img v-for="yama in bannerYama" :src="getBannerImageUrl(yama)" alt="Banner背景山" ref="yamaSlider" />
-      </div>
+      <bannerAnimation />
     </div>
-    <div class="Banner-ground"></div>
   </section>
 
   <section class="Knowing-nora" ref="knowingNora">
