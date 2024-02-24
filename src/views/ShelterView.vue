@@ -127,17 +127,6 @@ export default {
           src="/src/assets/image/shelter/yellow_heart.svg"
           alt="黃色愛心icon"
         />
-
-        <img
-          class="line-1"
-          src="/src/assets/image/shelter/line_1.svg"
-          alt="線條一"
-        />
-        <img
-          class="line-2"
-          src="/src/assets/image/shelter/line_2.svg"
-          alt="線條二"
-        />
       </div>
 
       <!-- 不再流浪區塊 -->
@@ -192,24 +181,16 @@ export default {
 
     <div class="shelter-idea-bg">
       <div class="shelter-idea">
-        <img
-          class="sign_board"
-          src="/src/assets/image/shelter/sign_board.svg"
-          alt="我們的理念標題招牌圖片"
-        />
-        <img
-          class="idea_paw"
-          src="/src/assets/image/shelter/idea_paw.svg"
-          alt="腳印icon"
-        />
-        <h4 class="shelter-idea-title">我們的理念</h4>
+          <h4 class="shelter-idea-title">我們的理念</h4>
+          <img
+            class="idea_paw"
+            src="/src/assets/image/shelter/idea_paw.svg"
+            alt="腳印icon"
+          />
       </div>
 
       <div class="shelter-idea-dog">
-        <img
-          src="/src/assets/image/shelter/big_dog.png"
-          alt="我們的理念狗狗大圖"
-        />
+        <img src="/src/assets/image/shelter/big_dog.png" alt="我們的理念狗狗大圖">
         <p class="shelter-idea-dog-word">
           流浪的貓狗日趨增多，<br />
           野良希望能為流浪貓狗盡一份心力！<br />
@@ -243,139 +224,80 @@ export default {
     <!-- 領養流程區塊 -->
     <div class="shelter-adopt-bg">
       <div class="shelter-adopt">
-        <img
-          class="black-cat"
-          src="/src/assets/image/shelter/blackcat.svg"
-          alt="黑貓icon"
-        />
-        <img
-          class="sign_board"
-          src="/src/assets/image/shelter/sign_board_r.svg"
-          alt="領養流程標題招牌圖片"
-        />
         <div id="nora-adopt"></div>
         <h4 class="shelter-adopt-title">領養流程</h4>
+        <img
+            class="idea_paw"
+            src="/src/assets/image/shelter/idea_paw.svg"
+            alt="腳印icon"
+          />
       </div>
 
       <div class="adopt-cloud-dog">
         <div class="adopt-cloud">
-          <p class="adopt-cloud-words">謝謝你，選擇了我。</p>
-          <img
-            class="white_cloud"
-            src="/src/assets/image/shelter/white_cloud.svg"
-            alt="白色雲朵"
-          />
-        </div>
         <img
           class="hand-dog"
           src="/src/assets/image/shelter/hand_dog.png"
           alt="舉手狗狗圖片"
         />
-        <img
-          class="line3"
-          src="/src/assets/image/shelter/line3.svg"
-          alt="線條三"
-        />
+        <p class="adopt-cloud-words">謝謝你，選擇了我。</p>
+        </div>
       </div>
 
       <!-- 領養步驟一到六 -->
       <div class="adopt-steps">
-        <div class="adopt-step1">
-          <img
-            src="/src/assets/image/shelter/step_circle_s.svg"
-            alt="領養步驟一"
-          />
-          <p class="step1">STEP 1</p>
-          <p class="step1-dtl">選擇想要領養的動物</p>
-        </div>
-
-        <div class="adopt-step2">
-          <img
-            src="/src/assets/image/shelter/step_circle_s.svg"
-            alt="領養步驟二"
-          />
-          <p class="step2">STEP 2</p>
-          <div class="step2-dtls">
-            <p class="step2-dtl">填寫領養申請表</p>
-            <div class="step2-dtl-wrap">
-              <p>確保領養者生活方式適合貓狗需求</p>
-            </div>
+          <div class="adopt-step1">
+            <p class="step1">STEP 1</p>
+            <p class="step1-dtl">選擇想領養的動物</p>
           </div>
-        </div>
 
-        <div class="adopt-step3">
-          <img
-            src="/src/assets/image/shelter/step_circle_s.svg"
-            alt="領養步驟三"
-          />
-          <p class="step3">STEP 3</p>
-          <div class="step3-dtls">
+          <div class="adopt-step2">
+            <p class="step2">STEP 2</p>
+            <p class="step2-dtl">填寫領養申請表單</p>
+            <p class="step2-txt">確保領養者生活方式適合貓狗需求</p>
+          </div>
+
+          <div class="adopt-step3">
+            <p class="step3">STEP 3</p>
             <p class="step3-dtl">專屬互動時間</p>
-            <div class="step3-dtl-wrap">
-              <p>確認雙方是否適應彼此</p>
-            </div>
+            <p>確認雙方是否適應彼此</p>
           </div>
-        </div>
 
-        <div class="adopt-step4">
-          <img
-            src="/src/assets/image/shelter/step_circle_s.svg"
-            alt="領養步驟四"
-          />
-          <p class="step4">STEP 4</p>
-          <div class="step4-dtls">
+          <div class="adopt-step4">
+            <p class="step4">STEP 4</p>
             <p class="step4-dtl">簽署領養合約</p>
-            <div class="step4-dtl-wrap">
-              <p>討論並簽署領養條件</p>
-            </div>
+            <p>討論並簽署領養條件</p>
           </div>
-        </div>
 
-        <div class="adopt-step5">
-          <img
-            src="/src/assets/image/shelter/step_circle_s.svg"
-            alt="領養步驟五"
-          />
-          <p class="step5">STEP 5</p>
-          <div class="step5-dtls">
+          <div class="adopt-step5">
+            <p class="step5">STEP 5</p>
             <p class="step5-dtl">支付領養費用</p>
-            <div class="step5-dtl-wrap">
-              <p>支付相應費用以支持野良之家營運</p>
-            </div>
+            <p>支付相應費用以支持野良之家營運</p>
           </div>
-        </div>
 
-        <div class="adopt-step6">
-          <img
-            src="/src/assets/image/shelter/step_circle_s.svg"
-            alt="領養步驟六"
-          />
-          <p class="step6">STEP 6</p>
-          <div class="step6-dtls">
+          <div class="adopt-step6">
+            <p class="step6">STEP 6</p>
             <p class="step6-dtl">接回寵物至家庭</p>
           </div>
-        </div>
       </div>
 
       <!-- 領養須知 -->
       <div class="adopt-attention">
-        <img
-          class="adopt-dog"
-          src="/src/assets/image/shelter/adopt_dog.png"
-          alt="領養須知狗狗大圖"
-        />
         <div class="attention-dtl">
-          <div class="attention-title">
-            <img src="/src/assets/image/shelter/attention_w.svg" alt="!圖片" />
-            <p>領養後須知</p>
+          <img class="adopt-dog" src="/src/assets/image/shelter/adopt_dog.png" alt="領養須知狗狗圖片">
+          <div class="attention-txt">
+            <div class="attention-title">
+              <img src="/src/assets/image/shelter/attention_w.svg" alt="!圖片" />
+              <p>領養後須知</p>
+            </div>
+            <div class="adopt-list">
+                <p>給寵物適應新環境的時間，注意觀察行為變化。</p>
+                <p>定期至獸醫院檢查、預防注射及處理寄生蟲。</p>
+                <p>建立規律生活，確保穩定的生活節奏。</p>
+                <p>引導寵物與動物及人類建立良好社交關係。</p>
+                <p>提供愛與關懷，建立與家庭成員的情感連結。</p>
+            </div>
           </div>
-          <ol class="p">
-            <li>給予寵物適應新環境的時間，注意觀察行為變化。</li>
-            <li>定期至獸醫院檢查、預防注射及處理寄生蟲。</li>
-            <li>建立規律生活，確保穩定的生活節奏。</li>
-            <li>引導寵物與動物及人類建立良好社交關係。</li>
-            <li>提供愛與關懷，建立與家庭成員的情感連結。</li>
-          </ol>
         </div>
       </div>
     </div>
@@ -392,26 +314,16 @@ export default {
     <div class="shelter-volunteer-bg">
       <div id="nora-volunteer"></div>
       <div class="shelter-volunteer">
-        <img
-          class="black-cat"
-          src="/src/assets/image/shelter/blackcat.svg"
-          alt="黑貓icon"
-        />
-        <img
-          class="sign_board"
-          src="/src/assets/image/shelter/sign_board.svg"
-          alt="志工活動標題招牌圖片"
-        />
-
         <h4 class="shelter-volunteer-title">志工活動</h4>
+        <img
+            class="idea_paw"
+            src="/src/assets/image/shelter/idea_paw.svg"
+            alt="腳印icon"
+          />
       </div>
 
       <div class="volunteer-cloud">
-        <p class="volunteer-txt">一起為浪浪盡點心力吧！</p>
-        <img
-          src="/src/assets/image/shelter/volunteer_cloud.svg"
-          alt="志工活動雲朵圖片"
-        />
+        <p class="volunteer-txt">一起為浪浪努力吧！</p>
       </div>
 
       <!-- 志工活動介紹區塊 -->
@@ -422,16 +334,6 @@ export default {
         </div>
 
         <div class="volunteer-info">
-          <img
-            class="lines1"
-            src="/src/assets/image/shelter/lines1.svg"
-            alt="線條一"
-          />
-          <img
-            class="lines4"
-            src="/src/assets/image/shelter/lines4.svg"
-            alt="線條四"
-          />
           <div class="volunteer-dtls">
             <p class="volunteer-dtl">
               野良之家的日常工作：<br />
@@ -441,11 +343,6 @@ export default {
             </p>
             <button class="contact-btn">聯絡我們</button>
           </div>
-          <img
-            class="shape"
-            src="/src/assets/image/shelter/volunteer_shape.svg"
-            alt="志工活動介紹多邊形"
-          />
         </div>
 
         <div class="circle-img-bottom">

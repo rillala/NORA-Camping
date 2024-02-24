@@ -42,7 +42,7 @@ export default {
           path: '/shelter',
         },
       ],
-      
+
     };
   },
   watch: {
@@ -149,23 +149,11 @@ export default {
 
 <template>
   <section>
-    <input
-      type="checkbox"
-      name="hambuger-mobile"
-      id="hambuger-mobile"
-      class="ham-check"
-      v-model="isMenuOpen"
-      ref="hamburgerMobile"
-    />
+    <input type="checkbox" name="hambuger-mobile" id="hambuger-mobile" class="ham-check" v-model="isMenuOpen"
+      ref="hamburgerMobile" />
 
-    <input
-      type="checkbox"
-      name="hambuger-tablet"
-      id="hambuger-tablet"
-      class="ham-check"
-      v-model="isMenuOpen"
-      ref="hamburgerTablet"
-    />
+    <input type="checkbox" name="hambuger-tablet" id="hambuger-tablet" class="ham-check" v-model="isMenuOpen"
+      ref="hamburgerTablet" />
 
     <nav>
       <div id="nav-wrap">
@@ -181,68 +169,35 @@ export default {
 
         <!--導覽列右側-->
         <div id="nav-box">
-          <RouterLink
-            :to="reserveBtn.path"
-            class="bg-blue-3"
-            id="reserve-btn-desktop"
-            @click="closeHam"
-            ><img
-              :src="getImageUrl('headerFooter/reservation-mobile.png')"
-              :alt="reserveBtn"
-            />
+          <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn-desktop" @click="closeHam"><img
+              :src="getImageUrl('headerFooter/reservation-mobile.png')" :alt="reserveBtn" />
             <p>
               {{ reserveBtn.name }}
-            </p></RouterLink
-          >
+            </p>
+          </RouterLink>
 
-          <RouterLink
-            :to="shopBtn.path"
-            class="bg-blue-3"
-            id="shop-btn-desktop"
-            @click="closeHam"
-            ><img
-              :src="getImageUrl('headerFooter/shop-mobile.png')"
-              :alt="shopBtn"
-            />
-            <p>{{ shopBtn.name }}</p></RouterLink
-          >
+          <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn-desktop" @click="closeHam"><img
+              :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
+            <p>{{ shopBtn.name }}</p>
+          </RouterLink>
 
           <!--會員登入-->
-          <button
-            id="member-login"
-            @click="
-              memberCenter();
-              closeHam();
-            "
-            :style="userProfileImageStyle"
-          >
+          <button id="member-login" @click="
+            memberCenter();
+          closeHam();
+          ">
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
                 <div class="close-sub-menu" @click.stop="closeSubmenu">X</div>
                 <li>
-                  <RouterLink
-                    class="sub-menu"
-                    to="/membercenter"
-                    @click.stop="closeSubmenu"
-                    >會員中心</RouterLink
-                  >
+                  <RouterLink class="sub-menu" to="/membercenter" @click.stop="closeSubmenu">會員中心</RouterLink>
                 </li>
                 <li>
-                  <RouterLink
-                    class="sub-menu"
-                    to="/membercampsiteorders"
-                    @click.stop="closeSubmenu"
-                    >商品訂單</RouterLink
-                  >
+                  <RouterLink class="sub-menu" to="/membercampsiteorders" @click.stop="closeSubmenu">商品訂單</RouterLink>
                 </li>
                 <li>
-                  <RouterLink
-                    class="sub-menu"
-                    to="/memberorderhistory"
-                    @click.stop="closeSubmenu"
-                    >營地訂單</RouterLink
-                  >
+                  <RouterLink class="sub-menu" to="/memberorderhistory" @click.stop="closeSubmenu">營地訂單</RouterLink>
                 </li>
                 <button class="logout" @click.stop="handleLogout">登出</button>
               </ul>
@@ -254,8 +209,8 @@ export default {
           <RouterLink to="/shopCar" id="shop-car" @click="closeHam">
             <div v-if="cartList.totalQty > 0" class="cart-num-box bg-blue-4">
               <p class="cart-num white01">{{ cartList.totalQty }}</p>
-            </div></RouterLink
-          >
+            </div>
+          </RouterLink>
 
           <!--平板用子選單開關-->
 
@@ -269,32 +224,18 @@ export default {
 
       <ul id="menu-list">
         <li>
-          <RouterLink
-            :to="reserveBtn.path"
-            class="bg-blue-3"
-            id="reserve-btn"
-            @click="closeHam"
-            ><img
-              :src="getImageUrl('headerFooter/reservation-mobile.png')"
-              :alt="reserveBtn"
-            />
+          <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn" @click="closeHam"><img
+              :src="getImageUrl('headerFooter/reservation-mobile.png')" :alt="reserveBtn" />
             <p>
               {{ reserveBtn.name }}
-            </p></RouterLink
-          >
+            </p>
+          </RouterLink>
         </li>
         <li>
-          <RouterLink
-            :to="shopBtn.path"
-            class="bg-blue-3"
-            id="shop-btn"
-            @click="closeHam"
-            ><img
-              :src="getImageUrl('headerFooter/shop-mobile.png')"
-              :alt="shopBtn"
-            />
-            <p>{{ shopBtn.name }}</p></RouterLink
-          >
+          <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn" @click="closeHam"><img
+              :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
+            <p>{{ shopBtn.name }}</p>
+          </RouterLink>
         </li>
         <li v-for="link in navList" :key="link.name">
           <RouterLink :to="link.path" class="sub-menu dark" @click="closeHam">

@@ -1,8 +1,10 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
+import apiInstance from '@/plugins/auth';
 import actionBtn from '@/components/button/actionBtn.vue';
 import viewMoreBtn from '@/components/button/viewMoreBtn.vue';
+import bannerAnimation from '@/components/home/bannerAnimation.vue';
 import dogAnimation from '@/components/home/dogAnimation.vue';
 import catAnimation from '@/components/home/catAnimation.vue';
 import newsArticle from '@/components/home/newsArticle.vue';
@@ -14,6 +16,7 @@ export default {
   components: {
     actionBtn,
     viewMoreBtn,
+    bannerAnimation,
     dogAnimation,
     catAnimation,
     newsArticle,
@@ -21,10 +24,6 @@ export default {
   },
   data() {
     return {
-      //banner動畫
-      bannerMori: ['riverBg.png', 'riverBg.png'],
-      bannerYama: ['mountainBg.png', 'mountainBg.png'],
-
       //天氣和溫度
       weather: '',
       airTemperature: '',
@@ -42,23 +41,13 @@ export default {
       search: '',
       newsContent: [
         {
-          newsTitle: '2024春季優惠開跑中',
-          newsDate: '2024/1/24',
+          newsTitle: '',
+          newsDate: '',
           newsText:
-            '探險春季，NORA Camp誠摯邀請您攜帶心愛的寵物一同感受大自然的懷抱！透過我們獨家的「春季寵物露營樂享包」優惠，獲得精心準備的狗狗貓貓歡迎禮 包，內含美味零食、趣味玩具及特別的寵物地圖。優惠僅限春季特定日期，請提前預訂，確保您和寵物共享這春之樂。期待您們一家人一起加入NORA Camp的大家庭，享受春日露營的美好時光！',
-          smalls: [
-            { src: 'Camping_dog_lake.jpg', alt: '消息圖片1' },
-            { src: 'knowingnora-pic.jpg', alt: '消息圖片2' },
-            { src: 'shelter.jpg', alt: '消息圖片3' },
-          ],
-          large: { src: '', alt: '' },
-        },
-        {
-          newsTitle: '營地設備維修公告',
-          newsDate: '2024/1/10',
-          newsText:
-            '為提供更良好的露營體驗，我們即將進行狗狗專屬營區烤肉區設備的定期維修。維修時間為下週二上午9時至下午3時。在此期間，狗狗專屬營區的烤肉區域將無法使用。請見諒造成的不便。我們將盡快完成維修，以確保您和您的毛小孩在安全和愉快的環境中度過美好的露營時光。在維修期間，為確保您的安全，請勿進入烤肉區域。如有任何緊急需要使用烤肉設備的情況，請聯繫我們的服務人員，我們將協助您找到合適的解決辦法。感謝您的理解和支持。期待在維修完成後，為您呈獻一個更舒適、更便利的露營環境。如有任何疑問或需要進一步協助，請隨時與我們聯絡。',
-          smalls: [],
+            '',
+          small1: { src: '', alt: '消息圖片1' },
+          small2: { src: '', alt: '消息圖片2' },
+          small3: { src: '', alt: '消息圖片3' },
           large: { src: '', alt: '' },
         },
       ],
@@ -105,12 +94,12 @@ export default {
     };
   },
   mounted() {
-    this.Catin();
-    this.Dogin();
-    this.moriSlide();
-    this.yamaSlide();
-    // window.addEventListener('scroll', this.handleScroll);
+    //觸發天氣API
     this.getWeather();
+    //觸發章節觀察
+    this.sectionObserve();
+    //觸發最新消息讀取資料庫
+    this.getNewsPhp()
   },
   computed: {
     wrapLeft() {
@@ -118,76 +107,6 @@ export default {
     },
   },
   methods: {
-    //banner的動畫
-    getBannerImageUrl(paths) {
-      return new URL(
-        `../assets/image/homeView/animation/${paths}`,
-        import.meta.url,
-      ).href;
-    },
-    Catin() {
-      // 取得 catAnimation 組件的 DOM 元素
-      const catElement = this.$refs.cat.$el;
-      //$el
-      // 使用 GSAP 創建動畫
-      gsap.from(catElement, {
-        x: '100%', // 從右邊畫面外開始
-        duration: 3, // 動畫時間(秒)
-      });
-    },
-    Dogin() {
-      const dogElement = this.$refs.dog.$el;
-      gsap.from(dogElement, {
-        x: '100%',
-        duration: 1.8,
-      });
-    },
-    moriSlide() {
-      gsap.fromTo(
-        this.$refs.moriSlider,
-        { x: '-100%' },
-        {
-          x: '0%',
-          duration: 25,
-          ease: 'linear', //線性
-          repeat: -1, //無限播放
-        },
-      ),
-        gsap.fromTo(
-          this.$refs.moriSlider,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 2,
-          },
-        );
-    },
-    yamaSlide() {
-      gsap.fromTo(
-        this.$refs.yamaSlider,
-        { x: '-100%' },
-        {
-          x: '0%',
-          duration: 30,
-          ease: 'linear',
-          repeat: -1,
-        },
-      ),
-        gsap.fromTo(
-          this.$refs.moriSlider,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 2,
-          },
-        );
-    },
-
-    //捲動偵測，想改用AOS做捲動的特效
-    getScrollHeight() {
-      return window.scrollY;
-    },
-
     //串接氣象API取得資料
     async getWeather() {
       try {
@@ -228,6 +147,20 @@ export default {
         this.getWeatherImageUrl(this.weatherMark[0])
       );
     },
+
+    //讀取最新消息
+    getNewsPhp() {
+      apiInstance
+        .get("./getNews.php")
+        .then((response) => {
+          this.newsList = response.data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+
     //暫時借用的圖片路徑
     getNewProdImageUrl(paths) {
       return new URL(
@@ -243,6 +176,53 @@ export default {
     moveRight() {
       this.curIndex++;
       console.log(this.curIndex);
+    },
+    //貓狗的動畫
+    Catin() {
+      // 取得 catAnimation 組件的 DOM 元素
+      const catElement = this.$refs.cat.$el;
+      //$el是訪問 Vue conponent 裡面元素的方法
+      // 使用 GSAP 創建動畫
+      gsap.to(catElement, {
+        x: '-81%', // 從右邊畫面外開始
+        duration: 3, // 動畫時間(秒)
+      });
+    },
+    Dogin() {
+      const dogElement = this.$refs.dog.$el;
+      gsap.to(dogElement, {
+        x: '-75%',
+        duration: 1.8,
+      });
+    },
+    //章節觀察
+    sectionObserve() {
+      const options = {
+        root: null, // 根節點，null表示整個視窗
+        threshold: 0.5 // 可見比例大於50%時觸發回調
+      };
+      //IntersectionObserver 觀察API
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // 如果部分進入視窗，執行相應的邏輯
+            this.handleSectionIntersection(entry.target);
+          }
+        });
+      }, options);
+
+      //開始觀察
+      observer.observe(this.$refs.shelter);
+    },
+    //觀察動作
+    handleSectionIntersection(section) {
+      // 根據進入視窗的部分執行指定程式
+      if (section === this.$refs.shelter) {
+        // 當捲動到section3時執行特定程式
+        // console.log("已捲動到野良之家");
+        this.Catin();
+        this.Dogin();
+      }
     }
   },
   watch: {
@@ -261,6 +241,9 @@ export default {
       deep: true,
     },
   },
+  // beforeUnmount() {
+  //   window.removeEventListener('scroll', this.handleScroll); // 移除事件監聽器，避免內存洩漏
+  // },
 };
 </script>
 
@@ -276,17 +259,10 @@ export default {
         <actionBtn class="Reserve-Now" :content="'立即預約'" />
       </router-link>
     </div>
-    <catAnimation class="Cat" ref="cat" />
-    <dogAnimation class="Dog" ref="dog" />
+
     <div class="Banner-background bg-blue-1">
-      <div class="mori-slider">
-        <img v-for="mori in bannerMori" :src="getBannerImageUrl(mori)" alt="Banner背景森林" ref="moriSlider" />
-      </div>
-      <div class="yama-slider">
-        <img v-for="yama in bannerYama" :src="getBannerImageUrl(yama)" alt="Banner背景山" ref="yamaSlider" />
-      </div>
+      <bannerAnimation />
     </div>
-    <div class="Banner-ground"></div>
   </section>
 
   <section class="Knowing-nora" ref="knowingNora">
@@ -321,7 +297,6 @@ export default {
     </div>
   </section>
 
-  <div id="nora-news"></div>
   <section class="News bg-blue-3">
     <div class="News-container">
       <div class="News-Title-search">
@@ -334,7 +309,8 @@ export default {
       <div class="News-viewport">
         <newsArticle class="News-article" v-for="(setArticle, index) in newsContent" :key="setArticle.newsTitle"
           :newsTitle="setArticle.newsTitle" :newsDate="setArticle.newsDate" :newsText="setArticle.newsText"
-          :smalls="setArticle.smalls" v-model:large="setArticle.large" />
+          :small1="setArticle.small1" :small2="setArticle.small2" :small3="setArticle.small3"
+          v-model:large="setArticle.large" />
       </div>
     </div>
   </section>
@@ -368,7 +344,7 @@ export default {
     </router-link>
   </section>
 
-  <section class="Stray-home">
+  <section class="Stray-home" ref="shelter">
     <div class="Stray-home-content">
       <div class="SH-text">
         <h2>野良之家</h2>
@@ -391,12 +367,10 @@ export default {
       </div>
     </div>
 
-    <div class="SH-tent-container">
-      <img src="@/assets/image/homeView/Tent_with_ground.png" alt="帳篷框">
-    </div>
-
     <div class="Stray-home-background">
       <img src="@/assets/image/homeView/Stray_home_bg.png" alt="野良之家背景" />
+      <catAnimation class="Cat" ref="cat" />
+      <dogAnimation class="Dog" ref="dog" />
       <div class="The-ground"></div>
     </div>
   </section>

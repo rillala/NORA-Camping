@@ -6,6 +6,7 @@ import addMinusBtn from '@/components/button/addMinusBtn-shop.vue';
 import ActionBtn from '@/components/button/actionBtn.vue';
 import loading from '@/components/loading.vue';
 import DropDownBtn from '@/components/button/dropDownBtn.vue';
+import { getDBImage } from '@/assets/js/common';
 
 export default {
   components: {
@@ -13,15 +14,14 @@ export default {
     ActionBtn,
     loading,
     DropDownBtn
-},
-
+  },
 
   data() {
     return {
       selectedQuantity: 0,
-      currentIndex: 0,//還沒用到，如果多張圖片可能用到
-      selectColor:['顏色','黑色', '白色', '綠色','藍色'],
-      selectSize:['尺寸','XS', 'S', 'M', 'L', 'XL'],
+      currentIndex: 0,
+      selectedColor: '', 
+      selectedSize: '',
     };
   },
   created() {
@@ -39,10 +39,18 @@ export default {
     nodata() {
       return Object.keys(this.responseData).length === 0;
     },
+    colorOptions() {
+      // 檢查是否有colors，並將其從字符串轉換為數組，如果沒有則返回一個只包含預設選項的數組
+      return this.responseData.colors ? ['顏色', ...this.responseData.colors.split(',')] : ['顏色'];
+    },
+    sizeOptions() {
+      // 同上，對sizes進行處理
+      return this.responseData.sizes ? ['尺寸', ...this.responseData.sizes.split(',')] : ['尺寸'];
+    },
   },
   watch: {},
   methods: {
-    turntopage(){this.$router.replace({name: 'shop'})},
+    turntopage() { this.$router.replace({ name: 'shop' }) },
     handleQuantityUpdate(quantity) {
       // 接收數量更新事件
       this.selectedQuantity = quantity;
@@ -50,43 +58,34 @@ export default {
     },
     async addIntoCart() {
       const cartStore = useCartStore();
-      await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
-      alert('商品已加入購物車')
+      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
+      
     },
     async addAndBuy() {
       const cartStore = useCartStore();
-      await cartStore.addToCart(this.responseData.id, this.selectedQuantity);
+      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity);
       this.$router.replace('/shopCar');
     },
     prevImage() {
       // 切換到前一張圖片
       this.currentIndex = (this.currentIndex - 1 + this.responseData.images.length) % this.responseData.images.length;
-      console.log('click');
     },
     nextImage() {
       // 切換到下一張圖片
       this.currentIndex = (this.currentIndex + 1) % this.responseData.images.length;
     },
-    handleSelection(type) {
-      // 在這裡觸發相應的事件
-      if (type === '黑色') {
-        console.log('黑色')
-      }else if(type === '白色'){
-        console.log('白色');
-      }else if (type === '綠色'){
-        console.log('綠色');
-      }else if(type === '藍色'){
-        console.log('藍色');
-      }else if(type === 'XS'){
-        console.log('XS');
-      }else if(type === 'S'){
-        console.log('S');
-      }else if(type === 'M'){
-        console.log('M');
-      }else if(type === 'L'){
-        console.log('L');
-      }else if(type === 'XL'){
-        console.log('XL');
+
+    getDBImage(images) {
+      return getDBImage(images)
+    },
+    updateSelectedColor(e) {
+      if (e && e.target) {
+        this.selectedColor = e.target.value;
+      }
+    },
+    updateSelectedSize(e) {
+      if (e && e.target) {
+        this.selectedSize = e.target.value;
       }
     },
   },
@@ -102,26 +101,36 @@ export default {
         <div class="shop-item-top">
 
           <div class="shop-item-images">
-            <img class="shop-arrow-icon" @click="prevImage" src="/src/assets/image/universe/left-arrow-btn.svg"
-              alt="icon">
+            <img v-if="responseData.images && responseData.images.length > 1" class="shop-arrow-icon" @click="prevImage"
+              src="/src/assets/image/universe/left-arrow-btn.svg" alt="Previous Image">
             <div class="shop-item-imagesSlider">
-              <img :src="responseData.images" alt="responseData.title" />
+              <img
+                :src="getDBImage(responseData.images && responseData.images.length > 0 ? responseData.images[currentIndex] : '')"
+                alt="Product Image" />
             </div>
-            <img class="shop-arrow-icon" @click="nextImage" src="/src/assets/image/universe/right-arrow-btn.svg"
-              alt="icon">
+            <img v-if="responseData.images && responseData.images.length > 1" class="shop-arrow-icon" @click="nextImage"
+              src="/src/assets/image/universe/right-arrow-btn.svg" alt="Next Image">
+
           </div>
+
           <div class="shop-item-words">
             <h2>{{ responseData.title }}</h2>
             <h3>NT${{ responseData.price }}</h3>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-select">
-              <DropDownBtn :options="selectColor" @change="handleSelection" :default-value="'顏色'"></DropDownBtn>
-              <DropDownBtn :options="selectSize" @change="handleSelection" :default-value="'尺寸'"></DropDownBtn>
+              <DropDownBtn v-if="colorOptions.length > 1" :options="colorOptions" @change="updateSelectedColor"
+                :default-value="'顏色'"></DropDownBtn>
+
+              <DropDownBtn v-if="sizeOptions.length > 1" :options="sizeOptions" @change="updateSelectedSize"
+                :default-value="'尺寸'"></DropDownBtn>
+
+
             </div>
             <div class="shop-item-actionBtns">
-              <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.id)" :content="'加購物車'"></ActionBtn>
+              <ActionBtn class="addCart-btn" @click.prevent="addIntoCart(responseData.product_id)" :content="'加購物車'">
+              </ActionBtn>
               <ActionBtn @click.prevent="addAndBuy" :content="'直接購買'"></ActionBtn>
-              
+
             </div>
           </div>
         </div>
@@ -169,12 +178,14 @@ export default {
           flex-flow: column;
           gap: 20px;
           align-items: center;
-          .shop-item-select{
+
+          .shop-item-select {
             display: flex;
             gap: 8px;
           }
         }
-        @include desktop{
+
+        @include desktop {
           text-align: left;
         }
 
@@ -199,6 +210,7 @@ export default {
           width: 50%;
         }
       }
+
       .shop-item-images {
         display: flex;
         align-items: center;
@@ -259,8 +271,7 @@ export default {
       max-width: 1200px;
       height: 100%;
       margin: auto;
-      padding: 40px ;
+      padding: 40px;
     }
   }
-}
-</style>
+}</style>

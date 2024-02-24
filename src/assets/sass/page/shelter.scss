@@ -10,8 +10,9 @@
     justify-content: center;
 
     @include desktop {
+        height: auto;
         text-align: left;
-        padding-left: 10%;
+        padding: 5vw 0vw 3rem 10vw;
     }
 }
 
@@ -166,6 +167,10 @@
             @include desktop {
                 padding: 0;
             }
+
+            @include tablet {
+                padding: 0;
+            }
         }
 
         .round {
@@ -180,7 +185,7 @@
             }
 
             @include tablet {
-                width:300px;
+                width:200px;
             }
 
             @keyframes rotate {
@@ -495,83 +500,93 @@
 .shelter-idea-bg {
     //我們的理念
     background-color: rgba(225, 202, 167, 0.5);
+    padding: 20px 0px;
 
     .shelter-idea {
-        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0px;
 
-        .sign_board {
-            width: 100%;
-            padding: 50px 20px 0px 0px;
-            animation: shine 2s infinite alternate;
-            
-            @include desktop {
-                width: 1000px;
-                padding: 100px 0px;
-            }
-        }
-
-        .shelter-idea-title {
-            position: absolute;
-            top: 35%;
-            left: 45%;
-
-            @include desktop {
-                top: 45%;
-                left: 40%;
-                font-size: 40px;
-            }
-
-            @include tablet {
-                top: 38%;
-                left: 55%;
-            }
+        .idea_paw {
+            width: 80px;
         }
     }
 
     .shelter-idea-dog {
-        position: relative;
+        background-color: $brown-2;
+        padding: 10px;
+        margin: 30px auto;
+        border-radius: $radius;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 700px;
+
+        @include desktop {
+            max-width: 1160px;
+            justify-content: center;
+            align-items: center;
+            flex-direction:row;
+            gap: 30px;
+        }
 
         img {
             width: 100%;
             vertical-align: bottom;
+            border-radius: $radius;
+
+            @include desktop {
+                width: 550px;
+            }
         }
 
         .shelter-idea-dog-word {
-            position: absolute;
-            top: 30%;
-            left: 3%;
             color: $white01;
+            padding: 8px;
 
             @include desktop {
-                font-size: 24px;
-                top: 50%;
-                left: 10%;
+                width: 550px;
             }
         }
     }
 
     .shelter-idea-cat {
-        position: relative;
+        background-color: $brown-2;
+        padding: 10px;
+        margin: 0px auto;
+        border-radius: $radius;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 700px;
+
+        @include desktop {
+            margin: 30px auto;
+            max-width: 1160px;
+            justify-content: center;
+            align-items: center;
+            flex-direction:row;
+            gap: 30px;
+        }
 
         img {
             width: 100%;
             vertical-align: bottom;
+            border-radius: $radius;
+
+            @include desktop {
+                width: 550px;
+                order: 0;
+            }
         }
 
         .shelter-idea-cat-word {
-            position: absolute;
-            top: 30%;
-            left: 4%;
             color: $white01;
+            padding: 8px;
 
             @include desktop {
-                font-size: 24px;
-                top: 50%;
-                left: 60%;
-            }
-
-            @include tablet {
-                left: 50%;
+                width: 550px;
             }
         }
     }
@@ -579,67 +594,28 @@
 
 .shelter-adopt-bg {
     background-color: rgba(225, 202, 167, 0.5);
+    padding-top: 20px;
 
     .shelter-adopt {
-        position: relative;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
         @include desktop {
-            display: flex;
-            justify-content: flex-end;
+            padding: 20px 0px;
         }
 
-        .black-cat {
+        .idea_paw {
             width: 80px;
-            position: absolute;
-            right: 4%;
-            top: 10%;
-
-            @include desktop {
-                width: 150px;
-                right: 6%;
-                top: 17%;
-            }
-        }
-
-        .sign_board {
-            padding: 50px 0px 0px 20px;
-            width: 100%;
-            animation: shine 2s infinite alternate;
-
-            @include desktop {
-                width: 1000px;
-                padding: 100px 0px 30px 0px;
-            }
-        }
-
-        .shelter-adopt-title {
-            position: absolute;
-            top: 55%;
-            left: 25%;
-
-            @include desktop {
-                font-size: 40px;
-                left: 50%;
-            }
-
-            @include tablet {
-                top: 52%;
-                left: 30%;
-            }
         }
     }
 
     .adopt-cloud-dog {
-        position: relative;
-
-        @include desktop {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         .hand-dog {
-            padding-left: 10px;
             animation: movingDog 1s infinite linear;
 
             @include desktop {
@@ -660,77 +636,16 @@
                 }
             }
         }
-
-        .line3 {
-            position: absolute;
-            left: 3%;
-            bottom: -5%;
-
-            @include desktop {
-                left: 30%;
-            }
-        }
     }
 
     .adopt-cloud {
-        max-width: 250px;
-        position: relative;
-        overflow-x: hidden;
-        animation: whiteCloudMove 3s infinite linear;
-
-        @include desktop {
-            max-width: 500px;
-            animation: whiteCloudMove 5s infinite linear;
-        }
-
-        @keyframes whiteCloudMove {
-            0% {
-                transform: translateX(-20px) translateY(10px);
-            }
-
-            50% {
-                transform: translateX(0px) translateY(15px);
-            }
-
-            100% {
-                transform: translateX(15px) translateY(10px);
-            }
-        }
-
-        @include desktop {
-            @keyframes whiteCloudMove {
-                0% {
-                    transform: translateX(0px) translateY(10px);
-                }
-    
-                50% {
-                    transform: translateX(50px) translateY(15px);
-                }
-    
-                100% {
-                    transform: translateX(100px) translateY(10px);
-                }
-            }
-        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
         .adopt-cloud-words {
-            position: absolute;
-            top: 45%;
-            left: 15%;
-
-            @include desktop {
-                left: 30%;
-                top: 50%;
-            }
-        }
-
-        .white_cloud {
-            width: 200px;
-            padding: 10px 0px;
-
-            @include desktop {
-                width: 500px;
-            }
+            padding-top: 20px;
         }
     }
 
@@ -738,317 +653,207 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-        padding: 50px 15px;
+        padding: 30px 10px;
 
         @include desktop {
-            padding: 100px 0px;
-            gap: 35px;
-        }
-
-        img {
-            @include desktop {
-                width: 200px;
-            }
+            flex-direction: row;
+            margin: auto;
+            padding: 40px 10px;
         }
 
         p {
             @include desktop {
-                font-size: 24px;
+                font-size: 20px;
             }
         }
 
         .adopt-step1 {
+            background-color: $blue-3;
             display: flex;
+            justify-content: center;
             align-items: center;
-            position: relative;
-            gap: 10px;
+            gap: 15px;
+            padding: 10px; 
+            border-radius: $radius;
 
             @include desktop {
-                justify-content: center;
-                gap: 20px;
+                flex-wrap: wrap;
             }
 
             .step1 {
                 color: $blue-1;
-                position: absolute;
-                left: 8%;
-                top: 40%;
+            }
 
-                @include desktop {
-                    font-size: 32px;
-                    left: 38%;
-                }
-
-                @include tablet {
-                    left: 34%;
-                }
+            .step1-dtl {
+                color: $yellow-1;
             }
         }
 
         .adopt-step2 {
+            background-color: $blue-3;
             display: flex;
+            justify-content: center;
             align-items: center;
-            position: relative;
             gap: 10px;
-
-            @include desktop {
-                justify-content: center;
-                gap: 20px;
-            }
+            padding: 10px;
+            border-radius: $radius;
+            flex-wrap: wrap;
 
             .step2 {
                 color: $blue-1;
-                position: absolute;
-                left: 8%;
-                top: 40%;
-
-                @include desktop {
-                    font-size: 32px;
-                    left: 31.5%;
-                }
-
-                @include tablet {
-                    left: 25%;
-                }
             }
 
-            .step2-dtls {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-
-                .step2-dtl-wrap {
-                    background-color: $white01;
-                    border-radius: $radius;
-                    padding: 10px;
-
-                    @include desktop {
-                        padding: 20px;
-                    }
-                }
-
-                .step2-dtl {
-                    padding-left: 10px;
-                }
+            .step2-dtl {
+                color: $yellow-1;
             }
         }
 
         .adopt-step3 {
+            background-color: $blue-3;
             display: flex;
+            justify-content: center;
             align-items: center;
-            position: relative;
             gap: 10px;
-
-            @include desktop {
-                justify-content: center;
-                gap: 20px;
-            }
+            padding: 10px;
+            border-radius: $radius;
+            flex-wrap: wrap;
 
             .step3 {
                 color: $blue-1;
-                position: absolute;
-                left: 8%;
-                top: 40%;
-
-                @include desktop {
-                    font-size: 32px;
-                    left: 35.5%;
-                }
-
-                @include tablet {
-                    left: 31%;
-                }
             }
 
-            .step3-dtls {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-
-                .step3-dtl-wrap {
-                    background-color: $white01;
-                    border-radius: $radius;
-                    padding: 10px;
-
-                    @include desktop {
-                        padding: 20px;
-                    }
-                }
-
-                .step3-dtl {
-                    padding-left: 10px;
-                }
+            .step3-dtl {
+                color: $yellow-1;
             }
+        
         }
 
         .adopt-step4 {
+            background-color: $blue-3;
             display: flex;
+            justify-content: center;
             align-items: center;
-            position: relative;
             gap: 10px;
-
-            @include desktop {
-                justify-content: center;
-                gap: 20px;
-            }
+            padding: 10px;
+            border-radius: $radius;
+            flex-wrap: wrap;
 
             .step4 {
                 color: $blue-1;
-                position: absolute;
-                left: 8%;
-                top: 40%;
-
-                @include desktop {
-                    font-size: 32px;
-                    left: 36.5%;
-                }
-
-                @include tablet {
-                    left: 31.5%;
-                }
             }
 
-            .step4-dtls {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-
-                .step4-dtl-wrap {
-                    background-color: $white01;
-                    border-radius: $radius;
-                    padding: 10px;
-
-                    @include desktop {
-                        padding: 20px;
-                    }
-                }
-
-                .step4-dtl {
-                    padding-left: 10px;
-                }
+            .step4-dtl {
+                color: $yellow-1;
             }
         }
 
         .adopt-step5 {
+            background-color: $blue-3;
             display: flex;
+            justify-content: center;
             align-items: center;
-            position: relative;
             gap: 10px;
-
-            @include desktop {
-                justify-content: center;
-                gap: 20px;
-            }
+            padding: 10px;
+            border-radius: $radius;
+            flex-wrap: wrap;
 
             .step5 {
                 color: $blue-1;
-                position: absolute;
-                left: 8%;
-                top: 40%;
-
-                @include desktop {
-                    font-size: 32px;
-                    left: 31.5%;
-                }
-
-                @include tablet {
-                    left: 25%;
-                }
             }
 
-            .step5-dtls {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-
-                .step5-dtl-wrap {
-                    background-color: $white01;
-                    border-radius: $radius;
-                    padding: 10px;
-
-                    @include desktop {
-                        padding: 20px;
-                    }
-                }
-
-                .step5-dtl {
-                    padding-left: 10px;
-                }
+            .step5-dtl {
+                color: $yellow-1;
             }
         }
 
         .adopt-step6 {
+            background-color: $blue-3;
             display: flex;
+            justify-content: center;
             align-items: center;
-            position: relative;
             gap: 10px;
-
-            @include desktop {
-                justify-content: center;
-                gap: 20px;
-            }
+            padding: 10px;
+            border-radius: $radius;
+            flex-wrap: wrap;
 
             .step6 {
                 color: $blue-1;
-                position: absolute;
-                left: 8%;
-                top: 40%;
-
-                @include desktop {
-                    font-size: 32px;
-                    left: 39.5%;
-                }
-
-                @include tablet {
-                    left: 36%;
-                }
             }
 
-            .step6-dtls {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
+            .step6-dtl {
+                color: $yellow-1;
             }
         }
     }
 
     .adopt-attention {
-        position: relative;
-        color: $white01;
+        padding: 10px;
+
+        @include desktop {
+            padding: 20px;
+        }
 
         .adopt-dog {
             width: 100%;
-            height: 220px;
-            vertical-align: bottom;
+            border-radius: $radius;
 
             @include desktop {
-                height: auto;
+                width: 550px;
             }
         }
 
         .attention-dtl {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            position: absolute;
-            gap: 10px;
-            top: 8%;
-            left: 7%;
+            justify-content: center;
+            background-color: $blue-2;
+            border-radius: $radius;
+            gap: 15px;
+            padding: 12px;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
 
             @include desktop {
-                gap: 20px;
-                top: 35%;
-                left: 12%;
+                flex-direction: row;
+                max-width: 1160px;
+                margin: 0 auto;
             }
 
-            @include tablet {
-                top: 31%;
-                left: 28%;
+            .attention-txt {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 10px;
+                margin: 0 auto;
+
+                @include desktop {
+                    width: 550px;
+                    align-items: center;
+                    gap: 20px;
+                }
+            }
+
+            .adopt-list {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                p {
+                    font-size: 13px;
+
+                    @include desktop {
+                        font-size: 20px;
+                    }
+                }
             }
 
             .attention-title {
                 display: flex;
+                justify-content: center;
+                align-items: center;
                 gap: 5px;
+                font-size: 20px;
 
                 p {
                     @include desktop {
@@ -1057,21 +862,7 @@
                 }
 
                 img {
-                    width: 15px;
-
-                    @include desktop {
-                        width: 30px;
-                    }
-                }
-            }
-
-            li {
-                list-style: decimal;
-                font-size: 13px;
-
-                @include desktop {
-                    font-size: 20px;
-                    padding-bottom: 10px;
+                    width: 20px;
                 }
             }
         }
@@ -1081,66 +872,28 @@
 .shelter-volunteer-bg {
     //志工活動
     background-color: rgba(225, 202, 167, 0.3);
+    padding-top: 30px;
 
     .shelter-volunteer {
-        position: relative;
-
-        .sign_board {
-            width: 100%;
-            padding: 50px 20px 0px 0px;
-            animation: shine 2s infinite alternate;
-
-            @include desktop {
-                width: 1000px;
-                padding: 100px 0px;
-            }
-        }
-
-        .black-cat {
-            width: 65px;
-            position: absolute;
-            top: 17%;
-            left: 5%;
-
-            @include desktop {
-                width: 120px;
-                top: 20%;
-                left: 5%;
-            }
-        }
-
-        .shelter-volunteer-title {
-            position: absolute;
-            top: 55%;
-            right: 25%;
-
-            @include desktop {
-                top: 45%;
-                left: 40%;
-                font-size: 40px;
-            }
-
-            @include tablet {
-                top: 45%;
-                left: 57%;
-            }
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .volunteer-cloud {
-        position: relative;
-        padding: 20px 0px;
+        background-image: url(/src/assets/image/shelter/volunteer_cloud.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        min-height: 120px;
         animation: blueCloudMove 3s infinite linear;
-
-        img {
-            @include desktop {
-                width: 100%;
-            }
-        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         @include desktop {
-            width: 500px;
-            padding: 20px 0px 50px 0px;
+            min-height: 200px;
+            padding: 20px 0px;
         }
 
         @keyframes blueCloudMove {
@@ -1157,26 +910,7 @@
             }
         }
 
-        @include desktop {
-            @keyframes blueCloudMove {
-                0% {
-                    transform: translateX(100px) translateY(5px);
-                }
-    
-                50% {
-                    transform: translateX(150px) translateY(0px);
-                }
-    
-                100% {
-                    transform: translateX(100px) translateY(5px);
-                }
-            }
-        }
-
         .volunteer-txt {
-            position: absolute;
-            top: 50%;
-            left: 20%;
             color: $white01;
         }
     }
@@ -1234,59 +968,30 @@
         }
 
         .volunteer-info {
-            position: relative;
+            background-color: $blue-2;
+            border-radius: $radius;
+            padding: 20px;
+            margin: 10px;
 
             @include desktop {
+                width: 600px;
+                margin: auto;
+            }
+
+            .volunteer-dtls {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-            }
-
-            .lines1 {
-                position: absolute;
-                left: 40%;
-                top: -10%;
+                justify-content: center;
+                gap: 10px;
 
                 @include desktop {
-                    left: 45%;
-                }
-            }
-
-            .lines4 {
-                position: absolute;
-                right: 3%;
-                bottom: 0;
-
-                @include desktop {
-                    right: 15%;
-                }
-            }
-
-            .shape {
-                width: 100%;
-
-                @include desktop {
-                    width: 1000px;
-                }
-            }
-
-            .volunteer-dtl {
-                position: absolute;
-                top: 35%;
-                left: 8%;
-                font-size: 14px;
-
-                @include desktop {
-                    font-size: 24px;
-                    top: 45%;
-                    left: 35%;
+                    gap: 30px;
+                    padding: 20px 0px;
                 }
             }
 
             .contact-btn {
-                position: absolute;
-                top: 72%;
-                left: 25%;
                 width: 150px;
                 height: 40px;
                 border: 0;
@@ -1295,11 +1000,9 @@
                 border-radius: $radius;
 
                 @include desktop {
-                    width: 200px;
+                    width: 180px;
                     height: 60px;
-                    top: 65%;
-                    left: 40%;
-                    font-size: 18px;
+                    font-size: 16px;
                 }
             }
         }
