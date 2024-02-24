@@ -237,7 +237,7 @@ export default {
       bodyFormData.append('psw', this.user_enter.psw);
       apiInstance({
           method: 'post',
-          url: '/login.php',
+          url: '/login_JWT.php',
           headers: { "Content-Type": "multipart/form-data" },
           data: bodyFormData
       }).then(res => {
@@ -251,9 +251,11 @@ export default {
         // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
       } else if (res && res.data && res.data.error === true) {
         // 如果後端返回了錯誤，則處理登入失敗的情況
+        
         alert(res.data.message);
       } else {
       //   如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
+      console.log('Unexpected format:', res.data);
       alert('登入失敗：無法解析伺服器響應。');
       }
     }).catch(error => {
@@ -329,7 +331,7 @@ export default {
     }).catch(error => {
         console.error('註冊過程中出錯', error);
     });
-},
+    },
 
     signInWithGoogle() {
       const auth = getAuth(); // 確保已經正確初始化 Firebase Auth

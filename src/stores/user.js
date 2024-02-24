@@ -5,7 +5,7 @@ export default defineStore('userStore', {
   // 對應 data
   state: () => ({
     token: '',
-    userData: {}, //補php
+    memberInfo: {},
     userProfileImage: null,
   }),
 
@@ -16,12 +16,12 @@ export default defineStore('userStore', {
         this.updateUserProfileImage(userProfileImage);
       }
     },
-    updateUserProfileImage(imageUrl) {
-      this.userProfileImage = imageUrl;
-      // 在這裡將用户頭像 URL 保存到 localStorage
-      localStorage.setItem('userProfileImage', imageUrl);
-      console.log('Profile image updated:', imageUrl);
-    },
+    // updateUserProfileImage(imageUrl) {
+    //   this.userProfileImage = imageUrl;
+    //   // 在這裡將用户頭像 URL 保存到 localStorage
+    //   localStorage.setItem('userProfileImage', imageUrl);
+    //   console.log('Profile image updated:', imageUrl);
+    // },
     checkLogin() {
       const storageToken = localStorage.getItem('token');
       if (this.token) {
@@ -45,24 +45,23 @@ export default defineStore('userStore', {
       this.name = payload;
     },
     updateUserData(data) {
-      // 將 API 返回的數據賦值給 memberInfo
+      console.log('Received data:', data); // 確認收到的數據
+      if (data) {
+        // 如果 data 不是 undefined 或 null，則更新 memberInfo
         this.memberInfo = {
-          no: data.member_id,
+          member_id: data.member_id,
           name: data.name,
-          email: data.email,
           phone: data.phone,
-          address: data.address
-          // name: val.mem_name,
-          // email驗證狀況1|0
-          // validation: val.mem_validation,
-          // 封鎖狀況1|0
-          // state: val.mem_state,
-          // 如果有權限可以把權限角色記載資料庫
-          // role: 'editor'
-      };
-      localStorage.setItem('userData', JSON.stringify(this.userData))
-      console.log('Updated userData:', this.userData);
-    },
+          email: data.email,
+          address: data.address,
+        };
+        // localStorage.setItem('userData', JSON.stringify(this.memberInfo));
+        console.log('Updated userData:', this.memberInfo);
+      } else {
+        // 如果 data 是 undefined 或 null，則在這裡處理錯誤
+        console.error('Received undefined data');
+      }
+    },   
     checkUserData(){
       const storageUserData = localStorage.getItem('userData')
       console.log(Object.keys(this.userData).length);
@@ -77,9 +76,10 @@ export default defineStore('userStore', {
     },
     logout() {
       this.token = '';
+      // this.userData = '';
       localStorage.removeItem('token');
-      localStorage.removeItem('userProfileImage');
-      this.userProfileImage = null;
+      // localStorage.removeItem('userData');
+      // this.userProfileImage = null;
     },
   },
 });
