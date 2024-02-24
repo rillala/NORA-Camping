@@ -22,7 +22,6 @@ export default {
         address: '',
         note: '',
         totalWithPayWay: 0,
-        orderId: [],
       },
       creditCardParts: ['', '', '', ''], // 信用卡號碼
       expInput: '',
@@ -39,7 +38,7 @@ export default {
         sessionStorage.setItem('orderInfo', JSON.stringify(this.orderInfo));
         // 跳轉到下一頁，你可以使用 this.$router.push
       });
-      
+
       const orderData = {
         member_id: this.orderInfo.memberId,//待修正
         name: this.orderInfo.name,
@@ -51,17 +50,22 @@ export default {
         total_amount: this.totalWithPayWay,
         order_status: '待出貨', // 預設值
         comment: this.orderInfo.note,
+        delivery_fee: this.orderInfo.payWay,
         cartList: this.cartList // 包含購物車商品的列表
-    };
+      };
 
-    // 發送到後端
-    apiInstance.post('/addOrder.php', orderData)
+      // 發送到後端
+      apiInstance.post('/addOrder.php', orderData)
         .then(response => {
-            console.log(response.data); // 處理響應
+          console.log(response.data); // 處理響應
+          sessionStorage.removeItem('orderInfo');
         })
-        this.$router.replace('/ShopOrderSucess')
+      localStorage.removeItem('cartList');
+      this.$router.replace('/ShopOrderSucess')
         .catch(error => {
           console.error(error); // 處理錯誤
+          sessionStorage.removeItem('orderInfo');
+          localStorage.removeItem('cartList');
         });
     },
     confirmCarry(way) {
@@ -102,7 +106,7 @@ export default {
   {{ this.orderInfo }}
   <br>
   <br>
-  {{ this.cartList }}
+  {{ this.cartList }}{{ this.orderInfo.payWay }}
   <section class="shop-payment-wrap">
     <div class="shop-payment-container">
       <form class="shop-payment-forms">
@@ -344,4 +348,5 @@ textarea {
   padding: 4px;
   border: 2px solid $dark-gray;
   border-radius: 5px;
-}</style>
+}
+</style>
