@@ -12,14 +12,16 @@ export default {
   components: {
     productCard,
     DropDownBtn
-},
+  },
   data() {
     return {
       count: 10,
       sourceData: [],
       search: '',
-      groupOptions: ['選擇類別', 'Nora文青生活','Nora品牌服飾','Nora營地用品'],
-      priceOptions: ['選擇排序','價格高到低','價格低到高'],
+      groupOptions: ['選擇類別', 'NORA文青生活', 'NORA品牌服飾', 'NORA營地用品'],
+      priceOptions: ['選擇排序', '價格高到低', '價格低到高'],
+      currentPage: 1, // 當前頁碼
+      itemsPerPage: 4, // 每頁顯示的商品數量
     };
   },
 
@@ -43,6 +45,24 @@ export default {
     nodata() {
       return this.productCount === 0;
     },
+    // 計算總頁數
+    totalPages() {
+      return Math.ceil(this.displayData.length / this.itemsPerPage);
+    },
+    // 根據當前頁碼計算當前頁面顯示的商品
+    paginatedData() {
+      let start = (this.currentPage - 1) * this.itemsPerPage;
+      let end = start + this.itemsPerPage;
+      return this.displayData.slice(start, end);
+    },
+    // 生成分頁按鈕的頁碼
+    pages() {
+      let pages = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+      return pages;
+    },
   },
   created() {
     //建立好vue實體=>可以呼叫vue 裡面的東西
@@ -52,11 +72,11 @@ export default {
   },
 
   methods: {
-    async priceHighToLow(){
+    async priceHighToLow() {
       const productStore = useProductStore();
       await productStore.sortByPriceHighToLow();
     },
-    async priceLowToHigh(){
+    async priceLowToHigh() {
       const productStore = useProductStore();
       await productStore.sortByPriceLowToHigh();
     },
@@ -64,27 +84,32 @@ export default {
       const productStore = useProductStore();
       productStore.filterProducts(this.search);
     },
+    async handleFilterClick() {
+      await this.filterHandle(this.search); // 將 input 欄位中的資料作為參數傳遞給 filterHandle 函數
+    },
     handleSelection(type) {
-      // 在這裡觸發相應的事件
+      const productStore = useProductStore();
       if (type === '選擇類別') {
-        console.log('選擇類別')
-      } else if (type === 'Nora文青生活') {
-        // 處理 color 的事件
-        console.log('Nora文青生活');
-      }else if (type === '價格高到低'){
-        this.priceHighToLow()
-      }else if (type === '價格低到高'){
-        this.priceLowToHigh()
+        productStore.filterByCategory(type);
+      } else if (type === 'NORA文青生活' || type === 'NORA品牌服飾' || type === 'NORA營地用品') {
+        productStore.filterByCategory(type);
+      } else if (type === '價格高到低') {
+        this.priceHighToLow();
+      } else if (type === '價格低到高') {
+        this.priceLowToHigh();
       }
     },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    goToPage(pageNumber) {
+    this.currentPage = pageNumber;
+  },
   },
   watch: {
-    // 每当 search 改变时，这个函数就会执行
-    search(newSearch, oldsearch) {
-      console.log('new:' + newSearch);
-      console.log('old:' + oldsearch);
-      this.filterHandle();
-    },
     category: {
       handler(newcCategory) {
         console.log(newcCategory);
@@ -101,26 +126,30 @@ export default {
     <div class="shop-all-container">
       <div class="shop-all-banner">
         <h2>歡慶Nora商城開幕🎪</h2>
-        <input
-          type="text"
-          v-model.trim="search"
-          @input="filterHandle"
-          class="shop-searchbar"
-          placeholder="輸入商品關鍵字"
-        />
+        <div class="input-group">
+          <input type="text" v-model.trim="search" class="shop-searchbar" placeholder="輸入商品關鍵字" />
+          <button @click="handleFilterClick" type="button">確認</button>
+        </div>
       </div>
       <div class="shop-select-button">
         <DropDownBtn :options="groupOptions" @change="handleSelection" :default-value="'選擇類別'"></DropDownBtn>
         <DropDownBtn :options="priceOptions" @change="handleSelection" :default-value="'選擇排序'"></DropDownBtn>
       </div>
-      
+
 
 
       <div class="shop-all-list">
-        <template v-for="product in displayData" :key="product.id">
-          <productCard :item="product"></productCard>
+        <template v-for="product in paginatedData" :key="product.id">
           <productCard :item="product"></productCard>
         </template>
+      </div>
+      <div class="pagination-controls">
+        <button @click="prevPage" :disabled="currentPage <= 1">上一頁</button>
+        <!-- 數字分頁按鈕 -->
+        <button v-for="page in pages" :key="page" @click="goToPage(page)" :class="{ 'active': currentPage === page }">
+          {{ page }}
+        </button>
+        <button @click="nextPage" :disabled="currentPage >= totalPages">下一頁</button>
       </div>
     </div>
   </div>
@@ -128,4 +157,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/shopView.scss';
+.pagination-controls button.active {
+  color: white;
+  background-color: blue;
+}
 </style>

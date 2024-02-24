@@ -16,15 +16,7 @@ export default defineConfig({
   },
   plugins: [vue()],
   server: {
-    host: "0.0.0.0",
-    proxy: {
-      // 带选项写法：http://localhost:5173/api/bar.php -> https://tibamef2e.com/cgd103/g1/api/bar.php
-      "/api": {
-        target: "http://localhost/NORAapi",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
+    host: '0.0.0.0',
   },
   resolve: {
     alias: {

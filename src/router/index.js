@@ -74,7 +74,7 @@ const router = createRouter({
     {
       path: '/shopOrderSucess',
       name: 'shopOrderSucess',
-      component: () => import('../views/shop/ShopOrderSucess.vue'),
+      component: () => import('../views/shop/shopOrderSucess.vue'),
       meta: {
         title: '訂單完成 Order Sucess',
       },

@@ -103,14 +103,12 @@ $padding: 15px; // 定義外層padding
 
   .product-image {
     width: 100%;
+    // height: 300px;
     max-height: 50svh;
+    background: $white01;
     border: 5px solid $white01;
     border-radius: $radius - $padding;
     overflow: hidden;
-
-    @include tablet {
-      // height: 230px;
-    }
 
     img {
       width: 100%;
