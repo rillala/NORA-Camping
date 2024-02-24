@@ -129,7 +129,7 @@
           /><br />
           <a class="forget-psw">忘記密碼？</a><br/>
           <button class="main-btn" @click="login">會員登入</button><br />
-          <button class="sub-btn" @click.prevent="signInWithGoogle">以Google登入</button>
+          <!-- <button class="sub-btn" @click.prevent="signInWithGoogle">以Google登入</button> -->
           <button class="sub-btn" @click.prevent="signInWithLine">以Line登入</button>
         </form>
       </div>
@@ -143,8 +143,6 @@ import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
-// import { useFirebaseAuth } from 'vuefire';
-// import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 export default {
   props: { isOpen: Boolean },
@@ -156,9 +154,6 @@ export default {
       user_add: {
         name:'王小亮',
         email: 'ubud301@gmail.com',
-        // chd.noracamping@gmail.com
-        // psw: '83r5^_',
-        // pswConfirmation: '83r5^_',
         psw: '123456',
         pswConfirmation: '123456',
         receiveNews: true,
@@ -167,8 +162,6 @@ export default {
       user_enter: {
         email: 'ubud301@gmail.com',
         psw: '123456',
-        // email: 'sandra401120422@gmail.com',
-        // psw: 'tibame654',
       },
       showPrivacyPolicy: false,
       channel_id: '2003443299',
@@ -264,37 +257,7 @@ export default {
     },
 
     ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin', 'updateUserProfileImage']),
-    // register() {
-    //   if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
-    //     alert('密碼不一致');
-    //     return; // 中止註冊流程
-    //   }
-    //   // 問題 檢查用戶是否勾選了同意隱私權政策
-    //   if (!this.user_add.agreeTerms) {
-    //     alert('請勾選隱私權政策');
-    //     console('請勾選隱私權政策');
-    //   }
-    //   // 在此處呼叫註冊 API 端點
-    //   axios
-    //     .post('https://fakestoreapi.com/auth/login', {
-    //       username: this.user_add.account,
-    //       password: this.user_add.pwd,
-    //     })
-    //     .then(response => {
-    //       if (response.data && response.data.token) {
-    //         this.updateToken(response.data.token); // 更新 token
-    //         console.log('register success', response.data.token);
-    //         this.closeLightbox();
-    //         alert('註冊成功。'); // 註冊成功後，關閉燈箱
-    //         // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
-    //       }
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //       // 處理註冊失敗的回應
-    //       alert('註冊失敗，請稍後再試。');
-    //     });
-    // },
+    
     register() {
     // 檢查密碼是否一致
     if (!this.user_add.agreeTerms) {
@@ -331,24 +294,6 @@ export default {
     }).catch(error => {
         console.error('註冊過程中出錯', error);
     });
-    },
-
-    signInWithGoogle() {
-      const auth = getAuth(); // 確保已經正確初始化 Firebase Auth
-      const googleProvider = new GoogleAuthProvider();
-      signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        // 此處獲取用戶令牌
-        result.user.getIdToken().then((token) => {
-          console.log('Token:', token); // 顯示令牌
-          alert('Google登入成功');
-          this.updateToken(token); // 更新 token
-          this.closeLightbox(); // 登入成功後，關閉燈箱
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
     },
     signInWithLine(){
         // 根據指定的 client_id、redirect_uri、scope 等參數組合出一個 LINE 登入的連結
