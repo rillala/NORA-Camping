@@ -9,6 +9,10 @@ import loading from '@/components/loading.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+// import { auth } from "@/firebase/config";
+// import { db } from "@/firebase/config";
+// import { onSnapshot, collection, query, where } from "firebase/firestore";
+
 const isLoading = ref(false);
 const router = useRouter();
 

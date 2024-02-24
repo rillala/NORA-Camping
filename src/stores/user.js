@@ -5,10 +5,23 @@ export default defineStore('userStore', {
   // 對應 data
   state: () => ({
     token: '',
-    userData: {}, //補php
+    memberInfo: {},
+    userProfileImage: null,
   }),
 
   actions: {
+    initializeUserState() {
+      const userProfileImage = localStorage.getItem('userProfileImage');
+      if (userProfileImage) {
+        this.updateUserProfileImage(userProfileImage);
+      }
+    },
+    // updateUserProfileImage(imageUrl) {
+    //   this.userProfileImage = imageUrl;
+    //   // 在這裡將用户頭像 URL 保存到 localStorage
+    //   localStorage.setItem('userProfileImage', imageUrl);
+    //   console.log('Profile image updated:', imageUrl);
+    // },
     checkLogin() {
       const storageToken = localStorage.getItem('token');
       if (this.token) {
@@ -30,6 +43,43 @@ export default defineStore('userStore', {
     },
     updateName(payload) {
       this.name = payload;
+    },
+    updateUserData(data) {
+      console.log('Received data:', data); // 確認收到的數據
+      if (data) {
+        // 如果 data 不是 undefined 或 null，則更新 memberInfo
+        this.memberInfo = {
+          member_id: data.member_id,
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          address: data.address,
+        };
+        // localStorage.setItem('userData', JSON.stringify(this.memberInfo));
+        console.log('Updated userData:', this.memberInfo);
+      } else {
+        // 如果 data 是 undefined 或 null，則在這裡處理錯誤
+        console.error('Received undefined data');
+      }
+    },   
+    checkUserData(){
+      const storageUserData = localStorage.getItem('userData')
+      console.log(Object.keys(this.userData).length);
+      if(Object.keys(this.userData).length > 0){
+          return this.userData
+      }else if(storageUserData){
+          this.userData = JSON.parse(storageUserData)
+          return storageUserData
+      }else{
+          return ''
+      }
+    },
+    logout() {
+      this.token = '';
+      // this.userData = '';
+      localStorage.removeItem('token');
+      // localStorage.removeItem('userData');
+      // this.userProfileImage = null;
     },
   },
 });
