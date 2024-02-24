@@ -4,8 +4,7 @@
       <div
         v-if="showPrivacyPolicy"
         class="privacy-policy-lightbox"
-        @click="closePrivacy()"
-        v-on:click.stop
+        @click="closePrivacy"
       >
         <div class="privacy-policy-content">
           <p class="privacy-message">
@@ -55,18 +54,27 @@
         <form v-if="showRegisterForm" action="javascript:void(0);">
           <input
             type="text"
+            placeholder="請輸入名字"
+            v-model="user_add.name"
+            autocomplete="name"
+          /><br />
+          <input
+            type="text"
             placeholder="請輸入信箱"
-            v-model="user_add.account"
+            v-model="user_add.email"
+            autocomplete="email"
           /><br />
           <input
             type="password"
             placeholder="請輸入密碼"
-            v-model="user_add.pwd"
+            v-model="user_add.psw"
+            autocomplete="password"
           /><br />
           <input
             type="password"
             placeholder="再次輸入密碼"
-            v-model="user_add.pwdConfirmation"
+            v-model="user_add.pswConfirmation"
+            autocomplete="new-password"
           /><br />
           <p v-if="passwordMismatch" class="password-ismatch">密碼不一致</p>
 
@@ -110,16 +118,19 @@
           <input
             type="text"
             placeholder="請輸入信箱"
-            v-model="user_enter.account"
+            v-model="user_enter.email"
+            autocomplete="new-password"
           /><br />
           <input
             type="password"
             placeholder="請輸入密碼"
-            v-model="user_enter.pwd"
+            v-model="user_enter.psw"
+            autocomplete="new-password"
           /><br />
-          <a class="forget-psw">忘記密碼？</a><br />
-          <button class="main-btn" @click="signin">會員登入</button><br />
-          <button class="sub-btn">以Google登入</button>
+          <a class="forget-psw">忘記密碼？</a><br/>
+          <button class="main-btn" @click="login">會員登入</button><br />
+          <!-- <button class="sub-btn" @click.prevent="signInWithGoogle">以Google登入</button> -->
+          <button class="sub-btn" @click.prevent="signInWithLine">以Line登入</button>
         </form>
       </div>
     </div>
@@ -127,10 +138,12 @@
 </template>
 
 <script>
-// import { RouterLink, RouterView } from 'vue-router';
+import qs from 'qs';
 import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
+import apiInstance from '@/plugins/auth';
+
 export default {
   props: { isOpen: Boolean },
 
@@ -139,31 +152,26 @@ export default {
       passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        account: 'mor_2314',
-        pwd: '83r5^_',
-        pwdConfirmation: '',
+        name:'王小亮',
+        email: 'ubud301@gmail.com',
+        psw: '123456',
+        pswConfirmation: '123456',
         receiveNews: true,
         agreeTerms: true,
       },
       user_enter: {
-        account: 'mor_2314',
-        pwd: '83r5^_',
+        email: 'ubud301@gmail.com',
+        psw: '123456',
       },
       showPrivacyPolicy: false,
+      channel_id: '2003443299',
+      redirect_uri: 'http://localhost:5173',
+      client_secret: '6944f7d50fb550267d1488e66d7f4d90',
     };
-  },
-  created() {
-    // 判斷有沒有登入過，如果沒有token等同於沒有登入
-    const user = userStore();
-    user.checkLogin();
-    // if (user) {
-    //   //有登入資訊轉到首頁
-    //   this.$router.push('/');
-    // }
   },
   watch: {
     isOpen(newVal) {
-      console.log(`isOpen changed to ${newVal}`);
+      // console.log(`isOpen changed to ${newVal}`);
     },
     // 'user_add.pwd'(newPassword) {
     //   this.passwordMismatch = newPassword !== this.user_add.pwdConfirmation;
@@ -172,89 +180,185 @@ export default {
     //   this.passwordMismatch = newConfirmation !== this.user_add.pwd;
     // },
   },
-
+  async mounted(){
+    // 使用 window.location.search 和 urlParams 獲取當前網頁 URL 中的查詢參數
+    const queryString = window.location.search;
+    if(queryString){
+        const urlParams = new URLSearchParams(queryString);
+        // 使用 get 方法從 urlParams 實例中獲取名為 code 的參數的值。(授權碼，通常由用戶在身份驗證流程中獲得)
+        // 如果查詢字串中存在名為 code 的參數，code 變數將被賦值為該參數的值；否則，code 變數將為 null。
+        const code = urlParams.get('code');
+        await this.lineLoginRedirect(code)
+    }else{
+        // 判斷有沒有登入過，如果沒有token等同於沒有登入
+      const user = this.checkLogin()
+      // console.log(user);
+      if(user){
+        //有登入資訊轉到首頁
+        this.$router.push('/')
+      }
+    }
+  },
   methods: {
     closePrivacy() {
       this.showPrivacyPolicy = false;
     },
     closeLightbox() {
-      console.log('closeLightbox');
       this.$emit('close');
-      // alert()
-      // if (this.isOpen) {
-      //   this.isOpen = false;
-      // }
     },
-    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
-    signin() {
-      this.updateToken(123);
-      console.log('login');
-      //關閉燈箱
-      // this.isOpen = false;
+    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin', 'updateUserProfileImage']),
+    // login() {
+    //   this.updateToken(123);
+    //   console.log('login');
 
-      axios
-        .post('https://fakestoreapi.com/auth/login', {
-          username: this.user_enter.account,
-          password: this.user_enter.pwd,
-        })
-        .then(response => {
-          if (response.data && response.data.token) {
-            this.updateToken(response.data.token); // 更新 token
-            console.log('login success', response.data.token);
-            this.closeLightbox(); // 登入成功後，關閉燈箱
-            // this.$router.push('/membercenter'); // 跳轉到會員中心頁面
-          }
-        })
-        .catch(error => {
-          console.error(error);
-
-          if (error.response && error.response.status === 401) {
-            alert('帳號密碼有誤請再確認.');
-          } else {
-            alert(
-              'An error occurred while logging in. Please try again later.',
-            );
-          }
-          // 調用pinia的updateToken
-          // 將/src/stores/user裡的token清除
-          this.updateToken('');
-        });
+    //   axios
+    //     .post('https://fakestoreapi.com/auth/login', {
+    //       username: this.user_enter.account,
+    //       password: this.user_enter.pwd,
+    //     })
+    //     .then(response => {
+    //       if (response.data && response.data.token) {
+    //         this.updateToken(response.data.token); // 更新 token
+    //         console.log('login success', response.data.token);
+    //         this.closeLightbox(); // 登入成功後，關閉燈箱
+    //         // this.$router.push('/membercenter'); // 跳轉到會員中心頁面
+    //       }
+    //     })
+    login(){
+      const bodyFormData = new FormData();
+      bodyFormData.append('email', this.user_enter.email);
+      bodyFormData.append('psw', this.user_enter.psw);
+      apiInstance({
+          method: 'post',
+          url: '/login_JWT.php',
+          headers: { "Content-Type": "multipart/form-data" },
+          data: bodyFormData
+      }).then(res => {
+        // console.log(res)
+        if (res && res.data && res.data.error === false) {
+        // 如果後端沒有返回錯誤，則處理登入成功的情況
+          alert(res.data.message);
+        localStorage.setItem('token', res.data.token);
+        this.updateToken(res.data.token);
+        this.closeLightbox();
+        // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
+      } else if (res && res.data && res.data.error === true) {
+        // 如果後端返回了錯誤，則處理登入失敗的情況
+        
+        alert(res.data.message);
+      } else {
+      //   如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
+      console.log('Unexpected format:', res.data);
+      alert('登入失敗：無法解析伺服器響應。');
+      }
+    }).catch(error => {
+        console.error('註冊過程中出錯', error);
+    });
     },
 
-    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin']),
+    ...mapActions(userStore, ['updateToken', 'updateName', 'checkLogin', 'updateUserProfileImage']),
+    
     register() {
-      if (this.user_add.pwd !== this.user_add.pwdConfirmation) {
-        alert('密碼不一致');
-        return; // 中止註冊流程
-      }
-      // 問題 檢查用戶是否勾選了同意隱私權政策
-      if (!this.user_add.agreeTerms) {
-        alert('請勾選隱私權政策');
-        console('請勾選隱私權政策');
-      }
-      // 在此處呼叫註冊 API 端點
-      axios
-        .post('https://fakestoreapi.com/auth/login', {
-          username: this.user_add.account,
-          password: this.user_add.pwd,
-        })
-        .then(response => {
-          if (response.data && response.data.token) {
-            this.updateToken(response.data.token); // 更新 token
-            console.log('register success', response.data.token);
-            this.closeLightbox();
-            alert('註冊成功。'); // 註冊成功後，關閉燈箱
-            // 可添加其他註冊成功後的處理邏輯，例如跳轉到會員中心頁面
-          }
-        })
-        .catch(error => {
-          console.error(error);
-          // 處理註冊失敗的回應
-          alert('註冊失敗，請稍後再試。');
-        });
+    // 檢查密碼是否一致
+    if (!this.user_add.agreeTerms) {
+      alert('請勾選隱私權政策');
+      return;
+    }
+
+    if (this.user_add.psw !== this.user_add.pswConfirmation) {
+      alert('密碼和確認密碼不匹配');
+      return;
+    }
+
+    // 創建 FormData 對象
+    const bodyFormData = new FormData();
+    bodyFormData.append('name', this.user_add.name);
+    bodyFormData.append('email', this.user_add.email);
+    bodyFormData.append('psw', this.user_add.psw);
+
+    // 發送請求到後端註冊 API
+    apiInstance({
+        method: 'post',
+        url: '/register.php', // 註冊 API 端點
+        headers: { "Content-Type": "multipart/form-data" },
+        data: bodyFormData
+    }).then(res => {
+      if (res.data.error) {
+        // 如果後端返回錯誤，顯示錯誤訊息
+        alert(`註冊失敗: ${res.data.message}`);
+      } else {
+        // 註冊成功的處理邏輯
+        alert(`${res.data.message}`);
+      // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
+    }
+    }).catch(error => {
+        console.error('註冊過程中出錯', error);
+    });
     },
-  },
-};
+    signInWithLine(){
+        // 根據指定的 client_id、redirect_uri、scope 等參數組合出一個 LINE 登入的連結
+        const link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${this.channel_id}&redirect_uri=${this.redirect_uri}&state=login&scope=openid%20profile`;
+        // 將頁面重新導向到該連結
+        window.location.href = link;
+    },
+    async lineLoginRedirect(code) {
+    try {
+      const tokenResponse = await axios.post('https://api.line.me/oauth2/v2.1/token', qs.stringify({
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: this.redirect_uri,
+        client_id: this.channel_id,
+        client_secret: this.client_secret
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+      const accessToken = tokenResponse.data.access_token;
+      const idToken = tokenResponse.data.id_token;
+      
+      const userInfoResponse = await axios.post('https://api.line.me/oauth2/v2.1/verify', qs.stringify({
+        id_token: idToken,
+        client_id: this.channel_id
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + accessToken
+        }
+      });
+      console.log(userInfoResponse.data);
+        const lineUserId = userInfoResponse.data.sub;
+        const lineNickname = userInfoResponse.data.name;
+        const lineUSerImgURL = userInfoResponse.data.picture;
+        const lineAccountTypeID = 1;
+
+        //更新token;
+        localStorage.setItem('token', accessToken);
+        this.updateToken(accessToken);
+        
+        // 這邊寫回資料庫
+        const response = await axios.post(`http://localhost/NoraApi/phps/lineLogin.php`, {
+            user_id: lineUserId,
+            name: lineNickname,
+            photo: lineUSerImgURL,
+            //accountTypeID: lineAccountTypeID
+        });
+        // this.updateToken(lineUserId)
+
+        // 沒有API先使用寫死資料
+        // this.updateUserData({
+        //     mem_name: lineNickname,
+        //     mem_validation: 1,
+        //     mem_state: 1
+        // })
+        this.$router.push('/')
+    } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>

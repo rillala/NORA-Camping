@@ -1,19 +1,19 @@
 <script>
 export default {
     name: "dogAnimation",
-    
+
 
 };
 </script>
 
 <template>
     <div class="Dog-animation">
-        <img class="dogBody" src="@/assets/image/homeView/animation/DOG/dogBody.png">
-        <img class="dogLeg1" src="@/assets/image/homeView/animation/DOG/dogLeg1.png">
-        <img class="dogLeg2" src="@/assets/image/homeView/animation/DOG/dogLeg2.png">
-        <img class="dogLeg3" src="@/assets/image/homeView/animation/DOG/dogLeg3.png">
-        <img class="dogLeg4" src="@/assets/image/homeView/animation/DOG/dogLeg4.png">
-        <img class="dogTail" src="@/assets/image/homeView/animation/DOG/dogTail.png">
+        <img class="dogBody" src="@/assets/image/homeView/animation/DOG/dogBody.png" draggable="false">
+        <img class="dogLeg1" src="@/assets/image/homeView/animation/DOG/dogLeg1.png" draggable="false">
+        <img class="dogLeg2" src="@/assets/image/homeView/animation/DOG/dogLeg2.png" draggable="false">
+        <img class="dogLeg3" src="@/assets/image/homeView/animation/DOG/dogLeg3.png" draggable="false">
+        <img class="dogLeg4" src="@/assets/image/homeView/animation/DOG/dogLeg4.png" draggable="false">
+        <img class="dogTail" src="@/assets/image/homeView/animation/DOG/dogTail.png" draggable="false">
     </div>
 </template>
 
