@@ -3,12 +3,15 @@ export default {
     name: 'newsImgGallery',
     data() {
         return {
-            smalls: [
-                { src: 'Camping_dog_lake.jpg', alt: '消息圖片1' },
-                { src: 'knowingnora-pic.jpg', alt: '消息圖片2' },
-                { src: 'shelter.jpg', alt: '消息圖片3' },
-                // 小圖的路徑
-            ],
+            // smalls: [
+            //     { src: 'Camping_dog_lake.jpg', alt: '消息圖片1' },
+            //     { src: 'knowingnora-pic.jpg', alt: '消息圖片2' },
+            //     { src: 'shelter.jpg', alt: '消息圖片3' },
+            //     // 小圖的路徑
+            // ],
+            small1: { src: 'Camping_dog_lake.jpg', alt: '消息圖片1' },
+            small2: { src: 'knowingnora-pic.jpg', alt: '消息圖片2' },
+            small3: { src: 'shelter.jpg', alt: '消息圖片3' },
             large: { src: '', alt: '' },
             //大圖連結
         };
@@ -17,20 +20,27 @@ export default {
         getNewsImgUrl(paths) {
             return new URL(`../../assets/image/homeView/${paths}`, import.meta.url).href
         },
-        showLarge(index) {
-            // 點擊小圖片時，將大圖片更新為相應的小圖片
-            this.large = { ...this.smalls[index] };
-            //複製一個新的陣列
+        // showLarge(index) {
+        //     // 點擊小圖片時，將大圖片更新為相應的小圖片
+        //     this.large = { ...this.smalls[index] };
+        //     //複製一個新的陣列
+        // },
+        showLarge(image) {
+            this.large = image
         },
         init() {
         },
     },
     mounted() {
-        if (this.smalls.length > 0) {
-            this.showLarge(0);
+        // if (this.smalls.length > 0) {
+        //     this.showLarge(0);
+        // }
+        // this.init();
+        // // 將第一張照片設置為初始化
+        if (this.small1.src != '') {
+            this.showLarge(this.small1);
         }
         this.init();
-        // 將第一張照片設置為初始化
     },
 };
 </script>
@@ -42,8 +52,11 @@ export default {
         </div>
 
         <div class="images-row">
-            <img v-for="(small, index) in  smalls " :src=getNewsImgUrl(small.src) :alt="small.alt" @click="showLarge(index)"
-                class="small" :key="index" />
+            <!-- <img v-for="(small, index) in  smalls " :src=getNewsImgUrl(small.src) :alt="small.alt" @click="showLarge(index)"
+                class="small" :key="index" /> -->
+            <img :src="getNewsImgUrl(small1.src)" :alt="small1.alt" @click="showLarge(this.small1)" class="small">
+            <img :src="getNewsImgUrl(small2.src)" :alt="small2.alt" @click="showLarge(this.small2)" class="small">
+            <img :src="getNewsImgUrl(small3.src)" :alt="small3.alt" @click="showLarge(this.small3)" class="small">
         </div>
     </div>
 </template>

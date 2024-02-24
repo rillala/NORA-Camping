@@ -18,6 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .Cat-animation {
+    width: 100%;
     position: relative;
     z-index: 2;
 }
