@@ -167,6 +167,7 @@ export default {
 
     //最新消息圖片路徑
     getDBImage(paths){
+      console.log(paths);
       return getDBImage(paths);
     },
 

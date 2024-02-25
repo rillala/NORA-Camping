@@ -50,9 +50,9 @@ export default {
     ],
     methods: {
         //這邊要改php那邊的圖片路徑
-        // getNewsImgUrl(paths) {
-        //     return new URL(`../../assets/image/homeView/${paths}`, import.meta.url).href
-        // },
+        getNewsImgUrl(paths) {
+            return new URL(`../../assets/image/homeView/${paths}`, import.meta.url).href
+        },
         getDBImage(paths){
             return getDBImage(paths);
         },
@@ -107,13 +107,13 @@ export default {
             </div>
         </div> -->
         <div class="News-img" v-show="this.img1 != ''">
-            <!-- <div class="large-images">
-                <img :src=getNewsImgUrl(large.src) :alt="large.alt" id="large" />
-            </div> -->
+            <div class="large-images">
+                <img :src=getNewsImgUrl(this.large) :alt="large" id="large" />
+            </div>
             <div class="images-row">
-                <img :src="getDBImage(this.img1)" :alt="img3.alt" @click="changeLargeImage(this.img1)"
+                <img :src="getDBImage(this.img1)" :alt="img1.alt" @click="changeLargeImage(this.img1)"
                     class="small">
-                <img :src="getDBImage(this.img2)" :alt="img3.alt" @click="changeLargeImage(this.img2)"
+                <img :src="getDBImage(this.img2)" :alt="img2.alt" @click="changeLargeImage(this.img2)"
                     class="small" v-if="this.img2 != ''">
                 <img :src="getDBImage(this.img3)" :alt="img3.alt" @click="changeLargeImage(this.img3)"
                     class="small" v-if="this.img3 != ''">
