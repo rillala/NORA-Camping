@@ -1,7 +1,7 @@
 <script>
 //測試用大圖小圖組件
 // import newsImgGallery from "@/components/home/newsImgGallery.vue"
-import { getDBImage } from "@/assets/js/common";
+// import { getDBImage } from "@/assets/js/common";
 
 export default {
     name: 'newsArticle',
@@ -53,9 +53,10 @@ export default {
         getNewsImgUrl(paths) {
             return new URL(`../../assets/image/homeView/${paths}`, import.meta.url).href
         },
-        getDBImage(paths){
-            return getDBImage(paths);
-        },
+        // getDBImage(paths){
+        //     console.log(paths);
+        //     return getDBImage(paths);
+        // },
 
         // changeLargeImage(index) {
         //     this.$emit('update:large', { ...this.smalls[index] });
@@ -111,12 +112,12 @@ export default {
                 <img :src=getNewsImgUrl(this.large) :alt="large" id="large" />
             </div>
             <div class="images-row">
-                <img :src="getDBImage(this.img1)" :alt="img1.alt" @click="changeLargeImage(this.img1)"
+                <img :src="img1" :alt="img1.alt" @click="changeLargeImage(img1)"
                     class="small">
-                <img :src="getDBImage(this.img2)" :alt="img2.alt" @click="changeLargeImage(this.img2)"
-                    class="small" v-if="this.img2 != ''">
-                <img :src="getDBImage(this.img3)" :alt="img3.alt" @click="changeLargeImage(this.img3)"
-                    class="small" v-if="this.img3 != ''">
+                <img :src="img2" :alt="img2.alt" @click="changeLargeImage(img2)"
+                    class="small" v-if="img2 != ''">
+                <img :src="img3" :alt="img3.alt" @click="changeLargeImage(img3)"
+                    class="small" v-if="img3 != ''">
             </div>
         </div>
         <!-- <div class="News-img" v-show="smalls.length > 0">
