@@ -10,6 +10,7 @@ import catAnimation from '@/components/home/catAnimation.vue';
 import newsArticle from '@/components/home/newsArticle.vue';
 import productCard from '@/components/shop/productCard.vue';
 import { gsap } from 'gsap';
+import { getDBImage } from "@/assets/js/common";
 
 
 export default {
@@ -39,18 +40,19 @@ export default {
 
       //最新消息搜尋和內容
       search: '',
-      newsContent: [
-        {
-          newsTitle: '',
-          newsDate: '',
-          newsText:
-            '',
-          small1: { src: '', alt: '消息圖片1' },
-          small2: { src: '', alt: '消息圖片2' },
-          small3: { src: '', alt: '消息圖片3' },
-          large: { src: '', alt: '' },
-        },
-      ],
+      // newsContent: [
+      //   {
+      //     newsTitle: '',
+      //     newsDate: '',
+      //     newsText:
+      //       '',
+      //     small1: { src: '', alt: '消息圖片1' },
+      //     small2: { src: '', alt: '消息圖片2' },
+      //     small3: { src: '', alt: '消息圖片3' },
+      //     large: { src: '', alt: '' },
+      //   },
+      // ],
+      newsList:[], //放資料庫的資料
       newProds: [
         {
           prodPicSrc: 'single8.png',
@@ -99,7 +101,7 @@ export default {
     //觸發章節觀察
     this.sectionObserve();
     //觸發最新消息讀取資料庫
-    this.getNewsPhp()
+    this.getNewsPhp();
   },
   computed: {
     wrapLeft() {
@@ -151,15 +153,22 @@ export default {
     //讀取最新消息
     getNewsPhp() {
       apiInstance
-        .get("./getNews.php")
+        .get("./getNewsForHomeView.php")
         .then((response) => {
           this.newsList = response.data;
+          // this.newsContent = response.data;
+          console.log(this.newsList);
+          // console.log(this.newsContent);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     },
 
+    //最新消息圖片路徑
+    getDBImage(paths){
+      return getDBImage(paths);
+    },
 
     //暫時借用的圖片路徑
     getNewProdImageUrl(paths) {
@@ -306,10 +315,16 @@ export default {
           <span v-if="search !== ''">正在搜尋：</span>{{ search }}
         </div>
       </div>
-      <div class="News-viewport">
+      <!-- <div class="News-viewport">
         <newsArticle class="News-article" v-for="(setArticle, index) in newsContent" :key="setArticle.newsTitle"
           :newsTitle="setArticle.newsTitle" :newsDate="setArticle.newsDate" :newsText="setArticle.newsText"
           :small1="setArticle.small1" :small2="setArticle.small2" :small3="setArticle.small3"
+          v-model:large="setArticle.large" />
+      </div> -->
+      <div class="News-viewport">
+        <newsArticle class="News-article" v-for="(setArticle, index) in newsList" :key="index"
+          :title="setArticle.title" :publish_date="setArticle.publish_date" :content="setArticle.content"
+          :img1="getDBImage(setArticle.img1)" :img2="getDBImage(setArticle.img2)" :img3="getDBImage(setArticle.img3)"
           v-model:large="setArticle.large" />
       </div>
     </div>
