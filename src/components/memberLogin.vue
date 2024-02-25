@@ -152,15 +152,15 @@ export default {
       passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        name:'王小亮',
-        email: 'ubud301@gmail.com',
-        psw: '123456',
-        pswConfirmation: '123456',
+        name:'',
+        email: '',
+        psw: '',
+        pswConfirmation: '',
         receiveNews: true,
         agreeTerms: true,
       },
       user_enter: {
-        email: 'ubud301@gmail.com',
+        email: 'coconut5529@yahoo.com.tw',
         psw: '123456',
       },
       showPrivacyPolicy: false,
@@ -289,6 +289,7 @@ export default {
       } else {
         // 註冊成功的處理邏輯
         alert(`${res.data.message}`);
+        this.closeLightbox(); // 登入成功後，關閉燈箱
       // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
     }
     }).catch(error => {
