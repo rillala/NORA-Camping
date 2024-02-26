@@ -49,10 +49,6 @@ export default {
         "large",
     ],
     methods: {
-        //這邊要改php那邊的圖片路徑
-        getNewsImgUrl(paths) {
-            return new URL(`../../assets/image/homeView/${paths}`, import.meta.url).href
-        },
         // getDBImage(paths){
         //     console.log(paths);
         //     return getDBImage(paths);
@@ -109,7 +105,7 @@ export default {
         </div> -->
         <div class="News-img" v-show="this.img1 != ''">
             <div class="large-images">
-                <img :src=getNewsImgUrl(this.large) :alt="large" id="large" />
+                <img :src="large" :alt="large" id="large" />
             </div>
             <div class="images-row">
                 <img :src="img1" :alt="img1.alt" @click="changeLargeImage(img1)"
