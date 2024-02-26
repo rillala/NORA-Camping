@@ -542,23 +542,28 @@ export default {
     changeToCalendarAttr(remainData) {
       // 計算每個日期的房間總數
       const roomCounts = remainData.map(item => {
-        const date = item.date;
-        // 根据 chosenZone 计算当日所有房型的剩余总数
-        const rooms = Object.keys(item).reduce((sum, key) => {
-          if (key === 'date') {
-            return sum; // 如果是日期键，跳过
+        const date = item.date; // 保持日期值
+        // 初始化房间总数为 0
+        let rooms = 0;
+        // 遍历对象中的每个键
+        Object.keys(item).forEach(key => {
+          if (key !== 'date') {
+            // 排除日期键
+            const roomNumber = parseInt(key, 10); // 将键转换为数字
+            const roomCount = parseInt(item[key], 10); // 将房间数转换为数字
+            // 当 chosenZone 为 'cat' 且键值小于 4 时，累加房间数
+            if (this.chosenZone === 'cat' && roomNumber < 4) {
+              rooms += roomCount;
+            } else if (this.chosenZone === 'dog' && roomNumber > 3) {
+              rooms += roomCount;
+            }
           }
-          const keyAsNumber = parseInt(key, 10); // 将键转换为数字
-          // 根据 chosenZone 添加条件判断
-          if (this.chosenZone == 'cat') {
-            return keyAsNumber < 4 ? sum + item[key] : sum;
-          } else {
-            return keyAsNumber > 3 ? sum + item[key] : sum;
-          }
-        }, 0);
+        });
+        // 返回新的对象，包含累加后的房间总数和日期
         return { date, rooms };
       });
-      // console.log(roomCounts);
+      console.log('room data');
+      console.log(roomCounts);
 
       // 禁用的日期
       this.disabledDates = roomCounts
