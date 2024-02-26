@@ -33,7 +33,7 @@ onBeforeUnmount(() => {
 <template>
     <div class="qaWrap">
         <button @click="ansOpen()"><h4>{{props.title}}</h4></button>
-        <p v-if="ans  ">{{ props.ans }}</p>
+        <p v-if="ans">{{ props.ans }}</p>
     </div>
 </template>
 
