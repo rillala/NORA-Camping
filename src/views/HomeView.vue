@@ -53,6 +53,7 @@ export default {
       //   },
       // ],
       newsList: [], //放資料庫的資料
+      searchList: [], //搜尋後顯示資料
       newProds: [
         {
           prodPicSrc: 'single8.png',
@@ -140,6 +141,7 @@ export default {
         晴: this.getWeatherImageUrl(this.weatherMark[0]),
         多雲: this.getWeatherImageUrl(this.weatherMark[1]),
         陰: this.getWeatherImageUrl(this.weatherMark[2]),
+        陰有靄: this.getWeatherImageUrl(this.weatherMark[2]),
         雨: this.getWeatherImageUrl(this.weatherMark[3]),
       };
 
@@ -156,8 +158,10 @@ export default {
         .get("./getNewsForHomeView.php")
         .then((response) => {
           this.newsList = response.data;
+          this.searchList = this.newsList;
           // this.newsContent = response.data;
           console.log(this.newsList);
+          console.log(this.searchList);
           // console.log(this.newsContent);
         })
         .catch((error) => {
@@ -165,9 +169,21 @@ export default {
         });
     },
 
+    //最新消息搜尋
+    handleSearch() {
+      if (this.search === '') {
+        this.newsList = this.searchList;
+      } else {
+        this.newsList = this.searchList.filter((setArticle) => {
+          //搜尋範圍包含標題和內文
+          return setArticle.title.includes(this.search) || setArticle.content.includes(this.search);
+        })
+      }
+    },
+
     //最新消息圖片路徑
     getDBImage(paths) {
-      console.log(paths);
+      // console.log(paths);
       return getDBImage(paths);
     },
 
@@ -309,7 +325,7 @@ export default {
       <div class="News-Title-search">
         <h3>野良露營 X 最新消息</h3>
         <div class="search-input">
-          <input class="Search-bar" type="text" placeholder="搜尋關鍵字" v-model.trim="search" />
+          <input class="Search-bar" type="text" placeholder="搜尋關鍵字" v-model.trim="search" @input="handleSearch" />
           <span v-if="search !== ''">正在搜尋：</span>{{ search }}
         </div>
       </div>

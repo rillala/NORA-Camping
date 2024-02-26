@@ -2,6 +2,8 @@
 //測試用大圖小圖組件
 // import newsImgGallery from "@/components/home/newsImgGallery.vue"
 // import { getDBImage } from "@/assets/js/common";
+import { getDBImage } from "@/assets/js/common";
+
 
 export default {
     name: 'newsArticle',
@@ -39,7 +41,7 @@ export default {
     //         default: () => ({ src: '', alt: '' }),
     //     },
     // },
-    props :[
+    props: [
         "title",
         "publish_date",
         "content",
@@ -62,6 +64,10 @@ export default {
         },
         init() {
         },
+        getDBImage(paths) {
+            // console.log(paths);
+            return getDBImage(paths);
+        },
     },
     mounted() {
         // if (this.smalls.length > 0) {
@@ -73,10 +79,10 @@ export default {
         //     this.changeLargeImage(this.small1);
         // }
         // this.init();
-            if (this.img1 != '') {
-                this.changeLargeImage(this.img1);
-            }
-            this.init();
+        if (this.img1 != '') {
+            this.changeLargeImage(this.img1);
+        }
+        this.init();
     },
 };
 </script>
@@ -103,17 +109,16 @@ export default {
                     class="small" v-if="this.small3.src != ''">
             </div>
         </div> -->
-        <div class="News-img" v-show="this.img1 != ''">
+        <div class="News-img" v-if="this.img1 != getDBImage(null)">
             <div class="large-images">
                 <img :src="large" :alt="large" id="large" />
             </div>
             <div class="images-row">
-                <img :src="img1" :alt="img1.alt" @click="changeLargeImage(img1)"
-                    class="small">
-                <img :src="img2" :alt="img2.alt" @click="changeLargeImage(img2)"
-                    class="small" v-if="img2 != ''">
-                <img :src="img3" :alt="img3.alt" @click="changeLargeImage(img3)"
-                    class="small" v-if="img3 != ''">
+                <img :src="img1" :alt="img1.alt" @click="changeLargeImage(img1)" class="small">
+                <img :src="img2" :alt="img2.alt" @click="changeLargeImage(img2)" class="small"
+                    v-if="img2 != getDBImage(null)">
+                <img :src="img3" :alt="img3.alt" @click="changeLargeImage(img3)" class="small"
+                    v-if="img3 != getDBImage(null)">
             </div>
         </div>
         <!-- <div class="News-img" v-show="smalls.length > 0">
@@ -149,7 +154,9 @@ export default {
 }
 
 .News-text {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     width: fit-content;
     height: 100%;
     align-items: start;
