@@ -126,26 +126,24 @@ export default {
     async getMemberInfo() {
     try {
       const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
-      // console.log(token)
-      // 確保token存在
+      // 確保 token 存在
       if (!token) {
         console.error('Logout error: No token found');
         return;
       }
       // 發送請求到後端，獲取用戶資料
-      const response = await axios.get('/api/memberInfo', {
+      const response = await apiInstance.get('/memberInfo.php', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       // 更新 Pinia store 裡的使用者資料
-      console.log(response.data)
+      console.log(response.data);
       this.updateUserData(response.data);
-       //  調用 Pinia action 並傳入響應數據
+      // 調用 Pinia action 並傳入響應數據
     } catch (error) {
       console.error("Error fetching member info:", error);
       // 處理錯誤，可能需要在界面上顯示錯誤資訊
-    }
-  },
-
+      }
+    },
     logout() {
       // 調用pinia的updateToken
       this.updateToken('');
@@ -164,31 +162,34 @@ export default {
     };
     this.isEditing = true;
     },
+
     saveChanges() {
-      const token = localStorage.getItem('token'); // 從本地存儲獲取用戶的token
-      axios.put('/api/memberUpdate', {
-      member_id: this.memberInfo.member_id, // 假設這是您從store或初始化時獲得的會員ID
-      name: this.editMemberInfo.name,
-      phone: this.editMemberInfo.phone,
-      address: this.editMemberInfo.address
-  }, {
-      headers: { 'Authorization': `Bearer ${token}` }
+    const token = localStorage.getItem('token'); // 從本地存儲獲取用戶的token
+
+    // 使用 api 實例
+    apiInstance.post('/memberUpdate.php', {
+        member_id: this.memberInfo.member_id,
+        name: this.editMemberInfo.name,
+        phone: this.editMemberInfo.phone,
+        address: this.editMemberInfo.address
+    }, {
+        headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(response => {
-      // 更新成功
-      alert('資料更新成功');
-      console.log(response.data)
-      this.getMemberInfo()
-      // this.updateUserData(response.data); // 更新前端store或狀態
-      // this.memberInfo = {...this.editMemberInfo}
-      this.isEditing = false;
+        // 更新成功
+        alert('資料更新成功');
+        console.log(response.data)
+        this.getMemberInfo()
+        // this.updateUserData(response.data); // 更新前端store或狀態
+        // this.memberInfo = {...this.editMemberInfo}
+        this.isEditing = false;
     })
     .catch(error => {
-      // 處理錯誤
-      console.error("更新資料失敗:", error);
-      alert('資料更新失敗');
+        // 處理錯誤
+        console.error("更新資料失敗:", error);
+        alert('資料更新失敗');
     });
-  },
+    },
     // saveChanges() {
     //   // 在這裡處理保存變更的邏輯
     //   this.memberInfo = {...this.editMemberInfo};
