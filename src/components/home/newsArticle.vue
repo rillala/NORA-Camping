@@ -130,19 +130,47 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.News-article {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $white01;
+    border-radius: 30px;
+    margin-left: 65px;
+
+    @include desktop {
+        width: 100%;
+        flex-direction: row;
+        margin: 10px 0;
+        margin-left: 0;
+    }
+}
+
 .News-text {
     display: inline-block;
+    width: fit-content;
     height: 100%;
     align-items: start;
-    margin: 20px;
+    padding: 20px;
+
+    @include desktop {
+        width: 60%;
+    }
 
     .title {
-        margin: 10px 0;
+        width: 80vw;
+
+        @include desktop {
+            width: 100%;
+            margin: 10px 0;
+        }
     }
 }
 
 .News-img {
-    margin: 0 auto;
+    margin: 20px;
     width: fit-content;
 }
 
