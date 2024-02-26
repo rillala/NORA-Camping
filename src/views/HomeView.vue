@@ -93,7 +93,7 @@ export default {
         }
       ],
       curIndex: 0,
-      slideWidth: 200,
+      slideWidth: 300,
     };
   },
   mounted() {
@@ -347,13 +347,12 @@ export default {
 
   <section class="New-products bg-brown-2">
     <h2>野良選物X最新商品</h2>
-
     <!-- 桌機板左右按鈕 -->
     <div class="New-prod-btn">
       <button id="left" @click="moveLeft" :disabled="curIndex <= 0">
         <img src="@/assets/image/universe/left-arrow-btn.svg" alt="左按鈕">
       </button>
-      <button id="right" @click="moveRight" :disabled="curIndex >= 5">
+      <button id="right" @click="moveRight" :disabled="curIndex >= 2">
         <img src="@/assets/image/universe/right-arrow-btn.svg" alt="右按鈕">
       </button>
     </div>
