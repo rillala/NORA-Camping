@@ -160,7 +160,6 @@ export default {
         });
     },
 
-
     //暫時借用的圖片路徑
     getNewProdImageUrl(paths) {
       return new URL(
@@ -195,7 +194,7 @@ export default {
         duration: 1.8,
       });
     },
-    //章節觀察
+    //野良之家章節觀察
     sectionObserve() {
       const options = {
         root: null, // 根節點，null表示整個視窗
@@ -241,9 +240,6 @@ export default {
       deep: true,
     },
   },
-  // beforeUnmount() {
-  //   window.removeEventListener('scroll', this.handleScroll); // 移除事件監聽器，避免內存洩漏
-  // },
 };
 </script>
 
@@ -297,7 +293,7 @@ export default {
     </div>
   </section>
 
-  <section class="News bg-blue-3">
+  <section class="News bg-yellow-2">
     <div class="News-container">
       <div class="News-Title-search">
         <h3>野良露營 X 最新消息</h3>
@@ -307,7 +303,7 @@ export default {
         </div>
       </div>
       <div class="News-viewport">
-        <newsArticle class="News-article" v-for="(setArticle, index) in newsContent" :key="setArticle.newsTitle"
+        <newsArticle v-for="(setArticle, index) in newsContent" :key="setArticle.newsTitle"
           :newsTitle="setArticle.newsTitle" :newsDate="setArticle.newsDate" :newsText="setArticle.newsText"
           :small1="setArticle.small1" :small2="setArticle.small2" :small3="setArticle.small3"
           v-model:large="setArticle.large" />
@@ -315,7 +311,7 @@ export default {
     </div>
   </section>
 
-  <section class="New-products bg-blue-2">
+  <section class="New-products bg-brown-2">
     <h2>野良選物X最新商品</h2>
 
     <!-- 桌機板左右按鈕 -->
