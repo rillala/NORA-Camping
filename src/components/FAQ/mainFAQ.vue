@@ -137,8 +137,7 @@ function changeData(qa,t){
     width:100%;
     @include desktop{
         width: 50%;
-        display: flex;
-        
+        display: flex;  
     }
 
     button{
@@ -168,6 +167,5 @@ function changeData(qa,t){
 .qaArr{
     margin: auto;
     width: 80%;
-    // background-color: #ff0;
 }
 </style>
