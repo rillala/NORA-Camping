@@ -36,7 +36,7 @@ const DESKTOP = 1024;
 
 <template>
     <button :class="{active:types}" @click="typeOpen()"><h4>{{props.title}}</h4></button>
-    <Questions v-for="(data,index) in QAs" :key="index" v-if=" nowWidth < DESKTOP && types" :title="data.title" :ans="data.ans"/>
+    <Questions v-for="(data,index) in QAs" :key="index" v-if=" nowWidth < DESKTOP && types" :title="data.question" :ans="data.answer"/>
 </template>
 
 <style lang="scss" scoped>

@@ -85,15 +85,15 @@ function goBack(){
         <div class="contactInfo">
             <div class="info">
                 <p class="tinyp">稱呼*</p>
-                <input type="text" placeholder="請輸入姓名或暱稱" :readonly="isReadonly">
+                <input type="text" placeholder="請輸入姓名或暱稱" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
             </div>
             <div class="info">
                 <p class="tinyp">電子郵件*</p>
-                <input type="email" placeholder="請輸入您的電子郵件" :readonly="isReadonly">
+                <input type="email" placeholder="請輸入您的電子郵件" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
             </div>
             <div class="info">
                 <p class="tinyp">連絡電話</p>
-                <input type="tel" placeholder="請輸入您的連絡電話" :readonly="isReadonly">
+                <input type="tel" placeholder="請輸入您的連絡電話" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
             </div>
             <!-- ------------ -->
         </div>
@@ -356,6 +356,9 @@ input[readonly], textarea[readonly] {
     cursor: default;
 }
 textarea.readonlyBGC{
-    background-color: #EEE;
+    background-color: $blue-3;
+}
+.info input.readonlyBGC{
+    background-color: $blue-3;
 }
 </style>

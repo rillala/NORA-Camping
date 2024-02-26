@@ -1,48 +1,60 @@
 <script>
 //測試用大圖小圖組件
 // import newsImgGallery from "@/components/home/newsImgGallery.vue"
+// import { getDBImage } from "@/assets/js/common";
+import { getDBImage } from "@/assets/js/common";
+
 
 export default {
     name: 'newsArticle',
     // components: {
     //     newsImgGallery
     // },
-    props: {
-        newsTitle: {
-            type: String,
-            requre: true,
-        },
-        newsDate: {
-            type: String,
-            requre: true,
-        },
-        newsText: {
-            type: String,
-            requre: true,
-        },
-        small1: {
-            type: Object,
-            required: true,
-        },
-        small2: {
-            type: Object,
-            required: true,
-        },
-        small3: {
-            type: Object,
-            required: true,
-        },
-        large: {
-            type: Object,
-            required: true,
-            default: () => ({ src: '', alt: '' }),
-        },
-    },
+    // props: {
+    //     newsTitle: {
+    //         type: String,
+    //         requre: true,
+    //     },
+    //     newsDate: {
+    //         type: String,
+    //         requre: true,
+    //     },
+    //     newsText: {
+    //         type: String,
+    //         requre: true,
+    //     },
+    //     small1: {
+    //         type: Object,
+    //         required: true,
+    //     },
+    //     small2: {
+    //         type: Object,
+    //         required: true,
+    //     },
+    //     small3: {
+    //         type: Object,
+    //         required: true,
+    //     },
+    //     large: {
+    //         type: Object,
+    //         required: true,
+    //         default: () => ({ src: '', alt: '' }),
+    //     },
+    // },
+    props: [
+        "title",
+        "publish_date",
+        "content",
+        "img1",
+        "img2",
+        "img3",
+        "large",
+    ],
     methods: {
-        //這邊要改php那邊的圖片路徑
-        getNewsImgUrl(paths) {
-            return new URL(`../../assets/image/homeView/${paths}`, import.meta.url).href
-        },
+        // getDBImage(paths){
+        //     console.log(paths);
+        //     return getDBImage(paths);
+        // },
 
         // changeLargeImage(index) {
         //     this.$emit('update:large', { ...this.smalls[index] });
@@ -52,6 +64,10 @@ export default {
         },
         init() {
         },
+        getDBImage(paths) {
+            // console.log(paths);
+            return getDBImage(paths);
+        },
     },
     mounted() {
         // if (this.smalls.length > 0) {
@@ -59,8 +75,12 @@ export default {
         // }
         // this.init();
         // 將第一張照片設置為初始化
-        if (this.small1.src != '') {
-            this.changeLargeImage(this.small1);
+        // if (this.small1.src != '') {
+        //     this.changeLargeImage(this.small1);
+        // }
+        // this.init();
+        if (this.img1 != '') {
+            this.changeLargeImage(this.img1);
         }
         this.init();
     },
@@ -71,12 +91,12 @@ export default {
     <article class="News-article">
         <div class="News-text">
             <div class="title">
-                <h2>{{ newsTitle }}</h2>
-                <p class="tinyp">{{ newsDate }}</p>
+                <h2>{{ title }}</h2>
+                <p class="tinyp">{{ publish_date }}</p>
             </div>
-            <p>{{ newsText }}</p>
+            <p>{{ content }}</p>
         </div>
-        <div class="News-img" v-show="this.small1.src != ''">
+        <!-- <div class="News-img" v-show="this.small1.src != ''">
             <div class="large-images">
                 <img :src=getNewsImgUrl(large.src) :alt="large.alt" id="large" />
             </div>
@@ -87,6 +107,18 @@ export default {
                     class="small" v-if="this.small2.src != ''">
                 <img :src="getNewsImgUrl(this.small3.src)" :alt="small3.alt" @click="changeLargeImage(this.small3)"
                     class="small" v-if="this.small3.src != ''">
+            </div>
+        </div> -->
+        <div class="News-img" v-if="this.img1 != getDBImage(null)">
+            <div class="large-images">
+                <img :src="large" :alt="large" id="large" />
+            </div>
+            <div class="images-row">
+                <img :src="img1" :alt="img1.alt" @click="changeLargeImage(img1)" class="small">
+                <img :src="img2" :alt="img2.alt" @click="changeLargeImage(img2)" class="small"
+                    v-if="img2 != getDBImage(null)">
+                <img :src="img3" :alt="img3.alt" @click="changeLargeImage(img3)" class="small"
+                    v-if="img3 != getDBImage(null)">
             </div>
         </div>
         <!-- <div class="News-img" v-show="smalls.length > 0">
@@ -103,19 +135,49 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.News-article {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $white01;
+    border-radius: 30px;
+    margin-left: 65px;
+
+    @include desktop {
+        width: 100%;
+        flex-direction: row;
+        margin: 10px 0;
+        margin-left: 0;
+    }
+}
+
 .News-text {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: fit-content;
     height: 100%;
     align-items: start;
-    margin: 20px;
+    padding: 20px;
+
+    @include desktop {
+        width: 60%;
+    }
 
     .title {
-        margin: 10px 0;
+        width: 80vw;
+
+        @include desktop {
+            width: 100%;
+            margin: 10px 0;
+        }
     }
 }
 
 .News-img {
-    margin: 0 auto;
+    margin: 20px;
     width: fit-content;
 }
 
