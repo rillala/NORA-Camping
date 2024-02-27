@@ -69,7 +69,7 @@ export const useCartStore = defineStore('cartStore', {
       const index = this.cart.findIndex(item => item.productId === id);
       this.cart.splice(index, 1);
       this.saveCartListToLocalStorage();
-      window.location.reload();
+      this.getCart()
     },
     saveCartListToLocalStorage() {
       const productStore = useProductStore();

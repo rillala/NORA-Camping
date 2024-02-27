@@ -142,6 +142,7 @@ export default {
               </td>
               <td>
                 <select
+                  class="select-productQty"
                   name=""
                   id=""
                   :value="item.qty"
@@ -264,6 +265,7 @@ img {
 .cart-cancel {
   width: 15px;
   height: 15px;
+  cursor: pointer;
 }
 
 @include desktop {
@@ -293,7 +295,9 @@ img {
 .select-title {
   display: flex;
 }
-
+.select-productQty{
+  cursor: pointer;
+}
 .select {
   display: flex;
   justify-content: center;
