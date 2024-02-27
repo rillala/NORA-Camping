@@ -1,41 +1,44 @@
 <script setup>
 import { ref } from 'vue';
+
 const flag = ref(false);
 const isReadonly = ref(false);
 
+const dogPosition = ref('null');
 const defaultText = '填寫完畢';
-const buttonText = ref(defaultText); //位置1
+const buttonText = ref(defaultText);
+const submmitDialog = ref(false);
 const flagCheck = (e)=>{
     e.preventDefault();
     if(flag.value){
         //value=T means SecondtimeSubmmit goto step3 
-        buttonText.value = buttonText.value;
-
         //點擊確認送出後並顯示彈窗"送出成功"
-        alert("送出成功");
-        //並將flag.value change to F，同時清空表單回到位置1
-        flag.value = false;
-        console.log("step3");
+        // alert('送出成功');//不用alert，刻一個對話框
+        //並將flag.value change to F，回到位置1
         //將狗頭改變位置到76%
+        dogPosition.value = '3';
+        successfulMsg();
+        setTimeout(()=>{
+            resetForm();
+        },1000);//一秒後重置表單
+        alert("送出成功")
     }else{
         //value=F means firsttimeSubmmit goto step2 
         //點擊填寫完畢後進入鎖定，進入位置2，提供使用者確認資料正確性
-        isReadonly.value = true;
-        console.log(isReadonly.value);
-        //鎖定階段修改按鈕文字
-        buttonText.value = '確認送出';
-        //並將flag.value change to T
-        flag.value = true;
-        console.log("step2");
-        //將狗頭改變位置到42.5%
+        if(formCheck()){
+            isReadonly.value = true;
+            console.log(isReadonly.value);
+            //鎖定階段修改按鈕文字
+            buttonText.value = '確認送出';
+            //並將flag.value change to T
+            flag.value = true;
+            console.log(isWritten.value.question);
+            //將狗頭改變位置到42.5%
+            dogPosition.value = '2';
+        }
     }
 }
-const nowLocation = ref(null);
-function dogLocation(){
-    if(!flag.value){
-        
-    }
-}
+
 const emits = defineEmits([
     'changeToMain'
 ]);
@@ -43,7 +46,44 @@ const emits = defineEmits([
 function goBack(){
     emits('changeToMain');
 }
-
+function successfulMsg(){
+    submmitDialog.value = true;
+}
+const isWritten = ref({
+    question:'',
+    name:'',
+    email:'',
+    agree:false,
+});
+function formCheck() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!isWritten.value.question){
+        alert("請輸入您的問題");
+    }else if(!isWritten.value.name){
+        alert("請輸入您的稱呼");
+    }else if(!isWritten.value.email){
+            alert("請輸入您的電子郵件");
+    }else if(!emailRegex.test(isWritten.value.email)){
+        alert("email格式錯誤");
+        console.log(isWritten.value.email);
+    }else if(!isWritten.value.agree){
+        alert("請同意我們的隱私權政策");
+    }else{
+        return true;
+    }
+}
+function resetForm(){
+    flag.value = false;
+    isReadonly.value = false;
+    dogPosition.value = '1';
+    buttonText.value = defaultText;
+    isWritten.value = {
+        question:'',
+        name:'',
+        email:'',
+        agree:false,
+    }
+}
 </script>
 
 <template>
@@ -68,7 +108,7 @@ function goBack(){
         <div class="check B">2</div>
         <div class="check C">3</div>
         <div class="dogLink"></div>
-        <img src="../../assets/image/FAQView/dog.png" alt="狗頭" class="dog">
+        <img src="../../assets/image/FAQView/dog.png" alt="狗頭" class="dog" :class="{'position1':dogPosition==2,'position2':dogPosition==3}" >
     </div>
     <form action="">
         <div class="step">
@@ -76,7 +116,7 @@ function goBack(){
         </div>
         <div class="ask">
             <p class="tinyp">問題內容*</p>
-            <textarea name="ques" id="ques"  placeholder="請輸入您的問題"  :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}"></textarea>
+            <textarea name="ques" id="ques"  placeholder="請輸入您的問題(必填)" v-model="isWritten.question"  :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}"></textarea>
         </div>
         <!-- contact info -->
         <div class="step">
@@ -85,11 +125,11 @@ function goBack(){
         <div class="contactInfo">
             <div class="info">
                 <p class="tinyp">稱呼*</p>
-                <input type="text" placeholder="請輸入姓名或暱稱" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
+                <input type="text" placeholder="請輸入姓名或暱稱(必填)" v-model="isWritten.name" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
             </div>
             <div class="info">
                 <p class="tinyp">電子郵件*</p>
-                <input type="email" placeholder="請輸入您的電子郵件" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
+                <input type="email" placeholder="請輸入您的電子郵件(非必填)" v-model="isWritten.email" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
             </div>
             <div class="info">
                 <p class="tinyp">連絡電話</p>
@@ -97,16 +137,21 @@ function goBack(){
             </div>
             <!-- ------------ -->
         </div>
+        
         <div class="checkBox">
-            <input type="checkbox" id="agree">
+            <input type="checkbox" id="agree" v-model="isWritten.agree">
             <label class="agreed" for="agree">我同意本網站的隱私權政策*</label>
         </div>
         <div class="btns">
             <button type="button" class="submit" @click="goBack">返回前頁</button>
             <button type="submit" class="submit" @click="flagCheck">{{buttonText}}</button>
-
         </div>
     </form>
+    <!-- <div class="succesMsg" v-show="submmitDialog">
+        <div class="content">
+            <h1>送出成功!</h1>
+        </div>
+    </div> -->
 </template>
 
 <style lang="scss" scoped>
@@ -184,11 +229,18 @@ function goBack(){
         position: absolute;
         width: 15%;
         top: -20%;
-        left: 76%;
+        left: 9%;
         @include desktop{
             min-width: 20px;
         }
     }
+    .position1 {
+        left: 42.5%; 
+    }
+    .position2 {
+        left: 76%;
+    }
+    
 } 
 /*表單內容*/
 form{
@@ -361,4 +413,30 @@ textarea.readonlyBGC{
 .info input.readonlyBGC{
     background-color: $blue-3;
 }
+.succesMsg{
+    @include desktop{
+        width: 500px;
+        height: 400px;
+        margin: auto;
+    }
+    // .content{
+    //     @include desktop{
+    //         width: 100%;
+    //         height: 100%;
+    //         align-items: center;
+    //         display: flex;
+    //         justify-content: center;
+    //         border-radius: 30px;
+    //         background-color: rgba($blue-3,0.7);
+
+    //     }
+    //     h1{
+    //         @include desktop{
+    //             display: block;
+    //             color: $white01;
+    //         }
+    //     }
+    // }
+}
+
 </style>
