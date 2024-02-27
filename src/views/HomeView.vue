@@ -11,6 +11,9 @@ import newsArticle from '@/components/home/newsArticle.vue';
 import productCard from '@/components/shop/productCard.vue';
 import { gsap } from 'gsap';
 import { getDBImage } from "@/assets/js/common";
+import ProductSlider from '@/components/shop/productSlider.vue';
+import { useProductStore } from '@/stores/productStore'; // 導入 Pinia Store
+
 
 
 export default {
@@ -22,7 +25,8 @@ export default {
     catAnimation,
     newsArticle,
     productCard,
-  },
+    ProductSlider
+},
   data() {
     return {
       //天氣和溫度
@@ -103,6 +107,9 @@ export default {
     this.sectionObserve();
     //觸發最新消息讀取資料庫
     this.getNewsPhp();
+    //獲得商品列
+    const productStore = useProductStore();
+    productStore.axiosGetData(); 
   },
   computed: {
     wrapLeft() {
@@ -337,6 +344,7 @@ export default {
           :small1="setArticle.small1" :small2="setArticle.small2" :small3="setArticle.small3"
           v-model:large="setArticle.large" />
       </div> -->
+
       <div class="News-viewport">
         <newsArticle class="News-article" v-for="(setArticle, index) in newsList" :key="index" :title="setArticle.title"
           :publish_date="setArticle.publish_date" :content="setArticle.content" :img1="getDBImage(setArticle.img1)"
@@ -346,18 +354,18 @@ export default {
   </section>
 
   <section class="New-products bg-brown-2">
-    <h2>野良選物X最新商品</h2>
+    <!-- <h2>野良選物X最新商品</h2> -->
     <!-- 桌機板左右按鈕 -->
-    <div class="New-prod-btn">
+    <!-- <div class="New-prod-btn">
       <button id="left" @click="moveLeft" :disabled="curIndex <= 0">
         <img src="@/assets/image/universe/left-arrow-btn.svg" alt="左按鈕">
       </button>
       <button id="right" @click="moveRight" :disabled="curIndex >= 2">
         <img src="@/assets/image/universe/right-arrow-btn.svg" alt="右按鈕">
       </button>
-    </div>
+    </div> -->
     <!-- 抓axios後的商品資料陣列 -->
-    <div class="Prod-wapper" :style="{ left: wrapLeft }">
+    <!-- <div class="Prod-wapper" :style="{ left: wrapLeft }">
       <div class=" New-prod" v-for=" prods  in  newProds ">
         <div class="New-prod-image">
           <img :src="getNewProdImageUrl(prods.prodPicSrc)" :alt="prods.prodPicSrc" />
@@ -365,12 +373,12 @@ export default {
         <h4>{{ prods.prodTitle }}</h4>
         <p>{{ prods.prodPrice }}</p>
       </div>
-    </div>
+    </div> -->
 
-
-    <router-link to="/shop">
+    <ProductSlider></ProductSlider>
+    <!-- <router-link to="/shop">
       <viewMoreBtn class="See-more-prod" :content="'逛逛其他好物'" />
-    </router-link>
+    </router-link> -->
   </section>
 
   <section class="Stray-home" ref="shelter">

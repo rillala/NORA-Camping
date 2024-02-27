@@ -21,7 +21,7 @@ export default {
       groupOptions: ['選擇類別', 'NORA文青生活', 'NORA品牌服飾', 'NORA營地用品'],
       priceOptions: ['選擇排序', '價格高到低', '價格低到高'],
       currentPage: 1, // 當前頁碼
-      itemsPerPage: 4, // 每頁顯示的商品數量
+      itemsPerPage: 24, // 每頁顯示的商品數量
     };
   },
 
@@ -140,7 +140,7 @@ export default {
 
       <div class="shop-all-list">
         <template v-for="product in paginatedData" :key="product.id">
-          <productCard :item="product"></productCard>
+          <productCard v-if="product.state === 1" :item="product"></productCard>
         </template>
       </div>
       <div class="pagination-controls">
