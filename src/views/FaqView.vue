@@ -2,8 +2,7 @@
 // 引入函式庫
 import mainFAQ from '../components/FAQ/mainFAQ.vue';
 import contactForm from '../components/FAQ/contactForm.vue';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import wave from '@/components/FAQ/wave.vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';;
 
 const flag = ref(true);
 const changeFlag = () => {
