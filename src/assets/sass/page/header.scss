@@ -79,7 +79,7 @@ nav {
   border: 0;
   border-radius: 50%;
   background-color: transparent;
-  // background-image: url(@/assets/image/headerFooter/member-mobile.png);
+  background-image: url(@/assets/image/headerFooter/member-mobile.png);
   background-size: contain;
   background-repeat: no-repeat;
 
@@ -322,8 +322,8 @@ input[type='checkbox'] {
 
 // 點選後 3.子選單打開
 .ham-check:checked ~ nav #menu-list {
-  height: calc(100svh - 127px);
-  margin-top: -40px;
+  height: calc(100svh - 147px);
+  margin-top: -20px;
 
   @include tablet {
     height: calc(100svh - 68px);
