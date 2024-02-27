@@ -6,13 +6,12 @@ import { mapState, mapActions } from 'pinia';
 import ActionBtn from '@/components/button/actionBtn.vue';
 import apiInstance from '@/plugins/auth';
 
-
 export default {
   components: { BannerStepShop, ActionBtn },
   data() {
     return {
       orderInfo: {
-        memberId: 2,//暫時
+        memberId: 2, //暫時
         payWay: 0,
         payment: '',
         carry: '',
@@ -26,11 +25,12 @@ export default {
       creditCardParts: ['', '', '', ''], // 信用卡號碼
       expInput: '',
       secureCode: '',
-    }
+    };
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
     confirmPayment() {
+      this.nextStep();
       this.$nextTick(() => {
         // 確保在更新之後獲取正確的 orderInfo.payWay 值
         this.orderInfo.totalWithPayWay = this.totalWithPayWay;
@@ -40,7 +40,7 @@ export default {
       });
 
       const orderData = {
-        member_id: this.orderInfo.memberId,//待修正
+        member_id: this.orderInfo.memberId, //待修正
         name: this.orderInfo.name,
         phone: this.orderInfo.phone,
         email: this.orderInfo.email,
@@ -51,25 +51,33 @@ export default {
         order_status: '待出貨', // 預設值
         comment: this.orderInfo.note,
         delivery_fee: this.orderInfo.payWay,
-        cartList: this.cartList // 包含購物車商品的列表
+        cartList: this.cartList, // 包含購物車商品的列表
       };
 
       // 發送到後端
-      apiInstance.post('/addOrder.php', orderData)
-        .then(response => {
-          console.log(response.data); // 處理響應
-          sessionStorage.removeItem('orderInfo');
-        })
+      apiInstance.post('/addOrder.php', orderData).then(response => {
+        console.log(response.data); // 處理響應
+        sessionStorage.removeItem('orderInfo');
+      });
       localStorage.removeItem('cartList');
-      this.$router.replace('/ShopOrderSucess')
-        .catch(error => {
-          console.error(error); // 處理錯誤
-          sessionStorage.removeItem('orderInfo');
-          localStorage.removeItem('cartList');
-        });
+      this.$router.replace('/ShopOrderSucess').catch(error => {
+        console.error(error); // 處理錯誤
+        sessionStorage.removeItem('orderInfo');
+        localStorage.removeItem('cartList');
+      });
     },
     confirmCarry(way) {
-      this.orderInfo.carry = way
+      this.orderInfo.carry = way;
+    },
+    nextStep() {
+      if (sessionStorage.getItem('isCart2Clicked')) {
+        return;
+      } else {
+        sessionStorage.setItem('isCart2Clicked', 'true');
+        let currentStep = parseInt(sessionStorage.getItem('cartStep'));
+        currentStep++;
+        sessionStorage.setItem('cartStep', currentStep.toString());
+      }
     },
   },
   computed: {
@@ -98,14 +106,13 @@ export default {
       };
     }
   },
-
-}
+};
 </script>
 <template>
   <BannerStepShop></BannerStepShop>
   {{ this.orderInfo }}
-  <br>
-  <br>
+  <br />
+  <br />
   {{ this.cartList }}{{ this.orderInfo.payWay }}
   <section class="shop-payment-wrap">
     <div class="shop-payment-container">
@@ -119,7 +126,11 @@ export default {
               <th>小計</th>
             </tr>
             <tr v-for="item in cartList.carts" :key="item.productId">
-              <td>{{ item.product.title }}-{{ item.selectedColor }}-{{ item.selectedSize }}-×{{ item.qty }}</td>
+              <td>
+                {{ item.product.title }}-{{ item.selectedColor }}-{{
+                  item.selectedSize
+                }}-×{{ item.qty }}
+              </td>
               <td>NT${{ item.subtotal }}</td>
             </tr>
             <tr class="shop-payment-aggregately">
@@ -129,25 +140,56 @@ export default {
             <div class="shop-payment-carry">
               <h4>運送方式</h4>
               <div class="carry-option">
-                <label for="self-pick"><input @change="confirmCarry('自行取貨')" name="sendWay" type="radio" id="self-pick"
-                    value="0" v-model="this.orderInfo.payWay">自行取貨</label>
-                <label for="sendHome"><input @change="confirmCarry('宅配')" name="sendWay" type="radio" id="sendHome"
-                    value="100" v-model="this.orderInfo.payWay">宅配: NT$100</label>
-                <label for="sendStore"><input @change="confirmCarry('超商取貨')" name="sendWay" type="radio" id="sendStore"
-                    value="60" v-model="this.orderInfo.payWay">超商取貨: NT$60</label>
+                <label for="self-pick"
+                  ><input
+                    @change="confirmCarry('自行取貨')"
+                    name="sendWay"
+                    type="radio"
+                    id="self-pick"
+                    value="0"
+                    v-model="this.orderInfo.payWay"
+                  />自行取貨</label
+                >
+                <label for="sendHome"
+                  ><input
+                    @change="confirmCarry('宅配')"
+                    name="sendWay"
+                    type="radio"
+                    id="sendHome"
+                    value="100"
+                    v-model="this.orderInfo.payWay"
+                  />宅配: NT$100</label
+                >
+                <label for="sendStore"
+                  ><input
+                    @change="confirmCarry('超商取貨')"
+                    name="sendWay"
+                    type="radio"
+                    id="sendStore"
+                    value="60"
+                    v-model="this.orderInfo.payWay"
+                  />超商取貨: NT$60</label
+                >
               </div>
             </div>
             <div class="shop-payment-carry">
               <h4>支付方式</h4>
               <div class="carry-option">
-                <label for="creditCard"><input name="creditCard" type="radio" id="creditCard" value="信用卡付款"
-                    v-model="orderInfo.payment" required>信用卡付款</label>
+                <label for="creditCard"
+                  ><input
+                    name="creditCard"
+                    type="radio"
+                    id="creditCard"
+                    value="信用卡付款"
+                    v-model="orderInfo.payment"
+                    required
+                  />信用卡付款</label
+                >
               </div>
             </div>
             <h4 class="shop-payment-total">總計: NT$ {{ totalWithPayWay }}</h4>
           </table>
         </div>
-
 
         <h2>訂購資訊</h2>
         <div class="shop-payment-box">
@@ -157,31 +199,64 @@ export default {
               <td>
                 <p class="item">姓名</p>
               </td>
-              <td><input type="name" name="name" placeholder="請輸入姓名" v-model="orderInfo.name" required></td>
+              <td>
+                <input
+                  type="name"
+                  name="name"
+                  placeholder="請輸入姓名"
+                  v-model="orderInfo.name"
+                  required
+                />
+              </td>
             </tr>
             <tr>
               <td>
                 <p class="item">手機</p>
               </td>
-              <td><input type="text" maxlength="11" placeholder="請輸入手機號碼" v-model="orderInfo.phone" /></td>
+              <td>
+                <input
+                  type="text"
+                  maxlength="11"
+                  placeholder="請輸入手機號碼"
+                  v-model="orderInfo.phone"
+                />
+              </td>
             </tr>
             <tr>
               <td>
                 <p class="item">信箱</p>
               </td>
-              <td><input type="text" name="email" placeholder="例:123@gmail.com" v-model="orderInfo.email" required></td>
+              <td>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="例:123@gmail.com"
+                  v-model="orderInfo.email"
+                  required
+                />
+              </td>
             </tr>
             <tr>
               <td>
                 <p class="item">地址</p>
               </td>
-              <td><input type="text" v-model="orderInfo.address" required></td>
+              <td>
+                <input type="text" v-model="orderInfo.address" required />
+              </td>
             </tr>
             <tr>
               <td>
                 <p class="item">備註</p>
               </td>
-              <td><textarea name="" id="" cols="25" rows="4" v-model="orderInfo.note"></textarea></td>
+              <td>
+                <textarea
+                  name=""
+                  id=""
+                  cols="25"
+                  rows="4"
+                  v-model="orderInfo.note"
+                ></textarea>
+              </td>
             </tr>
           </table>
         </div>
@@ -204,25 +279,43 @@ export default {
             <div class="box p">
               <div class="item">信用卡號</div>
               <div class="card-box">
-                <input class="card-input" v-for="(item, index) in creditCardParts" :key="index" type="text"
-                  v-model="creditCardParts[index]" maxlength="4" @input="moveFocus(index)" :ref="`part${index}`"
-                  placeholder="####" />
+                <input
+                  class="card-input"
+                  v-for="(item, index) in creditCardParts"
+                  :key="index"
+                  type="text"
+                  v-model="creditCardParts[index]"
+                  maxlength="4"
+                  @input="moveFocus(index)"
+                  :ref="`part${index}`"
+                  placeholder="####"
+                />
               </div>
             </div>
             <div class="box p deadline">
               <div class="first">
                 <div class="item">有效期限</div>
-                <input type="text" class="input" placeholder="MM/YY" v-model="expInput" @input="formatExpirationDate" />
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="MM/YY"
+                  v-model="expInput"
+                  @input="formatExpirationDate"
+                />
               </div>
               <div class="second">
                 <div class="item">安全碼</div>
-                <input type="text" class="input" maxlength="3" v-model="secureCode" />
+                <input
+                  type="text"
+                  class="input"
+                  maxlength="3"
+                  v-model="secureCode"
+                />
               </div>
             </div>
           </div>
         </div>
         <ActionBtn @click="confirmPayment" :content="'確認付款'"></ActionBtn>
-
       </form>
     </div>
   </section>
@@ -305,7 +398,6 @@ export default {
             border-bottom: 1px solid $light-gray;
           }
         }
-
       }
     }
   }

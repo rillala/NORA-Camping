@@ -22,9 +22,7 @@ export default {
       return this.activeDiv === index;
     },
     handleStepClick(stepNumber, path) {
-      const currentStep = parseInt(
-        sessionStorage.getItem('currentStep') || '1',
-      );
+      const currentStep = parseInt(sessionStorage.getItem('cartStep') || '1');
       if (stepNumber <= currentStep) {
         this.$router.push(path);
       } else {
@@ -37,7 +35,6 @@ export default {
 
 <template>
   <div class="banner bg-blue-1">
-
     <div class="bar">
       <div v-for="(step, index) in stepList" :key="index" class="dash-box">
         <!-- 這邊不要使用RouterLink，每一個步驟的input包在div中，根據步驟選擇開啟隱藏步驟，不然會很難做 // 01/21 checked -->
@@ -111,20 +108,18 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
 
   @include tablet {
     width: 100%;
-    margin:  auto;
+    margin: auto;
   }
   @include tablet {
     width: 80%;
     max-width: 1000px;
     // margin: 40px auto 0;
   }
-  @include desktop{
+  @include desktop {
     // margin:  auto ;
-    
   }
 
   p {
@@ -172,7 +167,6 @@ export default {
     @include font-style(64px, 700, 10%, auto);
 
     @include tablet {
-      
       @include font-style(64px, 700, 10%, auto);
     }
 

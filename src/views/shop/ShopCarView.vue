@@ -10,13 +10,10 @@ import DropDownBtn from '@/components/button/dropDownBtn.vue';
 import { RouterLink } from 'vue-router';
 import { getDBImage } from '@/assets/js/common';
 
-
 export default {
   components: { bannerStepShop, actionBtn, DropDownBtn, RouterLink },
   data() {
-    return {
-
-    };
+    return {};
   },
   created() {
     const cartStore = useCartStore();
@@ -27,9 +24,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(useCartStore, ['removeCartItem', 'setCartQty', 'getCart', 'saveCartListToLocalStorage']),
+    ...mapActions(useCartStore, [
+      'removeCartItem',
+      'setCartQty',
+      'getCart',
+      'saveCartListToLocalStorage',
+    ]),
     getDBImage(images) {
-      return getDBImage(images)
+      return getDBImage(images);
     },
     handleColorChange(value, productId) {
       const cartStore = useCartStore();
@@ -41,16 +43,35 @@ export default {
       // 确保传递给方法的是选中的尺寸值而不是事件对象
       cartStore.updateProductOption(productId, value, 'size');
     },
+    nextStep(nextPath) {
+      if (sessionStorage.getItem('isCart1Clicked')) {
+        this.$router.push(nextPath);
+      } else {
+        // 1. 建立此步驟已被選擇過的 isCart1Clicked = true
+        sessionStorage.setItem('isCart1Clicked', 'true');
+        // 2. 建立記錄步驟數的 currentStep
+        let currentStep = parseInt(sessionStorage.getItem('cartStep') || '1');
+        currentStep++;
+        sessionStorage.setItem('cartStep', currentStep.toString());
+        if (nextPath) {
+          this.$router.push(nextPath);
+        }
+      }
+    },
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
     colorOptions() {
       // 檢查是否有colors，並將其從字符串轉換為數組，如果沒有則返回一個只包含預設選項的數組
-      return this.cartList.colors ? ['顏色', ...this.cartList.colors.split(',')] : ['顏色'];
+      return this.cartList.colors
+        ? ['顏色', ...this.cartList.colors.split(',')]
+        : ['顏色'];
     },
     sizeOptions() {
       // 同上，對sizes進行處理
-      return this.cartList.sizes ? ['尺寸', ...this.cartList.sizes.split(',')] : ['尺寸'];
+      return this.cartList.sizes
+        ? ['尺寸', ...this.cartList.sizes.split(',')]
+        : ['尺寸'];
     },
   },
   watch: {},
@@ -77,18 +98,41 @@ export default {
             </tr>
             <tr v-for="item in cartList.carts" :key="item.productId">
               <td>
-                <img :src="getDBImage(item.product.images[0])" alt="Product Image" />
+                <img
+                  :src="getDBImage(item.product.images[0])"
+                  alt="Product Image"
+                />
               </td>
               <td class="select-content">
                 <p class="select-product-title">{{ item.product.title }}</p>
                 <div class="select">
-                  <DropDownBtn v-if="item.product.colors && item.product.colors.length > 0"
-                    :options="item.product.colors ? [...item.product.colors.split(',')] : ['顏色']"
-                    @change="event => handleColorChange(event.target.value, item.productId)" :default-value="item.selectedColor">
+                  <DropDownBtn
+                    v-if="item.product.colors && item.product.colors.length > 0"
+                    :options="
+                      item.product.colors
+                        ? [...item.product.colors.split(',')]
+                        : ['顏色']
+                    "
+                    @change="
+                      event =>
+                        handleColorChange(event.target.value, item.productId)
+                    "
+                    :default-value="item.selectedColor"
+                  >
                   </DropDownBtn>
-                  <DropDownBtn v-if="item.product.sizes && item.product.sizes.length > 0"
-                    :options="item.product.sizes ? [...item.product.sizes.split(',')] : ['尺寸']"
-                    @change="event => handleSizeChange(event.target.value, item.productId)" :default-value="item.selectedSize">
+                  <DropDownBtn
+                    v-if="item.product.sizes && item.product.sizes.length > 0"
+                    :options="
+                      item.product.sizes
+                        ? [...item.product.sizes.split(',')]
+                        : ['尺寸']
+                    "
+                    @change="
+                      event =>
+                        handleSizeChange(event.target.value, item.productId)
+                    "
+                    :default-value="item.selectedSize"
+                  >
                   </DropDownBtn>
                 </div>
               </td>
@@ -96,7 +140,12 @@ export default {
                 <p>{{ item.product.price }}</p>
               </td>
               <td>
-                <select name="" id="" :value="item.qty" @change="event => setCartQty(item.productId, event)">
+                <select
+                  name=""
+                  id=""
+                  :value="item.qty"
+                  @change="event => setCartQty(item.productId, event)"
+                >
                   <option :value="i" v-for="i in 20" :key="i">{{ i }}</option>
                 </select>
               </td>
@@ -104,8 +153,12 @@ export default {
                 <p>$ {{ item.subtotal }}</p>
               </td>
               <td>
-                <img class="cart-cancel" src="/src/assets/image/shop/icons/cancel.svg"
-                  @click.prevent="removeCartItem(item.productId)" alt="cancel" />
+                <img
+                  class="cart-cancel"
+                  src="/src/assets/image/shop/icons/cancel.svg"
+                  @click.prevent="removeCartItem(item.productId)"
+                  alt="cancel"
+                />
               </td>
             </tr>
           </tbody>
@@ -113,12 +166,16 @@ export default {
         <p class="cart-total">總金額 NT$ {{ cartList.total }}</p>
         <div class="cart-buttons">
           <router-link to="shop">
-            <actionBtn class="cart-keepShoping" :content="'繼續購物'"></actionBtn>
+            <actionBtn
+              class="cart-keepShoping"
+              :content="'繼續購物'"
+            ></actionBtn>
           </router-link>
-          <RouterLink to="shopPayment">
-            <actionBtn class="cart-placeOrder" :content="'前往結帳'"></actionBtn>
-          </RouterLink>
-
+          <actionBtn
+            @click="nextStep('/shopPayment')"
+            class="cart-placeOrder"
+            :content="'前往結帳'"
+          ></actionBtn>
         </div>
       </div>
     </div>

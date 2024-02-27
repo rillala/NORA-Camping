@@ -8,10 +8,8 @@ export default {
   components: { BannerStepShop, ActionBtn },
   data() {
     return {
-      orderInfo: {
-
-      }
-    }
+      orderInfo: {},
+    };
   },
   methods: {
     clearStorage() {
@@ -20,10 +18,10 @@ export default {
       // 清除 sessionStorage 的 orderInfo
       sessionStorage.removeItem('orderInfo');
       window.location.reload();
-    }
+    },
   },
   computed: {
-    ...mapState(useCartStore, ['cartList'])
+    ...mapState(useCartStore, ['cartList']),
   },
   created() {
     const cartStore = useCartStore();
@@ -41,14 +39,15 @@ export default {
         ...parsedOrderInfo,
       };
     }
-  }
-}
+    sessionStorage.clear();
+  },
+};
 </script>
 
 <template>
   {{ cartList.title }}
   <BannerStepShop></BannerStepShop>
-  <section class=" shop-orderSucess-wrap">
+  <section class="shop-orderSucess-wrap">
     <div class="step3">
       <div class="title">
         <h2>謝謝</h2>
@@ -63,8 +62,15 @@ export default {
           <p>12345678</p>
         </div>
         <div class="buy-information">
-          <div v-for="item in cartList.carts" :key="item.id" class="between buy-list">
-            <h4>{{ item.product.title }} {{ `-${item.selectedColor}` }}{{ `-${item.selectedSize}` }} X {{ item.qty }}</h4>
+          <div
+            v-for="item in cartList.carts"
+            :key="item.id"
+            class="between buy-list"
+          >
+            <h4>
+              {{ item.product.title }} {{ `-${item.selectedColor}`
+              }}{{ `-${item.selectedSize}` }} X {{ item.qty }}
+            </h4>
             <p>NT$ {{ item.subtotal }}</p>
           </div>
           <div class="between buy-total">
@@ -88,15 +94,15 @@ export default {
           </div>
           <div class="between buyer">
             <h4>姓名</h4>
-            <p> {{ orderInfo.name }} </p>
+            <p>{{ orderInfo.name }}</p>
           </div>
           <div class="between buyer">
             <h4>電話</h4>
-            <p> {{ orderInfo.phone }} </p>
+            <p>{{ orderInfo.phone }}</p>
           </div>
           <div class="between buyer">
             <h4>郵件</h4>
-            <p> {{ orderInfo.email }} </p>
+            <p>{{ orderInfo.email }}</p>
           </div>
           <div class="locate-title">
             <h4>帳單地址</h4>
@@ -108,9 +114,11 @@ export default {
       </div>
     </div>
     <div class="backButton">
-      <router-link to="HomeView"><ActionBtn @click="clearStorage" :content="'返回首頁'"></ActionBtn>
+      <router-link to="HomeView"
+        ><ActionBtn @click="clearStorage" :content="'返回首頁'"></ActionBtn>
       </router-link>
-      <router-link to="memberorderhistory"><ActionBtn @click="clearStorage" :content="'查看訂單'"></ActionBtn>
+      <router-link to="memberorderhistory"
+        ><ActionBtn @click="clearStorage" :content="'查看訂單'"></ActionBtn>
       </router-link>
     </div>
   </section>
@@ -186,4 +194,5 @@ export default {
   justify-content: center;
   gap: 20px;
   padding: 40px;
-}</style>
+}
+</style>
