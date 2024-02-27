@@ -1,6 +1,9 @@
 // https://pinia.vuejs.org/core-concepts/state.html
 //vuex
+import axios from 'axios';
 import { defineStore } from 'pinia';
+import apiInstance from '@/plugins/auth';
+
 export default defineStore('userStore', {
   // 對應 data
   state: () => ({
@@ -61,17 +64,17 @@ export default defineStore('userStore', {
         // 如果 data 是 undefined 或 null，則在這裡處理錯誤
         console.error('Received undefined data');
       }
-    },   
-    checkUserData(){
-      const storageUserData = localStorage.getItem('userData')
+    },
+    checkUserData() {
+      const storageUserData = localStorage.getItem('userData');
       console.log(Object.keys(this.userData).length);
-      if(Object.keys(this.userData).length > 0){
-          return this.userData
-      }else if(storageUserData){
-          this.userData = JSON.parse(storageUserData)
-          return storageUserData
-      }else{
-          return ''
+      if (Object.keys(this.userData).length > 0) {
+        return this.userData;
+      } else if (storageUserData) {
+        this.userData = JSON.parse(storageUserData);
+        return storageUserData;
+      } else {
+        return '';
       }
     },
     logout() {
@@ -80,6 +83,27 @@ export default defineStore('userStore', {
       localStorage.removeItem('token');
       // localStorage.removeItem('userData');
       // this.userProfileImage = null;
+    },
+    async getMemberInfo() {
+      try {
+        const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
+        // 確保 token 存在
+        if (!token) {
+          console.error('Logout error: No token found');
+          return;
+        }
+        // 發送請求到後端，獲取用戶資料
+        const response = await apiInstance.get('/memberInfo.php', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        // 更新 Pinia store 裡的使用者資料
+        console.log(response.data);
+        this.updateUserData(response.data);
+        // 調用 Pinia action 並傳入響應數據
+      } catch (error) {
+        console.error('Error fetching member info:', error);
+        // 處理錯誤，可能需要在界面上顯示錯誤資訊
+      }
     },
   },
 });

@@ -6,6 +6,9 @@ import progressBar from '@/components/reserve/bannerStep.vue';
 import nextPageBtn from '@/components/reserve/nextPageBtn.vue';
 import apiInstance from '@/plugins/auth';
 
+import userStore from '@/stores/user';
+import { mapState, mapActions } from 'pinia';
+
 export default {
   components: {
     progressBar,
@@ -15,7 +18,7 @@ export default {
     return {
       reserveData: {
         reservation_id: 0,
-        member_id: 1,
+        member_id: -1,
 
         name: '', // 訂購人姓名
         phone: '', // 訂購人電話
@@ -40,19 +43,27 @@ export default {
       isPhone: false,
       isEmail: false,
       isAddress: false,
+      isMember: false,
     };
   },
-  mounted() {
+  computed: {
+    ...mapState(userStore, ['memberInfo']),
+  },
+  async mounted() {
     if (!sessionStorage.getItem('reserveData')) {
       // 第一次填寫付款資料, 需要取出所有資料
       this.getData();
     } else {
       // 非第一次填寫, 直接取出物件資料
       this.reserveData = JSON.parse(sessionStorage.getItem('reserveData'));
-      // this.equipmentData = JSON.parse(sessionStorage.getItem('equipmentData'));
-      // this.equipmentData = JSON.parse(sessionStorage.getItem('campsiteData'));
     }
+    await this.getMemberInfo();
+    // 确保 getMemberInfo 完成后执行
+    this.reserveData.member_id = this.memberInfo.member_id;
+    console.log(this.memberInfo.member_id);
+    console.log(this.reserveData.member_id);
   },
+
   watch: {
     'reserveData.name'(newVal) {
       if (newVal.length > 0) {
@@ -74,8 +85,28 @@ export default {
 
       this.isAddress = pattern.test(newVal);
     },
+    isMember(newVal) {
+      if (newVal == true) {
+        // 跟會員資料相同
+        this.reserveData.name = this.memberInfo.name;
+        this.reserveData.phone = this.memberInfo.phone;
+        this.reserveData.email = this.memberInfo.email;
+        this.reserveData.address = this.memberInfo.address;
+      } else {
+        // 清空
+        this.reserveData.name = '';
+        this.reserveData.phone = '';
+        this.reserveData.email = '';
+        this.reserveData.address = '';
+      }
+    },
   },
   methods: {
+    ...mapActions(userStore, [
+      'updateToken',
+      'updateUserData',
+      'getMemberInfo',
+    ]),
     getData() {
       let reserveId = sessionStorage.getItem('reserveId');
       let startDate = sessionStorage.getItem('startDate');
@@ -84,7 +115,6 @@ export default {
 
       // reserveData 裡的資料
       this.reserveData.reservation_id = reserveId;
-      // this.reserveData.member_id = ;
       this.reserveData.checkin_date = startDate;
       this.reserveData.checkout_date = endDate;
 
@@ -220,7 +250,13 @@ export default {
       </div>
 
       <div class="reserve-list">
-        <div class="title h4">訂購人資訊</div>
+        <div class="person-data">
+          <div class="title h4">訂購人資訊</div>
+          <div class="person-check">
+            <input type="checkbox" v-model="isMember" />
+            <span class="tinyp">與會員資料相同</span>
+          </div>
+        </div>
 
         <div class="info">
           <div class="box p">

@@ -217,3 +217,16 @@ h2 {
 .expdate-input {
   display: flex;
 }
+
+.person-data {
+  @include tablet {
+    margin: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .person-check {
+    text-align: center;
+  }
+}
