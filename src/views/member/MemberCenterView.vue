@@ -66,7 +66,7 @@
       <p class="password password-title-1" value="disabled">再確認新密碼 <span>*****************</span> {{ confirmPassword }}</p>
       <div class="box">
         <button class="save-changes" @click="startEditingPassword">修改密碼</button>
-        <button class="logout" @click.stop="logout">登出</button>
+        <button class="logout" @click.stop="handleLogout">登出</button>
       </div>
     </div>
     
@@ -88,6 +88,7 @@ import axios from 'axios';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
+import handleLogout from '@/components/header.vue'
 
 export default {
   data() {
@@ -126,33 +127,31 @@ export default {
     async getMemberInfo() {
     try {
       const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
-      // console.log(token)
-      // 確保token存在
+      // 確保 token 存在
       if (!token) {
         console.error('Logout error: No token found');
         return;
       }
       // 發送請求到後端，獲取用戶資料
-      const response = await axios.get('/api/memberInfo', {
+      const response = await apiInstance.get('/memberInfo.php', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       // 更新 Pinia store 裡的使用者資料
-      console.log(response.data)
+      console.log(response.data);
       this.updateUserData(response.data);
-       //  調用 Pinia action 並傳入響應數據
+      // 調用 Pinia action 並傳入響應數據
     } catch (error) {
       console.error("Error fetching member info:", error);
       // 處理錯誤，可能需要在界面上顯示錯誤資訊
-    }
-  },
-
-    logout() {
-      // 調用pinia的updateToken
-      this.updateToken('');
-      this.updateUserData('');
-      this.isMemberSubOpen = false;
-      this.$router.push('/');
+      }
     },
+    // logout() {
+    //   // 調用pinia的updateToken
+    //   this.updateToken('');
+    //   this.updateUserData('');
+    //   this.isMemberSubOpen = false;
+    //   this.$router.push('/');
+    // },
     
     startEditing() {
     // 複製當前會員資料到編輯用的對象中
@@ -164,31 +163,34 @@ export default {
     };
     this.isEditing = true;
     },
+
     saveChanges() {
-      const token = localStorage.getItem('token'); // 從本地存儲獲取用戶的token
-      axios.put('/api/memberUpdate', {
-      member_id: this.memberInfo.member_id, // 假設這是您從store或初始化時獲得的會員ID
-      name: this.editMemberInfo.name,
-      phone: this.editMemberInfo.phone,
-      address: this.editMemberInfo.address
-  }, {
-      headers: { 'Authorization': `Bearer ${token}` }
+    const token = localStorage.getItem('token'); // 從本地存儲獲取用戶的token
+
+    // 使用 api 實例
+    apiInstance.post('/memberUpdate.php', {
+        member_id: this.memberInfo.member_id,
+        name: this.editMemberInfo.name,
+        phone: this.editMemberInfo.phone,
+        address: this.editMemberInfo.address
+    }, {
+        headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(response => {
-      // 更新成功
-      alert('資料更新成功');
-      console.log(response.data)
-      this.getMemberInfo()
-      // this.updateUserData(response.data); // 更新前端store或狀態
-      // this.memberInfo = {...this.editMemberInfo}
-      this.isEditing = false;
+        // 更新成功
+        alert('資料更新成功');
+        console.log(response.data)
+        this.getMemberInfo()
+        // this.updateUserData(response.data); // 更新前端store或狀態
+        // this.memberInfo = {...this.editMemberInfo}
+        this.isEditing = false;
     })
     .catch(error => {
-      // 處理錯誤
-      console.error("更新資料失敗:", error);
-      alert('資料更新失敗');
+        // 處理錯誤
+        console.error("更新資料失敗:", error);
+        alert('資料更新失敗');
     });
-  },
+    },
     // saveChanges() {
     //   // 在這裡處理保存變更的邏輯
     //   this.memberInfo = {...this.editMemberInfo};
@@ -201,12 +203,49 @@ export default {
     startEditingPassword() {
     this.isEditingPassword = true;
     },
-    
-    savePasswordChanges() {
-    // 在這裡處理保存密碼變更的邏輯
-    // 需要檢查舊密碼是否正確，新密碼是否一致等
-    this.isEditingPassword = false;
-    },
+    async savePasswordChanges() {
+  // 檢查新密碼與確認密碼是否一致
+  if (this.newPassword !== this.confirmPassword) {
+    alert("新密碼和確認密碼不一致");
+    return;
+  }
+
+  // 從 localStorage 中獲取 token
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('No token found');
+    return;
+  }
+
+  try {
+    // 發送更新密碼的請求
+    const response = await apiInstance({
+      method: 'post',
+      url: '/updatePassword.php',
+      data: {
+        oldPassword: this.oldPassword,
+        newPassword: this.newPassword
+      },
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    // 根據後端響應處理前端邏輯
+    if (response.data.success) {
+      // 如果密碼更新成功
+      alert(response.data.message);
+      this.isEditingPassword = false;
+      this.handleLogout(); // 啟用這一行來執行登出操作並可能重定向用戶
+    } else {
+      // 如果後端報告說密碼更新失敗
+      alert(response.data.message);
+    }
+  } catch (error) {
+    // 處理請求過程中發生的錯誤
+    console.error("密碼更新失敗:", error);
+    alert('密碼更新過程中發生錯誤');
+  }
+},
+
     cancelPasswordEditing() {
     // 在這裡處理取消密碼修改的邏輯
     this.isEditingPassword = false;

@@ -313,7 +313,8 @@ export default {
     },
     async lineLoginRedirect(code) {
       try {
-        const tokenResponse = await axios.post(
+        // const tokenResponse = await axios.post(
+        const tokenResponse = await apiInstance.post(
           'https://api.line.me/oauth2/v2.1/token',
           qs.stringify({
             grant_type: 'authorization_code',
@@ -330,8 +331,8 @@ export default {
         );
         const accessToken = tokenResponse.data.access_token;
         const idToken = tokenResponse.data.id_token;
-
-        const userInfoResponse = await axios.post(
+        // const userInfoResponse = await axios.post(
+        const userInfoResponse = await apiInstance.post(
           'https://api.line.me/oauth2/v2.1/verify',
           qs.stringify({
             id_token: idToken,
@@ -355,8 +356,9 @@ export default {
         this.updateToken(accessToken);
 
         // 這邊寫回資料庫
-        const response = await axios.post(
-          `http://localhost/NoraApi/phps/lineLogin.php`,
+        // const response = await axios.post(
+        const response = await apiInstance.post(
+          `/lineLogin.php`,
           {
             user_id: lineUserId,
             name: lineNickname,
@@ -364,6 +366,7 @@ export default {
             //accountTypeID: lineAccountTypeID
           },
         );
+        alert(response.data.message);
         // this.updateToken(lineUserId)
 
         // 沒有API先使用寫死資料
