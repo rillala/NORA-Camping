@@ -126,7 +126,7 @@ export default {
       </div>
     </div>
     <div class="backButton">
-      <router-link to="HomeView"
+      <router-link to="shop"
         ><ActionBtn @click="clearStorage" :content="'返回首頁'"></ActionBtn>
       </router-link>
       <router-link to="memberorderhistory"
