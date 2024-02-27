@@ -12,7 +12,7 @@ export default {
     return {
       orderInfo: {
         memberId: 2, //暫時
-        payWay: 0,
+        payWay: null,
         payment: '',
         carry: '',
         name: '',
@@ -56,7 +56,6 @@ export default {
 
       // 發送到後端
       apiInstance.post('/addOrder.php', orderData).then(response => {
-        console.log(response.data); // 處理響應
         sessionStorage.removeItem('orderInfo');
       });
       localStorage.removeItem('cartList');
@@ -109,11 +108,7 @@ export default {
 };
 </script>
 <template>
-  <BannerStepShop></BannerStepShop>
-  {{ this.orderInfo }}
-  <br />
-  <br />
-  {{ this.cartList }}{{ this.orderInfo.payWay }}
+  <BannerStepShop :activeDiv="2"></BannerStepShop>
   <section class="shop-payment-wrap">
     <div class="shop-payment-container">
       <form class="shop-payment-forms">
@@ -138,7 +133,7 @@ export default {
               <td>NT${{ cartList.total }}</td>
             </tr>
             <div class="shop-payment-carry">
-              <h4>運送方式</h4>
+              <h4>運費送方式</h4>
               <div class="carry-option">
                 <label for="self-pick"
                   ><input
@@ -147,7 +142,7 @@ export default {
                     type="radio"
                     id="self-pick"
                     value="0"
-                    v-model="this.orderInfo.payWay"
+                    v-model="orderInfo.payWay"
                   />自行取貨</label
                 >
                 <label for="sendHome"
@@ -157,7 +152,7 @@ export default {
                     type="radio"
                     id="sendHome"
                     value="100"
-                    v-model="this.orderInfo.payWay"
+                    v-model="orderInfo.payWay"
                   />宅配: NT$100</label
                 >
                 <label for="sendStore"
@@ -167,7 +162,7 @@ export default {
                     type="radio"
                     id="sendStore"
                     value="60"
-                    v-model="this.orderInfo.payWay"
+                    v-model="orderInfo.payWay"
                   />超商取貨: NT$60</label
                 >
               </div>
@@ -219,6 +214,7 @@ export default {
                   maxlength="11"
                   placeholder="請輸入手機號碼"
                   v-model="orderInfo.phone"
+                  required
                 />
               </td>
             </tr>
@@ -228,7 +224,7 @@ export default {
               </td>
               <td>
                 <input
-                  type="text"
+                  type="email"
                   name="email"
                   placeholder="例:123@gmail.com"
                   v-model="orderInfo.email"
@@ -315,7 +311,7 @@ export default {
             </div>
           </div>
         </div>
-        <ActionBtn @click="confirmPayment" :content="'確認付款'"></ActionBtn>
+        <ActionBtn type="submit" @click="confirmPayment" :content="'確認付款'"></ActionBtn>
       </form>
     </div>
   </section>

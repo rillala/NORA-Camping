@@ -9,9 +9,10 @@ import actionBtn from '@/components/button/actionBtn.vue';
 import DropDownBtn from '@/components/button/dropDownBtn.vue';
 import { RouterLink } from 'vue-router';
 import { getDBImage } from '@/assets/js/common';
+import ProductSlider from '@/components/shop/productSlider.vue';
 
 export default {
-  components: { bannerStepShop, actionBtn, DropDownBtn, RouterLink },
+  components: { bannerStepShop, actionBtn, DropDownBtn, RouterLink, ProductSlider },
   data() {
     return {};
   },
@@ -83,7 +84,7 @@ export default {
   <div class="cart-wrap">
     <div class="cart-container">
       <div class="cart-background">
-        <div v-if="!cartList.carts.length">購物車沒有任何品項</div>
+        <div v-if="!cartList.carts.length">是在哈囉?購物車是空的啦</div>
         <table class="cart-list" v-else>
           <tbody>
             <tr>
@@ -179,6 +180,7 @@ export default {
         </div>
       </div>
     </div>
+    <ProductSlider style="background-color: #c0a790; background-image: none;"></ProductSlider>
   </div>
 </template>
 
