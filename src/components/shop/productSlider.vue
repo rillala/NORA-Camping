@@ -39,8 +39,8 @@ export default {
 			return `-${this.curIndex * this.slideWidth}px`;
 		},
 		filteredData() {
-    return this.displayData.filter(item => item.state === 1).slice(0, 16);
-  }
+			return this.displayData.filter(item => item.state === 1).slice(0, 16);
+		}
 	}
 }
 </script>
@@ -65,16 +65,16 @@ export default {
 		</div>
 
 		<div class="Prod-wapper" :style="{ left: wrapLeft }">
-			<div  v-for="item in filteredData" :key="item.id">
-				<router-link  class=" New-prod" style="text-decoration: none;" :to="{
+			<div v-for="item in filteredData" :key="item.id">
+				<router-link class=" New-prod" style="text-decoration: none;" :to="{
 					name: 'shopItem',
 					params: { id: item.product_id }
 				}">
-						<div class="New-prod-image">
-							<img :src="getDBImage(item.images[0])" :alt="item.title" />
-						</div>
-						<h4>{{ item.title }}</h4>
-						<p>${{ item.price }}</p>
+					<div class="New-prod-image">
+						<img :src="getDBImage(item.images[0])" :alt="item.title" />
+					</div>
+					<h4>{{ item.title }}</h4>
+					<p>${{ item.price }}</p>
 				</router-link>
 			</div>
 		</div>

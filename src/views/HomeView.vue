@@ -26,7 +26,7 @@ export default {
     newsArticle,
     productCard,
     ProductSlider
-},
+  },
   data() {
     return {
       //天氣和溫度
@@ -109,7 +109,7 @@ export default {
     this.getNewsPhp();
     //獲得商品列
     const productStore = useProductStore();
-    productStore.axiosGetData(); 
+    productStore.axiosGetData();
   },
   computed: {
     wrapLeft() {
@@ -143,20 +143,20 @@ export default {
     },
     //顯示對應天氣圖片
     getWeatherImage() {
-      // 使用 this.weatherMark拿data中的陣列
-      const weatherImages = {
-        晴: this.getWeatherImageUrl(this.weatherMark[0]),
-        多雲: this.getWeatherImageUrl(this.weatherMark[1]),
-        陰: this.getWeatherImageUrl(this.weatherMark[2]),
-        陰有靄: this.getWeatherImageUrl(this.weatherMark[2]),
-        雨: this.getWeatherImageUrl(this.weatherMark[3]),
-      };
-
-      // 如果 this.weather的內容在 weatherImages 中有對應的圖片，返回該路徑，否則返回預設圖片路徑
-      return (
-        weatherImages[this.weather] ||
-        this.getWeatherImageUrl(this.weatherMark[0])
-      );
+      switch (true) {
+        case this.weather.includes("晴"):
+          return this.getWeatherImageUrl(this.weatherMark[0]);
+        case this.weather.includes("多雲"):
+          return this.getWeatherImageUrl(this.weatherMark[1]) || this.getWeatherImageUrl(this.weatherMark[0]);
+        case this.weather.includes("陰"):
+        case this.weather.includes("靄"):
+          return this.getWeatherImageUrl(this.weatherMark[2]) || this.getWeatherImageUrl(this.weatherMark[0]);
+        case this.weather.includes("雨"):
+          return this.getWeatherImageUrl(this.weatherMark[3]) || this.getWeatherImageUrl(this.weatherMark[0]);
+        default:
+          // 如果沒有匹配的天氣條件，返回預設圖片路徑
+          return this.getWeatherImageUrl(this.weatherMark[0]);
+      }
     },
 
     //讀取最新消息
