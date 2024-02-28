@@ -59,13 +59,13 @@
   <!-- 訂單明細燈箱，使用 v-if 控制显示 -->
   <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
     <div class="modal-content">
-      <h3>訂單明細</h3>
+      <h3 class="content-title">訂單明細</h3>
       <!-- 显示选中订单的明细 -->
       <table>
         <thead>
           <tr>
-            <th>商品名稱</th>
-            <th>颜色</th>
+            <th class="product-name">商品名稱</th>
+            <th class="color">顏色</th>
             <th>尺寸</th>
             <th>單價</th>
             <th>數量</th>
@@ -74,21 +74,23 @@
         </thead>
         <tbody>
           <tr v-for="detail in selectedOrderDetails" :key="detail.title">
-            <td>{{ detail.title }}</td>
+          <td>{{ detail.title }}</td>
           <td>{{ detail.color }}</td>
           <td>{{ detail.size }}</td>
-          <td> {{detail.unit_price}} </td>
+          <td>{{detail.unit_price}} </td>
           <td>{{ detail.quantity }}</td>
           <td>{{ detail.subtotal }}</td>
           </tr>
         </tbody>
       </table>
       <!-- 显示总金额、配送方式等信息 -->
-      <p>總金额: {{ this.orders[0].total_amount }}</p>
-      <p>配送方式:{{ this.orders[0].delivery_method }}</p>
-      <p>支付方式: {{ this.orders[0].payment }}</p>
-      <p>訂單狀態: {{ this.orders[0].order_status }}</p>
-      <button @click="closeModal">關閉</button>
+      <p class="item">總金額: {{ this.orders[0].total_amount }}</p>
+      <p class="item">配送方式:{{ this.orders[0].delivery_method }}</p>
+      <p class="item">支付方式: {{ this.orders[0].payment }}</p>
+      <p class="item">訂單狀態: {{ this.orders[0].order_status }}</p>
+      <div class="button-container">
+        <button @click="closeModal">關閉</button>
+      </div>
     </div>
   </div>
 </template>
@@ -240,7 +242,7 @@ nav ul {
     background-color: $blue-3;
     border: none;
     padding: 6px 10px;
-    border-radius: 50px;
+    border-radius: $radius;
     margin-left: auto;
     @include font-style(16px, 400, 1%, 160%);
 
@@ -252,12 +254,14 @@ nav ul {
       padding: 6px 15px;
     }
   }
-
+  .btn-view-details:hover{
+    background-color:$blue-4;
+  }
   .btn-cancel {
     background-color: $light-gray;
     border: none;
     padding: 6px 10px;
-    border-radius: 50px;
+    border-radius:$radius;
     margin-left: auto;
 
     @include tablet {
@@ -270,20 +274,66 @@ nav ul {
   }
 }
 .modal-overlay {
-  position: fixed;
+  position: fixed; /* 或者是 absolute，依據需求 */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: center; /* 垂直置中 */
+  justify-content: center; /* 水平置中 */
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #fff; /* 白色背景 */
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 5px; /* 圓角邊框 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影 */
+  width: 50%; /* 彈窗寬度 */
+  max-width: 640px; /* 最大寬度 */
+}
+
+table {
+  width: 100%; /* 表格寬度為彈窗寬度 */
+  border-collapse: collapse; /* 去除表格間距 */
+}
+
+th, td {
+  text-align: left;
+  padding: 10px; /* 表格內填充 */
+  border-bottom: 1px solid #ddd; /* 表格行之間的分割線 */
+}
+
+button {
+  background-color: $blue-3; 
+  color: $white01;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer; 
+  border-radius: $radius; 
+  
+}
+
+button:hover {
+  background-color: $blue-4; 
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 這將使得按鈕靠右對齊 */
+}
+
+.item{
+  margin:10px;
+  font-size:16px;
+}
+.content-title{
+  text-align: center;
+  margin-bottom: 10px;
 }
 </style>

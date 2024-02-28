@@ -31,47 +31,64 @@
           <td class="table-content">{{ order.orderNumber }}</td>
           <td class="table-content responsive-cell-01" v-if="!isSmallScreen">{{ order.orderAmount }}</td>
           <td class="table-content">{{ order.orderStatus }}</td>
-          <td class="table-content"><button class="btn-view-details" @click="viewDetails(order)">查看</button></td>
+          <td class="table-content"><button class="btn-view-details" @click="getOrderDetails(order.order_id)">查看</button></td>
           <td class="table-content"><button class="btn-cancel" @click="cancelOrder(order)">取消</button></td>
         </tr>
       </tbody>
     </table>
   </div>
+
+    <!-- 營地明細燈箱，使用 v-if 控制顯示 -->
+    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+    <div class="modal-content">
+      <h3 class="content-title">營地明細</h3>
+      <!-- 显示选中订单的明细 -->
+      <table>
+        <thead>
+          <tr>
+            <th class="product-name">商品名稱</th>
+            <th class="color">顏色</th>
+            <th>尺寸</th>
+            <th>單價</th>
+            <th>數量</th>
+            <th>小計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="detail in selectedOrderDetails" :key="detail.title">
+          <td>{{ detail.title }}</td>
+          <td>{{ detail.color }}</td>
+          <td>{{ detail.size }}</td>
+          <td>{{detail.unit_price}} </td>
+          <td>{{ detail.quantity }}</td>
+          <td>{{ detail.subtotal }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- 显示总金额、配送方式等信息 -->
+      <p class="item">總金額: {{ this.orders[0].total_amount }}</p>
+      <p class="item">配送方式:{{ this.orders[0].delivery_method }}</p>
+      <p class="item">支付方式: {{ this.orders[0].payment }}</p>
+      <p class="item">訂單狀態: {{ this.orders[0].order_status }}</p>
+      <div class="button-container">
+        <button @click="closeModal">關閉</button>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
+<!-- <script>
 import { RouterLink, RouterView } from 'vue-router';
 import axios from 'axios';
 
 export default {
   data() {
     return {
-      orders: [ {
-          id: 1,
-          orderDate: '2023/12/01',
-          orderNumber: '#111111',
-          orderAmount: '$291',
-          shippingMethod: '宅配',
-          orderStatus: '完成',
-        },
-        {
-          id: 2,
-          orderDate: '2023/12/01',
-          orderNumber: '#111112',
-          orderAmount: '$391',
-          shippingMethod: '超商取貨',
-          orderStatus: '完成',
-        },
-        {
-          id: 3,
-          orderDate: '2023/12/01',
-          orderNumber: '#111113',
-          orderAmount: '$291',
-          shippingMethod: '宅配',
-          orderStatus: '完成',
-        },
+      orders: [
       ],// 從資料庫獲取的訂單數據
-      
+      showModal: false,
+      selectedOrder: null,
+      selectedOrderDetails: [],
       isSmallScreen: false,
     };
   },
@@ -107,8 +124,67 @@ export default {
     }
   },
 };
-</script>
+</script> -->
+<script>
+import { RouterLink, RouterView } from 'vue-router';
+import apiInstance from '@/plugins/auth';
+import userStore from '@/stores/user';
+import { mapState, mapActions } from 'pinia';
 
+export default {
+  data() {
+    return {
+      orders: [
+
+      ], // 從資料庫獲取的訂單數據
+      showModal: false,
+      selectedOrder: null,
+      selectedOrderDetails: [],
+    };
+  },
+  methods: {
+    //取得訂單
+    getOrders() {
+      const memberId = this.memberInfo.member_id;
+      apiInstance.get(`./getMemberOrders.php?member_id=${memberId}`)
+        .then(response => {
+          this.orders = response.data; // 假設後端返回是一個訂單數組假
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+    },
+    //取得訂單明細
+    getOrderDetails(orderId) {
+      apiInstance.get(`./getMemberOrderDetails.php?order_id=${orderId}`)
+        .then(response => {
+          this.selectedOrderDetails = response.data; // 假設後端返回是一個訂單數組假
+          this.showModal = true; // 打開模態框
+        })
+        .catch(error => {
+          console.error("Error getting order details:", error);
+        });
+    },
+    //關閉燈箱
+    closeModal() {
+      this.showModal = false;
+    },
+    //開啟燈箱
+    openModal() {
+      this.showModal = true;
+    }
+  },
+  computed: {
+    ...mapState(userStore, ['memberInfo']),
+  },
+  created() {
+    const memberStore = userStore();
+    memberStore.getMemberInfo();
+
+    this.getOrders();
+  },
+};
+</script>
 <style lang="scss" scoped>
 *{
   font-family: 'Inter', sans-serif;
