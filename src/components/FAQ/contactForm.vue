@@ -129,11 +129,11 @@ function resetForm(){
             </div>
             <div class="info">
                 <p class="tinyp">電子郵件*</p>
-                <input type="email" placeholder="請輸入您的電子郵件(非必填)" v-model="isWritten.email" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
+                <input type="email" placeholder="請輸入您的電子郵件(必填)" v-model="isWritten.email" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
             </div>
             <div class="info">
                 <p class="tinyp">連絡電話</p>
-                <input type="tel" placeholder="請輸入您的連絡電話" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
+                <input type="tel" placeholder="請輸入您的連絡電話(非必填)" :readonly="isReadonly" :class="{'readonlyBGC':isReadonly}">
             </div>
             <!-- ------------ -->
         </div>
@@ -147,11 +147,6 @@ function resetForm(){
             <button type="submit" class="submit" @click="flagCheck">{{buttonText}}</button>
         </div>
     </form>
-    <!-- <div class="succesMsg" v-show="submmitDialog">
-        <div class="content">
-            <h1>送出成功!</h1>
-        </div>
-    </div> -->
 </template>
 
 <style lang="scss" scoped>
@@ -162,14 +157,15 @@ function resetForm(){
     display: block;
     @include desktop{
         display: flex;
+        width: 70%;
     }
     h3{
         display: none;
         @include desktop{
-        display: block;
-        font-weight: bold;
-        font-size: 40px;
-        margin-bottom: 30px;
+            display: block;
+            font-weight: bold;
+            font-size: 40px;
+            margin-bottom: 30px;
         }
     }
     p{
@@ -211,6 +207,7 @@ function resetForm(){
         background-color: $yellow-2;
         font-size: 24px;
         @include desktop{
+
             font-size: 40px;
         }
     }
@@ -254,7 +251,7 @@ form{
     margin: 30px auto;
     border-bottom: 1px solid $dark;
     @include desktop{
-        margin: 5vw 20%;
+        margin: 3vw 20%;
         font-size: 24px;
         padding-bottom: 1em;
     }
@@ -269,9 +266,10 @@ form{
         text-align: end;
         width: 30%;
         @include desktop{
-        font-size: 20px;
-        text-align: start;
-    }
+            font-size: 20px;
+            text-align: start;
+            width: 20%;
+        }
     }
     textarea{
         width: 50%;
@@ -307,8 +305,7 @@ form{
             margin:  10vw;
             align-items: center;
             width: 70%;
-            margin: 5vw 0 0 20vw;
-
+            margin: 5% 0 -2% 20%;
         }
 
         p{
@@ -317,6 +314,7 @@ form{
             text-align: end;
             width: 30%;
             @include desktop{
+                width: 20%;
                 font-size: 20px;
                 text-align: start;
                 margin: 0;
@@ -350,7 +348,7 @@ form{
     justify-content: center;
     width: 100%;
     @include desktop{
-        margin: 10vw auto;
+        margin: 5vw auto;
         transform: scale(1.5);
         width: 50%;
     }
@@ -360,7 +358,6 @@ form{
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-
         }
     }
 }
@@ -397,7 +394,7 @@ form{
                 background-color: $blue-4;
             }
             @include desktop{
-                margin: 5vw auto;
+                margin: 0 auto 5vw;
                 width: 20vw;
                 font-size: 24px;
             }
@@ -412,31 +409,6 @@ textarea.readonlyBGC{
 }
 .info input.readonlyBGC{
     background-color: $blue-3;
-}
-.succesMsg{
-    @include desktop{
-        width: 500px;
-        height: 400px;
-        margin: auto;
-    }
-    // .content{
-    //     @include desktop{
-    //         width: 100%;
-    //         height: 100%;
-    //         align-items: center;
-    //         display: flex;
-    //         justify-content: center;
-    //         border-radius: 30px;
-    //         background-color: rgba($blue-3,0.7);
-
-    //     }
-    //     h1{
-    //         @include desktop{
-    //             display: block;
-    //             color: $white01;
-    //         }
-    //     }
-    // }
 }
 
 </style>

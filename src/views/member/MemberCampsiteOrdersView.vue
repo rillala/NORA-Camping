@@ -17,8 +17,9 @@
     <table class="order-container">
       <thead>
         <tr>
-          <th class="table-title">訂單日期</th>
           <th class="table-title">訂單編號</th>
+          <th class="table-title">入營日期</th>
+          <th class="table-title responsive-cell-01">拔營日期</th>
           <th class="table-title responsive-cell-01" v-if="!isSmallScreen">訂單金額</th>
           <th class="table-title">訂單狀態</th>
           <th class="table-title">查看詳情</th>
@@ -26,89 +27,142 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <td class="table-content">{{ truncatedDate(order.orderDate) }}</td>
-          <td class="table-content">{{ order.orderNumber }}</td>
-          <td class="table-content responsive-cell-01" v-if="!isSmallScreen">{{ order.orderAmount }}</td>
-          <td class="table-content">{{ order.orderStatus }}</td>
-          <td class="table-content"><button class="btn-view-details" @click="viewDetails(order)">查看</button></td>
+        <tr v-for="order in orders" :key="order.orderInfo.reservation_id">
+          <td class="table-content">{{order.orderInfo.reservation_id  }}</td>
+          <td class="table-content">{{ order.orderInfo.checkin_date }}</td>
+          <td class="table-content">{{ order.orderInfo.checkout_date }}</td>
+          <td class="table-content responsive-cell-01" v-if="!isSmallScreen">{{ order.orderInfo.total_price}}</td>
+          <td class="table-content">{{ order.orderInfo.reserve_status }}</td>
+          <td class="table-content"><button class="btn-view-details" @click="getOrderDetails()">查看</button></td>
           <td class="table-content"><button class="btn-cancel" @click="cancelOrder(order)">取消</button></td>
         </tr>
       </tbody>
     </table>
   </div>
+
+    <!-- 營地明細燈箱，使用 v-if 控制顯示 -->
+    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+    <div class="modal-content">
+      <h3 class="content-title">營地明細</h3>
+      <!-- 顯示選中訂單明細 -->
+      <table>
+        <thead> 
+          <th>入營日期</th>
+          <th>拔營日期</th>
+          <th>是否夜衝</th>
+          <th>訂單狀態</th>
+        </thead>
+        <tbody>
+          <tr v-for="order in orders" :key="order.orderInfo.reservation_id">
+          <td>{{ order.orderInfo.checkin_date }}</td>
+          <td>{{ order.orderInfo.checkout_date }}</td>
+          <td>{{ order.siteInfo.type_id }}</td>
+          <td>{{ order.siteInfo.reserve_count }}</td>
+          </tr>
+        </tbody>
+        <thead> 
+          <h5 class="detail-title">營位預定明細</h5> 
+            <tr>  
+              <th>營區</th>
+              <th>營位種類</th>
+              <th>數量</th>
+              <th>晚數</th>
+              <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="order in orders" :key="order.siteInfo.reservation_id">
+          <td>{{ order.siteInfo.type_id }}</td>
+          <td>{{ order.siteInfo.reserve_count }}</td>
+          <td>{{ order.siteInfo.type_id }}</td>
+          <td>{{ order.siteInfo.reserve_count }}</td>
+          </tr>
+        </tbody>
+        <thead> 
+          <h5 class="detail-title">設備預定明細</h5> 
+            <tr>  
+              <th>品項編號</th>
+              <th>品項名稱</th>
+              <th>數量</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="order in orders" :key="order.siteInfo.reservation_id">
+          <td>{{ order.siteInfo.type_id }}</td>
+          <td>{{ order.siteInfo.reserve_count }}</td>
+          <td>{{ order.siteInfo.type_id }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="button-container">
+        <button @click="closeModal">關閉</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import { RouterLink, RouterView } from 'vue-router';
-import axios from 'axios';
+import apiInstance from '@/plugins/auth';
+import userStore from '@/stores/user';
+import { mapState, mapActions } from 'pinia';
 
 export default {
   data() {
     return {
-      orders: [ {
-          id: 1,
-          orderDate: '2023/12/01',
-          orderNumber: '#111111',
-          orderAmount: '$291',
-          shippingMethod: '宅配',
-          orderStatus: '完成',
-        },
-        {
-          id: 2,
-          orderDate: '2023/12/01',
-          orderNumber: '#111112',
-          orderAmount: '$391',
-          shippingMethod: '超商取貨',
-          orderStatus: '完成',
-        },
-        {
-          id: 3,
-          orderDate: '2023/12/01',
-          orderNumber: '#111113',
-          orderAmount: '$291',
-          shippingMethod: '宅配',
-          orderStatus: '完成',
-        },
-      ],// 從資料庫獲取的訂單數據
-      
-      isSmallScreen: false,
+      orders: [
+
+      ], // 從資料庫獲取的訂單數據
+      showModal: false,
+      selectedOrder: null,
+      selectedOrderDetails: [],
     };
   },
-  mounted() {
-    // 模擬從資料庫中獲取訂單數據的操作
-    this.fetchOrdersFromDatabase();
-    this.checkScreenSize();
-    window.addEventListener('resize', this.checkScreenSize);
-  },
-  
   methods: {
-    fetchOrdersFromDatabase() {
-      // 實際從資料庫中獲取數據的邏輯
-      // 可以使用 API 請求或其他方式
-      // 將獲取到的數據賦值給 this.orders
-      // this.orders = 資料庫中的訂單數據;
+    //取得訂單
+    getOrders() {
+      const memberId = this.memberInfo.member_id;
+      apiInstance.get(`./getReserve.php?member_id=${memberId}`)
+        .then(response => {
+          this.orders = response.data.all; // 根據截圖中的數據結構進行了修正
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
     },
-    viewDetails(order) {
-      // 實作查看詳情的邏輯
-      console.log('查看詳情', order);
+    //取得訂單明細
+    getOrderDetails() {
+      const memberId = this.memberInfo.member_id;
+      apiInstance.get(`./getReserve.php?member_id=${memberId}`)
+        .then(response => {
+          this.orders = response.data.all;
+          // this.selectedOrderDetails = response.data; // 假設後端返回是一個訂單數組假
+          this.showModal = true; // 打開模態框
+        })
+        .catch(error => {
+          console.error("Error getting order details:", error);
+        });
     },
-    cancelOrder(order) {
-      // 實作取消訂單的邏輯
-      console.log('取消訂單', order);
+    //關閉燈箱
+    closeModal() {
+      this.showModal = false;
     },
-
-    checkScreenSize() {
-    this.isSmallScreen = window.innerWidth <= 480; 
-    },
-
-    truncatedDate(fullDate) {
-      return fullDate.slice(5); // 截取月份和日期部分，忽略年份
+    //開啟燈箱
+    openModal() {
+      this.showModal = true;
     }
+  },
+  computed: {
+    ...mapState(userStore, ['memberInfo']),
+  },
+  created() {
+    const memberStore = userStore();
+    memberStore.getMemberInfo();
+
+    this.getOrders();
   },
 };
 </script>
-
 <style lang="scss" scoped>
 *{
   font-family: 'Inter', sans-serif;
@@ -204,5 +258,74 @@ nav ul{
       padding: 6px 15px;
     }
   }
+}
+.modal-overlay {
+  position: fixed; /* 或者是 absolute，依據需求 */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+  display: flex;
+  align-items: center; /* 垂直置中 */
+  justify-content: center; /* 水平置中 */
+}
+
+.modal-content {
+  background-color: #fff; /* 白色背景 */
+  padding: 20px;
+  border-radius: 5px; /* 圓角邊框 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影 */
+  width: 50%; /* 彈窗寬度 */
+  max-width: 640px; /* 最大寬度 */
+}
+
+table {
+  width: 100%; /* 表格寬度為彈窗寬度 */
+  border-collapse: collapse; /* 去除表格間距 */
+}
+
+th, td {
+  text-align: left;
+  padding: 10px; /* 表格內填充 */
+  border-bottom: 1px solid #ddd; /* 表格行之間的分割線 */
+}
+
+button {
+  background-color: $blue-3; 
+  color: $white01;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer; 
+  border-radius: $radius; 
+  
+}
+
+button:hover {
+  background-color: $blue-4; 
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 這將使得按鈕靠右對齊 */
+}
+
+.item{
+  margin:10px;
+  font-size:16px;
+}
+.content-title{
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.detail-title{
+  padding:10px;
+  font-size: 18px;
+  font-weight:bold;
 }
 </style>

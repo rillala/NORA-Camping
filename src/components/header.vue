@@ -6,6 +6,8 @@ import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import { useCartStore } from '@/stores/cartStore';
 import apiInstance from '@/plugins/auth';
+import { getDBImage } from '@/assets/js/common';
+
 
 export default {
   components: {
@@ -56,16 +58,19 @@ export default {
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(useCartStore, ['cartList']),
-    ...mapState(userStore, ['token', 'userData', 'userProfileImage']),
+    ...mapState(userStore, ['token', 'userData', 'userProfileImage','updateUserData','memberInfo']),
     userProfileImageStyle() {
       return this.userProfileImage
         ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
         : ''; // 如果沒有使用者頭像，返回空字符串或預設樣式
     },
-
+    
     isLogin() {
       return !!this.token;
     },
+  },
+  mounted() {
+    this.updateUserData();
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
@@ -78,52 +83,12 @@ export default {
       'logout',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-
-    // 當使用者點擊登出按鈕時調用
-    handleLogout() {
-      // 從本地存儲中獲取token
-      const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
-      console.log(token);
-      // 確保token存在
-      if (!token) {
-        console.error('Logout error: No token found');
-        return;
-      }
-
-      // 使用 Axios 實例發送帶有 token 的 POST 請求到後端的 logout.php 端點
-      apiInstance
-        .post(
-          'logout.php',
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // 將 token 放在 Authorization 頭部
-            },
-          },
-        )
-        .then(response => {
-          // 檢查後端是否返回登出成功的訊息
-          if (!response.data.error) {
-            // 清除本地存儲中的token
-            this.logout();
-            // localStorage.removeItem('token'); // 清除token
-            // 清除前端存儲的狀態
-            this.isMemberSubOpen = false;
-            this.userProfileImage = null;
-            this.isLoginOpen = false;
-            // 登出成功，重定向到首頁
-            this.$router.push('/');
-          } else {
-            // 如果後端返回失敗訊息，處理這些訊息
-            console.error('Logout failed:', response.data.message);
-          }
-        })
-        .catch(error => {
-          // 處理登出過程中發生的錯誤
-          console.error('Logout error:', error);
-        });
+    handleLogout(){
+      this.logout();
+      this.isMemberSubOpen = false;
+      // this.userProfileImage = null;
+      this.isLoginOpen = false;
     },
-
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },
@@ -138,7 +103,6 @@ export default {
       this.isMenuOpen = false; // 關閉子選單-->手機板需要
       // console.log(this.isLoginOpen);
     },
-
     memberCenter() {
       if (this.isLogin) {
         // 如果已經登入了 token = true, 則開啟子選單
@@ -152,6 +116,10 @@ export default {
     // 點選子選單跳轉到會員中心時，子選單要關起來
     closeSubmenu() {
       this.isMemberSubOpen = false;
+    },
+    getDBImage(paths) {
+      return getDBImage(paths);
+      // console.log(this.getDBImage);
     },
   },
 };
@@ -215,6 +183,7 @@ export default {
               :alt="shopBtn"
             />
             <p>{{ shopBtn.name }}</p>
+            
           </RouterLink>
 
           <!--會員登入-->
@@ -223,8 +192,12 @@ export default {
             @click="
               memberCenter();
               closeHam();
-            "
-          >
+            ">
+            <img
+            class="photo"
+            :src="getDBImage(memberInfo.photo)"
+            />
+            
             <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
             <div class="sub-menu-container" v-if="isMemberSubOpen">
               <ul>
@@ -317,4 +290,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
+.photo{
+  border-radius: $radius;
+  height: 55px;
+  width: 55px;
+
+}
 </style>

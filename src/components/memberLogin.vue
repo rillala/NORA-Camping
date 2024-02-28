@@ -141,6 +141,7 @@ import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
+import { memberRedirect } from '@/assets/js/common';
 
 export default {
   props: { isOpen: Boolean },
@@ -163,7 +164,7 @@ export default {
       },
       showPrivacyPolicy: false,
       channel_id: '2003443299',
-      redirect_uri: 'http://localhost:5173',
+      redirect_uri: this.memberRedirect(),
       client_secret: '6944f7d50fb550267d1488e66d7f4d90',
     };
   },
@@ -195,6 +196,9 @@ export default {
     }
   },
   methods: {
+    memberRedirect() {
+      return memberRedirect();
+    },
     closePrivacy() {
       this.showPrivacyPolicy = false;
     },
@@ -352,20 +356,21 @@ export default {
         const lineAccountTypeID = 1;
 
         //更新token;
-        localStorage.setItem('token', accessToken);
+        console.log(accessToken);
+        // localStorage.setItem('token', accessToken);
         this.updateToken(accessToken);
 
         // 這邊寫回資料庫
         // const response = await axios.post(
-        const response = await apiInstance.post(
-          `/lineLogin.php`,
-          {
-            user_id: lineUserId,
-            name: lineNickname,
-            photo: lineUSerImgURL,
-            //accountTypeID: lineAccountTypeID
-          },
-        );
+        const response = await apiInstance.post(`/lineLogin.php`, {
+          user_id: lineUserId,
+          name: lineNickname,
+          photo: lineUSerImgURL,
+          //accountTypeID: lineAccountTypeID
+        });
+        localStorage.setItem('token', response.data.token);
+        this.updateToken(response.data.token);
+        console.log(response.data.token);
         alert(response.data.message);
         // this.updateToken(lineUserId)
 

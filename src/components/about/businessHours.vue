@@ -9,7 +9,10 @@ const props = defineProps({
 });
 const isOpen = ref(false);
 const open = () => {
-    isOpen.value = !isOpen.value;
+    if(nowWidth.value< DESKTOP){
+        isOpen.value = !isOpen.value;
+    }else
+    isOpen.value = isOpen.value;
 };
 const DESKTOP = 1024;
 const nowWidth = ref(window.innerWidth);

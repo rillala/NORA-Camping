@@ -25,16 +25,28 @@
     </ul>
   </div>
 
-  <div class="drop-box">
-    <div
-      id="dropzone"
-      class="drop-area"
-      @dragover.prevent="dragOver"
-      @drop.prevent="dropped"
+  <div class="photo-box">
+    <button
+      v-if="memberInfo.photo === ''"
+      @click="triggerFileInput"
+      class="added-photo"
     >
-      <img v-if="imageSrc" :src="imageSrc" alt="Dropped Image" />
-      <p class="added-photo">新增頭貼</p>
-    </div>
+      上傳頭貼
+    </button>
+    <img
+      v-else
+      @click="triggerFileInput"
+      class="added-photo"
+      :src="getDBImage(memberInfo.photo)"
+      alt="用戶頭貼"
+    />
+
+    <input
+      type="file"
+      ref="fileInput"
+      style="display: none"
+      @change="handleFileUpload"
+    />
   </div>
 
   <div class="info-container">
@@ -113,7 +125,7 @@
           <button class="save-changes" @click="startEditingPassword">
             修改密碼
           </button>
-          <button class="logout" @click.stop="handleLogout">登出</button>
+          <button class="logout" @click.stop="logout">登出</button>
         </div>
       </div>
 
@@ -157,26 +169,18 @@ import axios from 'axios';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
-import handleLogout from '@/components/header.vue';
+import { getDBImage } from '@/assets/js/common';
 
 export default {
   data() {
     return {
       isEditing: false,
-      // memberInfo: {
-      //   member_id:'',
-      //   name: ' ',
-      //   phone: '',
-      //   email:'',
-      //   address: '',
-      // },
       editMemberInfo: {
         name: '',
         phone: '',
         email: '',
         address: '',
       },
-
       isEditingPassword: false,
       oldPassword: '',
       newPassword: '',
@@ -193,7 +197,7 @@ export default {
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
-    ...mapActions(userStore, ['updateToken', 'updateUserData']),
+    ...mapActions(userStore, ['updateToken', 'updateUserData', 'logout']),
     async getMemberInfo() {
       try {
         const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
@@ -203,11 +207,11 @@ export default {
           return;
         }
         // 發送請求到後端，獲取用戶資料
-        const response = await apiInstance.get('/memberInfo.php', {
+        const response = await apiInstance.get('memberInfo.php', {
           headers: { Authorization: `Bearer ${token}` },
         });
         // 更新 Pinia store 裡的使用者資料
-        console.log(response.data);
+        // console.log(response.data);
         this.updateUserData(response.data);
         // 調用 Pinia action 並傳入響應數據
       } catch (error) {
@@ -215,14 +219,6 @@ export default {
         // 處理錯誤，可能需要在界面上顯示錯誤資訊
       }
     },
-    // logout() {
-    //   // 調用pinia的updateToken
-    //   this.updateToken('');
-    //   this.updateUserData('');
-    //   this.isMemberSubOpen = false;
-    //   this.$router.push('/');
-    // },
-
     startEditing() {
       // 複製當前會員資料到編輯用的對象中
       this.editMemberInfo = {
@@ -233,7 +229,9 @@ export default {
       };
       this.isEditing = true;
     },
-
+    getDBImage(paths) {
+      return getDBImage(paths);
+    },
     saveChanges() {
       const token = localStorage.getItem('token'); // 從本地存儲獲取用戶的token
 
@@ -254,7 +252,7 @@ export default {
         .then(response => {
           // 更新成功
           alert('資料更新成功');
-          console.log(response.data);
+          // console.log(response.data)
           this.getMemberInfo();
           // this.updateUserData(response.data); // 更新前端store或狀態
           // this.memberInfo = {...this.editMemberInfo}
@@ -266,19 +264,21 @@ export default {
           alert('資料更新失敗');
         });
     },
-    // saveChanges() {
-    //   // 在這裡處理保存變更的邏輯
-    //   this.memberInfo = {...this.editMemberInfo};
-    //   this.isEditing = false;
-    // },
     cancelEditing() {
-      // 在這裡處理取消編輯的邏輯
       this.isEditing = false;
     },
     startEditingPassword() {
       this.isEditingPassword = true;
     },
     async savePasswordChanges() {
+      if (
+        !this.oldPassword.trim() ||
+        !this.newPassword.trim() ||
+        !this.confirmPassword.trim()
+      ) {
+        alert('密碼欄位不能為空');
+        return;
+      }
       // 檢查新密碼與確認密碼是否一致
       if (this.newPassword !== this.confirmPassword) {
         alert('新密碼和確認密碼不一致');
@@ -305,18 +305,25 @@ export default {
         });
 
         // 根據後端響應處理前端邏輯
-        if (response.data.success) {
+        if (response.data.error === false) {
           // 如果密碼更新成功
-          alert(response.data.message);
+          alert(response.data.message); //沒辦法返回後端訊息
+          // console.log(response.data.message);
           this.isEditingPassword = false;
-          this.handleLogout(); // 啟用這一行來執行登出操作並可能重定向用戶
+          await this.logout(); // 無法登出
+          {
+            {
+              this.logout;
+            }
+          }
+          console.log(this.logout);
         } else {
           // 如果後端報告說密碼更新失敗
           alert(response.data.message);
         }
       } catch (error) {
         // 處理請求過程中發生的錯誤
-        console.error('密碼更新失敗:', error);
+        // console.error("密碼更新失敗:", error);
         alert('密碼更新過程中發生錯誤');
       }
     },
@@ -325,19 +332,48 @@ export default {
       // 在這裡處理取消密碼修改的邏輯
       this.isEditingPassword = false;
     },
-
-    dragOver(e) {
-      e.preventDefault();
+    triggerFileInput() {
+      this.$refs.fileInput.click();
     },
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      const fileName = file.name;
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
 
-    dropped(e) {
-      e.preventDefault();
-      const file = e.dataTransfer.files[0];
-      const readFile = new FileReader();
-      readFile.readAsDataURL(file);
-      readFile.onload = () => {
-        this.imageSrc = readFile.result;
-      };
+        apiInstance
+          .post('uploadPhoto.php', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          })
+          .then(response => {
+            console.log(response.data);
+            this.uploadImagePath(fileName);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+    },
+    uploadImagePath(file) {
+      const memberId = this.memberInfo.member_id;
+      const filePath = 'member/' + file;
+
+      const formDataForPath = new FormData();
+      formDataForPath.append('fileName', filePath);
+      formDataForPath.append('memberId', memberId);
+
+      apiInstance
+        .post('uploadPhotoPath.php', formDataForPath)
+        .then(response => {
+          if (!response.data.error) {
+            console.log(response.data.msg);
+            this.getMemberInfo();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     },
   },
 };
@@ -345,4 +381,17 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/memberCenterView.scss';
+
+.added-photo {
+  border-radius: 100px;
+  height: 150px;
+  width: 150px;
+  border: 1px dashed;
+}
+.photo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
 </style>
