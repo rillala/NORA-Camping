@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { defineStore } from 'pinia';
 import apiInstance from '@/plugins/auth';
+import router from '@/router';
 
 export default defineStore('userStore', {
   // 對應 data
@@ -122,8 +123,8 @@ export default defineStore('userStore', {
             sessionStorage.clear();
             this.isLoginOpen = false;
             // 登出成功，重定向到首頁
-            // this.$router.push('/');
-            alert('已登出')
+            alert('已登出');
+            router.push({ name: 'home' });
           } else {
             // 如果後端返回失敗訊息，處理這些訊息
             console.error('Logout failed:', response.data.message);

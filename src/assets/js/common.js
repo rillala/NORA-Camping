@@ -5,6 +5,11 @@ export const getDBImage = paths => {
   // return `https://tibamef2e.com/chd104/g1/image/${paths}`;
 };
 
+export const memberRedirect = () => {
+  return `http://localhost:5173`;
+  // return `https://tibamef2e.com/chd104/g1`;
+};
+
 // 資料庫中圖片路徑使用辦法:
 // import { getDBImage } from "@/assets/js/common";
 

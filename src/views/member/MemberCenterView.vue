@@ -25,12 +25,28 @@
     </ul>
   </div>
 
-  <div class="photo-box">    
-    <button v-if="memberInfo.photo === ''" @click="triggerFileInput" class="added-photo">上傳頭貼</button>
-<img v-else @click="triggerFileInput" class="added-photo" :src="getDBImage(memberInfo.photo)" alt="用戶頭貼"/>
+  <div class="photo-box">
+    <button
+      v-if="memberInfo.photo === ''"
+      @click="triggerFileInput"
+      class="added-photo"
+    >
+      上傳頭貼
+    </button>
+    <img
+      v-else
+      @click="triggerFileInput"
+      class="added-photo"
+      :src="getDBImage(memberInfo.photo)"
+      alt="用戶頭貼"
+    />
 
-<input type="file" ref="fileInput" style="display: none" @change="handleFileUpload" />
-
+    <input
+      type="file"
+      ref="fileInput"
+      style="display: none"
+      @change="handleFileUpload"
+    />
   </div>
 
   <div class="info-container">
@@ -153,7 +169,7 @@ import axios from 'axios';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
-import { getDBImage } from "@/assets/js/common";
+import { getDBImage } from '@/assets/js/common';
 
 export default {
   data() {
@@ -182,26 +198,26 @@ export default {
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
-    ...mapActions(userStore, ['updateToken', 'updateUserData','logout']),
+    ...mapActions(userStore, ['updateToken', 'updateUserData', 'logout']),
     async getMemberInfo() {
-    try {
-      const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
-      // 確保 token 存在
-      if (!token) {
-        console.error('Logout error: No token found');
-        return;
-      }
-      // 發送請求到後端，獲取用戶資料
-      const response = await apiInstance.get('memberInfo.php', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      // 更新 Pinia store 裡的使用者資料
-      // console.log(response.data);
-      this.updateUserData(response.data);
-      // 調用 Pinia action 並傳入響應數據
-    } catch (error) {
-      console.error("Error fetching member info:", error);
-      // 處理錯誤，可能需要在界面上顯示錯誤資訊
+      try {
+        const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
+        // 確保 token 存在
+        if (!token) {
+          console.error('Logout error: No token found');
+          return;
+        }
+        // 發送請求到後端，獲取用戶資料
+        const response = await apiInstance.get('memberInfo.php', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        // 更新 Pinia store 裡的使用者資料
+        // console.log(response.data);
+        this.updateUserData(response.data);
+        // 調用 Pinia action 並傳入響應數據
+      } catch (error) {
+        console.error('Error fetching member info:', error);
+        // 處理錯誤，可能需要在界面上顯示錯誤資訊
       }
     },
     startEditing() {
@@ -214,35 +230,40 @@ export default {
       };
       this.isEditing = true;
     },
-    getDBImage(paths){
-    return getDBImage(paths);
+    getDBImage(paths) {
+      return getDBImage(paths);
     },
     saveChanges() {
       const token = localStorage.getItem('token'); // 從本地存儲獲取用戶的token
 
-    // 使用 api 實例
-    apiInstance.post('/memberUpdate.php', {
-        member_id: this.memberInfo.member_id,
-        name: this.editMemberInfo.name,
-        phone: this.editMemberInfo.phone,
-        address: this.editMemberInfo.address
-    }, {
-        headers: { 'Authorization': `Bearer ${token}` }
-    })
-    .then(response => {
-        // 更新成功
-        alert('資料更新成功');
-        // console.log(response.data)
-        this.getMemberInfo()
-        // this.updateUserData(response.data); // 更新前端store或狀態
-        // this.memberInfo = {...this.editMemberInfo}
-        this.isEditing = false;
-    })
-    .catch(error => {
-        // 處理錯誤
-        console.error("更新資料失敗:", error);
-        alert('資料更新失敗');
-    });
+      // 使用 api 實例
+      apiInstance
+        .post(
+          '/memberUpdate.php',
+          {
+            member_id: this.memberInfo.member_id,
+            name: this.editMemberInfo.name,
+            phone: this.editMemberInfo.phone,
+            address: this.editMemberInfo.address,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        )
+        .then(response => {
+          // 更新成功
+          alert('資料更新成功');
+          // console.log(response.data)
+          this.getMemberInfo();
+          // this.updateUserData(response.data); // 更新前端store或狀態
+          // this.memberInfo = {...this.editMemberInfo}
+          this.isEditing = false;
+        })
+        .catch(error => {
+          // 處理錯誤
+          console.error('更新資料失敗:', error);
+          alert('資料更新失敗');
+        });
     },
     cancelEditing() {
       this.isEditing = false;
@@ -251,13 +272,17 @@ export default {
       this.isEditingPassword = true;
     },
     async savePasswordChanges() {
-      if (!this.oldPassword.trim() || !this.newPassword.trim() || !this.confirmPassword.trim()) {
-      alert("密碼欄位不能為空");
-      return;
-    }
+      if (
+        !this.oldPassword.trim() ||
+        !this.newPassword.trim() ||
+        !this.confirmPassword.trim()
+      ) {
+        alert('密碼欄位不能為空');
+        return;
+      }
       // 檢查新密碼與確認密碼是否一致
       if (this.newPassword !== this.confirmPassword) {
-        alert("新密碼和確認密碼不一致");
+        alert('新密碼和確認密碼不一致');
         return;
       }
 
@@ -275,19 +300,23 @@ export default {
           url: '/updatePassword.php',
           data: {
             oldPassword: this.oldPassword,
-            newPassword: this.newPassword
+            newPassword: this.newPassword,
           },
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         // 根據後端響應處理前端邏輯
         if (response.data.error === false) {
           // 如果密碼更新成功
-          alert(response.data.message);//沒辦法返回後端訊息
+          alert(response.data.message); //沒辦法返回後端訊息
           // console.log(response.data.message);
           this.isEditingPassword = false;
           await this.logout(); // 無法登出
-          {{this.logout}};
+          {
+            {
+              this.logout;
+            }
+          }
           console.log(this.logout);
         } else {
           // 如果後端報告說密碼更新失敗
@@ -298,7 +327,7 @@ export default {
         // console.error("密碼更新失敗:", error);
         alert('密碼更新過程中發生錯誤');
       }
-  },
+    },
 
     cancelPasswordEditing() {
       // 在這裡處理取消密碼修改的邏輯
@@ -308,69 +337,62 @@ export default {
       this.$refs.fileInput.click();
     },
     handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
+      const file = event.target.files[0];
+      const fileName = file.name;
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
 
-      // 第一個 API 請求 - 上傳圖片
-      apiInstance.post('uploadPhoto.php', formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then(response => {
-        // 確認響應中有 data 屬性
-        if (response && response.data) {
-          // 取得伺服器回傳的檔名
-          const fileName = response.data;
-          console.log(fileName); // 可以先檢查一下伺服器返回的檔名是否正確
-          // alert('圖片上傳成功');
-          
-          // 第二個 API 請求 - 更新圖片路徑
-          const token = localStorage.getItem('token');
-          const formDataForPath = new FormData();
-          formDataForPath.append('fileName', fileName); // 使用上一個 API 回傳的檔名
-          return apiInstance.post('uploadPhotoPath.php', formDataForPath, {
-              headers: { "Authorization": `Bearer ${token}` }
+        apiInstance
+          .post('uploadPhoto.php', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          })
+          .then(response => {
+            console.log(response.data);
+            this.uploadImagePath(fileName);
+          })
+          .catch(error => {
+            console.error('Error:', error);
           });
-        } else {
-          // 如果沒有 data，拋出錯誤讓下一個 catch 處理
-          throw new Error('圖片上傳失敗: ' + (response && response.data && response.data.message ? response.data.message : '未知錯誤'));
+      }
+    },
+    uploadImagePath(file) {
+      const memberId = this.memberInfo.member_id;
+      const filePath = 'member/' + file;
+
+      const formDataForPath = new FormData();
+      formDataForPath.append('fileName', filePath);
+      formDataForPath.append('memberId', memberId);
+
+      apiInstance
+        .post('uploadPhotoPath.php', formDataForPath)
+        .then(response => {
+          if (!response.data.error) {
+            console.log(response.data.msg);
+            this.getMemberInfo();
           }
-      })
-      .then(updateResponse => {
-          // 處理第二個 API 的響應
-          if (updateResponse && updateResponse.data && updateResponse.data.success) {
-            alert('檔名更新成功');
-          } else {
-            // 如果 updateResponse 不是預期格式，拋出錯誤
-            throw new Error('檔名更新失敗: ' + (updateResponse && updateResponse.data && updateResponse.data.message ? updateResponse.data.message : '未知錯誤'));
-          }
-      })
-      .catch(error => {
-          // 處理任何在鏈中發生的錯誤
-          console.error("圖片上傳或檔名更新失敗:", error);
-          alert(error.message || '過程中發生錯誤');
-      });
-    }
-  }
-  }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/memberCenterView.scss';
 
-.added-photo{
+.added-photo {
   border-radius: 100px;
   height: 150px;
-  width:150px;
-  border:1px dashed;
+  width: 150px;
+  border: 1px dashed;
 }
-.photo-box{
+.photo-box {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom:10px;
-  
+  margin-bottom: 10px;
 }
 </style>
