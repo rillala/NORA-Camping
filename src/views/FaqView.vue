@@ -2,7 +2,7 @@
 // 引入函式庫
 import mainFAQ from '../components/FAQ/mainFAQ.vue';
 import contactForm from '../components/FAQ/contactForm.vue';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';;
 
 const flag = ref(true);
 const changeFlag = () => {
@@ -36,6 +36,7 @@ const DESKTOP = 1024;
 
   <mainFAQ v-if="windows1024 > DESKTOP || flag" @changeToForm="changeFlag" />
   <div id="nora-contact"></div>
+
   <contactForm
     v-if="windows1024 > DESKTOP || !flag"
     @changeToMain="changeFlag"

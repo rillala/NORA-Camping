@@ -3,12 +3,15 @@ import BannerStepShop from '@/components/shop/bannerStep-shop.vue';
 import { useCartStore } from '@/stores/cartStore';
 import { mapState, mapActions } from 'pinia';
 import ActionBtn from '@/components/button/actionBtn.vue';
+import apiInstance from '@/plugins/auth';
+
 
 export default {
   components: { BannerStepShop, ActionBtn },
   data() {
     return {
       orderInfo: {},
+      orders: '',
     };
   },
   methods: {
@@ -18,6 +21,15 @@ export default {
       // 清除 sessionStorage 的 orderInfo
       sessionStorage.removeItem('orderInfo');
       window.location.reload();
+    },
+    getOrders() {
+      apiInstance.get("/getOrders.php")
+        .then(response => {
+          this.orders = response.data[0];
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
     },
   },
   computed: {
@@ -40,13 +52,13 @@ export default {
       };
     }
     sessionStorage.clear();
+    this.getOrders();
   },
 };
 </script>
 
 <template>
-  {{ cartList.title }}
-  <BannerStepShop></BannerStepShop>
+  <BannerStepShop :activeDiv="3"></BannerStepShop>
   <section class="shop-orderSucess-wrap">
     <div class="step3">
       <div class="title">
@@ -58,8 +70,8 @@ export default {
           <h3>訂單詳細資料</h3>
         </div>
         <div class="between number">
-          <h4>訂單編號</h4>
-          <p>12345678</p>
+          <h4>訂單編號:</h4>
+          <p>{{ this.orders.order_id }}</p>
         </div>
         <div class="buy-information">
           <div
@@ -74,15 +86,15 @@ export default {
             <p>NT$ {{ item.subtotal }}</p>
           </div>
           <div class="between buy-total">
-            <h4>合計</h4>
+            <h4>合計:</h4>
             <p>NT$ {{ cartList.total }}</p>
           </div>
           <div class="between buy-migrate">
-            <h4>付費方式</h4>
-            <p>{{ orderInfo.payMethod }}</p>
+            <h4>付款方式:</h4>
+            <p>{{ orderInfo.payment }}</p>
           </div>
           <div class="between buy-way">
-            <h4>運送方式</h4>
+            <h4>運送方式:</h4>
             <p>{{ orderInfo.carry }} NT$ {{ orderInfo.payWay }}</p>
           </div>
           <div class="between buy-result">
@@ -93,15 +105,15 @@ export default {
             <h3>訂購人資料</h3>
           </div>
           <div class="between buyer">
-            <h4>姓名</h4>
+            <h4>姓名:</h4>
             <p>{{ orderInfo.name }}</p>
           </div>
           <div class="between buyer">
-            <h4>電話</h4>
+            <h4>電話:</h4>
             <p>{{ orderInfo.phone }}</p>
           </div>
           <div class="between buyer">
-            <h4>郵件</h4>
+            <h4>Email:</h4>
             <p>{{ orderInfo.email }}</p>
           </div>
           <div class="locate-title">
@@ -114,7 +126,7 @@ export default {
       </div>
     </div>
     <div class="backButton">
-      <router-link to="HomeView"
+      <router-link to="shop"
         ><ActionBtn @click="clearStorage" :content="'返回首頁'"></ActionBtn>
       </router-link>
       <router-link to="memberorderhistory"

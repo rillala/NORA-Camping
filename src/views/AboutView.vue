@@ -158,8 +158,7 @@ function toSheleter(){
     @include desktop{
         padding-top: 5vw;
         width: 100%;
-        margin: auto;
-        max-width: 1400px;
+        max-width: 50%;
     }
     h2{
         @include desktop{

@@ -1,7 +1,7 @@
 <template>
 	<div class="dropDown-div">
 		<select class="dropDown-select" v-model="selectedOption" @change="handleSelection">
-			<option v-for="option in options" :key="option">{{ option }}</option>
+			<option class="dropDown-options" v-for="option in options" :key="option">{{ option }}</option>
 		</select>
 	</div>
 </template>
@@ -36,8 +36,11 @@ export default {
 	font-size: 12px;
 	background-color: $yellow-2;
 	border-radius: 20px;
-	
+	cursor: pointer;
 	padding: 2px 4px;
+	.dropDown-options{
+		cursor: pointer;
+	}
 	@include desktop {
 		font-size: 16px;
 		padding: 4px 8px;

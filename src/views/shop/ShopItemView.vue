@@ -7,14 +7,16 @@ import ActionBtn from '@/components/button/actionBtn.vue';
 import loading from '@/components/loading.vue';
 import DropDownBtn from '@/components/button/dropDownBtn.vue';
 import { getDBImage } from '@/assets/js/common';
+import ProductSlider from '@/components/shop/productSlider.vue';
 
 export default {
   components: {
     addMinusBtn,
     ActionBtn,
     loading,
-    DropDownBtn
-  },
+    DropDownBtn,
+    ProductSlider
+},
 
   data() {
     return {
@@ -56,14 +58,14 @@ export default {
       this.selectedQuantity = quantity;
       // console.log('changed quantity: ' + this.selectedQuantity);
     },
-    async addIntoCart() {
+     addIntoCart() {
       const cartStore = useCartStore();
-      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
+     cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
       
     },
-    async addAndBuy() {
+    addAndBuy() {
       const cartStore = useCartStore();
-      await cartStore.addToCart(this.responseData.product_id, this.selectedQuantity);
+      cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
       this.$router.replace('/shopCar');
     },
     prevImage() {
@@ -118,10 +120,10 @@ export default {
             <h3>NT${{ responseData.price }}</h3>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-select">
-              <DropDownBtn v-if="colorOptions.length > 1" :options="colorOptions" @change="updateSelectedColor"
+              <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 1" :options="colorOptions" @change="updateSelectedColor"
                 :default-value="'顏色'"></DropDownBtn>
 
-              <DropDownBtn v-if="sizeOptions.length > 1" :options="sizeOptions" @change="updateSelectedSize"
+              <DropDownBtn class="dropDown-select" v-if="sizeOptions.length > 1" :options="sizeOptions" @change="updateSelectedSize"
                 :default-value="'尺寸'"></DropDownBtn>
 
 
@@ -140,9 +142,9 @@ export default {
           </div>
           <p>{{ responseData.description }}</p>
         </section>
-        <div class="shop-item-rec">Nora 推薦加購</div>
       </div>
     </div>
+    <ProductSlider style="background-color: #c0a790; background-image: none;"></ProductSlider>
   </main>
 </template>
 

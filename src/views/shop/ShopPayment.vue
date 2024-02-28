@@ -5,14 +5,15 @@ import { useCartStore } from '@/stores/cartStore';
 import { mapState, mapActions } from 'pinia';
 import ActionBtn from '@/components/button/actionBtn.vue';
 import apiInstance from '@/plugins/auth';
+import userStore from '@/stores/user';
 
 export default {
   components: { BannerStepShop, ActionBtn },
   data() {
     return {
       orderInfo: {
-        memberId: 2, //暫時
-        payWay: 0,
+        memberId: '', //暫時
+        payWay: null,
         payment: '',
         carry: '',
         name: '',
@@ -30,6 +31,9 @@ export default {
   methods: {
     ...mapActions(useCartStore, ['getCart']),
     confirmPayment() {
+      if(!this.validateOrderInfo()){
+        return;
+      }
       this.nextStep();
       this.$nextTick(() => {
         // 確保在更新之後獲取正確的 orderInfo.payWay 值
@@ -40,7 +44,7 @@ export default {
       });
 
       const orderData = {
-        member_id: this.orderInfo.memberId, //待修正
+        member_id: this.memberInfo.member_id, //待修正
         name: this.orderInfo.name,
         phone: this.orderInfo.phone,
         email: this.orderInfo.email,
@@ -56,7 +60,6 @@ export default {
 
       // 發送到後端
       apiInstance.post('/addOrder.php', orderData).then(response => {
-        console.log(response.data); // 處理響應
         sessionStorage.removeItem('orderInfo');
       });
       localStorage.removeItem('cartList');
@@ -66,6 +69,29 @@ export default {
         localStorage.removeItem('cartList');
       });
     },
+    //表單驗證
+    validateOrderInfo() {
+  // 這裡只是一個基本示例，你可以根據需要擴展驗證規則
+  if (!this.orderInfo.name.trim()) {
+    alert('請輸入姓名');
+    return false;
+  }
+  if (!this.orderInfo.phone.trim() || !/^09\d{8}$/.test(this.orderInfo.phone)) {
+    alert('請輸入有效的手機號碼');
+    return false;
+  }
+  if (!this.orderInfo.email.trim() || !/\S+@\S+\.\S+/.test(this.orderInfo.email)) {
+    alert('請輸入有效的電子郵件地址');
+    return false;
+  }
+  if (!this.orderInfo.address.trim()) {
+    alert('請輸入地址');
+    return false;
+  }
+  // 可以添加更多的驗證規則
+
+  return true; // 如果所有檢查都通過了，返回true
+},
     confirmCarry(way) {
       this.orderInfo.carry = way;
     },
@@ -79,12 +105,28 @@ export default {
         sessionStorage.setItem('cartStep', currentStep.toString());
       }
     },
+    bindMemberData(event) {
+  if (event.target.checked) {
+    // 如果勾選了checkbox，則從memberInfo中取出資料並賦值給orderInfo
+    this.orderInfo.name = this.memberInfo.name;
+    this.orderInfo.phone = this.memberInfo.phone;
+    this.orderInfo.address = this.memberInfo.address;
+    this.orderInfo.email = this.memberInfo.email;
+  } else {
+    // 如果取消勾選，則清空對應的orderInfo中的資料
+    this.orderInfo.name = '';
+    this.orderInfo.phone = '';
+    this.orderInfo.address = '';
+    this.orderInfo.email = '';
+  }
+},
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
     totalWithPayWay() {
       return Number(this.cartList.total) + Number(this.orderInfo.payWay);
     },
+    ...mapState(userStore, ['memberInfo']),
   },
   created() {
     const cartStore = useCartStore();
@@ -92,6 +134,9 @@ export default {
 
     const productStore = useProductStore();
     productStore.axiosGetData();
+    
+    const memberStore = userStore();
+    memberStore.getMemberInfo();
 
     const storedOrderInfo = sessionStorage.getItem('orderInfo');
 
@@ -109,12 +154,9 @@ export default {
 };
 </script>
 <template>
-  <BannerStepShop></BannerStepShop>
-  {{ this.orderInfo }}
-  <br />
-  <br />
-  {{ this.cartList }}{{ this.orderInfo.payWay }}
+  <BannerStepShop :activeDiv="2"></BannerStepShop>
   <section class="shop-payment-wrap">
+  {{this.memberInfo}}
     <div class="shop-payment-container">
       <form class="shop-payment-forms">
         <h2>訂單資訊</h2>
@@ -138,7 +180,7 @@ export default {
               <td>NT${{ cartList.total }}</td>
             </tr>
             <div class="shop-payment-carry">
-              <h4>運送方式</h4>
+              <h4>運費送方式</h4>
               <div class="carry-option">
                 <label for="self-pick"
                   ><input
@@ -147,7 +189,7 @@ export default {
                     type="radio"
                     id="self-pick"
                     value="0"
-                    v-model="this.orderInfo.payWay"
+                    v-model="orderInfo.payWay"
                   />自行取貨</label
                 >
                 <label for="sendHome"
@@ -157,7 +199,7 @@ export default {
                     type="radio"
                     id="sendHome"
                     value="100"
-                    v-model="this.orderInfo.payWay"
+                    v-model="orderInfo.payWay"
                   />宅配: NT$100</label
                 >
                 <label for="sendStore"
@@ -167,7 +209,7 @@ export default {
                     type="radio"
                     id="sendStore"
                     value="60"
-                    v-model="this.orderInfo.payWay"
+                    v-model="orderInfo.payWay"
                   />超商取貨: NT$60</label
                 >
               </div>
@@ -193,7 +235,18 @@ export default {
 
         <h2>訂購資訊</h2>
         <div class="shop-payment-box">
-          <div class="shop-payment-formhead"></div>
+          <div class="shop-payment-formhead">
+            <div>
+              <label 
+              class="shop-memberDataBind tinyp" 
+              for="memberDataBind">同會員資料</label>
+              <input
+                type="checkbox"
+                id="memberDataBind"
+                @change="bindMemberData"
+              />
+            </div>
+          </div>
           <table class="shop-payment-inputs">
             <tr>
               <td>
@@ -201,7 +254,7 @@ export default {
               </td>
               <td>
                 <input
-                  type="name"
+                  type= 'text'
                   name="name"
                   placeholder="請輸入姓名"
                   v-model="orderInfo.name"
@@ -215,10 +268,11 @@ export default {
               </td>
               <td>
                 <input
-                  type="text"
-                  maxlength="11"
+                  type= 'tel'
+                  maxlength="10"
                   placeholder="請輸入手機號碼"
                   v-model="orderInfo.phone"
+                  required
                 />
               </td>
             </tr>
@@ -228,7 +282,7 @@ export default {
               </td>
               <td>
                 <input
-                  type="text"
+                  type= 'email'
                   name="email"
                   placeholder="例:123@gmail.com"
                   v-model="orderInfo.email"
@@ -440,5 +494,8 @@ textarea {
   padding: 4px;
   border: 2px solid $dark-gray;
   border-radius: 5px;
+}
+label, input{
+  cursor: pointer;
 }
 </style>
