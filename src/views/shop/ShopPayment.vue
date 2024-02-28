@@ -44,7 +44,7 @@ export default {
       });
 
       const orderData = {
-        member_id: this.memberInfo.member_id, //待修正
+        member_id: this.memberInfo.member_id,
         name: this.orderInfo.name,
         phone: this.orderInfo.phone,
         email: this.orderInfo.email,
@@ -156,7 +156,6 @@ export default {
 <template>
   <BannerStepShop :activeDiv="2"></BannerStepShop>
   <section class="shop-payment-wrap">
-  {{this.memberInfo}}
     <div class="shop-payment-container">
       <form class="shop-payment-forms">
         <h2>訂單資訊</h2>
