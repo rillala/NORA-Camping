@@ -55,6 +55,8 @@ const DESKTOP = 1024;
   color: $blue-4;
   @include desktop {
     padding-top: 5vw;
+    // margin-left: 15vw;
+    padding-left: 15vw;
     width: 100%;
   }
   h2 {
