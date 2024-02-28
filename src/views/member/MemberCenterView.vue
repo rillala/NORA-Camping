@@ -181,7 +181,6 @@ export default {
         email: '',
         address: '',
       },
-
       isEditingPassword: false,
       oldPassword: '',
       newPassword: '',

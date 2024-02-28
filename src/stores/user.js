@@ -20,12 +20,12 @@ export default defineStore('userStore', {
         this.updateUserProfileImage(userProfileImage);
       }
     },
-    updateUserProfileImage(imageUrl) {
-      this.userProfileImage = imageUrl;
-      // 在這裡將用户頭像 URL 保存到 localStorage
-      localStorage.setItem('userProfileImage', imageUrl);
-      console.log('Profile image updated:', imageUrl);
-    },
+    // updateUserProfileImage(imageUrl) {
+    //   this.userProfileImage = imageUrl;
+    //   // 在這裡將用户頭像 URL 保存到 localStorage
+    //   localStorage.setItem('userProfileImage', imageUrl);
+    //   console.log('Profile image updated:', imageUrl);
+    // },
     checkLogin() {
       const storageToken = localStorage.getItem('token');
       if (this.token) {
@@ -49,7 +49,6 @@ export default defineStore('userStore', {
       this.name = payload;
     },
     updateUserData(data) {
-      console.log('Received data:', data); // 確認收到的數據
       if (data) {
         // 如果 data 不是 undefined 或 null，則更新 memberInfo
         this.memberInfo = {
@@ -79,15 +78,6 @@ export default defineStore('userStore', {
         return '';
       }
     },
-    // logout() {
-    //   // this.token = '';
-    //   // // this.userData = '';
-    //   // localStorage.removeItem('token');
-    //   // // localStorage.removeItem('userData');
-    //   // // this.userProfileImage = null;
-    //   // sessionStorage.clear();
-    //   // alert('已登出')
-    // },
     logout() {
       // 從本地存儲中獲取token
       const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
@@ -122,6 +112,8 @@ export default defineStore('userStore', {
             this.userProfileImage = null;
             sessionStorage.clear();
             this.isLoginOpen = false;
+            // this.memberInfo = {}; 
+            // this.updateUserData = '';
             // 登出成功，重定向到首頁
             alert('已登出');
             router.push({ name: 'home' });
