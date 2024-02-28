@@ -49,14 +49,10 @@ export default {
   computed: {
     ...mapState(userStore, ['memberInfo']),
   },
+  created() {},
   async mounted() {
-    if (!sessionStorage.getItem('reserveData')) {
-      // 第一次填寫付款資料, 需要取出所有資料
-      this.getData();
-    } else {
-      // 非第一次填寫, 直接取出物件資料
-      this.reserveData = JSON.parse(sessionStorage.getItem('reserveData'));
-    }
+    this.getData();
+
     await this.getMemberInfo();
     // 确保 getMemberInfo 完成后执行
     this.reserveData.member_id = this.memberInfo.member_id;

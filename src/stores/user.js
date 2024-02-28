@@ -83,6 +83,7 @@ export default defineStore('userStore', {
       localStorage.removeItem('token');
       // localStorage.removeItem('userData');
       // this.userProfileImage = null;
+      sessionStorage.clear();
     },
     async getMemberInfo() {
       try {

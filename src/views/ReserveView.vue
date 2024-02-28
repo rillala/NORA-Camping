@@ -218,6 +218,7 @@ export default {
       endDate: '',
 
       // VCalender 變數
+      maxDate: new Date(new Date().setDate(new Date().getDate() + 90)),
       screen: null,
       range: {
         start: '',
@@ -570,9 +571,9 @@ export default {
         .filter(item => item.rooms == 0)
         .map(item => item.date);
 
-      // red dot 的顯示日期-->剩餘數量為 0-------------這裡邏輯怪怪的, 應該是顯示<3的之類
+      // red dot 的顯示日期-->剩餘數量 < 5
       const emptySiteDays = roomCounts
-        .filter(item => item.rooms == 0)
+        .filter(item => item.rooms < 5)
         .map(item => ({
           key: 'emptySiteDay',
           dot: 'red',
@@ -581,9 +582,9 @@ export default {
       console.log('這是沒房間的');
       console.log(emptySiteDays);
 
-      // green dot 的顯示日期-->剩餘數量> 10
+      // green dot 的顯示日期-->剩餘數量> 15
       const lotSitesDays = roomCounts
-        .filter(item => item.rooms > 10)
+        .filter(item => item.rooms > 15)
         .map(item => ({
           key: 'lotSitesDay',
           dot: 'green',
@@ -672,15 +673,16 @@ export default {
         borderless
         expanded
         :min-date="new Date()"
+        :max-date="maxDate"
         :columns="columns"
         :attributes="calendarAttributes"
         :disabled-dates="disabledDates"
       />
       <div class="notes">
         <div class="green dot"></div>
-        <div class="tinyp">剩餘營位數量 > 10</div>
+        <div class="tinyp">剩餘營位數量 > 15</div>
         <div class="red dot"></div>
-        <div class="tinyp">剩餘營位數量 = 0</div>
+        <div class="tinyp">剩餘營位數量 < 5</div>
       </div>
     </div>
 
