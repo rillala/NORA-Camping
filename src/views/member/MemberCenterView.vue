@@ -251,6 +251,10 @@ export default {
       this.isEditingPassword = true;
     },
     async savePasswordChanges() {
+      if (!this.oldPassword.trim() || !this.newPassword.trim() || !this.confirmPassword.trim()) {
+      alert("密碼欄位不能為空");
+      return;
+    }
       // 檢查新密碼與確認密碼是否一致
       if (this.newPassword !== this.confirmPassword) {
         alert("新密碼和確認密碼不一致");
