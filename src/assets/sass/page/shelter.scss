@@ -1,18 +1,39 @@
-.shelter-banner {
+.shelter-wrap {
+    background-color: $blue-1;
+    width: 100%;
+}
+
+.shelter-banner-wrap {
     // Banner區塊
     height: 200px;
     width: 100%;
-    background-color: $blue-1;
-    color: $blue-4;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 
     @include desktop {
         height: auto;
-        text-align: left;
-        padding: 5vw 0vw 3rem 10vw;
+        padding-bottom: 3rem;
+    }
+
+    .shelter-banner {
+        width: 100%;
+        padding-top: 10vw;
+        padding-left: 10vw;
+        color: $blue-4;
+
+        @include desktop{
+            padding-top: 5vw;
+            // margin: auto;
+            // max-width: 1400px;
+        }
+        h2{
+            @include desktop{
+                font-size: 48px;
+            }
+        }
+        h4{
+            @include desktop{
+                font-size: 32px;
+            }
+        }
     }
 }
 
