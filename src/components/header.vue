@@ -80,50 +80,55 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
 
     // 當使用者點擊登出按鈕時調用
-    handleLogout() {
-      // 從本地存儲中獲取token
-      const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
-      console.log(token);
-      // 確保token存在
-      if (!token) {
-        console.error('Logout error: No token found');
-        return;
-      }
+    // handleLogout() {
+    //   // 從本地存儲中獲取token
+    //   const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
+    //   console.log(token);
+    //   // 確保token存在
+    //   if (!token) {
+    //     console.error('Logout error: No token found');
+    //     return;
+    //   }
 
-      // 使用 Axios 實例發送帶有 token 的 POST 請求到後端的 logout.php 端點
-      apiInstance
-        .post(
-          'logout.php',
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // 將 token 放在 Authorization 頭部
-            },
-          },
-        )
-        .then(response => {
-          // 檢查後端是否返回登出成功的訊息
-          if (!response.data.error) {
-            // 清除本地存儲中的token
-            this.logout();
-            // localStorage.removeItem('token'); // 清除token
-            // 清除前端存儲的狀態
-            this.isMemberSubOpen = false;
-            this.userProfileImage = null;
-            this.isLoginOpen = false;
-            // 登出成功，重定向到首頁
-            this.$router.push('/');
-          } else {
-            // 如果後端返回失敗訊息，處理這些訊息
-            console.error('Logout failed:', response.data.message);
-          }
-        })
-        .catch(error => {
-          // 處理登出過程中發生的錯誤
-          console.error('Logout error:', error);
-        });
+    //   // 使用 Axios 實例發送帶有 token 的 POST 請求到後端的 logout.php 端點
+    //   apiInstance
+    //     .post(
+    //       'logout.php',
+    //       {},
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`, // 將 token 放在 Authorization 頭部
+    //         },
+    //       },
+    //     )
+    //     .then(response => {
+    //       // 檢查後端是否返回登出成功的訊息
+    //       if (!response.data.error) {
+    //         // 清除本地存儲中的token
+    //         this.logout();
+    //         // localStorage.removeItem('token'); // 清除token
+    //         // 清除前端存儲的狀態
+    //         this.isMemberSubOpen = false;
+    //         this.userProfileImage = null;
+    //         this.isLoginOpen = false;
+    //         // 登出成功，重定向到首頁
+    //         this.$router.push('/');
+    //       } else {
+    //         // 如果後端返回失敗訊息，處理這些訊息
+    //         console.error('Logout failed:', response.data.message);
+    //       }
+    //     })
+    //     .catch(error => {
+    //       // 處理登出過程中發生的錯誤
+    //       console.error('Logout error:', error);
+    //     });
+    // },
+    handleLogout(){
+      this.logout();
+      this.isMemberSubOpen = false;
+      // this.userProfileImage = null;
+      this.isLoginOpen = false;
     },
-
     getImageUrl(paths) {
       return new URL(`../assets/image/${paths}`, import.meta.url).href;
     },

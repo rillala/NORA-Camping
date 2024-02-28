@@ -109,7 +109,7 @@
           <button class="save-changes" @click="startEditingPassword">
             修改密碼
           </button>
-          <button class="logout" @click.stop="handleLogout">登出</button>
+          <button class="logout" @click.stop="logout">登出</button>
         </div>
       </div>
 
@@ -153,7 +153,6 @@ import axios from 'axios';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
-import handleLogout from '@/components/header.vue';
 import { getDBImage } from "@/assets/js/common";
 
 export default {
@@ -183,7 +182,7 @@ export default {
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
-    ...mapActions(userStore, ['updateToken', 'updateUserData']),
+    ...mapActions(userStore, ['updateToken', 'updateUserData','logout']),
     async getMemberInfo() {
     try {
       const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
@@ -205,14 +204,6 @@ export default {
       // 處理錯誤，可能需要在界面上顯示錯誤資訊
       }
     },
-    // logout() {
-    //   // 調用pinia的updateToken
-    //   this.updateToken('');
-    //   this.updateUserData('');
-    //   this.isMemberSubOpen = false;
-    //   this.$router.push('/');
-    // },
-
     startEditing() {
       // 複製當前會員資料到編輯用的對象中
       this.editMemberInfo = {
@@ -260,47 +251,49 @@ export default {
       this.isEditingPassword = true;
     },
     async savePasswordChanges() {
-    // 檢查新密碼與確認密碼是否一致
-    if (this.newPassword !== this.confirmPassword) {
-      alert("新密碼和確認密碼不一致");
-      return;
-    }
-
-    // 從 localStorage 中獲取 token
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.error('No token found');
-      return;
-    }
-
-    try {
-      // 發送更新密碼的請求
-      const response = await apiInstance({
-        method: 'post',
-        url: '/updatePassword.php',
-        data: {
-          oldPassword: this.oldPassword,
-          newPassword: this.newPassword
-        },
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-
-      // 根據後端響應處理前端邏輯
-      if (response.data.error === false) {
-        // 如果密碼更新成功
-        alert(response.data.message);//沒辦法返回後端訊息
-        // console.log(response.data.message);
-        this.isEditingPassword = false;
-        this.handleLogout(); // 啟用這一行來執行登出操作並可能重定向用戶
-      } else {
-        // 如果後端報告說密碼更新失敗
-        alert(response.data.message);
+      // 檢查新密碼與確認密碼是否一致
+      if (this.newPassword !== this.confirmPassword) {
+        alert("新密碼和確認密碼不一致");
+        return;
       }
-    } catch (error) {
-      // 處理請求過程中發生的錯誤
-      // console.error("密碼更新失敗:", error);
-      alert('密碼更新過程中發生錯誤');
-    }
+
+      // 從 localStorage 中獲取 token
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found');
+        return;
+      }
+
+      try {
+        // 發送更新密碼的請求
+        const response = await apiInstance({
+          method: 'post',
+          url: '/updatePassword.php',
+          data: {
+            oldPassword: this.oldPassword,
+            newPassword: this.newPassword
+          },
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        // 根據後端響應處理前端邏輯
+        if (response.data.error === false) {
+          // 如果密碼更新成功
+          alert(response.data.message);//沒辦法返回後端訊息
+          // console.log(response.data.message);
+          this.isEditingPassword = false;
+          await this.logout(); // 無法登出
+          {{this.logout}};
+          console.log(this.logout);
+        } else {
+          // 如果後端報告說密碼更新失敗
+          alert(response.data.message);
+        }
+      } catch (error) {
+        // 處理請求過程中發生的錯誤
+        // console.error("密碼更新失敗:", error);
+        alert('密碼更新過程中發生錯誤');
+      }
   },
 
     cancelPasswordEditing() {
@@ -321,23 +314,23 @@ export default {
           headers: { "Content-Type": "multipart/form-data" },
       })
       .then(response => {
-          // 確認響應中有 data 屬性
-          if (response && response.data) {
-            // 取得伺服器回傳的檔名
-            const fileName = response.data;
-            console.log(fileName); // 可以先檢查一下伺服器返回的檔名是否正確
-            // alert('圖片上傳成功');
-            
-            // 第二個 API 請求 - 更新圖片路徑
-            const token = localStorage.getItem('token');
-            const formDataForPath = new FormData();
-            formDataForPath.append('fileName', fileName); // 使用上一個 API 回傳的檔名
-            return apiInstance.post('uploadPhotoPath.php', formDataForPath, {
-                headers: { "Authorization": `Bearer ${token}` }
-            });
-          } else {
-            // 如果沒有 data，拋出錯誤讓下一個 catch 處理
-            throw new Error('圖片上傳失敗: ' + (response && response.data && response.data.message ? response.data.message : '未知錯誤'));
+        // 確認響應中有 data 屬性
+        if (response && response.data) {
+          // 取得伺服器回傳的檔名
+          const fileName = response.data;
+          console.log(fileName); // 可以先檢查一下伺服器返回的檔名是否正確
+          // alert('圖片上傳成功');
+          
+          // 第二個 API 請求 - 更新圖片路徑
+          const token = localStorage.getItem('token');
+          const formDataForPath = new FormData();
+          formDataForPath.append('fileName', fileName); // 使用上一個 API 回傳的檔名
+          return apiInstance.post('uploadPhotoPath.php', formDataForPath, {
+              headers: { "Authorization": `Bearer ${token}` }
+          });
+        } else {
+          // 如果沒有 data，拋出錯誤讓下一個 catch 處理
+          throw new Error('圖片上傳失敗: ' + (response && response.data && response.data.message ? response.data.message : '未知錯誤'));
           }
       })
       .then(updateResponse => {
