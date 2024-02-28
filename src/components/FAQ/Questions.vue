@@ -45,11 +45,8 @@ onBeforeUnmount(() => {
         margin: auto;
         @include desktop{
             font-size: 24px;
-            // border-radius: 30px;
-            margin: -30px auto 0;
-            // background-color: #ff0;
-            // height: 5rem;
-            width: 70%;
+            margin: 0 auto;
+            width: 55%;
         }
         
     }
@@ -62,10 +59,11 @@ onBeforeUnmount(() => {
         background-color: $blue-2;
         margin: 10px auto;
         @include desktop{
-            border-radius: 30px;
-            margin: 50px auto;
-            height: 5rem;
-            width: 80%;
+            border-radius: 50px;
+            margin: 30px auto;
+            height: 4rem;
+            width: 60%;
+        border-radius: 30px;
         }
 
         h4{

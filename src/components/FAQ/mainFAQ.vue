@@ -112,7 +112,9 @@ function changeData(qa,t){
     img{
         width: 50%;
         @include desktop{
-            width: 100%;
+            width: 80%;
+            vertical-align: bottom;
+            translate: 150px 20px;
         }
     }
     button{
@@ -152,12 +154,12 @@ function changeData(qa,t){
     @include desktop{
         width: 15vw;
         height: 3rem;
-        margin:  10% 1%;
+        margin:  5% 1%;
         border-radius: 30px;
     }
-    h4{
-        font-weight: bold;
-    }
+        h4{
+            font-weight: bold;
+        }
     }
     .active{
         background-color: $blue-3;
@@ -167,5 +169,8 @@ function changeData(qa,t){
 .qaArr{
     margin: auto;
     width: 80%;
+    @include desktop{
+        width: 95%;
+    }
 }
 </style>
