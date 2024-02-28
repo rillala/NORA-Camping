@@ -352,7 +352,8 @@ export default {
         const lineAccountTypeID = 1;
 
         //更新token;
-        localStorage.setItem('token', accessToken);
+        console.log(accessToken);
+        // localStorage.setItem('token', accessToken);
         this.updateToken(accessToken);
 
         // 這邊寫回資料庫
@@ -366,6 +367,9 @@ export default {
             //accountTypeID: lineAccountTypeID
           },
         );
+        localStorage.setItem('token', response.data.token);
+        this.updateToken(response.data.token);
+        console.log(response.data.token)
         alert(response.data.message);
         // this.updateToken(lineUserId)
 
