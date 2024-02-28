@@ -16,12 +16,12 @@ export default defineStore('userStore', {
         this.updateUserProfileImage(userProfileImage);
       }
     },
-    // updateUserProfileImage(imageUrl) {
-    //   this.userProfileImage = imageUrl;
-    //   // 在這裡將用户頭像 URL 保存到 localStorage
-    //   localStorage.setItem('userProfileImage', imageUrl);
-    //   console.log('Profile image updated:', imageUrl);
-    // },
+    updateUserProfileImage(imageUrl) {
+      this.userProfileImage = imageUrl;
+      // 在這裡將用户頭像 URL 保存到 localStorage
+      localStorage.setItem('userProfileImage', imageUrl);
+      console.log('Profile image updated:', imageUrl);
+    },
     checkLogin() {
       const storageToken = localStorage.getItem('token');
       if (this.token) {
@@ -54,6 +54,7 @@ export default defineStore('userStore', {
           phone: data.phone,
           email: data.email,
           address: data.address,
+          photo: data.photo,
         };
         // localStorage.setItem('userData', JSON.stringify(this.memberInfo));
         console.log('Updated userData:', this.memberInfo);
