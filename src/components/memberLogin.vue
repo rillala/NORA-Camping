@@ -177,12 +177,12 @@ export default {
       await this.lineLoginRedirect(code);
     } else {
       // 判斷有沒有登入過，如果沒有token等同於沒有登入
-      const user = this.login();
-      // console.log(user);
-      if (user) {
-        //有登入資訊轉到首頁
-        this.$router.push('/');
-      }
+      // const user = this.login();
+      // // console.log(user);
+      // if (user) {
+      //   //有登入資訊轉到首頁
+      //   this.$router.push('/');
+      // }
     }
   },
   methods: {
@@ -221,7 +221,7 @@ export default {
         // 處理錯誤，可能需要在界面上顯示錯誤資訊
       }
     },
-  
+
     login() {
       const bodyFormData = new FormData();
       bodyFormData.append('email', this.user_enter.email);
@@ -262,7 +262,7 @@ export default {
         alert('請勾選隱私權政策');
         return;
       }
-      
+
       if (this.user_add.psw !== this.user_add.pswConfirmation) {
         alert('密碼和確認密碼不匹配');
         return;
@@ -296,45 +296,45 @@ export default {
           console.error('註冊過程中出錯', error);
         });
     },
-  // register() {
-  //   // 檢查密碼是否一致
-  //   if (!this.user_add.agreeTerms) {
-  //     alert('請勾選隱私權政策');
-  //     return;
-  //   }
+    // register() {
+    //   // 檢查密碼是否一致
+    //   if (!this.user_add.agreeTerms) {
+    //     alert('請勾選隱私權政策');
+    //     return;
+    //   }
 
-  //   if (this.user_add.psw !== this.user_add.pswConfirmation) {
-  //     alert('密碼和確認密碼不匹配');
-  //     return;
-  //   }
+    //   if (this.user_add.psw !== this.user_add.pswConfirmation) {
+    //     alert('密碼和確認密碼不匹配');
+    //     return;
+    //   }
 
-  //   // 創建 FormData 對象
-  //   const bodyFormData = new FormData();
-  //   bodyFormData.append('name', this.user_add.name);
-  //   bodyFormData.append('email', this.user_add.email);
-  //   bodyFormData.append('psw', this.user_add.psw);
+    //   // 創建 FormData 對象
+    //   const bodyFormData = new FormData();
+    //   bodyFormData.append('name', this.user_add.name);
+    //   bodyFormData.append('email', this.user_add.email);
+    //   bodyFormData.append('psw', this.user_add.psw);
 
-  //   // 發送請求到後端發送驗證郵件 API
-  //   apiInstance({
-  //     method: 'post',
-  //     url: '/sendEmail.php', // 發送驗證郵件 API 端點
-  //     headers: { 'Content-Type': 'multipart/form-data' },
-  //     data: bodyFormData,
-  //   })
-  //   .then(res => {
-  //     if (res.data.error) {
-  //       // 如果後端返回錯誤，顯示錯誤訊息
-  //       alert(`發送驗證郵件失敗: ${res.data.message}`);
-  //     } else {
-  //       // 發送驗證郵件成功的處理邏輯
-  //       alert(`${res.data.message}`);
-  //       // 在這裡可以做其他處理，例如顯示成功訊息並提示用戶去檢查郵件
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('發送驗證郵件過程中出錯', error);
-  //   });
-  //   },
+    //   // 發送請求到後端發送驗證郵件 API
+    //   apiInstance({
+    //     method: 'post',
+    //     url: '/sendEmail.php', // 發送驗證郵件 API 端點
+    //     headers: { 'Content-Type': 'multipart/form-data' },
+    //     data: bodyFormData,
+    //   })
+    //   .then(res => {
+    //     if (res.data.error) {
+    //       // 如果後端返回錯誤，顯示錯誤訊息
+    //       alert(`發送驗證郵件失敗: ${res.data.message}`);
+    //     } else {
+    //       // 發送驗證郵件成功的處理邏輯
+    //       alert(`${res.data.message}`);
+    //       // 在這裡可以做其他處理，例如顯示成功訊息並提示用戶去檢查郵件
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.error('發送驗證郵件過程中出錯', error);
+    //   });
+    //   },
 
     signInWithLine() {
       // 根據指定的 client_id、redirect_uri、scope 等參數組合出一個 LINE 登入的連結

@@ -1,13 +1,12 @@
 <script>
 import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
-import memberLogin from '@/components/memberLogin.vue';
 import { mapState, mapActions } from 'pinia';
+import memberLogin from '@/components/memberLogin.vue';
 import userStore from '@/stores/user';
 import { useCartStore } from '@/stores/cartStore';
 import apiInstance from '@/plugins/auth';
 import { getDBImage } from '@/assets/js/common';
-
 
 export default {
   components: {
@@ -58,19 +57,20 @@ export default {
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(useCartStore, ['cartList']),
-    ...mapState(userStore, ['token', 'userData', 'userProfileImage','updateUserData','memberInfo']),
+    ...mapState(userStore, ['token', 'memberInfo']),
     userProfileImageStyle() {
       return this.userProfileImage
         ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
         : ''; // 如果沒有使用者頭像，返回空字符串或預設樣式
     },
-    
+
     isLogin() {
-      return !!this.token;
+      return this.token ? true : false;
     },
   },
   mounted() {
-    this.updateUserData();
+    // this.updateUserData();
+    this.checkLogin();
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
@@ -78,9 +78,11 @@ export default {
       'updateToken',
       'updateUserData',
       'logout',
+      'checkLogin',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-    handleLogout(){
+
+    handleLogout() {
       this.logout();
       this.isMemberSubOpen = false;
       this.userProfileImage = null;
@@ -180,7 +182,6 @@ export default {
               :alt="shopBtn"
             />
             <p>{{ shopBtn.name }}</p>
-            
           </RouterLink>
 
           <!--會員登入-->
@@ -189,46 +190,48 @@ export default {
             @click="
               memberCenter();
               closeHam();
-            ">
+            "
+          >
             <img
-            v-if="memberInfo.photo"
-            class="photo"
-            :src="getDBImage(memberInfo.photo)"
+              v-if="memberInfo.photo"
+              class="photo"
+              :src="getDBImage(memberInfo.photo)"
             />
-            
-            <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
-            <div class="sub-menu-container" v-if="isMemberSubOpen">
-              <ul>
-                <div class="close-sub-menu" @click.stop="closeSubmenu">X</div>
-                <li>
-                  <RouterLink
-                    class="sub-menu"
-                    to="/membercenter"
-                    @click.stop="closeSubmenu"
-                    >會員中心</RouterLink
-                  >
-                </li>
-                <li>
-                  <RouterLink
-                    class="sub-menu"
-                    to="/membercampsiteorders"
-                    @click.stop="closeSubmenu"
-                    >商品訂單</RouterLink
-                  >
-                </li>
-                <li>
-                  <RouterLink
-                    class="sub-menu"
-                    to="/memberorderhistory"
-                    @click.stop="closeSubmenu"
-                    >營地訂單</RouterLink
-                  >
-                </li>
-                <button class="logout" @click.stop="handleLogout">登出</button>
-              </ul>
-            </div>
+
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
+
+          <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
+          <div class="sub-menu-container" v-if="isMemberSubOpen">
+            <ul>
+              <div class="close-sub-menu" @click.stop="closeSubmenu">X</div>
+              <li>
+                <RouterLink
+                  class="sub-menu"
+                  to="/membercenter"
+                  @click.stop="closeSubmenu"
+                  >會員中心</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  class="sub-menu"
+                  to="/membercampsiteorders"
+                  @click.stop="closeSubmenu"
+                  >商品訂單</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  class="sub-menu"
+                  to="/memberorderhistory"
+                  @click.stop="closeSubmenu"
+                  >營地訂單</RouterLink
+                >
+              </li>
+              <button class="logout" @click.stop="handleLogout">登出</button>
+            </ul>
+          </div>
 
           <!--購物車-->
           <RouterLink to="/shopCar" id="shop-car" @click="closeHam">
@@ -288,10 +291,9 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
-.photo{
+.photo {
   border-radius: $radius;
   height: 55px;
   width: 55px;
-
 }
 </style>

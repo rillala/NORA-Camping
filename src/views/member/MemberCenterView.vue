@@ -125,7 +125,7 @@
           <button class="save-changes" @click="startEditingPassword">
             修改密碼
           </button>
-          <button class="logout" @click.stop="logout">登出</button>
+          <div class="logout" @click.stop="logout">登出</div>
         </div>
       </div>
 
@@ -209,7 +209,7 @@ export default {
         const response = await apiInstance.get('memberInfo.php', {
           headers: { Authorization: `Bearer ${token}` },
         });
-    
+
         this.updateUserData(response.data);
         // 調用 Pinia action 並傳入響應數據
       } catch (error) {
@@ -263,6 +263,7 @@ export default {
     startEditingPassword() {
       this.isEditingPassword = true;
     },
+
     // savePasswordChanges() {
     //   if (
     //     !this.oldPassword.trim() ||
@@ -303,7 +304,7 @@ export default {
     //       alert(response.data.message); //沒辦法返回後端訊息
     //       this.isEditingPassword = false;
     //       this.logout(); // 無法登出
-        
+
     //       console.log(this.logout);
     //     } else {
     //       // 如果後端報告說密碼更新失敗
@@ -315,7 +316,7 @@ export default {
     //     alert('密碼更新過程中發生錯誤');
     //   }
     // },
-    
+
     savePasswordChanges() {
       if (
         !this.oldPassword.trim() ||
@@ -336,26 +337,28 @@ export default {
         console.error('No token found');
         return;
       }
-    apiInstance({
-      method: 'post',
-      url: '/updatePassword.php',
-      data: {
-        oldPassword: this.oldPassword,
-        newPassword: this.newPassword,
-      },
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(response => {
-      if (response.data.error === false) {
-        // 如果密碼更新成功
-        alert(response.data.message);
-        this.isEditingPassword = false;
-        console.log(logout);
-        this.logout(); // 登出操作 
-      } 
-      }).catch(error => {
-        // 處理請求過程中發生的錯誤
-        alert('密碼更新過程中發生錯誤');
-      });
+      apiInstance({
+        method: 'post',
+        url: '/updatePassword.php',
+        data: {
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then(response => {
+          if (response.data.error === false) {
+            // 如果密碼更新成功
+            alert(response.data.message);
+            this.isEditingPassword = false;
+            console.log(logout);
+            this.logout(); // 登出操作
+          }
+        })
+        .catch(error => {
+          // 處理請求過程中發生的錯誤
+          alert('密碼更新過程中發生錯誤');
+        });
     },
     cancelPasswordEditing() {
       // 在這裡處理取消密碼修改的邏輯
@@ -422,5 +425,13 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.logout {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
 }
 </style>
