@@ -16,13 +16,13 @@ export default {
     loading,
     DropDownBtn,
     ProductSlider
-},
+  },
 
   data() {
     return {
       selectedQuantity: 0,
       currentIndex: 0,
-      selectedColor: '', 
+      selectedColor: '',
       selectedSize: '',
     };
   },
@@ -58,10 +58,10 @@ export default {
       this.selectedQuantity = quantity;
       // console.log('changed quantity: ' + this.selectedQuantity);
     },
-     addIntoCart() {
+    addIntoCart() {
       const cartStore = useCartStore();
-     cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
-      
+      cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
+
     },
     addAndBuy() {
       const cartStore = useCartStore();
@@ -96,6 +96,15 @@ export default {
 
 <template>
   <main class="shop-item-wrap">
+    <div class="shop-item-banner">
+      <img class="shop-banner-pic" src="/src/assets/image/shop/商城banner1.png" alt="">
+      <svg class="shop-item-title ">
+        <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+          NORA SHOP
+        </text>
+      </svg>
+    </div>
+   
     <div class="shop-item-container">
       <loading v-if="nodata"></loading>
       <div v-else class="shop-item-content">
@@ -120,11 +129,11 @@ export default {
             <h3>NT${{ responseData.price }}</h3>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-select">
-              <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 1" :options="colorOptions" @change="updateSelectedColor"
-                :default-value="'顏色'"></DropDownBtn>
+              <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 1" :options="colorOptions"
+                @change="updateSelectedColor" :default-value="'顏色'"></DropDownBtn>
 
-              <DropDownBtn class="dropDown-select" v-if="sizeOptions.length > 1" :options="sizeOptions" @change="updateSelectedSize"
-                :default-value="'尺寸'"></DropDownBtn>
+              <DropDownBtn class="dropDown-select" v-if="sizeOptions.length > 1" :options="sizeOptions"
+                @change="updateSelectedSize" :default-value="'尺寸'"></DropDownBtn>
 
 
             </div>
@@ -149,9 +158,93 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+//banner 字體
+@import url("https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap");
+
+svg {
+  font-family: "Spicy Rice", sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+svg text {
+  animation: stroke 5s infinite alternate;
+  stroke-width: 2;
+  stroke: #C0A790;
+  font-size: 40px;
+
+  @include tablet{
+    font-size: 64px;
+  }
+  @include desktop{
+    font-size: 80px;
+  }
+}
+
+@keyframes stroke {
+  0% {
+    fill: rgba(192, 167, 144, 0);
+    stroke: rgba(192, 167, 144, 1);
+    stroke-dashoffset: 25%;
+    stroke-dasharray: 0 50%;
+    stroke-width: 2;
+  }
+
+  70% {
+    fill: rgba(192, 167, 144, 0);
+    stroke: rgba(192, 167, 144, 1);
+  }
+
+  80% {
+    fill: rgba(192, 167, 144, 0);
+    stroke: rgba(192, 167, 144, 1);
+    stroke-width: 3;
+  }
+
+  100% {
+    fill: rgba(192, 167, 144, 1);
+    stroke: rgba(192, 167, 144, 0);
+    stroke-dashoffset: -25%;
+    stroke-dasharray: 50% 0;
+    stroke-width: 0;
+  }
+}
+
+// ----------------------------------------------------------------
 .shop-item-wrap {
   width: 100%;
   height: 100%;
+
+  .shop-item-banner {
+    position: relative;
+		display: flex;
+		flex-flow: column;
+		justify-content: center;
+		align-items: center;
+		gap: 24px;
+		width: 100%;
+		height: 240px;
+		overflow: hidden;
+
+    .shop-banner-pic {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 2000 / 1300;
+
+      @include desktop {
+        height: auto;
+        aspect-ratio: 2000 / 480;
+      }
+    }
+
+    .shop-item-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
 
   .shop-item-container {
     width: 100%;
@@ -227,11 +320,17 @@ export default {
           width: 100%;
 
           img {
-            width: 100%;
+            width: 80%;
             aspect-ratio: 1 / 1;
             vertical-align: middle;
             border: solid 5px $yellow-3;
             border-radius: 10px;
+            @include tablet{
+              width: 60%;
+            }
+            @include desktop{
+              width: 80%;
+            }
           }
         }
       }

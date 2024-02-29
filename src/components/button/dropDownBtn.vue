@@ -38,6 +38,7 @@ export default {
 	border-radius: 20px;
 	cursor: pointer;
 	padding: 2px 4px;
+	border: none;
 	.dropDown-options{
 		cursor: pointer;
 	}
