@@ -75,18 +75,15 @@ export default {
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
     ...mapActions(userStore, [
-      'checkUserData',
-      'checkLogin',
       'updateToken',
       'updateUserData',
-      'updateUserProfileImage',
       'logout',
     ]),
     ...mapActions(useCartStore, ['getCart']),
     handleLogout(){
       this.logout();
       this.isMemberSubOpen = false;
-      // this.userProfileImage = null;
+      this.userProfileImage = null;
       this.isLoginOpen = false;
     },
     getImageUrl(paths) {
@@ -194,6 +191,7 @@ export default {
               closeHam();
             ">
             <img
+            v-if="memberInfo.photo"
             class="photo"
             :src="getDBImage(memberInfo.photo)"
             />
