@@ -306,7 +306,7 @@
 .New-prod-btn {
     display: none;
     position: relative;
-    top: 220px;
+    top: 225px;
     left: 0;
     padding: 0 10px;
     z-index: 1;
@@ -320,15 +320,33 @@
 }
 
 #left {
+    display: none;
+    position: relative;
+    top: 285px;
+    z-index: 1;
+    left: 0%;
     cursor: pointer;
     border: none;
     background-color: transparent;
+
+    @include desktop {
+        display: block;
+    }
 }
 
 #right {
+    display: none;
+    position: relative;
+    top: 220px;
+    right: -95%;
+    z-index: 1;
     cursor: pointer;
     border: none;
     background-color: transparent;
+
+    @include desktop {
+        display: block;
+    }
 }
 
 .Prod-wapper {
