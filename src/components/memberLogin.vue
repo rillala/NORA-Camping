@@ -125,7 +125,6 @@
           /><br />
           <a class="forget-psw">忘記密碼？</a><br />
           <button class="main-btn" @click="login">會員登入</button><br />
-          <!-- <button class="sub-btn" @click.prevent="signInWithGoogle">以Google登入</button> -->
           <button class="sub-btn" @click.prevent="signInWithLine">
             以Line登入
           </button>
@@ -137,7 +136,6 @@
 
 <script>
 import qs from 'qs';
-import axios from 'axios';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
@@ -151,10 +149,10 @@ export default {
       passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        name: '',
-        email: '',
-        psw: '',
-        pswConfirmation: '',
+        name: '陳穎穎',
+        email: 'sandra401120422@gmail.com',
+        psw: '123456',
+        pswConfirmation: '123456',
         receiveNews: true,
         agreeTerms: true,
       },
@@ -168,14 +166,6 @@ export default {
       client_secret: '6944f7d50fb550267d1488e66d7f4d90',
     };
   },
-  watch: {
-    // 'user_add.pwd'(newPassword) {
-    //   this.passwordMismatch = newPassword !== this.user_add.pwdConfirmation;
-    // },
-    // 'user_add.pwdConfirmation'(newConfirmation) {
-    //   this.passwordMismatch = newConfirmation !== this.user_add.pwd;
-    // },
-  },
   async mounted() {
     // 使用 window.location.search 和 urlParams 獲取當前網頁 URL 中的查詢參數
     const queryString = window.location.search;
@@ -187,7 +177,7 @@ export default {
       await this.lineLoginRedirect(code);
     } else {
       // 判斷有沒有登入過，如果沒有token等同於沒有登入
-      const user = this.checkLogin();
+      const user = this.login();
       // console.log(user);
       if (user) {
         //有登入資訊轉到首頁
@@ -207,27 +197,31 @@ export default {
     },
     ...mapActions(userStore, [
       'updateToken',
-      'updateName',
-      'checkLogin',
-      'updateUserProfileImage',
+      'getMemberInfo',
+      'updateUserData',
     ]),
-    // login() {
-    //   this.updateToken(123);
-    //   console.log('login');
-
-    //   axios
-    //     .post('https://fakestoreapi.com/auth/login', {
-    //       username: this.user_enter.account,
-    //       password: this.user_enter.pwd,
-    //     })
-    //     .then(response => {
-    //       if (response.data && response.data.token) {
-    //         this.updateToken(response.data.token); // 更新 token
-    //         console.log('login success', response.data.token);
-    //         this.closeLightbox(); // 登入成功後，關閉燈箱
-    //         // this.$router.push('/membercenter'); // 跳轉到會員中心頁面
-    //       }
-    //     })
+    async getMemberInfo() {
+      try {
+        const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
+        // 確保 token 存在
+        if (!token) {
+          console.error('Logout error: No token found');
+          return;
+        }
+        // 發送請求到後端，獲取用戶資料
+        const response = await apiInstance.get('memberInfo.php', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        // 更新 Pinia store 裡的使用者資料
+        // console.log(response.data);
+        this.updateUserData(response.data);
+        // 調用 Pinia action 並傳入響應數據
+      } catch (error) {
+        console.error('Error fetching member info:', error);
+        // 處理錯誤，可能需要在界面上顯示錯誤資訊
+      }
+    },
+  
     login() {
       const bodyFormData = new FormData();
       bodyFormData.append('email', this.user_enter.email);
@@ -246,6 +240,7 @@ export default {
             localStorage.setItem('token', res.data.token);
             this.updateToken(res.data.token);
             this.closeLightbox();
+            this.getMemberInfo();
             // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
           } else if (res && res.data && res.data.error === true) {
             // 如果後端返回了錯誤，則處理登入失敗的情況
@@ -261,21 +256,13 @@ export default {
           console.error('註冊過程中出錯', error);
         });
     },
-
-    ...mapActions(userStore, [
-      'updateToken',
-      'updateName',
-      'checkLogin',
-      'updateUserProfileImage',
-    ]),
-
     register() {
       // 檢查密碼是否一致
       if (!this.user_add.agreeTerms) {
         alert('請勾選隱私權政策');
         return;
       }
-
+      
       if (this.user_add.psw !== this.user_add.pswConfirmation) {
         alert('密碼和確認密碼不匹配');
         return;
@@ -309,6 +296,46 @@ export default {
           console.error('註冊過程中出錯', error);
         });
     },
+  // register() {
+  //   // 檢查密碼是否一致
+  //   if (!this.user_add.agreeTerms) {
+  //     alert('請勾選隱私權政策');
+  //     return;
+  //   }
+
+  //   if (this.user_add.psw !== this.user_add.pswConfirmation) {
+  //     alert('密碼和確認密碼不匹配');
+  //     return;
+  //   }
+
+  //   // 創建 FormData 對象
+  //   const bodyFormData = new FormData();
+  //   bodyFormData.append('name', this.user_add.name);
+  //   bodyFormData.append('email', this.user_add.email);
+  //   bodyFormData.append('psw', this.user_add.psw);
+
+  //   // 發送請求到後端發送驗證郵件 API
+  //   apiInstance({
+  //     method: 'post',
+  //     url: '/sendEmail.php', // 發送驗證郵件 API 端點
+  //     headers: { 'Content-Type': 'multipart/form-data' },
+  //     data: bodyFormData,
+  //   })
+  //   .then(res => {
+  //     if (res.data.error) {
+  //       // 如果後端返回錯誤，顯示錯誤訊息
+  //       alert(`發送驗證郵件失敗: ${res.data.message}`);
+  //     } else {
+  //       // 發送驗證郵件成功的處理邏輯
+  //       alert(`${res.data.message}`);
+  //       // 在這裡可以做其他處理，例如顯示成功訊息並提示用戶去檢查郵件
+  //     }
+  //   })
+  //   .catch(error => {
+  //     console.error('發送驗證郵件過程中出錯', error);
+  //   });
+  //   },
+
     signInWithLine() {
       // 根據指定的 client_id、redirect_uri、scope 等參數組合出一個 LINE 登入的連結
       const link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${this.channel_id}&redirect_uri=${this.redirect_uri}&state=login&scope=openid%20profile`;
@@ -317,7 +344,6 @@ export default {
     },
     async lineLoginRedirect(code) {
       try {
-        // const tokenResponse = await axios.post(
         const tokenResponse = await apiInstance.post(
           'https://api.line.me/oauth2/v2.1/token',
           qs.stringify({
@@ -335,7 +361,6 @@ export default {
         );
         const accessToken = tokenResponse.data.access_token;
         const idToken = tokenResponse.data.id_token;
-        // const userInfoResponse = await axios.post(
         const userInfoResponse = await apiInstance.post(
           'https://api.line.me/oauth2/v2.1/verify',
           qs.stringify({
@@ -361,7 +386,6 @@ export default {
         this.updateToken(accessToken);
 
         // 這邊寫回資料庫
-        // const response = await axios.post(
         const response = await apiInstance.post(`/lineLogin.php`, {
           user_id: lineUserId,
           name: lineNickname,
