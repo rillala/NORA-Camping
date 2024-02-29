@@ -33,6 +33,9 @@ export default {
       //取得圖片路徑
       return new URL(`../assets/image/shelter/${paths}`, import.meta.url).href;
     },
+    toContact() {
+      this.$router.push('/faq');
+    },
   },
 };
 </script>
@@ -150,13 +153,13 @@ export default {
       <div class="dog-cat-home">
         <div class="walk-cat">
           <img
-            src="/src/assets/image/shelter/walking_cat.svg"
+            src="@/assets/image/campGuide/cat_card_icon.svg"
             alt="走進來的貓咪icon"
           />
         </div>
         <div class="walk-dog">
           <img
-            src="/src/assets/image/shelter/walking_dog.svg"
+            src="@/assets/image/campGuide/dog_card_icon.svg"
             alt="走進來的狗狗icon"
           />
         </div>
@@ -250,7 +253,7 @@ export default {
       <div class="adopt-steps">
           <div class="adopt-step1">
             <p class="step1">STEP 1</p>
-            <p class="step1-dtl">選擇想領養的動物</p>
+            <p class="step1-dtl">選擇想要領養的動物</p>
           </div>
 
           <div class="adopt-step2">
@@ -274,12 +277,12 @@ export default {
           <div class="adopt-step5">
             <p class="step5">STEP 5</p>
             <p class="step5-dtl">支付領養費用</p>
-            <p>支付相應費用以支持野良之家營運</p>
+            <p>支付相應費用支持野良之家營運</p>
           </div>
 
           <div class="adopt-step6">
             <p class="step6">STEP 6</p>
-            <p class="step6-dtl">接回寵物至家庭</p>
+            <p class="step6-dtl">接寵物回家</p>
           </div>
       </div>
 
@@ -343,7 +346,7 @@ export default {
               參與志工活動的客人，營位費用享有優惠！<br />
               若有興趣參與，歡迎聯絡我們！
             </p>
-            <button class="contact-btn">聯絡我們</button>
+            <button class="contact-btn" @click="toContact">聯絡我們</button>
           </div>
         </div>
 

@@ -24,16 +24,32 @@ export default {
 .camp-grass {
     position: absolute;
     width: 100%;
-    top: 36.5%;
+    top: 36%;
     left: 0;
     z-index: 1;
-    
-    @include tablet {
-        top: 34.5%;
+
+    @media (width >= 320px) {
+        top:36.5%;
     }
 
-    @include desktop {
-        top:31%;
+    @media (width >= 425px) {
+        top:36%;
+    }
+
+    @media (width >= 768px) {
+        top:34%;
+    }
+
+    @media (width >= 1024px) {
+        top:32%;
+    }
+
+    @media (width >= 1440px) {
+        top:30%;
+    }
+
+    @media (width >= 1680px) {
+        top:50%;
     }
 
     @media (width = 1920px) {
