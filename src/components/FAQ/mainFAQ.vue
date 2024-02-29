@@ -41,20 +41,15 @@ function getFaqList() {
     .get("./getFaqForFrontend.php")
     .then((response) => {
         faqList.value = response.data;
-
         faqList.value.forEach(qa => {
             if(qa.faq_type === '營地預約'){
                 reserve.value.push(qa);
-                console.log(reserve.value);
             }else if(qa.faq_type === '中途之家'){
                 sheleter.value.push(qa);
-                console.log(sheleter.value);
             }else if(qa.faq_type === '裝備租借'){
                 equipment.value.push(qa);
-                console.log(equipment.value);
             }else{
                 onlineShop.value.push(qa);
-                console.log(onlineShop.value);
             }
         });
 
@@ -82,10 +77,10 @@ function changeData(qa,t){
         </div>
             <!-- 分隔線 -->
         <div class="FAQtype" v-if="nowWindow<DESKTOP">
-            <FAQtype title="營地預約" :QAs="reserve"/>
-            <FAQtype title="野良之家" :QAs="sheleter"/>
-            <FAQtype title="裝備租借" :QAs="equipment"/>
-            <FAQtype title="商品購物" :QAs="onlineShop"/>
+            <FAQtype title="營地預約" :QAs="reserve"  />
+            <FAQtype title="野良之家" :QAs="sheleter" />
+            <FAQtype title="裝備租借" :QAs="equipment"  />
+            <FAQtype title="商品購物" :QAs="onlineShop" />
         </div>
         <div class="FAQtype" v-else>
             <button @click="changeData(reserve,1)" :class="{active:touched==1}"><h4>營地預約</h4></button>
@@ -104,7 +99,6 @@ function changeData(qa,t){
     @include desktop{
         display: flex;
         align-items: baseline;
-        
     }
 }
 .otherquestion {
@@ -143,28 +137,28 @@ function changeData(qa,t){
     }
 
     button{
-    display:block;
-    width: 80vw;
-    height: 20vw;
-    border: none;
-    border-radius: 10px;
-    background-color: $blue-2;
-    margin: 10px auto;
+        display:block;
+        width: 80vw;
+        height: 20vw;
+        border: none;
+        border-radius: 10px;
+        background-color: $blue-2;
+        margin: 10px auto;
 
-    @include desktop{
-        width: 15vw;
-        height: 3rem;
-        margin:  5% 1%;
-        border-radius: 30px;
-    }
-        h4{
-            font-weight: bold;
+        @include desktop{
+            width: 15vw;
+            height: 3rem;
+            margin:  5% 1%;
+            border-radius: 30px;
         }
-    }
-    .active{
-        background-color: $blue-3;
-        color: $white01;
-    }
+            h4{
+                font-weight: bold;
+            }
+        }
+        .active{
+            background-color: $blue-3;
+            color: $white01;
+        }
 }
 .qaArr{
     margin: auto;

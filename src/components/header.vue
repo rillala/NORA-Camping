@@ -81,7 +81,6 @@ export default {
       'checkLogin',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-
     handleLogout() {
       this.logout();
       this.isMemberSubOpen = false;

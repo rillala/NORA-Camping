@@ -12,15 +12,12 @@ export default {
     return {
       orderInfo: {},
       orders: '',
+      cartListInSucess: null,
     };
   },
   methods: {
-    clearStorage() {
-      // 清除 localStorage 的 cartList
-      localStorage.removeItem('cartList');
-      // 清除 sessionStorage 的 orderInfo
-      sessionStorage.removeItem('orderInfo');
-    },
+    ...mapActions(useCartStore, ['removeCart', 'getCart']),
+    
     getOrders() {
       apiInstance.get("/getOrders.php")
         .then(response => {
@@ -35,9 +32,8 @@ export default {
     ...mapState(useCartStore, ['cartList']),
   },
   created() {
-    const cartStore = useCartStore();
-    cartStore.getCart();
-
+    this.cartListInSucess = this.cartList;
+    this.getCart()
     const storedOrderInfo = sessionStorage.getItem('orderInfo');
 
     if (storedOrderInfo) {
@@ -50,10 +46,12 @@ export default {
         ...parsedOrderInfo,
       };
     }
-    sessionStorage.clear();
     this.getOrders();
     sessionStorage.removeItem('orderInfo');
-        localStorage.removeItem('cartList');
+    localStorage.removeItem('cartList');
+    this.$nextTick(() => {
+    this.removeCart();  // 清空 Pinia 中的購物車
+  });
   },
 };
 </script>
@@ -76,7 +74,7 @@ export default {
         </div>
         <div class="buy-information">
           <div
-            v-for="item in cartList.carts"
+            v-for="item in cartListInSucess.carts"
             :key="item.id"
             class="between buy-list"
           >
@@ -88,7 +86,7 @@ export default {
           </div>
           <div class="between buy-total">
             <h4>合計:</h4>
-            <p>NT$ {{ cartList.total }}</p>
+            <p>NT$ {{ cartListInSucess.total }}</p>
           </div>
           <div class="between buy-migrate">
             <h4>付款方式:</h4>
@@ -128,10 +126,10 @@ export default {
     </div>
     <div class="backButton">
       <router-link to="shop"
-        ><ActionBtn @click="clearStorage" :content="'返回首頁'"></ActionBtn>
+        ><ActionBtn :content="'返回首頁'"></ActionBtn>
       </router-link>
       <router-link to="memberorderhistory"
-        ><ActionBtn @click="clearStorage" :content="'查看訂單'"></ActionBtn>
+        ><ActionBtn :content="'查看訂單'"></ActionBtn>
       </router-link>
     </div>
   </section>

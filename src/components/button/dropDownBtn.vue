@@ -1,8 +1,12 @@
 <template>
 	<div class="dropDown-div">
-		<select class="dropDown-select" v-model="selectedOption" @change="handleSelection">
-			<option class="dropDown-options" v-for="option in options" :key="option">{{ option }}</option>
-		</select>
+	  <select class="dropDown-select" v-model="selectedOption" @change="handleSelection">
+		<!-- 顯示一個不可選擇的預設選項 -->
+		<option class="dropDown-options" disabled value="">{{ defaultValue }}</option>
+		<option class="dropDown-options" v-for="option in options" :value="option" :key="option">
+		  {{ option }}
+		</option>
+	  </select>
 	</div>
 </template>
 
@@ -10,21 +14,21 @@
 export default {
 	props: {
 		options: Array,
-		defaultValue: '',
+		defaultValue: String,
 	},
 	data() {
 		return {
-			selectedOption: this.defaultValue
+			selectedOption: '',
 		};
 	},
 	methods: {
 		handleSelection() {
-			// 發出 @change 事件，通知父層有新的選擇
 			this.$emit('change', this.selectedOption);
 		}
-	}
+	},
 };
 </script>
+
 <style lang="scss" scoped>
 .dropDown-div{
 	cursor: pointer;
@@ -32,6 +36,7 @@ export default {
 }
 .dropDown-select {
 	// width: 100px;
+	
 	height: 100%;
 	font-size: 12px;
 	background-color: $yellow-2;

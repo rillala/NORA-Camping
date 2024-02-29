@@ -14,7 +14,7 @@ export default {
       orderInfo: {
         memberId: '', //暫時
         payWay: null,
-        payment: '',
+        payment: null,
         carry: '',
         name: '',
         phone: '',
@@ -61,8 +61,6 @@ export default {
       // 發送到後端
       apiInstance.post('/addOrder.php', orderData).then(response => {
         console.log(response.msg);
-        this.removeCart()
-        this.getCart()
       });
       localStorage.removeItem('cartList');
       this.$router.replace('/ShopOrderSucess').catch(error => {
@@ -73,6 +71,14 @@ export default {
     //表單驗證
     validateOrderInfo() {
       // 這裡只是一個基本示例，你可以根據需要擴展驗證規則
+      if (this.orderInfo.payWay === null) {
+        alert('請選擇一個運送方式');
+        return false;
+      }
+      if (this.orderInfo.payment === null) {
+        alert('請選擇一個付款方式');
+        return false;
+      }
       if (!this.orderInfo.name.trim()) {
         alert('請輸入姓名');
         return false;
@@ -183,11 +189,11 @@ export default {
               <h4>運費送方式</h4>
               <div class="carry-option">
                 <label for="self-pick"><input @change="confirmCarry('自行取貨')" name="sendWay" type="radio" id="self-pick"
-                    value="0" v-model="orderInfo.payWay" />自行取貨</label>
+                    value="0" v-model="orderInfo.payWay" required/>自行取貨</label>
                 <label for="sendHome"><input @change="confirmCarry('宅配')" name="sendWay" type="radio" id="sendHome"
-                    value="100" v-model="orderInfo.payWay" />宅配: NT$100</label>
+                    value="100" v-model="orderInfo.payWay" required/>宅配: NT$100</label>
                 <label for="sendStore"><input @change="confirmCarry('超商取貨')" name="sendWay" type="radio" id="sendStore"
-                    value="60" v-model="orderInfo.payWay" />超商取貨: NT$60</label>
+                    value="60" v-model="orderInfo.payWay" required/>超商取貨: NT$60</label>
               </div>
             </div>
             <div class="shop-payment-carry">
@@ -204,9 +210,9 @@ export default {
         <h2>訂購資訊</h2>
         <div class="shop-payment-box">
           <div class="shop-payment-formhead">
-            <div>
-              <label class="shop-memberDataBind tinyp" for="memberDataBind">同會員資料</label>
+            <div class="shop-memberDataBind tinyp">
               <input type="checkbox" id="memberDataBind" @change="bindMemberData" />
+              <label  for="memberDataBind">同會員資料</label>
             </div>
           </div>
           <table class="shop-payment-inputs">
@@ -377,10 +383,18 @@ export default {
 }
 
 .shop-payment-formhead {
+  position: relative;
   width: 100%;
   height: 40px;
   background-color: $blue-3;
   border-radius: 35px 35px 0 0;
+  .shop-memberDataBind{
+    color: #fff;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .shop-payment-inputs {

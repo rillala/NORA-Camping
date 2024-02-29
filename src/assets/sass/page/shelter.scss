@@ -401,6 +401,20 @@
         }
 
         .walk-cat {
+            animation: walkcat 4s infinite;
+
+            @keyframes walkcat {
+
+                //動物走路動畫
+                from {
+                    transform: translateX(-220%);
+                }
+        
+                to {
+                    transform: translateX(40%);
+                }
+            }
+
             img {
                 @include desktop {
                     width: 150px;
@@ -409,6 +423,20 @@
         }
 
         .walk-dog {
+            animation: walkdog 4s infinite;
+
+            @keyframes walkdog {
+
+                //動物走路動畫
+                from {
+                    transform: translateX(-200%);
+                }
+        
+                to {
+                    transform: translateX(50%);
+                }
+            }
+
             img {
                 @include desktop {
                     width: 220px;
@@ -706,7 +734,7 @@
             }
 
             .step1-dtl {
-                color: $yellow-1;
+                color: $white01;
             }
         }
 
@@ -725,7 +753,7 @@
             }
 
             .step2-dtl {
-                color: $yellow-1;
+                color: $white01;
             }
         }
 
@@ -744,7 +772,7 @@
             }
 
             .step3-dtl {
-                color: $yellow-1;
+                color: $white01;
             }
         
         }
@@ -764,7 +792,7 @@
             }
 
             .step4-dtl {
-                color: $yellow-1;
+                color: $white01;
             }
         }
 
@@ -783,7 +811,7 @@
             }
 
             .step5-dtl {
-                color: $yellow-1;
+                color: $white01;
             }
         }
 
@@ -802,7 +830,7 @@
             }
 
             .step6-dtl {
-                color: $yellow-1;
+                color: $white01;
             }
         }
     }
