@@ -3,7 +3,7 @@
 import { useRoute } from 'vue-router';
 import mainFAQ from '../components/FAQ/mainFAQ.vue';
 import contactForm from '../components/FAQ/contactForm.vue';
-import { ref, onMounted, onBeforeUnmount } from 'vue';;
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const flag = ref(true);
 const changeFlag = () => {

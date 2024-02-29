@@ -41,6 +41,7 @@ function getFaqList() {
     .get("./getFaqForFrontend.php")
     .then((response) => {
         faqList.value = response.data;
+
         faqList.value.forEach(qa => {
             if(qa.faq_type === '營地預約'){
                 reserve.value.push(qa);
