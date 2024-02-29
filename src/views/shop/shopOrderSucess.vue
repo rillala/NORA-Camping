@@ -20,7 +20,6 @@ export default {
       localStorage.removeItem('cartList');
       // 清除 sessionStorage 的 orderInfo
       sessionStorage.removeItem('orderInfo');
-      window.location.reload();
     },
     getOrders() {
       apiInstance.get("/getOrders.php")
@@ -53,6 +52,8 @@ export default {
     }
     sessionStorage.clear();
     this.getOrders();
+    sessionStorage.removeItem('orderInfo');
+        localStorage.removeItem('cartList');
   },
 };
 </script>

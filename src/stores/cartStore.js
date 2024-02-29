@@ -71,6 +71,10 @@ export const useCartStore = defineStore('cartStore', {
       this.saveCartListToLocalStorage();
       this.getCart()
     },
+    removeCart(){
+      this.cart = [];
+      this.saveCartListToLocalStorage();
+    },
     saveCartListToLocalStorage() {
       const productStore = useProductStore();
       const products = productStore.displayData;
