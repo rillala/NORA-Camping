@@ -43,11 +43,11 @@ export default {
     },
     colorOptions() {
       // 檢查是否有colors，並將其從字符串轉換為數組，如果沒有則返回一個只包含預設選項的數組
-      return this.responseData.colors ? ['顏色', ...this.responseData.colors.split(',')] : ['顏色'];
+      return this.responseData.colors ? [...this.responseData.colors.split(',')] : ['顏色'];
     },
     sizeOptions() {
       // 同上，對sizes進行處理
-      return this.responseData.sizes ? ['尺寸', ...this.responseData.sizes.split(',')] : ['尺寸'];
+      return this.responseData.sizes ? [...this.responseData.sizes.split(',')] : ['尺寸'];
     },
   },
   watch: {},
@@ -59,10 +59,20 @@ export default {
       // console.log('changed quantity: ' + this.selectedQuantity);
     },
     addIntoCart() {
+      // 检查是否选择了颜色和尺寸（如果有多个选项）
+      if (this.colorOptions.length > 1 && this.selectedColor == '') {
+        alert('請選擇顏色');
+        return; // 终止函数执行
+      }
+      if (this.sizeOptions.length > 1 && this.selectedSize == '') {
+        alert('請選擇尺寸');
+        return; // 终止函数执行
+      }
+      // 如果颜色和尺寸都已选择或者只有一个选项，就添加到购物车
       const cartStore = useCartStore();
       cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
-
     },
+
     addAndBuy() {
       const cartStore = useCartStore();
       cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
@@ -104,7 +114,7 @@ export default {
         </text>
       </svg>
     </div>
-   
+
     <div class="shop-item-container">
       <loading v-if="nodata"></loading>
       <div v-else class="shop-item-content">
@@ -173,10 +183,11 @@ svg text {
   stroke: #C0A790;
   font-size: 40px;
 
-  @include tablet{
+  @include tablet {
     font-size: 64px;
   }
-  @include desktop{
+
+  @include desktop {
     font-size: 80px;
   }
 }
@@ -217,14 +228,14 @@ svg text {
 
   .shop-item-banner {
     position: relative;
-		display: flex;
-		flex-flow: column;
-		justify-content: center;
-		align-items: center;
-		gap: 24px;
-		width: 100%;
-		height: 240px;
-		overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
 
     .shop-banner-pic {
       width: 100%;
@@ -311,12 +322,18 @@ svg text {
         align-items: center;
         gap: 8px;
 
+        @include desktop {
+          gap: 2px;
+        }
+
         .shop-arrow-icon {
+          cursor: pointer;
           width: 50px;
           height: 50px;
         }
 
         .shop-item-imagesSlider {
+          text-align: center;
           width: 100%;
 
           img {
@@ -325,10 +342,12 @@ svg text {
             vertical-align: middle;
             border: solid 5px $yellow-3;
             border-radius: 10px;
-            @include tablet{
+
+            @include tablet {
               width: 60%;
             }
-            @include desktop{
+
+            @include desktop {
               width: 80%;
             }
           }
@@ -375,4 +394,5 @@ svg text {
       padding: 40px;
     }
   }
-}</style>
+}
+</style>
