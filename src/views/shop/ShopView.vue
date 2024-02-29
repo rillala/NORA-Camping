@@ -101,12 +101,24 @@ export default {
     },
     prevPage() {
       if (this.currentPage > 1) this.currentPage--;
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     },
     nextPage() {
       if (this.currentPage < this.totalPages) this.currentPage++;
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     },
     goToPage(pageNumber) {
       this.currentPage = pageNumber;
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     },
   },
   watch: {
@@ -168,6 +180,6 @@ export default {
 
 .pagination-controls button.active {
   color: white;
-  background-color: blue;
+  background-color: $blue-3;
 }
 </style>

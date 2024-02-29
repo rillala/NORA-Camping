@@ -29,9 +29,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useCartStore, ['getCart']),
+    ...mapActions(useCartStore, ['getCart','removeCart']),
     confirmPayment() {
-      if(!this.validateOrderInfo()){
+      if (!this.validateOrderInfo()) {
         return;
       }
       this.nextStep();
@@ -60,38 +60,39 @@ export default {
 
       // 發送到後端
       apiInstance.post('/addOrder.php', orderData).then(response => {
-        sessionStorage.removeItem('orderInfo');
+        console.log(response.msg);
+        this.removeCart()
+        this.getCart()
       });
       localStorage.removeItem('cartList');
       this.$router.replace('/ShopOrderSucess').catch(error => {
         console.error(error); // 處理錯誤
-        sessionStorage.removeItem('orderInfo');
-        localStorage.removeItem('cartList');
+        
       });
     },
     //表單驗證
     validateOrderInfo() {
-  // 這裡只是一個基本示例，你可以根據需要擴展驗證規則
-  if (!this.orderInfo.name.trim()) {
-    alert('請輸入姓名');
-    return false;
-  }
-  if (!this.orderInfo.phone.trim() || !/^09\d{8}$/.test(this.orderInfo.phone)) {
-    alert('請輸入有效的手機號碼');
-    return false;
-  }
-  if (!this.orderInfo.email.trim() || !/\S+@\S+\.\S+/.test(this.orderInfo.email)) {
-    alert('請輸入有效的電子郵件地址');
-    return false;
-  }
-  if (!this.orderInfo.address.trim()) {
-    alert('請輸入地址');
-    return false;
-  }
-  // 可以添加更多的驗證規則
+      // 這裡只是一個基本示例，你可以根據需要擴展驗證規則
+      if (!this.orderInfo.name.trim()) {
+        alert('請輸入姓名');
+        return false;
+      }
+      if (!this.orderInfo.phone.trim() || !/^09\d{8}$/.test(this.orderInfo.phone)) {
+        alert('請輸入有效的手機號碼');
+        return false;
+      }
+      if (!this.orderInfo.email.trim() || !/\S+@\S+\.\S+/.test(this.orderInfo.email)) {
+        alert('請輸入有效的電子郵件地址');
+        return false;
+      }
+      if (!this.orderInfo.address.trim()) {
+        alert('請輸入地址');
+        return false;
+      }
+      // 可以添加更多的驗證規則
 
-  return true; // 如果所有檢查都通過了，返回true
-},
+      return true; // 如果所有檢查都通過了，返回true
+    },
     confirmCarry(way) {
       this.orderInfo.carry = way;
     },
@@ -106,20 +107,20 @@ export default {
       }
     },
     bindMemberData(event) {
-  if (event.target.checked) {
-    // 如果勾選了checkbox，則從memberInfo中取出資料並賦值給orderInfo
-    this.orderInfo.name = this.memberInfo.name;
-    this.orderInfo.phone = this.memberInfo.phone;
-    this.orderInfo.address = this.memberInfo.address;
-    this.orderInfo.email = this.memberInfo.email;
-  } else {
-    // 如果取消勾選，則清空對應的orderInfo中的資料
-    this.orderInfo.name = '';
-    this.orderInfo.phone = '';
-    this.orderInfo.address = '';
-    this.orderInfo.email = '';
-  }
-},
+      if (event.target.checked) {
+        // 如果勾選了checkbox，則從memberInfo中取出資料並賦值給orderInfo
+        this.orderInfo.name = this.memberInfo.name;
+        this.orderInfo.phone = this.memberInfo.phone;
+        this.orderInfo.address = this.memberInfo.address;
+        this.orderInfo.email = this.memberInfo.email;
+      } else {
+        // 如果取消勾選，則清空對應的orderInfo中的資料
+        this.orderInfo.name = '';
+        this.orderInfo.phone = '';
+        this.orderInfo.address = '';
+        this.orderInfo.email = '';
+      }
+    },
   },
   computed: {
     ...mapState(useCartStore, ['cartList']),
@@ -134,7 +135,7 @@ export default {
 
     const productStore = useProductStore();
     productStore.axiosGetData();
-    
+
     const memberStore = userStore();
     memberStore.getMemberInfo();
 
@@ -181,51 +182,19 @@ export default {
             <div class="shop-payment-carry">
               <h4>運費送方式</h4>
               <div class="carry-option">
-                <label for="self-pick"
-                  ><input
-                    @change="confirmCarry('自行取貨')"
-                    name="sendWay"
-                    type="radio"
-                    id="self-pick"
-                    value="0"
-                    v-model="orderInfo.payWay"
-                  />自行取貨</label
-                >
-                <label for="sendHome"
-                  ><input
-                    @change="confirmCarry('宅配')"
-                    name="sendWay"
-                    type="radio"
-                    id="sendHome"
-                    value="100"
-                    v-model="orderInfo.payWay"
-                  />宅配: NT$100</label
-                >
-                <label for="sendStore"
-                  ><input
-                    @change="confirmCarry('超商取貨')"
-                    name="sendWay"
-                    type="radio"
-                    id="sendStore"
-                    value="60"
-                    v-model="orderInfo.payWay"
-                  />超商取貨: NT$60</label
-                >
+                <label for="self-pick"><input @change="confirmCarry('自行取貨')" name="sendWay" type="radio" id="self-pick"
+                    value="0" v-model="orderInfo.payWay" />自行取貨</label>
+                <label for="sendHome"><input @change="confirmCarry('宅配')" name="sendWay" type="radio" id="sendHome"
+                    value="100" v-model="orderInfo.payWay" />宅配: NT$100</label>
+                <label for="sendStore"><input @change="confirmCarry('超商取貨')" name="sendWay" type="radio" id="sendStore"
+                    value="60" v-model="orderInfo.payWay" />超商取貨: NT$60</label>
               </div>
             </div>
             <div class="shop-payment-carry">
               <h4>支付方式</h4>
               <div class="carry-option">
-                <label for="creditCard"
-                  ><input
-                    name="creditCard"
-                    type="radio"
-                    id="creditCard"
-                    value="信用卡付款"
-                    v-model="orderInfo.payment"
-                    required
-                  />信用卡付款</label
-                >
+                <label for="creditCard"><input name="creditCard" type="radio" id="creditCard" value="信用卡付款"
+                    v-model="orderInfo.payment" required />信用卡付款</label>
               </div>
             </div>
             <h4 class="shop-payment-total">總計: NT$ {{ totalWithPayWay }}</h4>
@@ -236,14 +205,8 @@ export default {
         <div class="shop-payment-box">
           <div class="shop-payment-formhead">
             <div>
-              <label 
-              class="shop-memberDataBind tinyp" 
-              for="memberDataBind">同會員資料</label>
-              <input
-                type="checkbox"
-                id="memberDataBind"
-                @change="bindMemberData"
-              />
+              <label class="shop-memberDataBind tinyp" for="memberDataBind">同會員資料</label>
+              <input type="checkbox" id="memberDataBind" @change="bindMemberData" />
             </div>
           </div>
           <table class="shop-payment-inputs">
@@ -252,13 +215,7 @@ export default {
                 <p class="item">姓名</p>
               </td>
               <td>
-                <input
-                  type= 'text'
-                  name="name"
-                  placeholder="請輸入姓名"
-                  v-model="orderInfo.name"
-                  required
-                />
+                <input type='text' name="name" placeholder="請輸入姓名" v-model="orderInfo.name" required />
               </td>
             </tr>
             <tr>
@@ -266,13 +223,7 @@ export default {
                 <p class="item">手機</p>
               </td>
               <td>
-                <input
-                  type= 'tel'
-                  maxlength="10"
-                  placeholder="請輸入手機號碼"
-                  v-model="orderInfo.phone"
-                  required
-                />
+                <input type='tel' maxlength="10" placeholder="請輸入手機號碼" v-model="orderInfo.phone" required />
               </td>
             </tr>
             <tr>
@@ -280,13 +231,7 @@ export default {
                 <p class="item">信箱</p>
               </td>
               <td>
-                <input
-                  type= 'email'
-                  name="email"
-                  placeholder="例:123@gmail.com"
-                  v-model="orderInfo.email"
-                  required
-                />
+                <input type='email' name="email" placeholder="例:123@gmail.com" v-model="orderInfo.email" required />
               </td>
             </tr>
             <tr>
@@ -302,13 +247,7 @@ export default {
                 <p class="item">備註</p>
               </td>
               <td>
-                <textarea
-                  name=""
-                  id=""
-                  cols="25"
-                  rows="4"
-                  v-model="orderInfo.note"
-                ></textarea>
+                <textarea name="" id="" cols="25" rows="4" v-model="orderInfo.note"></textarea>
               </td>
             </tr>
           </table>
@@ -332,38 +271,19 @@ export default {
             <div class="box p">
               <div class="item">信用卡號</div>
               <div class="card-box">
-                <input
-                  class="card-input"
-                  v-for="(item, index) in creditCardParts"
-                  :key="index"
-                  type="text"
-                  v-model="creditCardParts[index]"
-                  maxlength="4"
-                  @input="moveFocus(index)"
-                  :ref="`part${index}`"
-                  placeholder="####"
-                />
+                <input class="card-input" v-for="(item, index) in creditCardParts" :key="index" type="text"
+                  v-model="creditCardParts[index]" maxlength="4" @input="moveFocus(index)" :ref="`part${index}`"
+                  placeholder="####" />
               </div>
             </div>
             <div class="box p deadline">
               <div class="first">
                 <div class="item">有效期限</div>
-                <input
-                  type="text"
-                  class="input"
-                  placeholder="MM/YY"
-                  v-model="expInput"
-                  @input="formatExpirationDate"
-                />
+                <input type="text" class="input" placeholder="MM/YY" v-model="expInput" @input="formatExpirationDate" />
               </div>
               <div class="second">
                 <div class="item">安全碼</div>
-                <input
-                  type="text"
-                  class="input"
-                  maxlength="3"
-                  v-model="secureCode"
-                />
+                <input type="text" class="input" maxlength="3" v-model="secureCode" />
               </div>
             </div>
           </div>
@@ -494,7 +414,9 @@ textarea {
   border: 2px solid $dark-gray;
   border-radius: 5px;
 }
-label, input{
+
+label,
+input {
   cursor: pointer;
 }
 </style>
