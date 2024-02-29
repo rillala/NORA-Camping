@@ -144,57 +144,24 @@ export default {
 <template>
   <div class="shop-all-wrap">
     <div class="shop-all-banner">
-      <img
-        class="shop-banner-pic"
-        src="/src/assets/image/shop/商城banner1.png"
-        alt=""
-      />
+      <img class="shop-banner-pic" src="/src/assets/image/shop/商城banner1.png" alt="" />
       <h2 class="shop-all-title">NORA品牌專區，打造屬於你的品牌風格</h2>
       <div class="input-group">
-        <input
-          type="text"
-          v-model.trim="search"
-          class="shop-searchbar"
-          placeholder="輸入商品關鍵字"
-        />
+        <input type="text" v-model.trim="search" class="shop-searchbar" placeholder="輸入商品關鍵字" />
         <button class="search-shop" @click="handleFilterClick" type="button">
-          <svg
-            width="25px"
-            height="25px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-              stroke="#fff"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-            <path
-              d="M22 22L20 20"
-              stroke="#fff"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
+              stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M22 22L20 20" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </button>
       </div>
     </div>
     <div class="shop-all-container">
       <div class="shop-select-button">
-        <DropDownBtn
-          :options="groupOptions"
-          @change="handleSelection"
-          :default-value="'選擇類別'"
-        ></DropDownBtn>
-        <DropDownBtn
-          :options="priceOptions"
-          @change="handleSelection"
-          :default-value="'選擇排序'"
-        ></DropDownBtn>
+        <DropDownBtn :options="groupOptions" @change="handleSelection" :default-value="'選擇類別'"></DropDownBtn>
+        <DropDownBtn :options="priceOptions" @change="handleSelection" :default-value="'選擇排序'"></DropDownBtn>
       </div>
 
       <div class="shop-all-list">
@@ -205,12 +172,7 @@ export default {
       <div class="pagination-controls">
         <button @click="prevPage" :disabled="currentPage <= 1">上一頁</button>
         <!-- 數字分頁按鈕 -->
-        <button
-          v-for="page in pages"
-          :key="page"
-          @click="goToPage(page)"
-          :class="{ active: currentPage === page }"
-        >
+        <button v-for="page in pages" :key="page" @click="goToPage(page)" :class="{ active: currentPage === page }">
           {{ page }}
         </button>
         <button @click="nextPage" :disabled="currentPage >= totalPages">
@@ -223,9 +185,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/shopView.scss';
-
-.pagination-controls button.active {
-  color: white;
-  background-color: $blue-3;
-}
 </style>
