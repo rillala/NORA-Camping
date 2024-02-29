@@ -43,11 +43,11 @@ export default {
     },
     colorOptions() {
       // 檢查是否有colors，並將其從字符串轉換為數組，如果沒有則返回一個只包含預設選項的數組
-      return this.responseData.colors ? [...this.responseData.colors.split(',')] : ['顏色'];
+      return this.responseData.colors ? [...this.responseData.colors.split(',')] : "";
     },
     sizeOptions() {
       // 同上，對sizes進行處理
-      return this.responseData.sizes ? [...this.responseData.sizes.split(',')] : ['尺寸'];
+      return this.responseData.sizes ? [...this.responseData.sizes.split(',')] : "";
     },
   },
   watch: {},
@@ -60,11 +60,11 @@ export default {
     },
     addIntoCart() {
       // 检查是否选择了颜色和尺寸（如果有多个选项）
-      if (this.colorOptions.length > 1 && this.selectedColor == '') {
+      if (this.colorOptions.length > 0 && this.selectedColor === '') {
         alert('請選擇顏色');
         return; // 终止函数执行
       }
-      if (this.sizeOptions.length > 1 && this.selectedSize == '') {
+      if (this.sizeOptions.length > 0 && this.selectedSize === '') {
         alert('請選擇尺寸');
         return; // 终止函数执行
       }
@@ -150,10 +150,10 @@ export default {
             </ul>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-select">
-              <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 1" :options="colorOptions"
+              <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 0" :options="colorOptions"
                 @change="updateSelectedColor" :default-value="'顏色'"></DropDownBtn>
 
-              <DropDownBtn class="dropDown-select" v-if="sizeOptions.length > 1" :options="sizeOptions"
+              <DropDownBtn class="dropDown-select" v-if="sizeOptions.length > 0" :options="sizeOptions"
                 @change="updateSelectedSize" :default-value="'尺寸'"></DropDownBtn>
 
 
