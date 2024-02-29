@@ -6,7 +6,7 @@ import apiInstance from '@/plugins/auth';
 
 const DESKTOP = 1024;
 const emits = defineEmits([
-    'changeToForm','changeToMain'
+    'changeToForm',
 ]);
 
 const toForm= ()=> {
@@ -41,7 +41,6 @@ function getFaqList() {
     .get("./getFaqForFrontend.php")
     .then((response) => {
         faqList.value = response.data;
-        console.log(response.data);
         faqList.value.forEach(qa => {
             if(qa.faq_type === '營地預約'){
                 reserve.value.push(qa);
