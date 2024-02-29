@@ -56,37 +56,37 @@ onBeforeUnmount(()=>{
 .cloud{
     top:-20%;
     right: 10%;
-    width: 500px;
+    width: 30%;
     transform: rotate(5deg);
     animation: flyUp 3s linear infinite;
 }
 .people{
     right: 15%;
     top: -70%;
-    width: 200px;
+    width: 12%;
     transform: rotate(5deg);
     animation: flyUp 3s linear infinite;
 }
 .tent{
     left: 5%;
-    top: -70%;
-    width: 300px;
+    top: -80%;
+    width: 20%;
     animation: tent 5s infinite cubic-bezier(0.85, 0, 0.15, 1);
 }
 .wood{
     left: 30%;
     top: 50%;
-    width: 200px;
+    width: 13%;
     rotate: (5deg);
 }
 .fire{
     left: 32%;
-    top: -50%;
-    width: 150px;
+    top: -60%;
+    width: 9%;
     animation: fire 3s infinite;
 }
 .marshmallow{
-    width: 200px;
+    width: 10%;
     right: 45%;
     top: -20%;
     transform: rotateY(180deg);
