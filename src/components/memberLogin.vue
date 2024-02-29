@@ -213,9 +213,7 @@ export default {
           headers: { Authorization: `Bearer ${token}` },
         });
         // 更新 Pinia store 裡的使用者資料
-        // console.log(response.data);
         this.updateUserData(response.data);
-        // 調用 Pinia action 並傳入響應數據
       } catch (error) {
         console.error('Error fetching member info:', error);
         // 處理錯誤，可能需要在界面上顯示錯誤資訊
@@ -244,11 +242,9 @@ export default {
             // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
           } else if (res && res.data && res.data.error === true) {
             // 如果後端返回了錯誤，則處理登入失敗的情況
-
             alert(res.data.message);
           } else {
-            //   如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
-            console.log('Unexpected format:', res.data);
+            // 如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
             alert('登入失敗：無法解析伺服器響應。');
           }
         })
@@ -378,17 +374,19 @@ export default {
         const lineNickname = userInfoResponse.data.name;
         const lineUSerImgURL = userInfoResponse.data.picture;
         const lineAccountTypeID = 1;
-        this.updateToken(accessToken);
+        // this.updateToken(accessToken);
 
         // 這邊寫回資料庫
-        const response = await apiInstance.post(`/lineLogin.php`, {
+        const response = await apiInstance.post(`/lineLoginNew.php`, {
           user_id: lineUserId,
           name: lineNickname,
           photo: lineUSerImgURL,
         });
         localStorage.setItem('token', response.data.token);
         this.updateToken(response.data.token);
-        this.updateUserData()
+        // this.updateUserData();
+        await this.getMemberInfo();
+        this.updateUserData(response.data);
         this.$router.push('/');
       } catch (error) {
         console.error(error);

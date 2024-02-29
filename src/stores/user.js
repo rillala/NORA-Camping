@@ -11,28 +11,6 @@ export default defineStore('userStore', {
     memberInfo: {},
   }),
   actions: {
-    // initializeUserState() {
-    //   const userProfileImage = localStorage.getItem('userProfileImage');
-    //   if (userProfileImage) {
-    //     this.updateUserProfileImage(userProfileImage);
-    //   }
-    // },
-    // updateUserProfileImage(imageUrl) {
-    //   this.userProfileImage = imageUrl;
-    //   // 在這裡將用户頭像 URL 保存到 localStorage
-    //   localStorage.setItem('userProfileImage', imageUrl);
-    //   console.log('Profile image updated:', imageUrl);
-    // },
-    checkLogin() {
-      const storageToken = localStorage.getItem('token');
-      if (this.token) {
-        return this.token;
-      } else if (storageToken) {
-        return (this.token = storageToken);
-      } else {
-        return '';
-      }
-    },
     updateToken(payload) {
       if (payload) {
         this.token = payload;

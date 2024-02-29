@@ -209,7 +209,6 @@ export default {
         const response = await apiInstance.get('memberInfo.php', {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         this.updateUserData(response.data);
         // 調用 Pinia action 並傳入響應數據
       } catch (error) {
@@ -263,60 +262,6 @@ export default {
     startEditingPassword() {
       this.isEditingPassword = true;
     },
-
-    // savePasswordChanges() {
-    //   if (
-    //     !this.oldPassword.trim() ||
-    //     !this.newPassword.trim() ||
-    //     !this.confirmPassword.trim()
-    //   ) {
-    //     alert('密碼欄位不能為空');
-    //     return;
-    //   }
-    //   // 檢查新密碼與確認密碼是否一致
-    //   if (this.newPassword !== this.confirmPassword) {
-    //     alert('新密碼和確認密碼不一致');
-    //     return;
-    //   }
-
-    //   // 從 localStorage 中獲取 token
-    //   const token = localStorage.getItem('token');
-    //   if (!token) {
-    //     console.error('No token found');
-    //     return;
-    //   }
-
-    //   try {
-    //     // 發送更新密碼的請求
-    //     const response = apiInstance({
-    //       method: 'post',
-    //       url: '/updatePassword.php',
-    //       data: {
-    //         oldPassword: this.oldPassword,
-    //         newPassword: this.newPassword,
-    //       },
-    //       headers: { Authorization: `Bearer ${token}` },
-    //     });
-
-    //     // 根據後端響應處理前端邏輯
-    //     if (response.data.error === false) {
-    //       // 如果密碼更新成功
-    //       alert(response.data.message); //沒辦法返回後端訊息
-    //       this.isEditingPassword = false;
-    //       this.logout(); // 無法登出
-
-    //       console.log(this.logout);
-    //     } else {
-    //       // 如果後端報告說密碼更新失敗
-    //       alert(response.data.message);
-    //     }
-    //   } catch (error) {
-    //     // 處理請求過程中發生的錯誤
-    //     // console.error("密碼更新失敗:", error);
-    //     alert('密碼更新過程中發生錯誤');
-    //   }
-    // },
-
     savePasswordChanges() {
       if (
         !this.oldPassword.trim() ||

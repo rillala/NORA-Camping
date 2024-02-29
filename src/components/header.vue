@@ -70,7 +70,7 @@ export default {
   },
   mounted() {
     // this.updateUserData();
-    this.checkLogin();
+    // this.login();
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
