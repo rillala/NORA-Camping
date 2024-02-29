@@ -137,6 +137,17 @@ export default {
           <div class="shop-item-words">
             <h2>{{ responseData.title }}</h2>
             <h3>NT${{ responseData.price }}</h3>
+            <ul class="rulesandpay tiny-p">運費規則:
+              <ul class="seven-take">
+                <li><img style="width: 20px;" src="/src/assets/image/shop/7-eleven_logo.svg.png" alt="711"></li>
+                <li class="tiny-p"> 711取貨(單件運費60元)</li>
+              </ul>
+              <li class="tiny-p"> 宅配(單件運費100元)</li>
+              <li class="tiny-p"> 買家自取(0元)</li>
+            </ul>
+            <ul class="rulesandpay tiny-p">
+              <li class="tiny-p">付款方式: 信用卡付款</li>
+            </ul>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-select">
               <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 1" :options="colorOptions"
@@ -159,7 +170,7 @@ export default {
           <div class="shop-intro-title">
             <h4>商品詳情</h4>
           </div>
-          <p>{{ responseData.description }}</p>
+          <p class="description">{{ responseData.description }}</p>
         </section>
       </div>
     </div>
@@ -284,6 +295,15 @@ svg text {
           flex-flow: column;
           gap: 20px;
           align-items: center;
+          .rulesandpay{
+              line-height: 140%;
+              color: $blue-3;
+              font-weight: 500;
+              .seven-take{
+                display: flex;
+                gap: 8px;
+              }
+            }
 
           .shop-item-select {
             display: flex;
@@ -300,6 +320,7 @@ svg text {
             width: 50%;
             align-items: flex-start;
             gap: 40px;
+            
           }
         }
       }
@@ -381,6 +402,9 @@ svg text {
           background-color: $yellow-2;
           border-radius: 20px 20px 0 0;
 
+        }
+        .description{
+          line-height: 180%;
         }
       }
     }
