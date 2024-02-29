@@ -1,5 +1,6 @@
 <script setup>
 // 引入函式庫
+import { useRoute } from 'vue-router';
 import mainFAQ from '../components/FAQ/mainFAQ.vue';
 import contactForm from '../components/FAQ/contactForm.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue';;
@@ -8,7 +9,7 @@ const flag = ref(true);
 const changeFlag = () => {
   flag.value = !flag.value;
 };
-
+const DESKTOP = 1024;
 const windows1024 = ref(window.innerWidth);
 function updataWindows() {
   windows1024.value = window.innerWidth;
@@ -16,13 +17,25 @@ function updataWindows() {
 onMounted(() => {
   updataWindows();
   window.addEventListener('resize', updataWindows);
+  checkSourcePage();
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', updataWindows);
 });
-
-const DESKTOP = 1024;
+const route = useRoute();
+function checkSourcePage() {
+  // 從路由參數獲得來源訊息
+  const currentPath = route.query.title;
+  // 根據來源訊息決定是否開啟聯絡表單
+  if (currentPath === '/shelter') {
+    console.log('轉跳來源是 收容所');
+    changeFlag();
+  } else {
+    console.log('轉跳來源不是 收容所');
+    console.log(route.query.title);
+  }
+}
 </script>
 
 <template>
