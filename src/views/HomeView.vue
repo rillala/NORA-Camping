@@ -10,11 +10,9 @@ import catAnimation from '@/components/home/catAnimation.vue';
 import newsArticle from '@/components/home/newsArticle.vue';
 import productCard from '@/components/shop/productCard.vue';
 import { gsap } from 'gsap';
-import { getDBImage } from "@/assets/js/common";
+import { getDBImage } from '@/assets/js/common';
 import ProductSlider from '@/components/shop/productSlider.vue';
 import { useProductStore } from '@/stores/productStore'; // 導入 Pinia Store
-
-
 
 export default {
   components: {
@@ -25,7 +23,7 @@ export default {
     catAnimation,
     newsArticle,
     productCard,
-    ProductSlider
+    ProductSlider,
   },
   data() {
     return {
@@ -94,7 +92,7 @@ export default {
           prodPicAlt: '商品圖片',
           prodTitle: '野良NORA折疊椅',
           prodPrice: 'NTD$900',
-        }
+        },
       ],
       curIndex: 0,
       slideWidth: 300,
@@ -144,15 +142,24 @@ export default {
     //顯示對應天氣圖片
     getWeatherImage() {
       switch (true) {
-        case this.weather.includes("晴"):
+        case this.weather.includes('晴'):
           return this.getWeatherImageUrl(this.weatherMark[0]);
-        case this.weather.includes("多雲"):
-          return this.getWeatherImageUrl(this.weatherMark[1]) || this.getWeatherImageUrl(this.weatherMark[0]);
-        case this.weather.includes("陰"):
-        case this.weather.includes("靄"):
-          return this.getWeatherImageUrl(this.weatherMark[2]) || this.getWeatherImageUrl(this.weatherMark[0]);
-        case this.weather.includes("雨"):
-          return this.getWeatherImageUrl(this.weatherMark[3]) || this.getWeatherImageUrl(this.weatherMark[0]);
+        case this.weather.includes('多雲'):
+          return (
+            this.getWeatherImageUrl(this.weatherMark[1]) ||
+            this.getWeatherImageUrl(this.weatherMark[0])
+          );
+        case this.weather.includes('陰'):
+        case this.weather.includes('靄'):
+          return (
+            this.getWeatherImageUrl(this.weatherMark[2]) ||
+            this.getWeatherImageUrl(this.weatherMark[0])
+          );
+        case this.weather.includes('雨'):
+          return (
+            this.getWeatherImageUrl(this.weatherMark[3]) ||
+            this.getWeatherImageUrl(this.weatherMark[0])
+          );
         default:
           // 如果沒有匹配的天氣條件，返回預設圖片路徑
           return this.getWeatherImageUrl(this.weatherMark[0]);
@@ -162,8 +169,8 @@ export default {
     //讀取最新消息
     getNewsPhp() {
       apiInstance
-        .get("./getNewsForHomeView.php")
-        .then((response) => {
+        .get('./getNewsForHomeView.php')
+        .then(response => {
           this.newsList = response.data;
           this.searchList = this.newsList;
           // this.newsContent = response.data;
@@ -171,8 +178,8 @@ export default {
           console.log(this.searchList);
           // console.log(this.newsContent);
         })
-        .catch((error) => {
-          console.error("Error:", error);
+        .catch(error => {
+          console.error('Error:', error);
         });
     },
 
@@ -181,10 +188,13 @@ export default {
       if (this.search === '') {
         this.newsList = this.searchList;
       } else {
-        this.newsList = this.searchList.filter((setArticle) => {
+        this.newsList = this.searchList.filter(setArticle => {
           //搜尋範圍包含標題和內文
-          return setArticle.title.includes(this.search) || setArticle.content.includes(this.search);
-        })
+          return (
+            setArticle.title.includes(this.search) ||
+            setArticle.content.includes(this.search)
+          );
+        });
       }
     },
 
@@ -232,7 +242,7 @@ export default {
     sectionObserve() {
       const options = {
         root: null, // 根節點，null表示整個視窗
-        threshold: 0.5 // 可見比例大於50%時觸發回調
+        threshold: 0.5, // 可見比例大於50%時觸發回調
       };
       //IntersectionObserver 觀察API
       const observer = new IntersectionObserver(entries => {
@@ -256,7 +266,7 @@ export default {
         this.Catin();
         this.Dogin();
       }
-    }
+    },
   },
   watch: {
     search(newSearch, oldSearch) {
@@ -297,13 +307,23 @@ export default {
 
   <section class="Knowing-nora" ref="knowingNora">
     <div class="KN-mountain-background">
-      <img src="@/assets/image/homeView/mountainBgL.png" class="Mountain-left" />
-      <img src="@/assets/image/homeView/mountainBgR.png" class="Mountain-right" />
+      <img
+        src="@/assets/image/homeView/mountainBgL.png"
+        class="Mountain-left"
+      />
+      <img
+        src="@/assets/image/homeView/mountainBgR.png"
+        class="Mountain-right"
+      />
     </div>
     <div class="KN-content">
       <div class="KN-text">
         <h3>認識野良</h3>
-        <img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1" />
+        <img
+          class="paw1"
+          src="@/assets/image/campGuide/paw.svg"
+          alt="動物腳掌1"
+        />
         <p>
           "野良" 這一詞在日文中指流浪動物，
           我們將這一概念融入露營體驗中，創造出一個充滿活力和溫馨的環境。
@@ -332,7 +352,13 @@ export default {
       <div class="News-Title-search">
         <h3>野良露營 X 最新消息</h3>
         <div class="search-input">
-          <input class="Search-bar" type="text" placeholder="搜尋關鍵字" v-model.trim="search" @input="handleSearch" />
+          <input
+            class="Search-bar"
+            type="text"
+            placeholder="搜尋關鍵字"
+            v-model.trim="search"
+            @input="handleSearch"
+          />
           <span v-if="search !== ''">正在搜尋：</span>{{ search }}
         </div>
       </div>
@@ -346,9 +372,18 @@ export default {
       </div> -->
 
       <div class="News-viewport">
-        <newsArticle class="News-article" v-for="(setArticle, index) in newsList" :key="index" :title="setArticle.title"
-          :publish_date="setArticle.publish_date" :content="setArticle.content" :img1="getDBImage(setArticle.img1)"
-          :img2="getDBImage(setArticle.img2)" :img3="getDBImage(setArticle.img3)" v-model:large="setArticle.large" />
+        <newsArticle
+          class="News-article"
+          v-for="(setArticle, index) in newsList"
+          :key="index"
+          :title="setArticle.title"
+          :publish_date="setArticle.publish_date"
+          :content="setArticle.content"
+          :img1="getDBImage(setArticle.img1)"
+          :img2="getDBImage(setArticle.img2)"
+          :img3="getDBImage(setArticle.img3)"
+          v-model:large="setArticle.large"
+        />
       </div>
     </div>
   </section>
@@ -385,7 +420,11 @@ export default {
     <div class="Stray-home-content">
       <div class="SH-text">
         <h2>野良之家</h2>
-        <img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1" />
+        <img
+          class="paw1"
+          src="@/assets/image/campGuide/paw.svg"
+          alt="動物腳掌1"
+        />
         <p>
           野良露營也是流浪動物的中途之家。 我們致力於照顧、
           庇護和尋找新的家園給需要幫助的流浪動物 我們提供免費的志工活動，

@@ -43,11 +43,11 @@ export default {
     },
     colorOptions() {
       // 檢查是否有colors，並將其從字符串轉換為數組，如果沒有則返回一個只包含預設選項的數組
-      return this.responseData.colors ? ['顏色', ...this.responseData.colors.split(',')] : ['顏色'];
+      return this.responseData.colors ? [...this.responseData.colors.split(',')] : "";
     },
     sizeOptions() {
       // 同上，對sizes進行處理
-      return this.responseData.sizes ? ['尺寸', ...this.responseData.sizes.split(',')] : ['尺寸'];
+      return this.responseData.sizes ? [...this.responseData.sizes.split(',')] : "";
     },
   },
   watch: {},
@@ -59,10 +59,20 @@ export default {
       // console.log('changed quantity: ' + this.selectedQuantity);
     },
     addIntoCart() {
+      // 检查是否选择了颜色和尺寸（如果有多个选项）
+      if (this.colorOptions.length > 0 && this.selectedColor === '') {
+        alert('請選擇顏色');
+        return; // 终止函数执行
+      }
+      if (this.sizeOptions.length > 0 && this.selectedSize === '') {
+        alert('請選擇尺寸');
+        return; // 终止函数执行
+      }
+      // 如果颜色和尺寸都已选择或者只有一个选项，就添加到购物车
       const cartStore = useCartStore();
       cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
-
     },
+
     addAndBuy() {
       const cartStore = useCartStore();
       cartStore.addToCart(this.responseData.product_id, this.selectedQuantity, this.selectedColor, this.selectedSize);
@@ -104,7 +114,7 @@ export default {
         </text>
       </svg>
     </div>
-   
+
     <div class="shop-item-container">
       <loading v-if="nodata"></loading>
       <div v-else class="shop-item-content">
@@ -127,12 +137,23 @@ export default {
           <div class="shop-item-words">
             <h2>{{ responseData.title }}</h2>
             <h3>NT${{ responseData.price }}</h3>
+            <ul class="rulesandpay tiny-p">運費規則:
+              <ul class="seven-take">
+                <li><img style="width: 20px;" src="/src/assets/image/shop/7-eleven_logo.svg.png" alt="711"></li>
+                <li class="tiny-p"> 711取貨(單件運費60元)</li>
+              </ul>
+              <li class="tiny-p"> 宅配(單件運費100元)</li>
+              <li class="tiny-p"> 買家自取(0元)</li>
+            </ul>
+            <ul class="rulesandpay tiny-p">
+              <li class="tiny-p">付款方式: 信用卡付款</li>
+            </ul>
             <addMinusBtn @update:quantity="handleQuantityUpdate"></addMinusBtn>
             <div class="shop-item-select">
-              <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 1" :options="colorOptions"
+              <DropDownBtn class="dropDown-select" v-if="colorOptions.length > 0" :options="colorOptions"
                 @change="updateSelectedColor" :default-value="'顏色'"></DropDownBtn>
 
-              <DropDownBtn class="dropDown-select" v-if="sizeOptions.length > 1" :options="sizeOptions"
+              <DropDownBtn class="dropDown-select" v-if="sizeOptions.length > 0" :options="sizeOptions"
                 @change="updateSelectedSize" :default-value="'尺寸'"></DropDownBtn>
 
 
@@ -149,7 +170,7 @@ export default {
           <div class="shop-intro-title">
             <h4>商品詳情</h4>
           </div>
-          <p>{{ responseData.description }}</p>
+          <p class="description">{{ responseData.description }}</p>
         </section>
       </div>
     </div>
@@ -173,10 +194,11 @@ svg text {
   stroke: #C0A790;
   font-size: 40px;
 
-  @include tablet{
+  @include tablet {
     font-size: 64px;
   }
-  @include desktop{
+
+  @include desktop {
     font-size: 80px;
   }
 }
@@ -217,14 +239,14 @@ svg text {
 
   .shop-item-banner {
     position: relative;
-		display: flex;
-		flex-flow: column;
-		justify-content: center;
-		align-items: center;
-		gap: 24px;
-		width: 100%;
-		height: 240px;
-		overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
 
     .shop-banner-pic {
       width: 100%;
@@ -273,6 +295,15 @@ svg text {
           flex-flow: column;
           gap: 20px;
           align-items: center;
+          .rulesandpay{
+              line-height: 140%;
+              color: $blue-3;
+              font-weight: 500;
+              .seven-take{
+                display: flex;
+                gap: 8px;
+              }
+            }
 
           .shop-item-select {
             display: flex;
@@ -289,6 +320,7 @@ svg text {
             width: 50%;
             align-items: flex-start;
             gap: 40px;
+            
           }
         }
       }
@@ -311,12 +343,18 @@ svg text {
         align-items: center;
         gap: 8px;
 
+        @include desktop {
+          gap: 2px;
+        }
+
         .shop-arrow-icon {
+          cursor: pointer;
           width: 50px;
           height: 50px;
         }
 
         .shop-item-imagesSlider {
+          text-align: center;
           width: 100%;
 
           img {
@@ -325,10 +363,12 @@ svg text {
             vertical-align: middle;
             border: solid 5px $yellow-3;
             border-radius: 10px;
-            @include tablet{
+
+            @include tablet {
               width: 60%;
             }
-            @include desktop{
+
+            @include desktop {
               width: 80%;
             }
           }
@@ -363,6 +403,9 @@ svg text {
           border-radius: 20px 20px 0 0;
 
         }
+        .description{
+          line-height: 180%;
+        }
       }
     }
   }
@@ -375,4 +418,5 @@ svg text {
       padding: 40px;
     }
   }
-}</style>
+}
+</style>

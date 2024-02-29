@@ -298,7 +298,12 @@ export default {
     top: -30%;
 
     @media (min-width:418px) {
-        top: 8%;
+        top: 12%;
+        left: -57%;
+    }
+
+    @include tablet {
+        top: 16%;
         left: -20%;
     }
 
