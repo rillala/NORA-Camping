@@ -17,6 +17,7 @@ export default {
 
 .tents {
     width: 100%;
+    height: auto;
     position: relative;
 }
 
@@ -26,13 +27,17 @@ export default {
     top: 36.5%;
     left: 0;
     z-index: 1;
-
-    @include desktop {
-        top: 31%;
-    }
     
     @include tablet {
         top: 34.5%;
+    }
+
+    @include desktop {
+        top:31%;
+    }
+
+    @media (width = 1920px) {
+        top:48%;
     }
 }
 
