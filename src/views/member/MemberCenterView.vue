@@ -291,20 +291,76 @@ export default {
         },
         headers: { Authorization: `Bearer ${token}` },
       })
-        .then(response => {
-          if (response.data.error === false) {
-            // 如果密碼更新成功
-            alert(response.data.message);
-            this.isEditingPassword = false;
-            console.log(logout);
-            this.logout(); // 登出操作
-          }
-        })
-        .catch(error => {
-          // 處理請求過程中發生的錯誤
-          alert('密碼更新過程中發生錯誤');
-        });
+      .then(response => {
+        if (response.data.success) {
+          // 如果密碼更新成功
+          alert(response.data.message);
+          this.isEditingPassword = false;
+          console.log(logout);
+          // 提示後，執行登出操作
+          this.logout(); // 登出操作
+        } else {
+          // 如果密碼更新過程中出現問題
+          alert(response.data.message);
+        }
+      })
+      .catch(error => {
+        // 請求過程中發生錯誤
+        // alert('請求過程中發生錯誤');
+      });
     },
+    // savePasswordChanges() {
+    // if (
+    //   !this.oldPassword.trim() ||
+    //   !this.newPassword.trim() ||
+    //   !this.confirmPassword.trim()
+    // ) {
+    //   alert('密碼欄位不能為空');
+    //   return;
+    // }
+    
+    // // 檢查新密碼與確認密碼是否一致
+    // if (this.newPassword !== this.confirmPassword) {
+    //   alert('新密碼和確認密碼不一致');
+    //   return;
+    // }
+    
+    // // 從 localStorage 中獲取 member_id
+    // const memberInfo = JSON.parse(localStorage.getItem('memberInfo'));
+
+    // if (!memberInfo || !memberInfo.member || !memberInfo.member_id) {
+    //   console.error('No member_id found');
+    //   return;
+    // }
+
+    // const member_id = memberInfo.member_id;
+
+    // apiInstance({
+    //   method: 'post',
+    //   url: '/updatePassword.php',
+    //   data: {
+    //     oldPassword: this.oldPassword,
+    //     newPassword: this.newPassword,
+    //     member_id: member_id,
+    //   },
+    // })
+    // .then(response => {
+    //   if (response.data.success) {
+    //     // 如果密碼更新成功
+    //     alert(response.data.message);
+    //     this.isEditingPassword = false;
+    //     // 執行登出操作
+    //     this.logout();
+    //   } else {
+    //     // 如果密碼更新過程中出現問題
+    //     alert(response.data.message);
+    //   }
+    // })
+    // .catch(error => {
+    //   // 請求過程中發生錯誤
+    //   alert('請求過程中發生錯誤');
+    //   });
+    // },
     cancelPasswordEditing() {
       // 在這裡處理取消密碼修改的邏輯
       this.isEditingPassword = false;

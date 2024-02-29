@@ -149,16 +149,22 @@ export default {
       passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        name: '陳穎穎',
-        email: 'sandra401120422@gmail.com',
-        psw: '123456',
-        pswConfirmation: '123456',
+        // name: '陳穎穎',
+        // email: 'sandra401120422@gmail.com',
+        // psw: '123456',
+        // pswConfirmation: '123456',
+        name: '',
+        email: '',
+        psw: '',
+        pswConfirmation: '', 
         receiveNews: true,
         agreeTerms: true,
       },
       user_enter: {
-        email: 'coconut5529@yahoo.com.tw',
-        psw: '123456',
+        // email: 'coconut5529@yahoo.com.tw',
+        // psw: '123456',
+        email: '',
+        psw: '',
       },
       showPrivacyPolicy: false,
       channel_id: '2003443299',
@@ -447,7 +453,7 @@ export default {
   background-color: transparent;
   border: none;
   text-decoration: none;
-  font-size: 32px;
+  font-size: 26px;
   padding: 0px 10px;
   margin: 10px 15px 30px;
   white-space: nowrap;
@@ -469,7 +475,7 @@ p {
 
 input {
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   border: none;
   border-bottom: 1px solid #000;
   outline: none;
@@ -504,7 +510,7 @@ input {
 .main-btn {
   background-color: $blue-3;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 50px;
   border: none;
   padding: 10px 25px;
@@ -515,7 +521,7 @@ input {
 .sub-btn {
   background-color: $blue-2;
   color: #000;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 50px;
   border: none;
   padding: 10px 25px;

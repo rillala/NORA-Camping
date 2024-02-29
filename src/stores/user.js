@@ -53,8 +53,9 @@ export default defineStore('userStore', {
             localStorage.removeItem('memberInfo');
             sessionStorage.clear();
             // 登出成功，重定向到首頁
-            alert('已登出');
             router.push({ name: 'home' });
+            alert('已登出');
+            
           } else {
             // 如果後端返回失敗訊息，處理這些訊息
             console.error('Logout failed:', response.data.message);
