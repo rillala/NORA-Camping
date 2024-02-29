@@ -22,9 +22,18 @@ export default {
 
 .camp-grass {
     position: absolute;
+    width: 100%;
+    top: 36.5%;
     left: 0;
-    top: 48%;
     z-index: 1;
+
+    @include desktop {
+        top: 31%;
+    }
+    
+    @include tablet {
+        top: 34.5%;
+    }
 }
 
 </style>

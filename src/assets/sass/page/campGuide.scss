@@ -339,7 +339,7 @@
                 }
 
                 @include tablet {
-                    width: 500px;
+                    width: 400px;
                 }
             }
 
@@ -540,7 +540,7 @@
         align-items: center;
 
         @include desktop {
-            min-height: 200px;
+            min-height: 120px;
         }
     }
 

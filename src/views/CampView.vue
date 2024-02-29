@@ -61,21 +61,21 @@ export default {
       // 使用 GSAP 創建動畫
       gsap.to(catElements, {
         x: '20%',
-        duration: 5, // 動畫時間(秒)
+        duration: 6, // 動畫時間(秒)
       });
     },
     dogMove() {
       const dogElements = this.$refs.dogs.$el;
       gsap.to(dogElements, {
         x: '-20%',
-        duration: 4,
+        duration: 6,
       });
     },
     wordMove() {
       const wordElements = this.$refs.words.$el;
       gsap.to(wordElements, {
         x: '25%',
-        duration: 3,
+        duration: 5,
       });
     },
   },
