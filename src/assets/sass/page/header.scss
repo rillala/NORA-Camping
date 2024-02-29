@@ -396,31 +396,38 @@ input[type='checkbox'] {
   display: none;
   overflow: hidden;
   @include tablet {
+    max-width: 1200px;
     display: block;
     position: absolute;
-    width: 120px;
+    width: 140px;
     background-color: $blue-4;
     color: $white01;
     // height: 120px;
+    left:900px;
     top: 80px;
     padding: 10px 8px;
     border-radius: 20px;
   }
 
   @include desktop {
-    padding: 15px 6px 10px;
-    border-radius: 10px;
+    max-width: 900px;
+    display: block;
+    position: absolute;
+    width: 140px;
+    background-color: $blue-4;
+    color: $white01;
+    top: 80px;
+    padding: 10px 8px;
+    border-radius: 20px;
   }
   .sub-menu {
     display: block;
     text-align: center;
     position: relative;
-    margin: 0;
+    margin-top:12px;
     text-decoration: none;
     color: $white01;
     border-bottom: 1px solid $white01;
-    // padding: 4px;
-    // line-height: 1.5%;
     @include font-style(16px, 400, 1%, 160%);
   }
 
@@ -428,6 +435,7 @@ input[type='checkbox'] {
     border-bottom: 1px solid $white01;
     background-color: transparent;
     border: none;
+    margin-top:8px;
     color: $white01;
     text-align: center;
     width: 100%;
@@ -436,9 +444,10 @@ input[type='checkbox'] {
 
   .close-sub-menu {
     position: absolute;
-    right: 12px;
-    top: 6px;
+    right: 15px;
+    top: 12px;
     cursor: pointer;
+    font-family: 'Inter', sans-serif;
   }
 }
 
