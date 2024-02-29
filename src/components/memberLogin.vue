@@ -374,15 +374,10 @@ export default {
             },
           },
         );
-        console.log(userInfoResponse.data);
         const lineUserId = userInfoResponse.data.sub;
         const lineNickname = userInfoResponse.data.name;
         const lineUSerImgURL = userInfoResponse.data.picture;
         const lineAccountTypeID = 1;
-
-        //更新token;
-        console.log(accessToken);
-        // localStorage.setItem('token', accessToken);
         this.updateToken(accessToken);
 
         // 這邊寫回資料庫
@@ -390,20 +385,10 @@ export default {
           user_id: lineUserId,
           name: lineNickname,
           photo: lineUSerImgURL,
-          //accountTypeID: lineAccountTypeID
         });
         localStorage.setItem('token', response.data.token);
         this.updateToken(response.data.token);
-        console.log(response.data.token);
-        alert(response.data.message);
-        // this.updateToken(lineUserId)
-
-        // 沒有API先使用寫死資料
-        // this.updateUserData({
-        //     mem_name: lineNickname,
-        //     mem_validation: 1,
-        //     mem_state: 1
-        // })
+        this.updateUserData()
         this.$router.push('/');
       } catch (error) {
         console.error(error);
