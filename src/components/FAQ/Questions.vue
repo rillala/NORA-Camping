@@ -57,13 +57,14 @@ onBeforeUnmount(() => {
         border: none;
         border-radius: 10px;
         background-color: $blue-2;
+        color: $dark;
         margin: 10px auto;
         @include desktop{
             border-radius: 50px;
             margin: 30px auto;
             height: 4rem;
             width: 60%;
-        border-radius: 30px;
+            border-radius: 30px;
         }
 
         h4{
@@ -71,6 +72,7 @@ onBeforeUnmount(() => {
             text-align: start;
             font-size: 20px;
             font-weight: 500;
+            color: $dark;
             @include desktop{
                 font-size: 28px;
                 padding-left: 2rem;

@@ -48,6 +48,7 @@ button{
     border: none;
     border-radius: 10px;
     background-color: $blue-2;
+    color: $dark;
     margin: 10px auto;
     @include desktop{
             border-radius: 30px;

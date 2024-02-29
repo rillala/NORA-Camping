@@ -116,6 +116,7 @@ function changeData(qa,t){
         transform: translate(-30%,-10%);
         border: none;
         background: none;
+        color: $dark;
         &:hover{
             cursor: pointer;
         }
@@ -144,6 +145,7 @@ function changeData(qa,t){
         border: none;
         border-radius: 10px;
         background-color: $blue-2;
+        color: $dark;
         margin: 10px auto;
 
         @include desktop{

@@ -378,6 +378,7 @@ form{
             height: 3rem;
         }
         &:nth-child(1){
+            color: $dark;
             &:hover{
                 background-color: $blue-3;
                 color: $white01;
