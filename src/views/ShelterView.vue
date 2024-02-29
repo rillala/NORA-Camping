@@ -1,7 +1,7 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
-
+import contactForm from '@/components/FAQ/contactForm.vue';
 export default {
   data() {
     return {
@@ -33,6 +33,19 @@ export default {
       //取得圖片路徑
       return new URL(`../assets/image/shelter/${paths}`, import.meta.url).href;
     },
+    toContact(){
+      const nowWidth = window.innerWidth;
+      const desktop = 1024;
+      if(nowWidth >= desktop){
+        this.$router.push('/faq');
+      }else{
+        this.$router.push({ 
+        path: '/faq',
+        name:'faq',
+        query: { title: '/shelter' }
+        })
+      }
+    }
   },
 };
 </script>
@@ -341,7 +354,7 @@ export default {
               參與志工活動的客人，營位費用享有優惠！<br />
               若有興趣參與，歡迎聯絡我們！
             </p>
-            <button class="contact-btn">聯絡我們</button>
+            <button class="contact-btn" @click="toContact()">聯絡我們</button>
           </div>
         </div>
 
