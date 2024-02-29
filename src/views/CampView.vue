@@ -1,8 +1,21 @@
 <script>
 // 引入函式庫
 import axios from 'axios';
+import campCatMove from '@/components/camp/campCatMove.vue';
+import campDogMove from '@/components/camp/campDogMove.vue';
+import campBanner from '@/components/camp/campBanner.vue';
+import campBannerWord from '@/components/camp/campBannerWord.vue';
+
+import { gsap } from 'gsap';
 
 export default {
+  components:{
+    campCatMove,
+    campDogMove,
+    campBanner,
+    campBannerWord,
+  },
+
   data() {
     return {
       images: [
@@ -13,6 +26,12 @@ export default {
       ],
       currentIndex: 0,
     };
+  },
+
+  mounted() {
+    this.catMove();
+    this.dogMove();
+    this.wordMove();
   },
 
   methods: {
@@ -35,6 +54,30 @@ export default {
     toShelter() {
       this.$router.push('/shelter');
     },
+    catMove() {
+      // 取得 campCatMove 組件的 DOM 元素
+      const catElements = this.$refs.cats.$el;
+      //$el是訪問 Vue conponent 裡面元素的方法
+      // 使用 GSAP 創建動畫
+      gsap.to(catElements, {
+        x: '20%',
+        duration: 6, // 動畫時間(秒)
+      });
+    },
+    dogMove() {
+      const dogElements = this.$refs.dogs.$el;
+      gsap.to(dogElements, {
+        x: '-20%',
+        duration: 6,
+      });
+    },
+    wordMove() {
+      const wordElements = this.$refs.words.$el;
+      gsap.to(wordElements, {
+        x: '25%',
+        duration: 5,
+      });
+    },
   },
 };
 </script>
@@ -42,26 +85,30 @@ export default {
 <template>
   <div class="guide-wrap">
     <!-- Banner區塊 -->
-    <div class="guide-banner">
-      <h2 class="guide-title">營地導覽</h2>
-      <h4 class="guide-subtitle">一起看看營區的美！</h4>
+    <div class="guide-banner-wrap">
+      <div class="guide-banner">
+        <h2 class="guide-title">營地導覽</h2>
+        <h4 class="guide-subtitle">一起看看營區的美</h4>
+      </div>
     </div>
 
     <!-- 立體地圖區塊 -->
     <div id="nora-zone"></div>
     <div class="guide-map">
-      <div class="camp-map" @mouseover="showInfo" @click="goToDetails">
-        <img src="@/assets/image/campGuide/map2.png" alt="立體地圖示意圖" />
+      <!-- 旗子區塊 -->
+      <div class="guide-flags">
+        <div class="guide-flag-left">
+          <img src="@/assets/image/campGuide/left-flag-m.svg" alt="立體地圖區塊左側旗子" />
+        </div>
+        <div class="guide-flag-right">
+          <img src="@/assets/image/campGuide/right-flag-m.svg" alt="立體地圖區塊右側旗子" />
+        </div>
       </div>
-    </div>
-
-    <!-- 立體地圖下方旗子區塊 -->
-    <div class="guide-flags">
-      <div class="guide-flag-left">
-        <img src="@/assets/image/campGuide/left-flag-m.svg" alt="立體地圖區塊左側旗子" />
-      </div>
-      <div class="guide-flag-right">
-        <img src="@/assets/image/campGuide/right-flag-m.svg" alt="立體地圖區塊右側旗子" />
+      <div class="camp-map" ref="bannerTop">
+        <campBannerWord ref="words"/>
+        <campBanner class="tents"/>
+        <campCatMove class="cat-run" ref="cats" />
+        <campDogMove class="dog-run" ref="dogs" />
       </div>
     </div>
 

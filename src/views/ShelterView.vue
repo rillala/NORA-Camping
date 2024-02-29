@@ -40,10 +40,12 @@ export default {
 <template>
   <div class="shelter-wrap">
     <!-- Banner區塊 -->
-    <div class="shelter-banner">
-      <div id="nora-shelter"></div>
-      <h1 class="shelter-title">野良之家</h1>
-      <h2 class="shelter-subtitle">讓牠們不再流浪！</h2>
+    <div class="shelter-banner-wrap">
+      <div class="shelter-banner">
+        <div id="nora-shelter"></div>
+        <h2 class="shelter-title">野良之家</h2>
+        <h4 class="shelter-subtitle">讓牠們不再流浪！</h4>
+      </div>
     </div>
 
     <!-- Banner輪播區塊 -->

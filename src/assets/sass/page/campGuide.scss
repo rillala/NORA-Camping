@@ -3,46 +3,68 @@
     width: 100%;
 }
 
-.guide-banner { // Banner區塊
+.guide-banner-wrap {
+    width: 100%;
     height: 200px;
-    padding-top: 10vw;
-    margin-left: 10vw;
-    color: $blue-4;
-    @include desktop{
-        padding-top: 5vw;
+
+    @include desktop {
+        height: auto;
+        padding-bottom: 3rem;
+    }
+
+    .guide-banner { // Banner區塊
         width: 100%;
-        margin: auto;
-        max-width: 1400px;
-    }
-    h2{
+        padding-top: 10vw;
+        padding-left: 10vw;
+        color: $blue-4;
+    
         @include desktop{
-            font-size: 48px;
+            padding-top: 5vw;
+            // margin: auto;
+            // max-width: 1400px;
         }
-    }
-    h4{
-        @include desktop{
-            font-size: 32px;
+        h2{
+            @include desktop{
+                font-size: 48px;
+            }
+        }
+        h4{
+            @include desktop{
+                font-size: 32px;
+            }
         }
     }
 }
 
 .guide-map { //立體地圖區塊
     width: 100%;
+    position: relative;
+    height: 750px;
+    overflow: hidden;
     background: linear-gradient(to bottom,
-        rgba(139, 252, 239, 0.7),
-        rgba(139, 252, 239, 0.5),
-        rgba(139, 252, 239, 0));
-    .camp-map {
+        rgba(139, 252, 239, 0.4),
+        rgba(139, 252, 239, 0.3),
+        rgba(139, 252, 239, 0.2),
+        );
+
+    .cat-run {
+        position: absolute;
+        left: -60%;
+        top: 60%;
+
         @include desktop {
-            display: flex;
-            justify-content: center;
+            left: 10%;
         }
     }
-    img { //立體地圖
-        width: 100%;
-        @include desktop {
-            width: fit-content;
-        }
+
+    .dog-run {
+        position: absolute;
+        left:70%;
+        top: 40%;
+    }
+
+    .tents {
+        position: absolute;
     }
 }
 
@@ -204,6 +226,7 @@
                 border-bottom: 1px solid;
 
                 @include desktop {
+                    font-size: 28px;
                     border-bottom:none;
                 }
             }
@@ -316,7 +339,7 @@
                 }
 
                 @include tablet {
-                    width: 500px;
+                    width: 400px;
                 }
             }
 
@@ -517,7 +540,7 @@
         align-items: center;
 
         @include desktop {
-            min-height: 200px;
+            min-height: 120px;
         }
     }
 
@@ -549,7 +572,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 20px;
 
             @include desktop {
                 gap: 30px;
@@ -558,6 +581,10 @@
 
         .camp-info-title { //營地資訊標題
             color: $white01;
+
+            @include desktop {
+                font-size: 32px;
+            }
         }
 
         .camp-info { //營地資訊帳篷文字
@@ -669,7 +696,7 @@
             text-align: center;
 
             @include desktop {
-                font-size: 40px;
+                font-size: 32px;
             }
         }
 
@@ -789,7 +816,7 @@
         color: $dark ;
 
         @include desktop {
-            font-size: 40px;
+            font-size: 32px;
         }
     }
 

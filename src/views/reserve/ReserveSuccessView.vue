@@ -16,6 +16,7 @@ export default {
       totalPrice: 0,
       payTime: '',
       isPay: true,
+      dateToCamp: 0,
 
       equipmentData: {},
       campsiteData: {},
@@ -25,6 +26,8 @@ export default {
     let reserveId = sessionStorage.getItem('reserveId');
     let startDate = sessionStorage.getItem('startDate');
     let endDate = sessionStorage.getItem('endDate');
+
+    this.dateDifference(startDate);
 
     this.reserveId = reserveId;
 
@@ -77,19 +80,16 @@ export default {
     // 確認訂單完成並且儲存進資料庫之後, 刪除 sessionStorage 裡所存資料
     sessionStorage.clear();
   },
-  computed: {
-    dateToCamp() {
-      let startDate = new Date(sessionStorage.getItem('startDate'));
-      startDate.setHours(0, 0, 0, 0); // 只計算天數,先歸零
-      // 這邊currentTime測試的時候設為2024/1/1
-      let currentDate = new Date(2024, 0, 1);
-      currentDate.setHours(0, 0, 0, 0);
-
-      return Math.round((startDate - currentDate) / (1000 * 60 * 60 * 24));
-    },
-  },
-
   methods: {
+    dateDifference(date) {
+      let startDate = new Date(date);
+      let currentDate = new Date();
+
+      // 計算兩個日期之間的天數差異
+      return (this.dateToCamp = Math.round(
+        (startDate - currentDate) / (1000 * 60 * 60 * 24),
+      ));
+    },
     formatPrice(price) {
       return '$' + price.toLocaleString('en-US');
     },
