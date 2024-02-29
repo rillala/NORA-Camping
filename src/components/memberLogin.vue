@@ -390,8 +390,7 @@ export default {
         });
         localStorage.setItem('token', response.data.token);
         this.updateToken(response.data.token);
-        // this.updateUserData();
-        await this.getMemberInfo();
+        this.getMemberInfo();
         this.updateUserData(response.data);
         this.$router.push('/');
       } catch (error) {
