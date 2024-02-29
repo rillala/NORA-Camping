@@ -1,13 +1,12 @@
 <script>
 import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
-import memberLogin from '@/components/memberLogin.vue';
 import { mapState, mapActions } from 'pinia';
+import memberLogin from '@/components/memberLogin.vue';
 import userStore from '@/stores/user';
 import { useCartStore } from '@/stores/cartStore';
 import apiInstance from '@/plugins/auth';
 import { getDBImage } from '@/assets/js/common';
-
 
 export default {
   components: {
@@ -58,7 +57,7 @@ export default {
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(useCartStore, ['cartList']),
-    ...mapState(userStore, ['token', 'userData', 'userProfileImage', 'updateUserData', 'memberInfo']),
+    ...mapState(userStore, ['token', 'memberInfo']),
     userProfileImageStyle() {
       return this.userProfileImage
         ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
@@ -66,18 +65,20 @@ export default {
     },
 
     isLogin() {
-      return !!this.token;
+      return this.token ? true : false;
     },
   },
-  // mounted() {
-  //   this.updateUserData();
-  // },
+  mounted() {
+    // this.updateUserData();
+    this.checkLogin();
+  },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
     ...mapActions(userStore, [
       'updateToken',
       'updateUserData',
       'logout',
+      'checkLogin',
     ]),
     ...mapActions(useCartStore, ['getCart']),
     handleLogout() {
@@ -124,11 +125,23 @@ export default {
 
 <template>
   <section>
-    <input type="checkbox" name="hambuger-mobile" id="hambuger-mobile" class="ham-check" v-model="isMenuOpen"
-      ref="hamburgerMobile" />
+    <input
+      type="checkbox"
+      name="hambuger-mobile"
+      id="hambuger-mobile"
+      class="ham-check"
+      v-model="isMenuOpen"
+      ref="hamburgerMobile"
+    />
 
-    <input type="checkbox" name="hambuger-tablet" id="hambuger-tablet" class="ham-check" v-model="isMenuOpen"
-      ref="hamburgerTablet" />
+    <input
+      type="checkbox"
+      name="hambuger-tablet"
+      id="hambuger-tablet"
+      class="ham-check"
+      v-model="isMenuOpen"
+      ref="hamburgerTablet"
+    />
 
     <nav>
       <div id="nav-wrap">
@@ -144,44 +157,80 @@ export default {
 
         <!--導覽列右側-->
         <div id="nav-box">
-          <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn-desktop" @click="closeHam"><img
-              :src="getImageUrl('headerFooter/reservation-mobile.png')" :alt="reserveBtn" />
+          <RouterLink
+            :to="reserveBtn.path"
+            class="bg-blue-3"
+            id="reserve-btn-desktop"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/reservation-mobile.png')"
+              :alt="reserveBtn"
+            />
             <p>
               {{ reserveBtn.name }}
             </p>
           </RouterLink>
 
-          <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn-desktop" @click="closeHam"><img
-              :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
+          <RouterLink
+            :to="shopBtn.path"
+            class="bg-blue-3"
+            id="shop-btn-desktop"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/shop-mobile.png')"
+              :alt="shopBtn"
+            />
             <p>{{ shopBtn.name }}</p>
-
           </RouterLink>
 
           <!--會員登入-->
-          <button id="member-login" @click="
-            memberCenter();
-          closeHam();
-          ">
-            <img v-if="memberInfo.photo" class="photo" :src="getDBImage(memberInfo.photo)" />
+          <button
+            id="member-login"
+            @click="
+              memberCenter();
+              closeHam();
+            "
+          >
+            <img
+              v-if="memberInfo.photo"
+              class="photo"
+              :src="getDBImage(memberInfo.photo)"
+            />
 
-            <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
-            <div class="sub-menu-container" v-if="isMemberSubOpen">
-              <ul>
-                <div class="close-sub-menu" @click.stop="closeSubmenu">X</div>
-                <li>
-                  <RouterLink class="sub-menu" to="/membercenter" @click.stop="closeSubmenu">會員中心</RouterLink>
-                </li>
-                <li>
-                  <RouterLink class="sub-menu" to="/membercampsiteorders" @click.stop="closeSubmenu">商品訂單</RouterLink>
-                </li>
-                <li>
-                  <RouterLink class="sub-menu" to="/memberorderhistory" @click.stop="closeSubmenu">營地訂單</RouterLink>
-                </li>
-                <button class="logout" @click.stop="handleLogout">登出</button>
-              </ul>
-            </div>
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
+
+          <!--如果登入了就可以 @click展示子選單, 而不是跳轉開啟燈箱-->
+          <div class="sub-menu-container" v-if="isMemberSubOpen">
+            <ul>
+              <div class="close-sub-menu" @click.stop="closeSubmenu">X</div>
+              <li>
+                <RouterLink
+                  class="sub-menu"
+                  to="/membercenter"
+                  @click.stop="closeSubmenu"
+                  >會員中心</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  class="sub-menu"
+                  to="/membercampsiteorders"
+                  @click.stop="closeSubmenu"
+                  >商品訂單</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  class="sub-menu"
+                  to="/memberorderhistory"
+                  @click.stop="closeSubmenu"
+                  >營地訂單</RouterLink
+                >
+              </li>
+              <button class="logout" @click.stop="handleLogout">登出</button>
+            </ul>
+          </div>
 
           <!--購物車-->
           <RouterLink to="/shopCar" id="shop-car" @click="closeHam">
@@ -202,16 +251,30 @@ export default {
 
       <ul id="menu-list">
         <li>
-          <RouterLink :to="reserveBtn.path" class="bg-blue-3" id="reserve-btn" @click="closeHam"><img
-              :src="getImageUrl('headerFooter/reservation-mobile.png')" :alt="reserveBtn" />
+          <RouterLink
+            :to="reserveBtn.path"
+            class="bg-blue-3"
+            id="reserve-btn"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/reservation-mobile.png')"
+              :alt="reserveBtn"
+            />
             <p>
               {{ reserveBtn.name }}
             </p>
           </RouterLink>
         </li>
         <li>
-          <RouterLink :to="shopBtn.path" class="bg-blue-3" id="shop-btn" @click="closeHam"><img
-              :src="getImageUrl('headerFooter/shop-mobile.png')" :alt="shopBtn" />
+          <RouterLink
+            :to="shopBtn.path"
+            class="bg-blue-3"
+            id="shop-btn"
+            @click="closeHam"
+            ><img
+              :src="getImageUrl('headerFooter/shop-mobile.png')"
+              :alt="shopBtn"
+            />
             <p>{{ shopBtn.name }}</p>
           </RouterLink>
         </li>
@@ -227,11 +290,9 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
-
 .photo {
   border-radius: $radius;
   height: 55px;
   width: 55px;
-
 }
 </style>

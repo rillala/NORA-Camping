@@ -23,16 +23,16 @@ export default defineStore('userStore', {
     //   localStorage.setItem('userProfileImage', imageUrl);
     //   console.log('Profile image updated:', imageUrl);
     // },
-    // checkLogin() {
-    //   const storageToken = localStorage.getItem('token');
-    //   if (this.token) {
-    //     return this.token;
-    //   } else if (storageToken) {
-    //     return (this.token = storageToken);
-    //   } else {
-    //     return '';
-    //   }
-    // },
+    checkLogin() {
+      const storageToken = localStorage.getItem('token');
+      if (this.token) {
+        return this.token;
+      } else if (storageToken) {
+        return (this.token = storageToken);
+      } else {
+        return '';
+      }
+    },
     updateToken(payload) {
       if (payload) {
         this.token = payload;
@@ -43,46 +43,40 @@ export default defineStore('userStore', {
       }
     },
     updateUserData(data) {
-        this.memberInfo = {
-          member_id: data.member_id,
-          name: data.name,
-          phone: data.phone,
-          email: data.email,
-          address: data.address,
-          photo: data.photo,
-        }
-        localStorage.setItem('memberInfo', JSON.stringify(this.memberInfo))
+      this.memberInfo = {
+        member_id: data.member_id,
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        address: data.address,
+        photo: data.photo,
+      };
+      localStorage.setItem('memberInfo', JSON.stringify(this.memberInfo));
     },
     logout() {
-      // 從本地存儲中獲取token
-      const token = localStorage.getItem('token'); // 使用 getItem 方法和 'token' 鍵
-      console.log(token);
       // 確保token存在
-      if (!token) {
+      if (!localStorage.getItem('token')) {
         console.error('Logout error: No token found');
         return;
       }
+
+      const form = new FormData();
+      form.append('data', this.memberInfo.member_id);
+
       apiInstance
-        .post(
-          'logout.php',
-          {},
-          {headers: {Authorization: `Bearer ${token}`,},
-          },
-        )
+        .post('logout.php', form)
         .then(response => {
           // 檢查後端是否返回登出成功的訊息
           if (!response.data.error) {
             this.token = '';
-            localStorage.removeItem('token');
             this.isMemberSubOpen = false;
+            this.memberInfo = {};
+            localStorage.removeItem('token');
+            localStorage.removeItem('memberInfo');
             sessionStorage.clear();
-            // this.isLoginOpen = false;
-            // this.memberInfo = {}; 
-            this.updateUserData = '';
             // 登出成功，重定向到首頁
-            router.push({ name: 'home' });
             alert('已登出');
-            
+            router.push({ name: 'home' });
           } else {
             // 如果後端返回失敗訊息，處理這些訊息
             console.error('Logout failed:', response.data.message);
@@ -105,7 +99,6 @@ export default defineStore('userStore', {
           headers: { Authorization: `Bearer ${token}` },
         });
         this.updateUserData(response.data);
-
       } catch (error) {
         console.error('Error fetching member info:', error);
       }

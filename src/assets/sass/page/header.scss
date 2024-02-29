@@ -73,7 +73,7 @@ nav {
 
 // 會員登入
 #member-login {
-  // position: relative;
+  position: relative;
   width: 50px;
   height: 50px;
   border: 0;
@@ -82,6 +82,16 @@ nav {
   background-image: url(@/assets/image/headerFooter/member-mobile.png);
   background-size: contain;
   background-repeat: no-repeat;
+
+  .photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    max-height: 100%;
+    background: $white01;
+  }
 
   @include tablet {
     background-image: url(@/assets/image/headerFooter/member-tablet.png);
@@ -398,24 +408,19 @@ input[type='checkbox'] {
   }
 
   @include desktop {
-    display: block;
-    position: absolute;
-    width: 120px;
-    background-color: $blue-4;
-    color: $white01;
-    // height: 120px;
-    top: 80px;
     padding: 15px 6px 10px;
     border-radius: 10px;
   }
   .sub-menu {
+    display: block;
+    text-align: center;
     position: relative;
-    margin: 10px 0;
+    margin: 0;
     text-decoration: none;
     color: $white01;
     border-bottom: 1px solid $white01;
-    padding: 4px;
-    line-height: 1.5%;
+    // padding: 4px;
+    // line-height: 1.5%;
     @include font-style(16px, 400, 1%, 160%);
   }
 
@@ -424,6 +429,8 @@ input[type='checkbox'] {
     background-color: transparent;
     border: none;
     color: $white01;
+    text-align: center;
+    width: 100%;
     @include font-style(16px, 400, 1%, 160%);
   }
 
@@ -431,6 +438,7 @@ input[type='checkbox'] {
     position: absolute;
     right: 12px;
     top: 6px;
+    cursor: pointer;
   }
 }
 
