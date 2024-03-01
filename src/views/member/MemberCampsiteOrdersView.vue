@@ -30,7 +30,7 @@
       <thead>
         <tr>
           <th class="table-title">訂單編號</th>
-          <th class="table-title">入營日期</th>
+          <th class="table-title responsive-cell-01">入營日期</th>
           <th class="table-title responsive-cell-01">拔營日期</th>
           <th class="table-title responsive-cell-01" v-if="!isSmallScreen">
             訂單金額
@@ -46,8 +46,8 @@
           :key="order.orderInfo.reservation_id"
         >
           <td class="table-content">{{ order.orderInfo.reservation_id }}</td>
-          <td class="table-content">{{ order.orderInfo.checkin_date }}</td>
-          <td class="table-content">{{ order.orderInfo.checkout_date }}</td>
+          <td class="table-content responsive-cell-01">{{ order.orderInfo.checkin_date }}</td>
+          <td class="table-content responsive-cell-01">{{ order.orderInfo.checkout_date }}</td>
           <td class="table-content responsive-cell-01" v-if="!isSmallScreen">
             {{ order.orderInfo.total_price }}
           </td>
@@ -81,7 +81,9 @@
   <!-- 營地明細燈箱，使用 v-if 控制顯示 -->
   <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
     <div class="modal-content">
-      <h3 class="content-title">營地明細</h3>
+      <div class="content-title-box">
+        <h3 class="content-title">營地明細</h3>
+      </div>
       <!-- 顯示選中訂單明細 -->
       <table>
         <thead>
@@ -107,7 +109,9 @@
           </tr>
         </tbody>
         <thead>
-          <h5 class="detail-title">營位預定明細</h5>
+          <div class="content-title-box">
+            <h5 class="detail-title">營位預定明細</h5>
+          </div>
           <tr>
             <th>營區</th>
             <th>營位種類</th>
@@ -123,7 +127,9 @@
           </tr>
         </tbody>
         <thead v-if="selectedEquip.length > 0">
-          <h5 class="detail-title">設備預定明細</h5>
+          <div class="content-title-box">
+            <h5 class="detail-title">設備預定明細</h5>
+          </div>
           <tr>
             <th>品項編號</th>
             <th>品項名稱</th>
@@ -374,6 +380,7 @@ nav ul {
 
   .btn-cancel {
     background-color: $light-gray;
+    color:$dark;
     border: none;
     padding: 6px 10px;
     border-radius: 50px;
@@ -405,7 +412,14 @@ nav ul {
   border-radius: 5px; /* 圓角邊框 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影 */
   width: 50%; /* 彈窗寬度 */
-  max-width: 640px; /* 最大寬度 */
+  // max-width: 640px; /* 最大寬度 */
+  width: 85%; /* 彈窗寬度 */
+  @include tablet {
+    width: 50%; /* 彈窗寬度 */
+  }
+  @include desktop {
+    width: 50%; /* 彈窗寬度 */
+  }
 }
 
 table {
@@ -416,7 +430,7 @@ table {
 th,
 td {
   text-align: left;
-  padding: 10px; /* 表格內填充 */
+  padding: 5px; /* 表格內填充 */
   border-bottom: 1px solid #ddd; /* 表格行之間的分割線 */
 }
 
@@ -447,13 +461,22 @@ button:hover {
   font-size: 16px;
 }
 .content-title {
-  text-align: center;
+  // text-align: center;
   margin-bottom: 10px;
 }
 
 .detail-title {
+  text-align: center;
   padding: 10px;
   font-size: 18px;
   font-weight: bold;
+  white-space: nowrap;
+}
+
+.content-title-box{
+  display: flex;
+  justify-content: center; 
+  align-items:center;
+  margin:10px;
 }
 </style>
