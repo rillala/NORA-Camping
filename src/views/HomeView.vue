@@ -367,7 +367,7 @@ export default {
         <h3>野良露營 X 最新消息</h3>
         <div class="search-input">
           <input class="Search-bar" type="text" placeholder="搜尋關鍵字" v-model.trim="search" @input="handleSearch" />
-          <span v-if="search !== ''">正在搜尋：</span>{{ search }}
+          <span v-if="search !== ''">正在搜尋：{{ search }}</span>
         </div>
       </div>
       <!-- <div class="News-viewport">
