@@ -301,6 +301,10 @@ export default {
       deep: true,
     },
   },
+  beforeUnmount() {
+    //卸載時消除計時器
+    clearInterval(this.timer);
+  },
 };
 </script>
 
