@@ -226,6 +226,7 @@ export default {
       },
       calendarAttributes: [],
       disabledDates: [],
+      calendarKey: 0,
 
       // 資料庫資料
       remainList: [],
@@ -468,6 +469,13 @@ export default {
         catButton.classList.remove('chosen-zone');
         dogButton.classList.add('chosen-zone');
       }
+
+      // 清空選取
+      this.range.start = '';
+      this.range.end = '';
+      this.startDate = '';
+      this.endDate = '';
+      this.calendarKey++;
     },
     choseCatZone() {
       this.selectSiteList = this.catSiteList;
@@ -692,6 +700,7 @@ export default {
     <!--預約時間日曆-->
     <div class="calendar">
       <DatePicker
+        :key="calendarKey"
         id="v-calendar"
         v-model.range="range"
         mode="date"
