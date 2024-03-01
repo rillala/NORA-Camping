@@ -309,7 +309,7 @@
 
     h2 {
         color: $white01;
-        padding-top: 60px;
+        padding: 60px 0px;
     }
 }
 
@@ -331,8 +331,8 @@
 
 #left {
     display: none;
-    position: relative;
-    top: 285px;
+    position: absolute;
+    top: 351px;
     z-index: 1;
     left: 0%;
     cursor: pointer;
@@ -346,9 +346,9 @@
 
 #right {
     display: none;
-    position: relative;
-    top: 220px;
-    right: -95%;
+    position: absolute;
+    top: 350px;
+    right: 1%;
     z-index: 1;
     cursor: pointer;
     border: none;

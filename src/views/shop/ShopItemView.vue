@@ -170,7 +170,7 @@ export default {
           <div class="shop-intro-title">
             <h4>商品詳情</h4>
           </div>
-          <p class="description">{{ responseData.description }}</p>
+          <p class="description preserve-format">{{ responseData.description }}</p>
         </section>
       </div>
     </div>
@@ -182,6 +182,9 @@ export default {
 //banner 字體
 @import url("https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap");
 
+.preserve-format {
+  white-space: pre-wrap;
+}
 svg {
   font-family: "Spicy Rice", sans-serif;
   width: 100%;
@@ -404,7 +407,7 @@ svg text {
 
         }
         .description{
-          line-height: 180%;
+          line-height: 140%;
         }
       }
     }
