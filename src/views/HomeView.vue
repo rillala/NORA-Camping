@@ -126,9 +126,9 @@ export default {
       const year = now.getFullYear();
       const month = (now.getMonth() + 1).toString();
       const day = now.getDate().toString();
-      const hour = now.getHours().toString();
-      const minute = now.getMinutes().toString();
-      const second = now.getSeconds().toString();
+      const hour = now.getHours().toString().padStart(2, '0');
+      const minute = now.getMinutes().toString().padStart(2, '0');
+      const second = now.getSeconds().toString().padStart(2, '0');
 
       this.currentTime = `${year}年${month}月${day}日 ${hour}:${minute}:${second}`;
     },
@@ -381,8 +381,8 @@ export default {
 
       <div class="News-viewport">
         <newsArticle class="News-article" v-for="(setArticle, index) in newsList" :key="index" :title="setArticle.title"
-          :publish_date="setArticle.publish_date" :content="setArticle.content" :img1="getDBImage(setArticle.img1)"
-          :img2="getDBImage(setArticle.img2)" :img3="getDBImage(setArticle.img3)" v-model:large="setArticle.large" />
+          :publish_date="setArticle.publish_date" :content="setArticle.content" :img1="setArticle.img1"
+          :img2="setArticle.img2" :img3="setArticle.img3" v-model:large="setArticle.large" />
       </div>
     </div>
   </section>

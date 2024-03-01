@@ -109,16 +109,14 @@ export default {
                     class="small" v-if="this.small3.src != ''">
             </div>
         </div> -->
-        <div class="News-img" v-if="this.img1 != getDBImage(null)">
+        <div class="News-img" v-if="img1">
             <div class="large-images">
-                <img :src="large" :alt="large" id="large" />
+                <img :src="getDBImage(large)" :alt="large" id="large" />
             </div>
             <div class="images-row">
-                <img :src="img1" :alt="img1.alt" @click="changeLargeImage(img1)" class="small">
-                <img :src="img2" :alt="img2.alt" @click="changeLargeImage(img2)" class="small"
-                    v-if="img2 != getDBImage(null)">
-                <img :src="img3" :alt="img3.alt" @click="changeLargeImage(img3)" class="small"
-                    v-if="img3 != getDBImage(null)">
+                <img :src="getDBImage(img1)" :alt="img1.alt" @click="changeLargeImage(img1)" class="small">
+                <img :src="getDBImage(img2)" :alt="img2.alt" @click="changeLargeImage(img2)" class="small" v-if="img2">
+                <img :src="getDBImage(img3)" :alt="img3.alt" @click="changeLargeImage(img3)" class="small" v-if="img3">
             </div>
         </div>
         <!-- <div class="News-img" v-show="smalls.length > 0">
