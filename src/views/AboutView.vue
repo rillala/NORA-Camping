@@ -94,10 +94,7 @@ function toSheleter(){
     <!-- </router-link> -->
 </div>
 
-<div class="tags">
-    <hr>
-    <hr>
-</div>
+
 <!--營業時間-->
 <div class="business-hours-wrap accordion" >
     <div id="nora-intro"></div>

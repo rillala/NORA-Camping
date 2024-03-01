@@ -27,6 +27,8 @@ export default {
   },
   data() {
     return {
+      //時鐘
+      currentTime: '',
       //天氣和溫度
       weather: '',
       airTemperature: '',
@@ -99,6 +101,9 @@ export default {
     };
   },
   mounted() {
+    this.updateTime();
+    // 每秒更新一次時間
+    this.timer = setInterval(this.updateTime, 1000);
     //觸發天氣API
     this.getWeather();
     //觸發章節觀察
@@ -115,6 +120,18 @@ export default {
     },
   },
   methods: {
+    //時鐘
+    updateTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString();
+      const day = now.getDate().toString();
+      const hour = now.getHours().toString();
+      const minute = now.getMinutes().toString();
+      const second = now.getSeconds().toString();
+
+      this.currentTime = `${year}年${month}月${day}日 ${hour}:${minute}:${second}`;
+    },
     //串接氣象API取得資料
     async getWeather() {
       try {
@@ -307,23 +324,13 @@ export default {
 
   <section class="Knowing-nora" ref="knowingNora">
     <div class="KN-mountain-background">
-      <img
-        src="@/assets/image/homeView/mountainBgL.png"
-        class="Mountain-left"
-      />
-      <img
-        src="@/assets/image/homeView/mountainBgR.png"
-        class="Mountain-right"
-      />
+      <img src="@/assets/image/homeView/mountainBgL.png" class="Mountain-left" />
+      <img src="@/assets/image/homeView/mountainBgR.png" class="Mountain-right" />
     </div>
     <div class="KN-content">
       <div class="KN-text">
         <h3>認識野良</h3>
-        <img
-          class="paw1"
-          src="@/assets/image/campGuide/paw.svg"
-          alt="動物腳掌1"
-        />
+        <img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1" />
         <p>
           "野良" 這一詞在日文中指流浪動物，
           我們將這一概念融入露營體驗中，創造出一個充滿活力和溫馨的環境。
@@ -339,7 +346,10 @@ export default {
       </div>
     </div>
     <div class="KN-weather-box">
-      <span>營地目前天氣</span>
+      <div class="time-box">
+        <span>營地目前天氣</span>
+        <p>{{ currentTime }}</p>
+      </div>
       <img :src="getWeatherImage()" :alt="weather" v-show="weather !== ''" />
       <!-- weather不是空字串 -->
       <div id="Weather">{{ weather }}</div>
@@ -352,13 +362,7 @@ export default {
       <div class="News-Title-search">
         <h3>野良露營 X 最新消息</h3>
         <div class="search-input">
-          <input
-            class="Search-bar"
-            type="text"
-            placeholder="搜尋關鍵字"
-            v-model.trim="search"
-            @input="handleSearch"
-          />
+          <input class="Search-bar" type="text" placeholder="搜尋關鍵字" v-model.trim="search" @input="handleSearch" />
           <span v-if="search !== ''">正在搜尋：</span>{{ search }}
         </div>
       </div>
@@ -372,18 +376,9 @@ export default {
       </div> -->
 
       <div class="News-viewport">
-        <newsArticle
-          class="News-article"
-          v-for="(setArticle, index) in newsList"
-          :key="index"
-          :title="setArticle.title"
-          :publish_date="setArticle.publish_date"
-          :content="setArticle.content"
-          :img1="getDBImage(setArticle.img1)"
-          :img2="getDBImage(setArticle.img2)"
-          :img3="getDBImage(setArticle.img3)"
-          v-model:large="setArticle.large"
-        />
+        <newsArticle class="News-article" v-for="(setArticle, index) in newsList" :key="index" :title="setArticle.title"
+          :publish_date="setArticle.publish_date" :content="setArticle.content" :img1="getDBImage(setArticle.img1)"
+          :img2="getDBImage(setArticle.img2)" :img3="getDBImage(setArticle.img3)" v-model:large="setArticle.large" />
       </div>
     </div>
   </section>
@@ -420,11 +415,7 @@ export default {
     <div class="Stray-home-content">
       <div class="SH-text">
         <h2>野良之家</h2>
-        <img
-          class="paw1"
-          src="@/assets/image/campGuide/paw.svg"
-          alt="動物腳掌1"
-        />
+        <img class="paw1" src="@/assets/image/campGuide/paw.svg" alt="動物腳掌1" />
         <p>
           野良露營也是流浪動物的中途之家。 我們致力於照顧、
           庇護和尋找新的家園給需要幫助的流浪動物 我們提供免費的志工活動，

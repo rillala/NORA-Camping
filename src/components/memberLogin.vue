@@ -149,16 +149,22 @@ export default {
       passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        name: '陳穎穎',
-        email: 'sandra401120422@gmail.com',
-        psw: '123456',
-        pswConfirmation: '123456',
+        // name: '陳穎穎',
+        // email: 'sandra401120422@gmail.com',
+        // psw: '123456',
+        // pswConfirmation: '123456',
+        name: '',
+        email: '',
+        psw: '',
+        pswConfirmation: '', 
         receiveNews: true,
         agreeTerms: true,
       },
       user_enter: {
-        email: 'coconut5529@yahoo.com.tw',
-        psw: '123456',
+        // email: 'coconut5529@yahoo.com.tw',
+        // psw: '123456',
+        email: '',
+        psw: '',
       },
       showPrivacyPolicy: false,
       channel_id: '2003443299',
@@ -213,9 +219,7 @@ export default {
           headers: { Authorization: `Bearer ${token}` },
         });
         // 更新 Pinia store 裡的使用者資料
-        // console.log(response.data);
         this.updateUserData(response.data);
-        // 調用 Pinia action 並傳入響應數據
       } catch (error) {
         console.error('Error fetching member info:', error);
         // 處理錯誤，可能需要在界面上顯示錯誤資訊
@@ -244,11 +248,9 @@ export default {
             // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
           } else if (res && res.data && res.data.error === true) {
             // 如果後端返回了錯誤，則處理登入失敗的情況
-
             alert(res.data.message);
           } else {
-            //   如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
-            console.log('Unexpected format:', res.data);
+            // 如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
             alert('登入失敗：無法解析伺服器響應。');
           }
         })
@@ -374,36 +376,22 @@ export default {
             },
           },
         );
-        console.log(userInfoResponse.data);
         const lineUserId = userInfoResponse.data.sub;
         const lineNickname = userInfoResponse.data.name;
         const lineUSerImgURL = userInfoResponse.data.picture;
         const lineAccountTypeID = 1;
-
-        //更新token;
-        console.log(accessToken);
-        // localStorage.setItem('token', accessToken);
-        this.updateToken(accessToken);
+        // this.updateToken(accessToken);
 
         // 這邊寫回資料庫
-        const response = await apiInstance.post(`/lineLogin.php`, {
+        const response = await apiInstance.post(`/lineLoginNew.php`, {
           user_id: lineUserId,
           name: lineNickname,
           photo: lineUSerImgURL,
-          //accountTypeID: lineAccountTypeID
         });
         localStorage.setItem('token', response.data.token);
         this.updateToken(response.data.token);
-        console.log(response.data.token);
-        alert(response.data.message);
-        // this.updateToken(lineUserId)
-
-        // 沒有API先使用寫死資料
-        // this.updateUserData({
-        //     mem_name: lineNickname,
-        //     mem_validation: 1,
-        //     mem_state: 1
-        // })
+        this.getMemberInfo();
+        this.updateUserData(response.data);
         this.$router.push('/');
       } catch (error) {
         console.error(error);
@@ -464,7 +452,7 @@ export default {
   background-color: transparent;
   border: none;
   text-decoration: none;
-  font-size: 32px;
+  font-size: 26px;
   padding: 0px 10px;
   margin: 10px 15px 30px;
   white-space: nowrap;
@@ -486,7 +474,7 @@ p {
 
 input {
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   border: none;
   border-bottom: 1px solid #000;
   outline: none;
@@ -521,7 +509,7 @@ input {
 .main-btn {
   background-color: $blue-3;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 50px;
   border: none;
   padding: 10px 25px;
@@ -532,7 +520,7 @@ input {
 .sub-btn {
   background-color: $blue-2;
   color: #000;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 50px;
   border: none;
   padding: 10px 25px;

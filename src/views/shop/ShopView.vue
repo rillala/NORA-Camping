@@ -18,12 +18,11 @@ export default {
       sourceData: [],
       search: '',
       groupOptions: [
-        '選擇類別',
         'NORA文青生活',
         'NORA品牌服飾',
         'NORA營地用品',
       ],
-      priceOptions: ['選擇排序', '價格高到低', '價格低到高'],
+      priceOptions: ['價格高到低', '價格低到高'],
       currentPage: 1, // 當前頁碼
       itemsPerPage: 24, // 每頁顯示的商品數量
     };

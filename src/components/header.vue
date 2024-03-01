@@ -70,7 +70,7 @@ export default {
   },
   mounted() {
     // this.updateUserData();
-    this.checkLogin();
+    // this.login();
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
@@ -215,7 +215,7 @@ export default {
               <li>
                 <RouterLink
                   class="sub-menu"
-                  to="/membercampsiteorders"
+                  to="/memberorderhistory"
                   @click.stop="closeSubmenu"
                   >商品訂單</RouterLink
                 >
@@ -223,7 +223,7 @@ export default {
               <li>
                 <RouterLink
                   class="sub-menu"
-                  to="/memberorderhistory"
+                  to="/membercampsiteorders"
                   @click.stop="closeSubmenu"
                   >營地訂單</RouterLink
                 >

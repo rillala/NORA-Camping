@@ -290,8 +290,13 @@ nav ul {
   padding: 20px;
   border-radius: 5px; /* 圓角邊框 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影 */
-  width: 50%; /* 彈窗寬度 */
-  max-width: 640px; /* 最大寬度 */
+  width: 80%; /* 彈窗寬度 */
+  @include tablet {
+    width: 50%; /* 彈窗寬度 */
+  }
+  @include desktop {
+    width: 50%; /* 彈窗寬度 */
+  }
 }
 
 table {
