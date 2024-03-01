@@ -504,8 +504,16 @@ export default {
       apiInstance
         .get('generateRemainSite.php')
         .then(response => {
-          // console.log(response.data.all);
-          this.remainList = response.data.all;
+          console.log('剩餘營位數量');
+          console.log(response.data.all);
+          this.remainList = response.data.all.map(item => {
+            // 假設item.remain是需要被轉換成數值的屬性
+            // 請根據實際情況調整屬性名稱
+            return {
+              ...item,
+              remain: parseInt(item.remain, 10), // 或者parseFloat(item.remain)如果這個數是浮點數
+            };
+          });
           if (this.startDate) {
             this.getSelectedSitesRemain();
           }
@@ -541,21 +549,28 @@ export default {
 
     // VCalender 相關 --------------------
     changeToCalendarAttr(remainData) {
+      this.calendarAttributes = [];
+
       // 計算每個日期的房間總數
-      const roomCounts = remainData.map(item => {
-        const date = item.date; // 保持日期值
+      let roomCountsOriginal = remainData.map(item => {
+        let date = item.date; // 保持日期值
         // 初始化房间总数为 0
         let rooms = 0;
         // 遍历对象中的每个键
         Object.keys(item).forEach(key => {
           if (key !== 'date') {
             // 排除日期键
-            const roomNumber = parseInt(key, 10); // 将键转换为数字
-            const roomCount = parseInt(item[key], 10); // 将房间数转换为数字
+            let roomCount = parseInt(item[key], 10); // 将房间数转换为数字
             // 当 chosenZone 为 'cat' 且键值小于 4 时，累加房间数
-            if (this.chosenZone === 'cat' && roomNumber < 4) {
+            if (
+              this.chosenZone === 'cat' &&
+              (key == '1' || key == '2' || key == '3')
+            ) {
               rooms += roomCount;
-            } else if (this.chosenZone === 'dog' && roomNumber > 3) {
+            } else if (
+              this.chosenZone === 'dog' &&
+              (key == '4' || key == '5' || key == '6')
+            ) {
               rooms += roomCount;
             }
           }
@@ -563,8 +578,22 @@ export default {
         // 返回新的对象，包含累加后的房间总数和日期
         return { date, rooms };
       });
-      console.log('room data');
-      console.log(roomCounts);
+
+      let roomCounts = roomCountsOriginal.filter(item => {
+        // 創建一個新的Date物件代表當前日期和時間
+        const currentDate = new Date();
+
+        // 將當前日期的時間設置為0，這樣只比較日期部分
+        currentDate.setHours(0, 0, 0, 0);
+
+        // 將item.date字符串轉換成Date物件
+        const itemDate = new Date(item.date);
+
+        // 比較，如果item的日期小於當前日期則不包含這個item
+        return itemDate >= currentDate;
+      });
+
+      console.log('每個日期的房間總數', roomCounts);
 
       // 禁用的日期
       this.disabledDates = roomCounts
@@ -573,14 +602,13 @@ export default {
 
       // red dot 的顯示日期-->剩餘數量 < 5
       const emptySiteDays = roomCounts
-        .filter(item => item.rooms < 5)
+        .filter(item => item.rooms < 5 && item.rooms != 0)
         .map(item => ({
           key: 'emptySiteDay',
           dot: 'red',
           dates: item.date,
         }));
-      console.log('這是沒房間的');
-      console.log(emptySiteDays);
+      console.log('這是數量小於五的', emptySiteDays);
 
       // green dot 的顯示日期-->剩餘數量> 15
       const lotSitesDays = roomCounts
@@ -590,8 +618,7 @@ export default {
           dot: 'green',
           dates: item.date,
         }));
-      console.log('這是很多房間的');
-      console.log(lotSitesDays);
+      console.log('這是很多房間的', lotSitesDays);
 
       this.calendarAttributes = [...emptySiteDays, ...lotSitesDays];
     },
