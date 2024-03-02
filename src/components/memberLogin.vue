@@ -139,7 +139,6 @@ import qs from 'qs';
 import { mapActions } from 'pinia';
 import userStore from '@/stores/user';
 import apiInstance from '@/plugins/auth';
-import { memberRedirect } from '@/assets/js/common';
 
 export default {
   props: { isOpen: Boolean },
@@ -156,7 +155,7 @@ export default {
         name: '',
         email: '',
         psw: '',
-        pswConfirmation: '', 
+        pswConfirmation: '',
         receiveNews: true,
         agreeTerms: true,
       },
@@ -168,7 +167,8 @@ export default {
       },
       showPrivacyPolicy: false,
       channel_id: '2003443299',
-      redirect_uri: this.memberRedirect(),
+      // redirect_uri: 'https://tibamef2e.com/chd104/g1/front',
+      redirect_uri: 'http://localhost:5173',
       client_secret: '6944f7d50fb550267d1488e66d7f4d90',
     };
   },
