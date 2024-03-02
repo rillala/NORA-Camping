@@ -192,11 +192,12 @@ export default {
     // 安全碼:123
 
     checkCreditCard() {
-      let cardNumber = this.creditCardParts.join('');
+      // let cardNumber = this.creditCardParts.join('');
+
       if (
-        cardNumber === '1111222233334444' &&
-        this.expInput === '12/34' &&
-        this.secureCode === '123'
+        confirm(
+          '[測試模式]: 按下"是"前往付款成功頁面 || 按下"否"前往付款失敗頁面 ',
+        )
       ) {
         this.addReserveToDb();
         this.$router.push('/reservesuccess');
@@ -261,7 +262,12 @@ export default {
           </div>
           <div class="box p">
             <div class="item">手機</div>
-            <input type="tel" class="input" v-model="reserveData.phone" />
+            <input
+              type="tel"
+              class="input"
+              maxlength="10"
+              v-model="reserveData.phone"
+            />
           </div>
           <div class="box p">
             <div class="item">email</div>

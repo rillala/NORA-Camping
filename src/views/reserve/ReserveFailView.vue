@@ -39,7 +39,7 @@ export default {
       </p>
     </div>
 
-    <nextPageBtn :text="`回到確認預定畫面`" :path="`/reserveconfirm`" />
+    <nextPageBtn :text="`重新付款`" :path="`/reserveconfirm`" />
   </div>
 </template>
 
