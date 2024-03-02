@@ -168,6 +168,7 @@ export default {
           );
         case this.weather.includes('陰'):
         case this.weather.includes('靄'):
+        case this.weather.includes('霧'):
           return (
             this.getWeatherImageUrl(this.weatherMark[2]) ||
             this.getWeatherImageUrl(this.weatherMark[0])
