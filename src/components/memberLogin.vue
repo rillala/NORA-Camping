@@ -417,7 +417,7 @@ export default {
         // this.updateToken(accessToken);
         
         // 這邊寫回資料庫
-        const response = await apiInstance.post(`/lineLogin.php`, {
+        const response = await apiInstance.post(`/lineLoginNew.php`, {
           user_id: lineUserId,
           name: lineNickname,
           photo: lineUSerImgURL,
