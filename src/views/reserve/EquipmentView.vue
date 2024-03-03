@@ -134,8 +134,8 @@ export default {
         // 遍歷解析後的陣列，根據 id 分配到 setList 或 singleList
         equipmentDataArray.forEach(item => {
           let matchedItem =
-            this.setList.find(setItem => setItem.id === item.id) ||
-            this.singleList.find(singleItem => singleItem.id === item.id);
+            this.setList.find(setItem => setItem.id == item.id) ||
+            this.singleList.find(singleItem => singleItem.id == item.id);
           if (matchedItem) {
             matchedItem.rentNum = item.rentNum;
           }
