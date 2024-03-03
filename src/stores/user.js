@@ -42,7 +42,7 @@ export default defineStore('userStore', {
       form.append('data', this.memberInfo.member_id);
 
       apiInstance
-        .post('logout.php', form)
+        .post('logoutNew.php', form)
         .then(response => {
           // 檢查後端是否返回登出成功的訊息
           if (!response.data.error) {
