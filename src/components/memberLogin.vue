@@ -225,39 +225,73 @@ export default {
         // 處理錯誤，可能需要在界面上顯示錯誤資訊
       }
     },
-
     login() {
-      const bodyFormData = new FormData();
-      bodyFormData.append('email', this.user_enter.email);
-      bodyFormData.append('psw', this.user_enter.psw);
-      apiInstance({
-        method: 'post',
-        url: '/login_JWT.php',
-        headers: { 'Content-Type': 'multipart/form-data' },
-        data: bodyFormData,
+    // 創建 FormData 對象，用於傳輸表單數據
+    const bodyFormData = new FormData();
+    bodyFormData.append('email', this.user_enter.email);
+    bodyFormData.append('psw', this.user_enter.psw);
+
+    // 使用 Axios 發送 POST 請求到後端的登入接口
+    apiInstance({
+      method: 'post',
+      url: '/login_JWTNew.php',
+      headers: { 'Content-Type': 'multipart/form-data' },
+      data: bodyFormData,
+    })
+      .then(res => {
+        // 檢查響應數據中的 error 標籤，以判斷後端處理是否成功
+        if (res.data.error === false) {
+          // 登入成功
+          alert(res.data.message); // 顯示成功消息
+          localStorage.setItem('token', res.data.token); // 將 token 儲存到 localStorage
+          this.updateToken(res.data.token); // 更新 Vue 實例中的 token 狀態
+          this.closeLightbox(); // 關閉登入彈窗（假設存在）
+          this.getMemberInfo(); // 獲取用戶資訊
+          // 這裡可以添加更多登入成功後的操作，例如跳轉到首頁
+        } else {
+          // 登入失敗
+          alert(res.data.message); // 顯示錯誤消息
+        }
       })
-        .then(res => {
-          // console.log(res)
-          if (res && res.data && res.data.error === false) {
-            // 如果後端沒有返回錯誤，則處理登入成功的情況
-            alert(res.data.message);
-            localStorage.setItem('token', res.data.token);
-            this.updateToken(res.data.token);
-            this.closeLightbox();
-            this.getMemberInfo();
-            // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
-          } else if (res && res.data && res.data.error === true) {
-            // 如果後端返回了錯誤，則處理登入失敗的情況
-            alert(res.data.message);
-          } else {
-            // 如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
-            alert('登入失敗：無法解析伺服器響應。');
-          }
-        })
-        .catch(error => {
-          console.error('註冊過程中出錯', error);
-        });
-    },
+      .catch(error => {
+        // 處理請求過程中出現的錯誤
+        console.error('登入過程中出錯', error);
+        alert('登入失敗：發生未知錯誤。');
+      });
+  },
+
+    // login() {
+    //   const bodyFormData = new FormData();
+    //   bodyFormData.append('email', this.user_enter.email);
+    //   bodyFormData.append('psw', this.user_enter.psw);
+    //   apiInstance({
+    //     method: 'post',
+    //     url: '/login_JWTNew.php',
+    //     headers: { 'Content-Type': 'multipart/form-data' },
+    //     data: bodyFormData,
+    //   })
+    //     .then(res => {
+    //       // console.log(res)
+    //       if (res && res.data && res.data.error === false) {
+    //         // 如果後端沒有返回錯誤，則處理登入成功的情況
+    //         alert(res.data.message);
+    //         localStorage.setItem('token', res.data.token);
+    //         this.updateToken(res.data.token);
+    //         this.closeLightbox();
+    //         this.getMemberInfo();
+    //         // 可以在這裡執行登入成功後的操作，比如跳轉到登入頁面或者首頁等
+    //       } else if (res && res.data && res.data.error === true) {
+    //         // 如果後端返回了錯誤，則處理登入失敗的情況
+    //         alert(res.data.message);
+    //       } else {
+    //         // 如果後端返回的數據格式不符合預期，則提醒用戶或開發者檢查問題
+    //         alert('登入失敗：無法解析伺服器響應。');
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.error('註冊過程中出錯', error);
+    //     });
+    // },
     register() {
       // 檢查密碼是否一致
       if (!this.user_add.agreeTerms) {
@@ -381,13 +415,18 @@ export default {
         const lineUSerImgURL = userInfoResponse.data.picture;
         const lineAccountTypeID = 1;
         // this.updateToken(accessToken);
-
+        
         // 這邊寫回資料庫
-        const response = await apiInstance.post(`/lineLoginNew.php`, {
+        const response = await apiInstance.post(`/lineLogin.php`, {
           user_id: lineUserId,
           name: lineNickname,
           photo: lineUSerImgURL,
         });
+        if (response.data.message === 'line登入成功') {
+          alert(response.data.message);
+        } else {
+          alert('line沒有登入成功');
+        }
         localStorage.setItem('token', response.data.token);
         this.updateToken(response.data.token);
         this.getMemberInfo();

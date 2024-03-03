@@ -292,13 +292,15 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
+        console.log(response.data);
         if (response.data.success) {
           // 如果密碼更新成功
-          alert(response.data.message);
+          
           this.isEditingPassword = false;
-          console.log(logout);
           // 提示後，執行登出操作
           this.logout(); // 登出操作
+          alert(response.data.message);
+          console.log(this.logout);
         } else {
           // 如果密碼更新過程中出現問題
           alert(response.data.message);

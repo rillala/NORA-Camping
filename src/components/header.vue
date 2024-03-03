@@ -196,7 +196,12 @@ export default {
               class="photo"
               :src="getDBImage(memberInfo.photo)"
             />
-
+            <div class="to-member-center">
+              <RouterLink class="to-member-center"
+                  to="/membercenter"
+                  ></RouterLink
+                >
+            </div>
             <memberLogin :isOpen="isLoginOpen" @close="handleClose" />
           </button>
 
@@ -291,8 +296,25 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/sass/page/header.scss';
 .photo {
+  // pointer-events: none;
   border-radius: $radius;
   height: 55px;
   width: 55px;
+  @include desktop{
+  
+  }
+  @include tablet{
+    
+  }
+}
+
+.to-member-center{
+  z-index: 7;
+  @include desktop{
+    display: none;
+  }
+  @include tablet{
+    display: none;
+  }
 }
 </style>
