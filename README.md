@@ -62,3 +62,24 @@ npm run dev
 - 營地預約：營區類型篩選，將VCalendar與後端資料庫串接顯示剩餘營位數量，並通過步驟條組件經由sessionStorage掌控使用者當前操作步驟。
 - 線上選物：商品搜尋、篩選和排序功能，Pinia.js購物車系統。
 - 會員登入：使用JSON WEB TOKEN(JWT)進行加密登入，同時支援第三方line登入。
+
+## 貢獻者
+<a href="https://github.com/victor6835">
+  <img src="https://github.com/victor6835.png?size=50" style="border-radius: 50%; border: 1px solid black;" alt="莊程富">
+</a>
+<a href="https://github.com/tiffany1029tw">
+  <img src="https://github.com/tiffany1029tw.png?size=50" style="border-radius: 50%; border: 1px solid black;" alt="江坤桂">
+</a>
+<a href="https://github.com/ortis88">
+  <img src="https://github.com/ortis88.png?size=50" style="border-radius: 50%; border: 1px solid black;" alt="陳柏廷">
+</a>
+<a href="https://github.com/nan-sansan">
+  <img src="https://github.com/nan-sansan.png?size=50" style="border-radius: 50%; border: 1px solid black;" alt="莊乃潔">
+</a>
+<a href="https://github.com/hsiaoyingchen">
+  <img src="https://github.com/hsiaoyingchen.png?size=50" style="border-radius: 50%; border: 1px solid black;" alt="陳曉穎">
+</a>
+<a href="https://github.com/rillala">
+  <img src="https://github.com/rillala.png?size=50" style="border-radius: 50%; border: 1px solid black;" alt="林育潔">
+</a>
+
