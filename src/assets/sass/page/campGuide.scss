@@ -1,0 +1,892 @@
+.guide-wrap {
+    background-color: $blue-1;
+    width: 100%;
+}
+
+.guide-banner-wrap {
+    width: 100%;
+    height: 200px;
+
+    @include desktop {
+        height: auto;
+        padding-bottom: 3rem;
+    }
+
+    .guide-banner { // Banner區塊
+        width: 100%;
+        padding-top: 10vw;
+        padding-left: 10vw;
+        color: $blue-4;
+    
+        @include desktop{
+            padding-top: 5vw;
+            // margin: auto;
+            // max-width: 1400px;
+        }
+        h2{
+            @include desktop{
+                font-size: 48px;
+            }
+        }
+        h4{
+            @include desktop{
+                font-size: 32px;
+            }
+        }
+    }
+}
+
+.guide-map { //立體地圖區塊
+    width: 100%;
+    position: relative;
+    height: 750px;
+    overflow: hidden;
+    background: linear-gradient(to bottom,
+        rgba(139, 252, 239, 0.4),
+        rgba(139, 252, 239, 0.3),
+        rgba(139, 252, 239, 0.2),
+        );
+
+    .cat-run {
+        position: absolute;
+        left: -60%;
+        top: 60%;
+
+        @include desktop {
+            left: 10%;
+        }
+    }
+
+    .dog-run {
+        position: absolute;
+        left:70%;
+        top: 40%;
+    }
+
+    .tents {
+        position: absolute;
+    }
+}
+
+.guide-flags { //旗子區塊
+    display: flex;
+    justify-content: space-between;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    .guide-flag-left { //左旗動畫
+        animation: flagWaveLeft 0.8s infinite alternate;
+    }
+    .guide-flag-right { //右旗動畫
+        animation: flagWaveRight 0.8s infinite alternate;
+    }
+    @keyframes flagWaveLeft { //左旗動畫
+        0% {
+            transform: rotateZ(10deg);
+        }
+        25% {
+            transform: rotateZ(15deg);
+        }
+        50% {
+            transform: rotateZ(20deg);
+        }
+        75% {
+            transform: rotateZ(25deg);
+        }
+        100% {
+            transform: rotateZ(20deg);
+        }
+    }
+    @keyframes flagWaveRight { //右旗動畫
+        0% {
+            transform: rotateZ(-10deg);
+        }
+        25% {
+            transform: rotateZ(-15deg);
+        }
+        50% {
+            transform: rotateZ(-20deg);
+        }
+        75% {
+            transform: rotateZ(-25deg);
+        }
+        100% {
+            transform: rotateZ(-20deg);
+        }
+    }
+}
+
+.guide-card { //導覽卡片最外層
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: linear-gradient(to bottom,
+        rgba(226, 219, 62, 0.7),
+        rgba(226, 219, 62, 0.5),
+        rgba(226, 219, 62, 0.3),
+    );
+    position: relative;
+
+    @include desktop {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .cat-icon , .dog-icon {
+        @include desktop {
+            width: 10%;
+        }
+    }
+
+    //腳印1-10
+    .paw1 {
+        position: absolute;
+        right: 0;
+    }
+    .paw2 {
+        position: absolute;
+        left: 0;
+        top: 10%;
+    }
+    .paw3 {
+        position: absolute;
+        right: 0;
+        top: 20%;
+    }
+    .paw4 {
+        position: absolute;
+        left: 0;
+        top: 25%;
+    }
+    .paw5 {
+        position: absolute;
+        right: 0;
+        top: 40%;
+    }
+    .paw6 {
+        position: absolute;
+        left: 0;
+        top: 50%;
+    }
+    .paw7 {
+        position: absolute;
+        right: 0;
+        top: 65%;
+    }
+    .paw8 {
+        position: absolute;
+        left: 0;
+        top: 70%;
+    }
+    .paw9 {
+        position: absolute;
+        right: 0;
+        top: 80%;
+    }
+    .paw10 {
+        position: absolute;
+        left: 0;
+        top: 87%;
+    }
+
+    .area-card { //導覽卡片內層
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        border-radius: $radius;
+        background-color: $blue-2;
+        color: $dark;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 700px;
+
+        @include desktop {
+            max-width: 1160px;
+        }
+
+        .card-dtl {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            @include desktop {
+                padding: 30px;
+                gap: 20px;
+            }
+
+            .area-title {
+                text-align: center;
+                width: 100%;
+                padding-bottom: 10px;
+                border-bottom: 1px solid;
+
+                @include desktop {
+                    font-size: 28px;
+                    border-bottom:none;
+                }
+            }
+        }
+
+        .dog-card-img ,
+        .cat-card-img {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            @include desktop {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
+        }
+
+        img { //導覽卡片內層圖片
+            padding-bottom: 10px;
+            width: 100%;
+            border-radius: $radius;
+
+            @include desktop {
+                width: 600px;
+                height: auto;
+                padding: 0;
+            }
+
+            @include tablet {
+                width: 400px;
+            }
+        }
+
+        .area-dtl { //狗區貓區的卡片內容p
+            padding: 10px 0px;
+
+            @include desktop {
+                width: 75%;
+            }
+        }
+
+        .list { //狗區貓區的清單
+            @include desktop {
+                font-size: 20px;
+            }
+        }
+
+        .reserve-btn { //我要預約按鈕
+            border: 0;
+            width: 160px;
+            height: 50px;
+            border-radius: $radius;
+            background-color: $blue-3;
+            transition: background-color 0.3s ease;
+            color: $white01;
+
+            @include desktop {
+                width: 200px;
+                height: 50px;
+                font-size: 18px;
+            }
+        }
+    }
+
+    .area-cat-card {
+        @include desktop {
+
+        }
+    }
+}
+
+.shelter-office-bg { //野良之家&辦公區背景
+    background: linear-gradient(to bottom,
+        rgba(226, 219, 62, 0.3),
+        rgba(226, 219, 62, 0));
+
+    .guide-shelter { //野良之家大區塊
+        width: 100%;
+        padding: 20px;
+
+        @include desktop {
+            display: flex;
+            justify-content: center;
+        }
+
+        .guide-shelter-info { //野良之家的資訊
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: $white01;
+            background-color: $yellow-2;
+            border-radius: $radius;
+
+            @include desktop {
+                flex-direction: row;
+                justify-content: center;
+                padding: 50px 30px;
+                gap: 20px;
+            }
+
+            img {
+                width: 100%;
+                border-radius: $radius;
+                padding: 10px;
+
+                @include desktop {
+                    width: 700px;
+                }
+
+                @include tablet {
+                    width: 400px;
+                }
+            }
+
+            .shelter-dtl {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+
+                @include desktop {
+                    gap: 30px;
+                }
+            }
+        }
+
+        .guide-shelter-title {
+
+            @include desktop {
+                font-size: 32px;
+                padding-bottom: 0;
+            }
+        }
+
+        .guide-shelter-dtl { 
+            color: $dark;
+
+            @include desktop {
+                font-size: 20px;
+                padding-bottom: 0;
+            }
+        }
+
+        .guide-shelter-btn {
+            border: 0;
+            width: 160px;
+            height: 50px;
+            padding: 10px 0px;
+            border-radius: $radius;
+            background-color: $brown-3;
+            color: $dark;
+            margin-bottom: 20px;
+
+            @include desktop {
+                width: 200px;
+                height: 50px;
+                font-size: 18px;
+            }
+        }
+    }
+    
+    .guide-office {
+        padding: 20px;
+
+        @include desktop {
+            display: flex;
+            justify-content: center;
+        }
+
+        .area-office { //辦公區區塊
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            background-color: $brown-1;
+            color: $dark;
+            border-radius: $radius;
+            padding: 10px;
+
+            @include desktop {
+                flex-direction:row;
+                justify-content: center;
+                gap: 50px;
+                padding: 30px;
+            }
+
+            .office-text-pc {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
+
+                @include desktop {
+                    padding: 30px;
+                    gap: 30px;
+                }
+            }
+
+            img {
+                width: 100%;
+                @include desktop {
+                    width: 600px;
+                }
+                @include tablet {
+                    width: 400px;
+                }
+            }
+
+            .office-title {
+
+                @include desktop {
+                    font-size: 32px;
+                    padding: 0;
+                }
+            }
+
+            .office-text { //辦公區文字
+                @include desktop {
+                    font-size: 20px;
+                }
+            }
+
+            .office-list { //辦公區清單
+                @include desktop {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+
+.guide-marquee { //跑馬燈
+    padding: 20px 0px;
+    color: $white01;
+    background-color: $blue-3;
+    white-space: nowrap; //內容保持在同一行
+    overflow: hidden; //超出的先隱藏
+
+    img { //跑馬燈圖片設置動畫
+        animation: marquee 12s linear infinite;
+
+        @include desktop {
+            width: 100%;
+        }
+    }
+
+    @keyframes marquee { //跑馬燈動畫
+        from {
+            transform: translateX(100%);
+        }
+    
+        to {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+.guide-camp-info-bg { //營地資訊背景
+    background: 
+    linear-gradient(to bottom,
+            rgba(213, 250, 255, 1),
+            rgba(213, 250, 255, 0.8),
+            rgba(213, 250, 255, 1));
+    padding-bottom: 10px;
+
+    .camp-cloud { //營地資訊雲朵一
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        animation: CloudMove 2s infinite linear;
+
+        @include desktop {
+            justify-content: space-around;    
+        }
+
+        @keyframes CloudMove {
+            0% {
+                transform: translateY(10px);
+            }
+
+            50% {
+                transform: translateY(15px);
+            }
+
+            100% {
+                transform: translateY(10px);
+            }
+        }
+
+        .cloud-m-small { //營地資訊雲朵二
+            display: none;
+
+            @include desktop {
+                display: block;
+            }
+        }
+    }
+
+    .guide-camp-info-title { //營地資訊
+        background-image: url(/src/assets/image/campGuide/flag_left.png) , url(/src/assets/image/campGuide/flag_right.png) ;
+        background-size: contain ;
+        min-height: 100px;
+        background-repeat: no-repeat ;
+        background-position: left , right;  
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @include desktop {
+            min-height: 120px;
+        }
+    }
+
+    .gc-wrap {
+        @include desktop {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .guide-camp-info { //營地資訊帳篷區塊
+        background-color: $blue-3;
+        border-radius: 30px;
+        padding: 20px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        @include desktop {
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .camp-info-pc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+
+            @include desktop {
+                gap: 30px;
+            }
+        }
+
+        .camp-info-title { //營地資訊標題
+            color: $white01;
+
+            @include desktop {
+                font-size: 32px;
+            }
+        }
+
+        .camp-info { //營地資訊帳篷文字
+            font-size: 15px;
+            color: $dark;
+
+            @include desktop {
+                font-size: 20px;
+            }
+        }
+
+        .camp-info-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            @include desktop {
+                align-items: end;
+            }
+
+            .roadmap {
+                width: 100%;
+    
+                @include desktop {
+                    width: 700px;
+                    padding: 20px;
+                }
+                @include tablet {
+                    width: 500px;
+                }
+            }
+
+            .camp-info-social { //營地資訊帳篷社群媒體區塊
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: $white01;
+                border-radius: 10px;
+
+                img { 
+                    cursor:pointer;   
+                    width: 35px;
+                    @include desktop {
+                        width: 60px;
+                    }
+                }
+                .roadmap {
+                    width: 100%;
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.colorful-flags { //彩色三角旗
+    width: 100%;
+    animation: shine 2s infinite alternate;
+}
+
+@keyframes shine {
+
+    //閃亮動畫            
+    0% {
+        filter: brightness(0.8);
+    }
+
+    50% {
+        filter: brightness(1.2);
+    }
+
+    100% {
+        filter: brightness(1.6); // 調整亮度
+    }
+}
+
+.guide-facility-intro-bg { //設施介紹背景
+    background: linear-gradient(to bottom,
+            rgba(206, 211, 140, 0.8),
+            rgba(206, 211, 140, 0.5),
+            rgba(206, 211, 140, 0.3));
+
+    .facility-pc {
+        display: flex;
+        justify-content: center;
+    }
+
+    .facility-intro { //設施介紹區塊
+        background-color: $yellow-2;
+        padding: 20px;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        @include desktop {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 50px;
+        }
+
+
+        .facility-intro-title { //設施介紹標題
+            color: $dark ;
+            text-align: center;
+
+            @include desktop {
+                font-size: 32px;
+            }
+        }
+
+        .facility-slider-btn { //設施介紹圖片輪播按鈕
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            @include desktop {
+                justify-content: center;
+            }
+
+            .facility-btn {
+                background: none;
+                border: none;
+            }
+        }
+
+        .txt-tree {
+            @include desktop {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+
+    .fade-enter,
+    .fade-leave-to { //淡入淡出
+        opacity: 0;
+    }
+
+    .facility-slider-container {
+        @include desktop {
+            padding: 10px;
+        }
+
+        .slider-image { //設施介紹圖片輪播
+            width: 100%;
+            border-radius: $radius;
+            @include desktop {
+                width: 600px;
+                height: 600px;
+            }
+            @include tablet {
+                width: 400px;
+                height: 400px;
+            }
+        }
+    }
+
+    .facility-txt { //設施介紹文字
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        @include desktop {
+            gap: 30px;
+        }
+    }
+
+    .facility_trees { //設施介紹樹
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        animation: TreeMove 0.7s infinite linear;
+
+        @keyframes TreeMove {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @include desktop {
+            justify-content: space-around;
+        }
+    
+        img {
+            width: 50px; 
+
+            @include desktop {
+                width: 220px;
+            }
+            @include tablet {
+                width: 150px;
+            }
+        }
+    }
+}
+
+.guide-rules-bg { //營區規範背景
+    background: linear-gradient(to bottom,
+            rgba(206, 211, 140, 0.3),
+            rgba(206, 211, 140, 0.5));
+
+    .rules-pc {
+        @include desktop {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .rules-title { //營區規範標題
+        color: $dark ;
+
+        @include desktop {
+            font-size: 32px;
+        }
+    }
+
+    .rule-icons { //營區規範貓狗icon
+        padding-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        @include desktop {
+            justify-content: space-evenly;
+        }
+
+        img { //營區規範貓狗icon
+
+            @include desktop {
+                width: 120px;
+            }
+        }
+    }    
+
+    .guide-rules { //營區規範區塊
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        background-color: $blue-2;
+        border-radius: $radius;
+        padding: 30px;
+
+        @include desktop {
+            gap: 30px;
+            padding: 50px;
+        }
+
+        img {
+            width: 30px;
+        }
+
+        .guide-rules-list { //營區規範清單
+            list-style: disc;
+
+            li {
+                @include desktop {
+                    padding-bottom: 10px;
+                }
+            }
+        }
+    }    
+    .rule-trees { //營區規範樹
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        animation: TreeMove 1s infinite linear;
+
+        @include desktop {
+            justify-content: space-around;
+        }
+
+        @keyframes TreeMove {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    }
+}

@@ -1,14 +1,25 @@
-// import './assets/main.css'
+// 套件
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { setupCalendar } from 'v-calendar';
 
-import { createApp } from "vue";
-import { createPinia } from "pinia";
 
-import App from "./App.vue";
-import router from "./router";
+// 引入主程式
+import App from './App.vue';
+import router from './router';
 
-const app = createApp(App);
+// 創建一個 vue 應用程式(主要配置在 app.vue裡)
+const vueApp = createApp(App);
 
-app.use(createPinia());
-app.use(router);
+vueApp.use(createPinia());
+vueApp.use(router);
 
-app.mount("#app");
+// 初始化用户狀態
+// userStore().initializeUserState();
+
+// 渲染在 index.html 裡面的 div#app
+vueApp.mount('#app');
+
+// Use calendar defaults (optional)
+vueApp.use(setupCalendar, {});
+
