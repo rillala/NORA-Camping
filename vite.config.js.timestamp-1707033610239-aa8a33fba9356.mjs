@@ -21,7 +21,7 @@ var vite_config_default = defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-        				@import "./src/assets/sass/main.scss";
+        @import "./src/assets/sass/main.scss";
 				`
       }
     }

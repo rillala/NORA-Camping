@@ -7,7 +7,7 @@ import router from '@/router';
 export default defineStore('userStore', {
   // 對應 data
   state: () => ({
-    token: '',
+    token: localStorage.getItem('token'),
     memberInfo: {},
   }),
   actions: {

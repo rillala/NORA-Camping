@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
 import { mapState, mapActions } from 'pinia';
 import memberLogin from '@/components/memberLogin.vue';
@@ -49,28 +48,32 @@ export default {
     isMenuOpen(newVal, oldVal) {
       document.body.style.overflow = newVal ? 'hidden' : 'auto';
     },
-  },
-  created() {
-    const cartStore = useCartStore();
-    cartStore.getCart();
+    // isLoginOpen(newVal) {
+    // console.log('isLoginOpen changed to:', newVal);
+    // },
   },
   computed: {
     //使用 mapState 輔助函數將/src/stores/user裡的state/data 映射在這裡
     ...mapState(useCartStore, ['cartList']),
     ...mapState(userStore, ['token', 'memberInfo']),
-    userProfileImageStyle() {
-      return this.userProfileImage
-        ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
-        : ''; // 如果沒有使用者頭像，返回空字符串或預設樣式
-    },
-
+    // userProfileImageStyle() {
+    //   return this.userProfileImage
+    //     ? `background-image: url('${this.userProfileImage}'); background-size: cover;`
+    //     : ''; // 如果沒有使用者頭像，返回空字符串或預設樣式
+    // },
     isLogin() {
       return this.token ? true : false;
     },
   },
   mounted() {
-    // this.updateUserData();
-    // this.login();
+    const token = localStorage.getItem('token');
+    console.log('Token: ', token);
+    if (token) {
+      this.isLoginOpen = false; // 如果 token 存在，假定使用者已經登入
+    } else {
+      this.isLoginOpen = true; // 如果無 token，顯示登入燈箱
+      console.log('Is Login Open: ', this.isLoginOpen);
+    }
   },
   methods: {
     // 使用 mapActions 輔助函數將/src/stores/user裡的actions/methods 映射在這裡
@@ -99,12 +102,10 @@ export default {
     handleClose() {
       this.isLoginOpen = false; // 這將關閉燈箱
       this.isMenuOpen = false; // 關閉子選單-->手機板需要
-      // console.log(this.isLoginOpen);
     },
     memberCenter() {
       if (this.isLogin) {
         // 如果已經登入了 token = true, 則開啟子選單
-        // console.log(`${this.isLogin}`);
         this.isMemberSubOpen = true;
       } else {
         // 如果用戶未登入，顯示登入介面
@@ -117,7 +118,6 @@ export default {
     },
     getDBImage(paths) {
       return getDBImage(paths);
-      // console.log(this.getDBImage);
     },
   },
 };
