@@ -148,10 +148,6 @@ export default {
       passwordMismatch: false,
       showRegisterForm: true,
       user_add: {
-        // name: '陳穎穎',
-        // email: 'sandra401120422@gmail.com',
-        // psw: '123456',
-        // pswConfirmation: '123456',
         name: '',
         email: '',
         psw: '',
@@ -172,6 +168,7 @@ export default {
       client_secret: '6944f7d50fb550267d1488e66d7f4d90',
     };
   },
+  
   async mounted() {
     // 使用 window.location.search 和 urlParams 獲取當前網頁 URL 中的查詢參數
     const queryString = window.location.search;
@@ -181,15 +178,7 @@ export default {
       // 如果查詢字串中存在名為 code 的參數，code 變數將被賦值為該參數的值；否則，code 變數將為 null。
       const code = urlParams.get('code');
       await this.lineLoginRedirect(code);
-    } else {
-      // 判斷有沒有登入過，如果沒有token等同於沒有登入
-      // const user = this.login();
-      // // console.log(user);
-      // if (user) {
-      //   //有登入資訊轉到首頁
-      //   this.$router.push('/');
-      // }
-    }
+    } 
   },
   methods: {
     memberRedirect() {
@@ -231,7 +220,7 @@ export default {
     bodyFormData.append('email', this.user_enter.email);
     bodyFormData.append('psw', this.user_enter.psw);
 
-    // 使用 Axios 發送 POST 請求到後端的登入接口
+    // 使用 apiInstance 發送 POST 請求到後端的登入接口
     apiInstance({
       method: 'post',
       url: '/login_JWTNew.php',
@@ -431,7 +420,7 @@ export default {
         this.updateToken(response.data.token);
         this.getMemberInfo();
         this.updateUserData(response.data);
-        this.$router.push('/');
+        // this.$router.push('/');
       } catch (error) {
         console.error(error);
       }

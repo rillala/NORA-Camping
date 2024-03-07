@@ -14,8 +14,7 @@ const vueApp = createApp(App);
 vueApp.use(createPinia());
 vueApp.use(router);
 
-// 初始化用户狀態
-// userStore().initializeUserState();
+
 
 // 渲染在 index.html 裡面的 div#app
 vueApp.mount('#app');
